@@ -1,0 +1,28 @@
+{
+  "name": "gulp-app-build-tasks-examples-angular",
+  "version": "0.0.1",
+  "description": "Angular example about the awesome project gulp-app-build-tasks.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jimmyfortinx/gulp-app-build-tasks-examples.git"
+  },
+  "keywords": [
+    "gulp",
+    "build",
+    "tasks",
+    "application",
+    "examples"
+  ],
+  "author": "Jimmy Fortin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jimmyfortinx/gulp-app-build-tasks-examples/issues"
+  },
+  "homepage": "https://github.com/jimmyfortinx/gulp-app-build-tasks-examples",
+  "devDependencies": {
+    "gulp-app-build-tasks": "https://github.com/jimmyfortinx/gulp-app-build-tasks.git"
+  }
+}

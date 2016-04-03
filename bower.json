@@ -1,0 +1,53 @@
+{
+  "name": "angular-project",
+  "version": "0.0.1",
+  "homepage": "https://github.com/babelouest/sagremor",
+  "authors": [
+    "Nicolas Mora",
+    "Jimmy Fortin"
+  ],
+  "description": "Angharad web client application",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "dist/css/bootstrap.css",
+        "dist/fonts/glyphicons-halflings-regular.eot",
+        "dist/fonts/glyphicons-halflings-regular.svg",
+        "dist/fonts/glyphicons-halflings-regular.ttf",
+        "dist/fonts/glyphicons-halflings-regular.woff",
+        "dist/fonts/glyphicons-halflings-regular.woff2"
+      ]
+    },
+    "font-awesome": {
+      "main": [
+        "css/font-awesome.min.css"
+      ]
+    }
+  },
+  "dependencies": {
+    "angular": "~1.5.3",
+    "bootstrap": "~3.3.6",
+    "angular-ui-router": "~0.2.15",
+    "angular-translate": "^2.11.0",
+    "angular-fontawesome": "^1.0.0",
+    "bootstrap-sidebar": "^0.2.2",
+    "responsive-nav": "^1.0.39",
+    "lodash": "^4.7.0"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.5.3"
+  },
+  "resolutions": {
+    "bootstrap": "~3.3.6"
+  }
+}
