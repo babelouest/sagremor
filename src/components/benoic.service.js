@@ -1,7 +1,7 @@
 angular.module('angharadApp')
     .factory('benoicFactory', ['$http', function($http) {
 
-    var urlBase = 'http://localhost:2473/benoic';
+    var urlBase = 'https://hunbaut.babelouest.org/angharaddev/benoic';
     var dataFactory = {};
 
     dataFactory.getDeviceTypes = function () {

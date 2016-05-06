@@ -42,7 +42,9 @@
     "angular-fontawesome": "^1.0.0",
     "bootstrap-sidebar": "^0.2.2",
     "responsive-nav": "^1.0.39",
-    "lodash": "^4.7.0"
+    "lodash": "^4.7.0",
+    "ng-cookies": "~1.1.1",
+    "angular-cookies": "~1.5.5"
   },
   "devDependencies": {
     "angular-mocks": "~1.5.3"

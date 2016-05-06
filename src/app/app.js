@@ -1,2 +1,2 @@
-angular.module('angharadApp', ['ui.router'])
+angular.module('angharadApp', ['ui.router', 'ngCookies'])
   .constant('_', window._);

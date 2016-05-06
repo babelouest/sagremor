@@ -1,9 +1,17 @@
 angular.module('angharadApp')
-    .config(function ($stateProvider, $urlRouterProvider) {
+    .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
+        //$httpProvider.defaults.withCredentials = true;
+        
         $stateProvider
             .state('dashboard', {
                 url: '/',
                 templateUrl: 'app/dashboard/dashboard.html'
+            })
+            .state('login', {
+                url: '/login',
+                templateUrl: 'app/login/login.html',
+                controller: 'loginCtrl',
+                controllerAs: 'loginCtrl'
             })
             .state('switches', {
                 url: '/switches',
