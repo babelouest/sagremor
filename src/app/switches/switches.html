@@ -1,9 +1,7 @@
-<div class="container" data-ng-controller="switchesCtrl">
+<div class="container">
     <h1>Switches</h1>
     
-    <div class="container" data-ng-repeat="switch in elements.switches">
-      <div class="col-md-4">
-        {{ switch.name }}
-      </div>
+    <div data-ng-repeat="switcher in switchesCtrl.switchList" class="row">
+      <data-sag-switch data-switcher="switcher"></data-sag-switch>
     </div>
 </div>

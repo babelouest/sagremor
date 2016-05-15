@@ -1,0 +1,9 @@
+<div class="col-md-4">
+    <span>{{$ctrl.switcher.display}}</span>
+    <input type="checkbox" 
+            data-bs-switch 
+            data-toggle="toggle" 
+            data-switch-size="mini" 
+            data-ng-model="$ctrl.switcher.value" 
+            data-ng-change="$ctrl.toggleSwitcher($ctrl.switcher)">
+</div>

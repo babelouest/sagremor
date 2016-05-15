@@ -1,6 +1,5 @@
-angular.module('angharadApp')
+angular.module('sagremorApp')
     .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
-        //$httpProvider.defaults.withCredentials = true;
         
         $stateProvider
             .state('dashboard', {
@@ -10,12 +9,14 @@ angular.module('angharadApp')
             .state('login', {
                 url: '/login',
                 templateUrl: 'app/login/login.html',
-                controller: 'loginCtrl',
-                controllerAs: 'loginCtrl'
+                controller: 'LoginCtrl',
+                controllerAs: 'LoginCtrl'
             })
             .state('switches', {
                 url: '/switches',
-                templateUrl: 'app/switches/switches.html'
+                templateUrl: 'app/switches/switches.html',
+                controller: 'switchesCtrl',
+                controllerAs: 'switchesCtrl'
             })
             .state('heaters', {
                 url: '/heaters',
@@ -59,7 +60,9 @@ angular.module('angharadApp')
             })
             .state('parameters', {
                 url: '/parameters',
-                templateUrl: 'app/parameters/parameters.html'
+                templateUrl: 'app/parameters/parameters.html',
+                controller: 'ParametersCtrl',
+                controllerAs: 'ParametersCtrl'
             });
             
         $urlRouterProvider.otherwise('/');

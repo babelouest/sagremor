@@ -1,15 +1,35 @@
-angular.module('angharadApp')
+angular.module('sagremorApp')
+    .factory('angharadBackendService', [
+    '$http',
+    '$q',
+    function($http, $q) {
+        var angharadBackendFactory = {};
+        
+        angharadBackendFactory.httpRequest = function (method, url, data) {
+          var deferred = $q.defer();
+          
+          $http({method: method, url: url, data: data}).then(function (response) {
+            deferred.resolve(response.data);
+          }, function (error) {
+            deferred.reject(error);
+          });
+          
+          return deferred.promise;
+        };
+        
+        return angharadBackendFactory;
+    }])
     .factory('angharadFactory', [
     '$http',
-    '$cookies',
-    function($http, $cookies) {
+    'angharadConstant',
+    'angharadBackendService',
+    function($http, angharadConstant, angharadBackendService) {
 
-        var urlBase = 'https://hunbaut.babelouest.org/angharaddev/angharad';
-        //var urlBase = 'http://localhost:2473/angharad';
+        var urlBase = angharadConstant.baseUrl + angharadConstant.prefixAngharad;
         var dataFactory = {};
         
         dataFactory.getAuth = function () {
-            return $http.get(urlBase + '/auth/');
+            return angharadBackendService.httpRequest("GET", urlBase + 'auth/');
         };
 
         dataFactory.postAuth = function (user, password, validity) {
@@ -20,23 +40,23 @@ angular.module('angharadApp')
             if (!!validity) {
                 data.validity = validity
             }
-            return $http.post(urlBase + '/auth/', data);
+            return angharadBackendService.httpRequest("POST", urlBase + 'auth/', data);
         };
 
         dataFactory.deleteAuth = function () {
-            return $http.delete(urlBase + '/auth/');
+            return angharadBackendService.httpRequest("DELETE", urlBase + 'auth/');
         };
 
         dataFactory.getSumboduleList = function () {
-            return $http.get(urlBase + '/submodule/');
+            return angharadBackendService.httpRequest("GET", urlBase + 'submodule/');
         };
 
         dataFactory.getSubmodule = function (name) {
-            return $http.get(urlBase + '/submodule/' + name);
+            return angharadBackendService.httpRequest("GET", urlBase + 'submodule/' + name);
         };
 
         dataFactory.enableSubmodule = function (name, enabled) {
-            return $http.get(urlBase + '/submodule/' + name + '/enable/' + enabled?'1':'0');
+            return angharadBackendService.httpRequest("GET", urlBase + 'submodule/' + name + '/enable/' + enabled?'1':'0');
         };
 
         return dataFactory;

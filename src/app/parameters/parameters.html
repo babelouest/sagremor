@@ -1,3 +1,83 @@
 <div class="container">
     <h1>Parameters</h1>
+    
+    <h2>Benoic devices list</h2>
+    <button type="button" data-ng-click="ParametersCtrl.addDevice()" class="btn">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+    </button>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>Connected</th>
+                <th>Enabled</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-ng-if="ParametersCtrl.deviceAdded">
+                <td><input type="text" data-ng-model="ParametersCtrl.newDeviceName"></td>
+                <td><input type="text" data-ng-model="ParametersCtrl.newDeviceDescription"></td>
+                <td>
+                    <select data-ng-model="ParametersCtrl.newDeviceType" data-ng-options="device.uid as device.name for device in ParametersCtrl.deviceTypes" data-ng-change="ParametersCtrl.setDeviceOptions()"></select>
+                    <button type="button" class="btn" data-ng-click="ParametersCtrl.setDeviceOptions()" data-ng-enabled="!!ParametersCtrl.newDeviceType">
+                        <i class="fa fa-cog" aria-hidden="true"></i>
+                    </button>
+                </td>
+                <td>
+                    <input data-toggle="toggle" type="checkbox" data-ng-model="ParametersCtrl.newDeviceConnect">
+                </td>
+                <td></td>
+                <td>
+                    <button type="button" class="btn" data-ng-click="ParametersCtrl.postNewDevice()">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" class="btn" data-ng-click="ParametersCtrl.cancelNewDevice()">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </button>
+                </td>
+            </tr>
+            <tr data-ng-if="ParametersCtrl.deviceAdded && ParametersCtrl.deviceOptionListDisplay" data-ng-repeat="(optionName, option) in ParametersCtrl.deviceOptionList track by optionName">
+                <td></td>
+                <td>{{option.description}}</td>
+                <td data-ng-if="option.type !== 'boolean'"><input type="text" data-ng-model="option.value"></td>
+                <td data-ng-if="option.type === 'boolean'"><label class="checkbox-inline"><input data-toggle="toggle" type="checkbox" data-ng-model="option.value"></label></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr data-ng-if="!ParametersCtrl.deviceAdded" 
+                data-ng-repeat="(name, device) in ParametersCtrl.deviceList track by name" 
+                data-ng-class="{'device-disabled': !device.enabled}">
+                <td>{{device.name}}</td>
+                <td data-ng-if="!device.update">{{device.description}}</td>
+                <td data-ng-if="device.update"><input type="text" name="deviceDesc" id="deviceDesc" data-ng-model="device.newDescription" value="{{device.newDescription}}"></td>
+                <td>{{device.type_uid | deviceTypeName}}</td>
+                <td>
+                    <input data-toggle="toggle" data-bs-switch data-switch-size="mini" type="checkbox" data-ng-model="device.connected" data-ng-change="ParametersCtrl.connectDevice(device)">
+                </td>
+                <td>
+                    <input data-toggle="toggle" data-bs-switch data-switch-size="mini" type="checkbox" data-ng-model="device.enabled" data-ng-change="ParametersCtrl.enableDevice(device)">
+                </td>
+                <td data-ng-if="!device.update">
+                    <button type="button" class="btn" data-ng-click="ParametersCtrl.editDevice(device)">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" class="btn" data-ng-click="ParametersCtrl.removeDevice(device)">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                </td>
+                <td data-ng-if="device.update">
+                    <button type="button" class="btn" data-ng-click="ParametersCtrl.saveDevice(device)">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" class="btn" data-ng-click="ParametersCtrl.cancelEditDevice(device)">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>

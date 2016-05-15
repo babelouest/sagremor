@@ -1,23 +1,55 @@
-angular.module('angharadApp')
-    .factory('benoicFactory', ['$http', function($http) {
+angular.module('sagremorApp')
+    .factory('benoicFactory', [
+    '$http', 
+    'angharadConstant',
+    'angharadBackendService',
+    function($http, angharadConstant, angharadBackendService) {
 
-    var urlBase = 'https://hunbaut.babelouest.org/angharaddev/benoic';
+    var urlBase = angharadConstant.baseUrl + angharadConstant.prefixBenoic;
     var dataFactory = {};
 
     dataFactory.getDeviceTypes = function () {
-        return $http.get(urlBase + '/deviceTypes/');
+        return angharadBackendService.httpRequest("GET", urlBase + 'deviceTypes/');
     };
 
     dataFactory.getDeviceList = function () {
-        return $http.get(urlBase + '/device/');
+        return angharadBackendService.httpRequest("GET", urlBase + 'device/');
     };
 
     dataFactory.getDevice = function (name) {
-        return $http.get(urlBase + '/device/' + name);
+        return angharadBackendService.httpRequest("GET", urlBase + 'device/' + name);
+    };
+    
+    dataFactory.addDevice = function (device) {
+        return angharadBackendService.httpRequest("POST", urlBase + 'device/', device);
     };
 
-    dataFactory.getDeviceOverview = function (name, enabled) {
-        return $http.get(urlBase + '/device/' + name + '/overview');
+    dataFactory.setDevice = function (device) {
+        return angharadBackendService.httpRequest("PUT", urlBase + 'device/' + device.name, device);
+    };
+
+    dataFactory.removeDevice = function (name) {
+        return angharadBackendService.httpRequest("DELETE", urlBase + 'device/' + name);
+    };
+    
+    dataFactory.connectDevice = function (name) {
+        return angharadBackendService.httpRequest("GET", urlBase + 'device/' + name + "/connect");
+    };
+
+    dataFactory.disconnectDevice = function (name) {
+        return angharadBackendService.httpRequest("GET", urlBase + 'device/' + name + "/disconnect");
+    };
+
+    dataFactory.pingDevice = function (name) {
+        return angharadBackendService.httpRequest("GET", urlBase + 'device/' + name + "/ping");
+    };
+
+    dataFactory.getDeviceOverview = function (name) {
+        return angharadBackendService.httpRequest("GET", urlBase + 'device/' + name + '/overview');
+    };
+
+    dataFactory.setElement = function (deviceName, elementName, elementType, elementValue) {
+        return angharadBackendService.httpRequest("GET", urlBase + 'device/' + deviceName + '/' + elementType + '/' + elementName + '/' + elementValue);
     };
 
     return dataFactory;
