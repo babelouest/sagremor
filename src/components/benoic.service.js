@@ -52,5 +52,9 @@ angular.module('sagremorApp')
         return angharadBackendService.httpRequest("GET", urlBase + 'device/' + deviceName + '/' + elementType + '/' + elementName + '/' + elementValue);
     };
 
+    dataFactory.updateElement = function (deviceName, elementName, elementType, element) {
+        return angharadBackendService.httpRequest("PUT", urlBase + 'device/' + deviceName + '/' + elementType + '/' + elementName, element);
+    };
+
     return dataFactory;
 }]);

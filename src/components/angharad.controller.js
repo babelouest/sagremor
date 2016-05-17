@@ -5,19 +5,26 @@ angular.module('sagremorApp')
   '$q',
   '$location',
   '$cookieStore',
+  'toaster',
   'angharadFactory',
   'benoicFactory',
   'sharedData',
-  function($scope, $http, $q, $location, $cookieStore, angharadFactory, benoicFactory, sharedData) {
+  'sagremorParams',
+  function($scope, $http, $q, $location, $cookieStore, toaster, angharadFactory, benoicFactory, sharedData, sagremorParams) {
     var self = this;
     
     function init() {
-      self.getAuth()
-        .then(function() {
-          self.initBenoicDeviceTypes().then(function() {
-              self.initBenoicElements();
-          });
-        });
+        sagremorParams.adminMode = false;
+        self.getAuth()
+            .then(function() {
+                var myToast = toaster.pop({type: 'wait', title: "Angharad", body: 'Load data', timeout: 0, showCloseButton: false});
+                self.initBenoicDeviceTypes().then(function() {
+                    self.initBenoicElements();
+                })['finally'](function () {
+                    toaster.clear(myToast);
+                    toaster.pop({type: 'success', title: "Angharad", body: 'Angharad loaded'});
+                });
+            });
     }
     
     this.getAuth = function() {
@@ -65,7 +72,11 @@ angular.module('sagremorApp')
                     curDevice.element = responses[index];
                 }
                 $scope.$broadcast('benoicDevicesChanged');
+            }, function (error) {
+                toaster.pop("error", "Overview devices", "Error loading devices overview");
             });
+        }, function (error) {
+              toaster.pop("error", "Load devices", "Error loading devices list");
         });
     };
     

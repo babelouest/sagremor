@@ -60,4 +60,5 @@ angular.module('sagremorApp')
         };
 
         return dataFactory;
-}]);
+    }
+]);

@@ -1,12 +1,17 @@
 angular.module('sagremorApp')
-  .controller('ParametersCtrl', [
-  '$scope',
-  '$q',
-  'benoicFactory',
-  'sharedData',
-  function($scope, $q, benoicFactory, sharedData) {
+    .controller('ParametersCtrl', [
+    '$scope',
+    '$q',
+    'toaster',
+    'benoicFactory',
+    'sharedData',
+    'sagremorParams',
+    'sagremorConfirm',
+    function($scope, $q, toaster, benoicFactory, sharedData, sagremorParams, sagremorConfirm) {
       
       var self = this;
+      
+      this.sagremorParams = sagremorParams;
       
       this.deviceList = {};
       this.deviceTypes = {};
@@ -21,6 +26,8 @@ angular.module('sagremorApp')
       this.deviceOptionListDisplay = false;
       
       this.init = function() {
+          self.deviceList = sharedData.all('benoicDevices');
+          self.deviceTypes = sharedData.all('benoicDeviceTypes');
       };
       
       $scope.$on('benoicDevicesChanged', function () {
@@ -59,6 +66,9 @@ angular.module('sagremorApp')
                     benoicDevices.add(response);
                 });
               }
+              toaster.pop("success", "Add device", "Device added successfully");
+          }, function (error) {
+              toaster.pop("error", "Add device", "Error adding device");
           })['finally'](function () {
               self.deviceAdded = false;
               self.deviceList = benoicDevices.all();
@@ -90,12 +100,16 @@ angular.module('sagremorApp')
       this.connectDevice = function (device) {
           if (device.connected) {
               benoicFactory.connectDevice(device.name).then(function (response) {
+                  toaster.pop("success", "Connect device", "Device connected successfully");
               }, function (error) {
+                  toaster.pop("error", "Connect device", "Error connecting device");
                   device.connected = false;
               });
           } else {
               benoicFactory.disconnectDevice(device.name).then(function (response) {
+                  toaster.pop("success", "Disconnect device", "Device disconnected successfully");
               }, function (error) {
+                  toaster.pop("error", "Disconnect device", "Error disconnecting device");
                   device.connected = true;
               });
           }
@@ -103,6 +117,17 @@ angular.module('sagremorApp')
       
       this.enableDevice = function (device) {
           benoicFactory.setDevice(device).then(function () {
+              if (device.enabled) {
+                toaster.pop("success", "Enable device", "Device enabled successfully");
+            } else {
+                toaster.pop("success", "Disable device", "Device disabled successfully");
+            }
+          }, function (error) {
+              if (device.enabled) {
+                toaster.pop("error", "Enable device", "Error enabling device");
+            } else {
+                toaster.pop("error", "Disable device", "Error disabling device");
+            }
           });
       };
       
@@ -114,6 +139,9 @@ angular.module('sagremorApp')
       this.saveDevice = function (device) {
           device.description = device.newDescription;
           benoicFactory.setDevice(device).then(function (response) {
+              toaster.pop("success", "Save device", "Device saved successfully");
+          }, function (error) {
+              toaster.pop("error", "Save device", "Error saving device");
           })['finally'](function () {
               device.update = false;
           });
@@ -125,14 +153,16 @@ angular.module('sagremorApp')
       };
       
       this.removeDevice = function (device) {
-          benoicFactory.removeDevice(device.name).then(function (response) {
-              benoicDevices.remove(device.name);
-              self.deviceList = benoicDevices.all()
+          sagremorConfirm.open("Remove device", "Are you sure you want to remove this device ?").then (function(result) {
+              benoicFactory.removeDevice(device.name).then(function (response) {
+                  benoicDevices.remove(device.name);
+                  self.deviceList = benoicDevices.all()
+              });
           });
       };
       
       self.init();
-  }
+    }
 ]).filter('deviceTypeName', [
     'sharedData',
     function(sharedData) {
