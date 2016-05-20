@@ -58,12 +58,12 @@ angular.module('sagremorApp')
               if (self.newDeviceConnect) {
                 benoicFactory.connectDevice(deviceName).then(function() {
                     benoicFactory.getDevice(deviceName).then(function(response) {
-                        benoicDevices.add(response);
+                        sharedData.add('benoicDevices', deviceName, response);
                     });
                 });
               } else {
                 benoicFactory.getDevice(deviceName).then(function(response) {
-                    benoicDevices.add(response);
+                    sharedData.add('benoicDevices', deviceName, response);
                 });
               }
               toaster.pop("success", "Add device", "Device added successfully");
@@ -71,7 +71,7 @@ angular.module('sagremorApp')
               toaster.pop("error", "Add device", "Error adding device");
           })['finally'](function () {
               self.deviceAdded = false;
-              self.deviceList = benoicDevices.all();
+              self.deviceList = sharedData.all('benoicDevices');
               self.newDeviceName = "";
               self.newDeviceDescription = "";
               self.newDeviceType = "";
@@ -155,8 +155,8 @@ angular.module('sagremorApp')
       this.removeDevice = function (device) {
           sagremorConfirm.open("Remove device", "Are you sure you want to remove this device ?").then (function(result) {
               benoicFactory.removeDevice(device.name).then(function (response) {
-                  benoicDevices.remove(device.name);
-                  self.deviceList = benoicDevices.all()
+                  sharedData.remove('benoicDevices', device.name);
+                  self.deviceList = sharedData.all('benoicDevices');
               });
           });
       };

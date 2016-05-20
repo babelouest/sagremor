@@ -10,6 +10,16 @@ function sagSwitchController (benoicFactory, sagremorParams, $uibModal) {
         benoicFactory.setElement(ctrl.switcher.device, ctrl.switcher.name, 'switch', ctrl.switcher.value);
     };
     
+    ctrl.menu = [
+        ['Edit', function ($itemScope) {
+            ctrl.editSwitcher();
+        }],
+        null,
+        ['Monitor', function ($itemScope) {
+            console.log($itemScope);
+        }]
+    ];
+    
     ctrl.editSwitcher = function () {
         var modalInstance = $uibModal.open({
           animation: true,

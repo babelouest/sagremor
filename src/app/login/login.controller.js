@@ -1,11 +1,13 @@
 angular.module('sagremorApp')
   .controller('LoginCtrl', [
   '$scope',
+  '$rootScope',
   '$location',
   '$cookieStore',
   '$http',
+  'toaster',
   'angharadFactory',
-  function($scope, $location, $cookies, $http, angharadFactory) {
+  function($scope, $rootScope, $location, $cookies, $http, toaster, angharadFactory) {
       
       var self = this;
       
@@ -30,11 +32,13 @@ angular.module('sagremorApp')
             .then(function (response) {
                 $cookies.put("ANGHARAD_SESSION_ID", response.token);
                 $http.defaults.headers.common["ANGHARAD_SESSION_ID"] = response.token;
+                $rootScope.$broadcast("loginSuccess");
                 $scope.isLogged = true;
                 $location.path("/");
+                toaster.pop({type: 'success', title: "Login success"});
             },
             function (error) {
-                console.log("login error", error);
+                toaster.pop({type: 'error', title: "Login error"});
             });
       };
       

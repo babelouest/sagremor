@@ -1,4 +1,4 @@
-angular.module('sagremorApp', ['ui.bootstrap', 'ui.router', 'ngCookies', 'frapontillo.bootstrap-switch', 'toaster'])
+angular.module('sagremorApp', ['ui.bootstrap', 'ui.router', 'ngCookies', 'frapontillo.bootstrap-switch', 'toaster', 'ui.bootstrap.contextMenu', 'pascalprecht.translate'])
     .constant('_', window._)
     .constant('angharadConstant', {
         'baseUrl': 'https://hunbaut.babelouest.org/angharaddev/',
@@ -24,6 +24,21 @@ angular.module('sagremorApp', ['ui.bootstrap', 'ui.router', 'ngCookies', 'frapon
             {value: 86400, label: "1 day"}
         ]
     })
+    .config(['$translateProvider', function ($translateProvider) {
+        var translations = {
+            HEADLINE: 'What an awesome module!',
+            PARAGRAPH: 'Srsly!',
+            NAMESPACE: {
+                PARAGRAPH: 'And it comes with awesome features!'
+            },
+            plop: "plop go"
+        };
+        // add translation table
+        $translateProvider
+        .translations('en', translations)
+        .preferredLanguage('en');
+        $translateProvider.useSanitizeValueStrategy('escape');
+    }])
     .factory('sharedData', function() {
         var sharedData = {};
         
