@@ -1,17 +1,16 @@
-
 <div class="modal-content">
     <div class="modal-header">
-        <h3 class="modal-title">Update switch</h3>
+        <h3 class="modal-title" data-translate="switch_update_title"></h3>
     </div>
     <div class="modal-body">
         <div class="row">
-            <span class="col-md-6">Switch name: </span>
+            <span class="col-md-6" data-translate="switch_update_name"></span>
             <div class="col-md-6">
                 <input type="text" name="switcherDisplay" id="switcherDisplay" data-ng-model="SwitchesModalCtrl.switcher.newDisplay" class="modal-input-text">
             </div>
         </div>
         <div class="row">
-            <span class="col-md-6">Enabled: </span>
+            <span class="col-md-6" data-translate="switch_update_enabled"></span>
             <div class="col-md-6"><input type="checkbox" 
                     data-bs-switch 
                     data-toggle="toggle" 
@@ -23,7 +22,7 @@
             <hr>
         </div>
         <div class="row">
-            <span class="col-md-6">Monitor: </span>
+            <span class="col-md-6" data-translate="switch_update_monitor"></span>
             <div class="col-md-6"><input type="checkbox" 
                     data-bs-switch 
                     data-toggle="toggle" 
@@ -32,16 +31,17 @@
             </div>
         </div>
         <div class="row" data-ng-if="SwitchesModalCtrl.switcher.monitored">
-            <span class="col-md-6">Monitor every: </span>
-            <div class="col-md-6"><select id="bddAddUserGrant"
-                                data-ng-model="SwitchesModalCtrl.switcher.monitored_every"
-                                data-ng-options="monitorEvery.value as SwitchesModalCtrl.getMonitorEveryLabel(monitorEvery.label) for monitorEvery in SwitchesModalCtrl.monitorEveryEnum track by $index">
-                            </select>
+            <span class="col-md-6" data-translate="switch_update_monitor_every"></span>
+            <div class="col-md-6">
+                <select id="bddAddUserGrant"
+                    data-ng-model="SwitchesModalCtrl.switcher.monitored_every"
+                    data-ng-options="monitorEvery.trLabel for monitorEvery in SwitchesModalCtrl.monitorEveryEnum track by monitorEvery.value">
+                </select>
             </div>
         </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" type="button" data-ng-click="SwitchesModalCtrl.saveSwitcher()">OK</button>
-        <button class="btn btn-warning" type="button" data-ng-click="SwitchesModalCtrl.cancel()" data-dismiss="modal">Cancel</button>
+        <button class="btn btn-primary" type="button" data-ng-click="SwitchesModalCtrl.saveSwitcher()" data-translate="switch_btn_ok"></button>
+        <button class="btn btn-warning" type="button" data-ng-click="SwitchesModalCtrl.cancel()" data-dismiss="modal" data-translate="switch_btn_cancel"></button>
     </div>
 </div>

@@ -25,11 +25,13 @@ angular.module('sagremorApp')
             var devices = sharedData.all('benoicDevices');
             for (key in devices) {
                 var deviceName = devices[key].name;
-                for (sw in devices[key].element.switches) {
-                    var switcher = devices[key].element.switches[sw];
-                    switcher.device = deviceName;
-                    switcher.name = sw;
-                    self.switchList.push(switcher);
+                if (devices[key].connected && devices[key].enabled) {
+                    for (sw in devices[key].element.switches) {
+                        var switcher = devices[key].element.switches[sw];
+                        switcher.device = deviceName;
+                        switcher.name = sw;
+                        self.switchList.push(switcher);
+                    }
                 }
             }
         };

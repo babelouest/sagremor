@@ -17,24 +17,25 @@ angular.module('sagremorApp')
     this.loaderToast;
     this.benoicInitComplete = false;
     this.benoicInitError = false;
+    this.messages = {};
     
     function init() {
-        $translate("plop").then(function (res) {
-            console.log("res", res);
-        }, function (err) {
-            console.log("err", err);
+        $translate(["init_message_loading", "init_message_loading_complete", "init_message_loading_error"]).then(function (results) {
+          self.messages = results;
         });
         initParameters();
         self.getAuth().then(function() {
             popLoader();
             self.initAngharadSubmodules().then(function (result) {
                 for (key in result) {
+                    sharedData.add("submodules", result[key].name, result[key]);
                     if (result[key].name === "benoic" && result[key].enabled) {
                         self.initBenoic();
                     } else if (result[key].name === "carleon" && result[key].enabled) {
                     } else if (result[key].name === "gareth" && result[key].enabled) {
                     }
                 }
+                $scope.$broadcast("submodulesChanged");
             }, function (error) {
             });
         });
@@ -55,14 +56,14 @@ angular.module('sagremorApp')
     function closeLoader(result) {
         toaster.clear(self.loaderToast);
         if (result) {
-            toaster.pop({type: 'success', title: "Angharad", body: 'Angharad loaded'});
+            toaster.pop({type: 'success', title: "Angharad", body: self.messages.init_message_loading_complete});
         } else {
-            toaster.pop({type: 'error', title: "Angharad", body: 'Error loading angharad services'});
+            toaster.pop({type: 'error', title: "Angharad", body: self.messages.init_message_loading_error});
         }
     }
     
     function popLoader() {
-        self.loaderToast = toaster.pop({type: 'wait', title: "Angharad", body: 'Load data', timeout: 0, showCloseButton: false});
+        self.loaderToast = toaster.pop({type: 'wait', title: "Angharad", body: self.messages.init_message_loading, timeout: 0, showCloseButton: false});
     }
     
     function initParameters() {
@@ -98,6 +99,10 @@ angular.module('sagremorApp')
         return angharadFactory.getSumboduleList();
     };
     
+    $scope.$on("reinitBenoic", function () {
+        self.initBenoic();
+    });
+    
     this.initBenoic = function () {
         var promiseList = [
             benoicFactory.getDeviceTypes(),
@@ -112,13 +117,13 @@ angular.module('sagremorApp')
             _.forEach(deviceTypesResult, function (type) {
                 sharedData.add('benoicDeviceTypes', type.name, type);
             });
-            $scope.$broadcast('benoicDevicesTypesChanged');
+            $scope.$broadcast('benoicDeviceTypesChanged');
             
             // Handle devices
             var deviceList = [];
             var deviceListName = [];
             for (index in deviceResult) {
-                if (deviceResult[index].connected) {
+                if (deviceResult[index].connected && deviceResult[index].enabled) {
                     deviceList.push(benoicFactory.getDeviceOverview(deviceResult[index].name));
                     deviceListName.push(deviceResult[index].name);
                 }

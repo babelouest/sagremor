@@ -1,5 +1,8 @@
-<div class="col-md-1 element-container" data-ng-if="$ctrl.switcher.enabled || $ctrl.adminMode" data-context-menu="$ctrl.menu">
+<div class="col-sm-2 element-container" data-ng-if="$ctrl.switcher.enabled || $ctrl.adminMode" data-context-menu="$ctrl.menu">
     <div class="text-center" data-ng-class="{'text-italic': $ctrl.adminMode}">
+        <span class="text-left element-label" 
+              data-ng-class="{'element-disabled': $ctrl.adminMode && !$ctrl.switcher.enabled}">{{$ctrl.switcher.display}} : 
+        </span>
         <input type="checkbox" 
                 data-bs-switch 
                 data-toggle="toggle" 
@@ -7,12 +10,12 @@
                 data-ng-model="$ctrl.switcher.valueChecked" 
                 data-ng-change="$ctrl.toggleSwitcher()">
     </div>
-    <div class="text-center element-label" data-ng-class="{'element-disabled': $ctrl.adminMode && !$ctrl.switcher.enabled}">
-        <span>{{$ctrl.switcher.display}}</span>
-    </div>
-    <div data-ng-if="$ctrl.adminMode">
+    <div class="text-center" data-ng-if="$ctrl.adminMode">
         <button type="button" class="btn" data-ng-click="$ctrl.editSwitcher()">
             <i class="fa fa-pencil" aria-hidden="true"></i>
+        </button>
+        <button type="button" class="btn" data-ng-click="$ctrl.monitorSwitcher()">
+            <i class="fa fa-line-chart" aria-hidden="true"></i>
         </button>
     </div>
 </div>

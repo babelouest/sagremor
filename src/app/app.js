@@ -1,4 +1,12 @@
-angular.module('sagremorApp', ['ui.bootstrap', 'ui.router', 'ngCookies', 'frapontillo.bootstrap-switch', 'toaster', 'ui.bootstrap.contextMenu', 'pascalprecht.translate'])
+angular.module('sagremorApp', [
+    'ui.bootstrap', 
+    'ui.router', 
+    'ngCookies', 
+    'frapontillo.bootstrap-switch', 
+    'toaster', 
+    'ui.bootstrap.contextMenu', 
+    'pascalprecht.translate',
+    'chart.js'])
     .constant('_', window._)
     .constant('angharadConstant', {
         'baseUrl': 'https://hunbaut.babelouest.org/angharaddev/',
@@ -7,36 +15,34 @@ angular.module('sagremorApp', ['ui.bootstrap', 'ui.router', 'ngCookies', 'frapon
         'prefixBenoic': 'benoic/',
         'preficCarleon': 'carleon/',
         'monitoredEveryEnum': [
-            {value: 60, label: "1 minute"},
-            {value: 120, label: "2 minutes"},
-            {value: 300, label: "5 minutes"},
-            {value: 600, label: "10 minutes"},
-            {value: 900, label: "15 minutes"},
-            {value: 1200, label: "20 minutes"},
-            {value: 1800, label: "30 minutes"},
-            {value: 3600, label: "1 hour"},
-            {value: 7200, label: "2 hours"},
-            {value: 10800, label: "3 hours"},
-            {value: 14400, label: "4 hours"},
-            {value: 18000, label: "5 hours"},
-            {value: 21600, label: "6 hours"},
-            {value: 43200, label: "12 hours"},
-            {value: 86400, label: "1 day"}
+            {value: 60, label: "1_minute"},
+            {value: 120, label: "2_minutes"},
+            {value: 300, label: "5_minutes"},
+            {value: 600, label: "10_minutes"},
+            {value: 900, label: "15_minutes"},
+            {value: 1200, label: "20_minutes"},
+            {value: 1800, label: "30_minutes"},
+            {value: 3600, label: "1_hour"},
+            {value: 7200, label: "2_hours"},
+            {value: 10800, label: "3_hours"},
+            {value: 14400, label: "4_hours"},
+            {value: 18000, label: "5_hours"},
+            {value: 21600, label: "6_hours"},
+            {value: 43200, label: "12_hours"},
+            {value: 86400, label: "1_day"}
         ]
     })
-    .config(['$translateProvider', function ($translateProvider) {
-        var translations = {
-            HEADLINE: 'What an awesome module!',
-            PARAGRAPH: 'Srsly!',
-            NAMESPACE: {
-                PARAGRAPH: 'And it comes with awesome features!'
-            },
-            plop: "plop go"
-        };
-        // add translation table
-        $translateProvider
-        .translations('en', translations)
-        .preferredLanguage('en');
+    .config(['$translateProvider', '$translatePartialLoaderProvider', function ($translateProvider, $translatePartialLoaderProvider) {
+        $translatePartialLoaderProvider.addPart('home');
+        $translatePartialLoaderProvider.addPart('parameters');
+        $translatePartialLoaderProvider.addPart('switches');
+        $translatePartialLoaderProvider.addPart('components/monitor');
+        $translatePartialLoaderProvider.addPart('components/switches');
+        $translateProvider.useLoader('$translatePartialLoader', {
+            urlTemplate: '/i18n/{part}/{lang}.json'
+        });
+        $translateProvider.determinePreferredLanguage();
+        $translateProvider.useCookieStorage();
         $translateProvider.useSanitizeValueStrategy('escape');
     }])
     .factory('sharedData', function() {

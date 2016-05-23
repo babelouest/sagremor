@@ -1,0 +1,20 @@
+{
+  "menu_home": "Accueil",
+  "menu_lights": "Lumières",
+  "menu_heaters": "Chauffages",
+  "menu_sensors": "Capteurs",
+  "menu_camera": "Caméras",
+  "menu_music": "Musique",
+  "menu_maps": "Cartes",
+  "menu_weather": "Météo",
+  "menu_scripts": "Tâches",
+  "menu_events": "Événements",
+  "menu_monitor": "Graphiques",
+  "menu_logs": "Journaux",
+  "menu_parameters": "Paramètres",
+  "menu_logout": "Déconnexion",
+  "dashboard_title": "Client Web Angharad",
+  "init_message_loading": "Chargement",
+  "init_message_loading_complete": "Chargement terminé",
+  "init_message_loading_error": "Erreur lors du chargement"
+}

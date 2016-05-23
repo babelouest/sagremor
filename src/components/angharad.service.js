@@ -56,7 +56,7 @@ angular.module('sagremorApp')
         };
 
         dataFactory.enableSubmodule = function (name, enabled) {
-            return angharadBackendService.httpRequest("GET", urlBase + 'submodule/' + name + '/enable/' + enabled?'1':'0');
+            return angharadBackendService.httpRequest("GET", urlBase + 'submodule/' + name + '/enable/' + (enabled?'1':'0'));
         };
 
         return dataFactory;
