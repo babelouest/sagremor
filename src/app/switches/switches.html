@@ -1,9 +1,17 @@
 <div class="container">
     <h1 data-translate="switches_title"></h1>
     
+    <h2 data-translate="switch_title"></h2>
     <div class="row">
         <div data-ng-repeat="switcher in switchesCtrl.switchList">
             <data-sag-switch data-switcher="switcher"></data-sag-switch>
+        </div>
+    </div>
+    
+    <h2 data-translate="dimmer_title"></h2>
+    <div class="row">
+        <div data-ng-repeat="dimmer in switchesCtrl.dimmerList">
+            <data-sag-dimmer data-dimmer="dimmer"></data-sag-dimmer>
         </div>
     </div>
 </div>

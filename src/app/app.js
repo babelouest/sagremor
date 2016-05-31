@@ -37,7 +37,8 @@ angular.module('sagremorApp', [
         $translatePartialLoaderProvider.addPart('parameters');
         $translatePartialLoaderProvider.addPart('switches');
         $translatePartialLoaderProvider.addPart('components/monitor');
-        $translatePartialLoaderProvider.addPart('components/switches');
+        $translatePartialLoaderProvider.addPart('components/switch');
+        $translatePartialLoaderProvider.addPart('components/dimmer');
         $translateProvider.useLoader('$translatePartialLoader', {
             urlTemplate: '/i18n/{part}/{lang}.json'
         });

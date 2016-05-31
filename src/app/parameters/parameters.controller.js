@@ -115,10 +115,14 @@ angular.module('sagremorApp')
           var deviceName = self.newDeviceName;
           benoicFactory.addDevice({name: deviceName, display: self.newDeviceName, description: self.newDeviceDescription, enabled: true, type_uid: self.newDeviceType, options: curOptions}).then(function (response) {
               if (self.newDeviceConnect) {
-                self.connectDevice({name: deviceName, connect: true});
+                  self.connectDevice({name: deviceName, connected: true}).then(function(result) {
+                      toaster.pop("success", self.messages.device_add, self.messages.device_add_success);
+                      $rootScope.$broadcast("reinitBenoic");
+                  });
+              } else {
+                  toaster.pop("success", self.messages.device_add, self.messages.device_add_success);
+                  $rootScope.$broadcast("reinitBenoic");
               }
-              toaster.pop("success", self.messages.device_add, self.messages.device_add_success);
-              $rootScope.$broadcast("reinitBenoic");
           }, function (error) {
               toaster.pop("error", self.messages.device_add, self.messages.device_add_error);
           })['finally'](function () {
@@ -151,14 +155,14 @@ angular.module('sagremorApp')
       
       this.connectDevice = function (device) {
           if (device.connected) {
-              benoicFactory.connectDevice(device.name).then(function (response) {
+              return benoicFactory.connectDevice(device.name).then(function (response) {
                   toaster.pop("success", self.messages.device_connect, self.messages.device_connect_success);
               }, function (error) {
                   toaster.pop("error", self.messages.device_connect, self.messages.device_connect_error);
                   device.connected = false;
               });
           } else {
-              benoicFactory.disconnectDevice(device.name).then(function (response) {
+              return benoicFactory.disconnectDevice(device.name).then(function (response) {
                   toaster.pop("success", self.messages.device_disconnect, self.messages.device_disconnect_success);
               }, function (error) {
                   toaster.pop("error", self.messages.device_disconnect, self.messages.device_disconnect_error);
