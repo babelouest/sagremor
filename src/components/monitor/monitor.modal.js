@@ -17,7 +17,7 @@ angular.module('sagremorApp')
         function init() {
             benoicFactory.getMonitor(element.device, element.type, element.name).then(function (result) {
                 var myData = [];
-                _.forEach(result, function (monitor) {
+                _.forEach(mediumValues(result, 12), function (monitor) {
                     var d = new Date();
                     d.setUTCSeconds(monitor.timestamp);
                     self.labels.push(d);
@@ -26,6 +26,26 @@ angular.module('sagremorApp')
                 self.data.push(myData);
             });
         }
+        
+        function mediumValues(monitorData, nbValues) {
+			var subTabLength = Math.round(monitorData.length / nbValues);
+			var counter = 0;
+			var tmpArray = [];
+			var result = [];
+			_.forEach(monitorData, function(data) {
+				tmpArray.push(data);
+				counter++;
+				if (counter >= subTabLength) {
+					tmpArray.sort(function (x, y) {
+						return (x.value - y.value);
+					});
+					result.push(tmpArray[Math.round(tmpArray.length/2)]);
+					counter = 0;
+					tmpArray = [];
+				}
+			});
+			return result;
+		}
         
         this.onClick = function (points, evt) {
           console.log(points, evt);

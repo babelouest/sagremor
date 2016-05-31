@@ -35,7 +35,7 @@
             <div class="col-md-6">
                 <select id="bddAddUserGrant"
                     data-ng-model="SwitchesModalCtrl.switcher.monitored_every"
-                    data-ng-options="monitorEvery.trLabel for monitorEvery in SwitchesModalCtrl.monitorEveryEnum track by monitorEvery.value">
+                    data-ng-options="monitorEvery.value as monitorEvery.trLabel for monitorEvery in SwitchesModalCtrl.monitorEveryEnum">
                 </select>
             </div>
         </div>
