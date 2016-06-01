@@ -1,5 +1,5 @@
 {
-  "name": "gulp-app-build-tasks-examples-angular",
+  "name": "sagremor",
   "version": "0.0.1",
   "description": "Angular example about the awesome project gulp-app-build-tasks.",
   "scripts": {
@@ -7,7 +7,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jimmyfortinx/gulp-app-build-tasks-examples.git"
+    "url": "https://github.com/babelouest/sagremor.git"
   },
   "keywords": [
     "gulp",
@@ -19,10 +19,16 @@
   "author": "Jimmy Fortin",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jimmyfortinx/gulp-app-build-tasks-examples/issues"
+    "url": "https://github.com/babelouest/sagremor/issues"
   },
-  "homepage": "https://github.com/jimmyfortinx/gulp-app-build-tasks-examples",
+  "homepage": "https://github.com/babelouest/sagremor",
   "devDependencies": {
-    "gulp-app-build-tasks": "https://github.com/jimmyfortinx/gulp-app-build-tasks.git"
+	"gulp-app-build-tasks": "https://github.com/jimmyfortinx/gulp-app-build-tasks.git",
+    "jasmine-core": "*",
+    "jasmine-terminal-reporter": "*",
+    "jshint": "^2.9.2",
+    "karma-jasmine": "*",
+    "karma": "*",
+    "gulp": "*"
   }
 }
