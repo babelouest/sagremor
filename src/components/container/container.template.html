@@ -1,0 +1,11 @@
+<div class="element-container container" data-ng-class="{'col-sm-2': $ctrl.size === 1, 'col-sm-3': $ctrl.size === 2, 'col-sm-4': $ctrl.size === 3}">
+    <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">#</button>
+        <ul class="dropdown-menu">
+            <li data-ng-repeat="menuItem in $ctrl.menu"><a href="" data-ng-click="$ctrl.menuSelect(menuItem, menuItem.name)">menuItem.display</a></li>
+        </ul>
+    </div>
+    <div class="container" data-ng-transclude>
+        Container size: {{$ctrl.size}}
+    </div>
+</div>

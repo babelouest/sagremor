@@ -12,6 +12,57 @@ angular.module('sagremorApp')
         
         this.init = function () {
             self.updateSwitchers();
+            self.updateDimmers();
+            
+            /* Menu items sample */
+            self.menu1 = [
+                {
+                    name: "menu1", 
+                    display: "Menu 1", 
+                    action: function (param) {
+                        console.log("param 1 is", param);
+                    }
+                },
+                {
+                    name: "menu2", 
+                    display: "Menu 2", 
+                    action: function (param) {
+                        console.log("param 2 is", param);
+                    }
+                }
+            ];
+            self.menu2 = [
+                {
+                    name: "menu2", 
+                    display: "Menu 2", 
+                    action: function (param) {
+                        console.log("param 2 is", param);
+                    }
+                },
+                {
+                    name: "menu3", 
+                    display: "Menu 3", 
+                    action: function (param) {
+                        console.log("param 3 is", param);
+                    }
+                }
+            ];
+            self.menu3 = [
+                {
+                    name: "menu3", 
+                    display: "Menu 3", 
+                    action: function (param) {
+                        console.log("param 3 is", param);
+                    }
+                },
+                {
+                    name: "menu1", 
+                    display: "Menu 1", 
+                    action: function (param) {
+                        console.log("param 1 is", param);
+                    }
+                }
+            ];
         };
         
         $scope.$on('benoicDevicesChanged', function () {

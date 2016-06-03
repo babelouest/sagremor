@@ -19,10 +19,7 @@ angular.module('sagremorApp')
         
         return angharadBackendFactory;
     }])
-    .factory('angharadFactory', [
-    '$http',
-    'angharadConstant',
-    'angharadBackendService',
+    .factory('angharadFactory', 
     function($http, angharadConstant, angharadBackendService) {
 
         var urlBase = angharadConstant.baseUrl + angharadConstant.prefixAngharad;
@@ -61,4 +58,4 @@ angular.module('sagremorApp')
 
         return dataFactory;
     }
-]);
+);

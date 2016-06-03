@@ -17,13 +17,15 @@ angular.module('sagremorApp')
         function init() {
             benoicFactory.getMonitor(element.device, element.type, element.name).then(function (result) {
                 var myData = [];
-                _.forEach(mediumValues(result, 12), function (monitor) {
-                    var d = new Date();
-                    d.setUTCSeconds(monitor.timestamp);
-                    self.labels.push(d);
-                    myData.push(monitor.value);
-                });
-                self.data.push(myData);
+                if (!!result && result.length > 0) {
+					_.forEach(mediumValues(result, 12), function (monitor) {
+						var d = new Date();
+						d.setUTCSeconds(monitor.timestamp);
+						self.labels.push(d);
+						myData.push(monitor.value);
+					});
+					self.data.push(myData);
+				}
             });
         }
         
@@ -32,6 +34,9 @@ angular.module('sagremorApp')
 			var counter = 0;
 			var tmpArray = [];
 			var result = [];
+			if (monitorData.length <= nbValues) {
+				return monitorData;
+			}
 			_.forEach(monitorData, function(data) {
 				tmpArray.push(data);
 				counter++;

@@ -32,8 +32,8 @@ function sagDimmerController (benoicFactory, sagremorParams, $translate, $uibMod
         var modalInstance = $uibModal.open({
             animation: true,
             templateUrl: 'components/dimmer/dimmer.modal.html',
-            controller: 'SwitchesModalCtrl',
-            controllerAs: 'SwitchesModalCtrl',
+            controller: 'DimmersModalCtrl',
+            controllerAs: 'DimmersModalCtrl',
             size: 'sm',
             resolve: {
                 dimmer: function () {

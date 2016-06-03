@@ -1,4 +1,14 @@
 {
     "dimmer_edit": "Modifier",
-    "dimmer_monitor": "Moniteur"
+	"dimmer_update_name": "Nom: ",
+	"dimmer_update_enabled": "Actif: ",
+	"dimmer_update_monitor": "monitoré: ",
+	"dimmer_update_monitor_every": "Fréquence: ",
+	"dimmer_btn_ok": "OK",
+	"dimmer_btn_cancel": "Annuler",
+	"dimmer_save": "Sauvegarde du gradateur",
+	"dimmer_save_success": "Succès",
+	"dimmer_save_error": "Erreur",
+	"dimmer_edit": "Modifier",
+	"dimmer_monitor": "Moniteur"
 }

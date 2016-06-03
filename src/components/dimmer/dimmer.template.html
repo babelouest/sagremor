@@ -4,16 +4,21 @@
               data-ng-class="{'element-disabled': $ctrl.adminMode && !$ctrl.dimmer.enabled}">{{$ctrl.dimmer.display}} : 
         </span>
         <div class="ring">
-            <div class="quarter quarter1" data-ng-click="$ctrl.setDimmer(100)">
+            <div class="quarter quarter1" 
+				 data-ng-click="$ctrl.setDimmer(100)"
+				 data-ng-class="{'quarter-off': $ctrl.dimmer.value < 75, 'quarter-on': $ctrl.dimmer.value >= 75}">
                 <span class="quarter-value">100%</span>
             </div>
-            <div class="quarter quarter2" data-ng-click="$ctrl.setDimmer(0)">
+            <div class="quarter quarter2" data-ng-click="$ctrl.setDimmer(0)"
+				 data-ng-class="{'quarter-off': $ctrl.dimmer.value === 0, 'quarter-on': $ctrl.dimmer.value > 0}">
                 <span class="quarter-value">0%</span>
             </div>
-            <div class="quarter quarter3" data-ng-click="$ctrl.setDimmer(50)">
+            <div class="quarter quarter3" data-ng-click="$ctrl.setDimmer(50)"
+				 data-ng-class="{'quarter-off': $ctrl.dimmer.value < 50, 'quarter-on': $ctrl.dimmer.value >= 50}">
                 <span class="quarter-value"><br/>50%</span>
             </div>
-            <div class="quarter quarter4" data-ng-click="$ctrl.setDimmer(25)">
+            <div class="quarter quarter4" data-ng-click="$ctrl.setDimmer(25)"
+				 data-ng-class="{'quarter-off': $ctrl.dimmer.value < 25, 'quarter-on': $ctrl.dimmer.value >= 25}">
                 <span class="quarter-value"><br/>25%</span>
             </div>
             <div class="cutout">
