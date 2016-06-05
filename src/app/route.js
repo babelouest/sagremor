@@ -20,11 +20,15 @@ angular.module('sagremorApp')
             })
             .state('heaters', {
                 url: '/heaters',
-                templateUrl: 'app/heaters/heaters.html'
+                templateUrl: 'app/heaters/heaters.html',
+                controller: 'heatersCtrl',
+                controllerAs: 'heatersCtrl'
             })
             .state('sensors', {
                 url: '/sensors',
-                templateUrl: 'app/sensors/sensors.html'
+                templateUrl: 'app/sensors/sensors.html',
+                controller: 'sensorsCtrl',
+                controllerAs: 'sensorsCtrl'
             })
             .state('cameras', {
                 url: '/cameras',

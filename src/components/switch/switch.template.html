@@ -1,10 +1,5 @@
-<div class="col-sm-2 element-container" data-ng-if="$ctrl.switcher.enabled || $ctrl.adminMode" data-context-menu="$ctrl.menu">
+<div data-ng-if="$ctrl.switcher.enabled || $ctrl.adminMode">
     <div class="text-center" data-ng-class="{'text-italic': $ctrl.adminMode}">
-        <div>
-            <span class="text-left element-label" 
-                  data-ng-class="{'element-disabled': $ctrl.adminMode && !$ctrl.switcher.enabled}">{{$ctrl.switcher.display}} : 
-            </span>
-        </div>
         <div>
             <input type="checkbox" 
                     data-bs-switch 

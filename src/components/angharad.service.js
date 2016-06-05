@@ -5,10 +5,10 @@ angular.module('sagremorApp')
     function($http, $q) {
         var angharadBackendFactory = {};
         
-        angharadBackendFactory.httpRequest = function (method, url, data) {
+        angharadBackendFactory.httpRequest = function (method, url, data, params) {
           var deferred = $q.defer();
           
-          $http({method: method, url: url, data: data}).then(function (response) {
+          $http({method: method, url: url, data: data, params: params}).then(function (response) {
             deferred.resolve(response.data);
           }, function (error) {
             deferred.reject(error);

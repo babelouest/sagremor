@@ -6,15 +6,20 @@ angular.module('sagremorApp', [
     'toaster', 
     'ui.bootstrap.contextMenu', 
     'pascalprecht.translate',
-    'chart.js'])
+    'chart.js'
+    ])
     .constant('_', window._)
     .config(['$translateProvider', '$translatePartialLoaderProvider', function ($translateProvider, $translatePartialLoaderProvider) {
         $translatePartialLoaderProvider.addPart('home');
         $translatePartialLoaderProvider.addPart('parameters');
         $translatePartialLoaderProvider.addPart('switches');
+        $translatePartialLoaderProvider.addPart('sensors');
+        $translatePartialLoaderProvider.addPart('heaters');
         $translatePartialLoaderProvider.addPart('components/monitor');
         $translatePartialLoaderProvider.addPart('components/switch');
         $translatePartialLoaderProvider.addPart('components/dimmer');
+        $translatePartialLoaderProvider.addPart('components/sensor');
+        $translatePartialLoaderProvider.addPart('components/heater');
         $translateProvider.useLoader('$translatePartialLoader', {
             urlTemplate: '/i18n/{part}/{lang}.json'
         });

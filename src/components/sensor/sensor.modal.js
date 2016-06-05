@@ -1,24 +1,24 @@
 angular.module('sagremorApp')
-    .controller('DimmersModalCtrl', [
+    .controller('SensorsModalCtrl', [
     '$scope',
     '$uibModalInstance',
     '$translate',
     'toaster',
     'angharadConstant',
     'benoicFactory',
-    'dimmer',
-    function($scope, $uibModalInstance, $translate, toaster, angharadConstant, benoicFactory, dimmer) {
+    'sensor',
+    function($scope, $uibModalInstance, $translate, toaster, angharadConstant, benoicFactory, sensor) {
         var self = this;
         
-        this.dimmer = dimmer;
-        this.dimmer.newDisplay = this.dimmer.display;
+        this.sensor = sensor;
+        this.sensor.newDisplay = this.sensor.display;
         
         this.monitorEveryEnum = angharadConstant.monitoredEveryEnum;
         this.messages = {};
         
         function init() {
-			self.dimmer.menu = false;
-            $translate(["dimmer_save", "dimmer_save_success", "dimmer_save_error"]).then(function (results) {
+			self.sensor.menu = false;
+            $translate(["sensor_save", "sensor_save_success", "sensor_save_error"]).then(function (results) {
                 self.messages = results;
             });
             
@@ -33,14 +33,14 @@ angular.module('sagremorApp')
             $uibModalInstance.dismiss('cancel');
         };
         
-        this.saveDimmer = function () {
-            self.dimmer.display = self.dimmer.newDisplay;
-            self.dimmer.monitor = self.dimmer.monitorChecked?1:0;
-            benoicFactory.updateElement(self.dimmer.device, "dimmer", self.dimmer.name, self.dimmer).then(function (response) {
-                $scope.$broadcast('benoicDimmersChanged');
-                toaster.pop("success", self.messages.dimmer_save, self.messages.dimmer_save_success);
+        this.saveSensor = function () {
+            self.sensor.display = self.sensor.newDisplay;
+            self.sensor.monitor = self.sensor.monitorChecked?1:0;
+            benoicFactory.updateElement(self.sensor.device, "sensor", self.sensor.name, self.sensor).then(function (response) {
+                $scope.$broadcast('benoicSensoresChanged');
+                toaster.pop("success", self.messages.sensor_save, self.messages.sensor_save_success);
             }, function (error) {
-                toaster.pop("error", self.messages.dimmer_save, self.messages.dimmer_save_error);
+                toaster.pop("error", self.messages.sensor_save, self.messages.sensor_save_error);
             })['finally'](function () {
                 $uibModalInstance.dismiss('close');
             });

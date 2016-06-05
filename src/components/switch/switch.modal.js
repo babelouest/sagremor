@@ -17,6 +17,7 @@ angular.module('sagremorApp')
         this.messages = {};
         
         function init() {
+			self.switcher.menu = false;
             $translate(["switch_save", "switch_save_success", "switch_save_error"]).then(function (results) {
                 self.messages = results;
             });

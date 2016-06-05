@@ -1,0 +1,19 @@
+{
+  "heater_update_title": "Heater",
+  "heater_update_name": "Name: ",
+  "heater_update_unit": "Unit: ",
+  "heater_update_enabled": "Enabled: ",
+  "heater_update_monitor": "Monitored: ",
+  "heater_update_monitor_every": "Frequency: ",
+  "heater_btn_ok": "OK",
+  "heater_btn_cancel": "Cancel",
+  "heater_save": "Heater save",
+  "heater_save_success": "Success",
+  "heater_save_error": "Error",
+  "heater_edit": "Edit",
+  "heater_monitor": "Monitor",
+  "heater_mode_title": "Mode",
+  "heater_mode_off": "Off",
+  "heater_mode_auto": "Auto",
+  "heater_mode_manual": "Manual"
+}

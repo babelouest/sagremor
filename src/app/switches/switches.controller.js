@@ -1,9 +1,11 @@
 angular.module('sagremorApp')
     .controller('switchesCtrl', [
     '$scope',
+    '$translate',
+    'sagremorService',
     'benoicFactory',
     'sharedData',
-    function($scope, benoicFactory, sharedData) {
+    function($scope, $translate, sagremorService, benoicFactory, sharedData) {
       
         var self = this;
         
@@ -11,59 +13,44 @@ angular.module('sagremorApp')
         this.dimmerList = [];
         
         this.init = function () {
-            self.updateSwitchers();
-            self.updateDimmers();
-            
-            /* Menu items sample */
-            self.menu1 = [
-                {
-                    name: "menu1", 
-                    display: "Menu 1", 
-                    action: function (param) {
-                        console.log("param 1 is", param);
-                    }
-                },
-                {
-                    name: "menu2", 
-                    display: "Menu 2", 
-                    action: function (param) {
-                        console.log("param 2 is", param);
-                    }
-                }
-            ];
-            self.menu2 = [
-                {
-                    name: "menu2", 
-                    display: "Menu 2", 
-                    action: function (param) {
-                        console.log("param 2 is", param);
-                    }
-                },
-                {
-                    name: "menu3", 
-                    display: "Menu 3", 
-                    action: function (param) {
-                        console.log("param 3 is", param);
-                    }
-                }
-            ];
-            self.menu3 = [
-                {
-                    name: "menu3", 
-                    display: "Menu 3", 
-                    action: function (param) {
-                        console.log("param 3 is", param);
-                    }
-                },
-                {
-                    name: "menu1", 
-                    display: "Menu 1", 
-                    action: function (param) {
-                        console.log("param 1 is", param);
-                    }
-                }
-            ];
-        };
+			$translate(["edit", "monitor"]).then(function (results) {
+				self.menuSwitcher = [
+					{
+						name: "edit", 
+						display: results.edit, 
+						action: function (param) {
+							sagremorService.editSwitcher(param);
+						}
+					},
+					{
+						name: "monitor", 
+						display: results.monitor, 
+						action: function (param) {
+							sagremorService.monitor(param);
+						}
+					}
+				];
+				self.menuDimmer = [
+					{
+						name: "edit", 
+						display: results.edit, 
+						action: function (param) {
+							sagremorService.editDimmer(param);
+						}
+					},
+					{
+						name: "monitor", 
+						display: results.monitor, 
+						action: function (param) {
+							sagremorService.monitor(param);
+						}
+					}
+				];
+				
+				self.updateSwitchers();
+				self.updateDimmers();
+			});
+		};
         
         $scope.$on('benoicDevicesChanged', function () {
             self.updateSwitchers();
@@ -104,7 +91,8 @@ angular.module('sagremorApp')
                 }
             }
         };
-          
+        
         this.init();
+        
     }
 ]);

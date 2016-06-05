@@ -1,2 +1,19 @@
 {
+  "monitor-title": "Monitor",
+  "monitor-close": "Close",
+  "1_minute": "1 minute",
+  "2_minutes": "2 minutes",
+  "5_minutes": "5 minutes",
+  "10_minutes": "10 minutes",
+  "15_minutes": "15 minutes",
+  "20_minutes": "20 minutes",
+  "30_minutes": "30 minutes",
+  "1_hour": "1 hour",
+  "2_hours": "2 hours",
+  "3_hours": "3 hours",
+  "4_hours": "4 hours",
+  "5_hours": "5 hours",
+  "6_hours": "6 hours",
+  "12_hours": "12 hours",
+  "1_day": "1 day"
 }

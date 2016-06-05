@@ -1,3 +1,14 @@
 <div class="container">
-    <h1>Sensors</h1>
+    <h1 data-translate="sensors_title"></h1>
+
+    <div class="row">
+        <div data-ng-repeat="sensor in sensorsCtrl.sensorList">
+            <data-sag-container data-menu="sensorsCtrl.menuSensor"
+                                data-size="1"
+                                data-title="sensor.display"
+                                data-element="sensor">
+				<data-sag-sensor data-sensor="sensor"></data-sag-sensor>
+			</data-sag-container>
+        </div>
+    </div>
 </div>
