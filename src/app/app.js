@@ -15,6 +15,7 @@ angular.module('sagremorApp', [
         $translatePartialLoaderProvider.addPart('switches');
         $translatePartialLoaderProvider.addPart('sensors');
         $translatePartialLoaderProvider.addPart('heaters');
+        $translatePartialLoaderProvider.addPart('components/topRightMenu');
         $translatePartialLoaderProvider.addPart('components/monitor');
         $translatePartialLoaderProvider.addPart('components/switch');
         $translatePartialLoaderProvider.addPart('components/dimmer');

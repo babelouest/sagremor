@@ -1,25 +1,6 @@
 <div class="container">
     <h1 data-translate="parameters_title"></h1>
     
-    <h3 data-translate="param_admin_global"></h3>
-    <div class="container">
-      <div class="row">
-          <div class="col-md-2">
-              <label for="admin-mode" data-translate="param_admin_mode"></label>
-          </div>
-          <div class="col-md-2">
-              <input id="admin-mode" name="admin-mode" data-toggle="toggle" data-bs-switch data-switch-size="mini" type="checkbox" data-ng-model="ParametersCtrl.sagremorParams.adminMode">
-          </div>
-      </div>
-      <div class="row">
-          <div class="col-md-2">
-              <label for="app-lang" data-translate="param_app_lang"></label>
-          </div>
-          <div class="col-md-2">
-              <select data-ng-model="ParametersCtrl.selectedLang" data-ng-options="lang.name as lang.display for lang in ParametersCtrl.langList" data-ng-change="ParametersCtrl.changeLang()"></select>
-          </div>
-      </div>
-    </div>
     <h3 data-translate="param_submodule_title"></h3>
     <div class="container">
       <div class="row">

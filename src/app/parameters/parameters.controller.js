@@ -14,8 +14,6 @@ angular.module('sagremorApp')
       
       var self = this;
       
-      this.sagremorParams = sagremorParams;
-      
       this.submodules;
       
       this.deviceList = {};
@@ -31,10 +29,6 @@ angular.module('sagremorApp')
       this.deviceOptionListDisplay = false;
       
       this.messages = {};
-      this.langList = [
-        {name: "fr", display: "Français"},
-        {name: "en", display: "English"}
-      ];
       
       this.init = function() {
           $translate(["device_add", "device_add_success", "device_add_error",
@@ -253,10 +247,6 @@ angular.module('sagremorApp')
                 toaster.pop("error", self.messages.submodules, self.messages.submodules_enable_error);
             });
           }
-      };
-      
-      this.changeLang = function () {
-          $translate.use(self.selectedLang);
       };
       
       self.init();

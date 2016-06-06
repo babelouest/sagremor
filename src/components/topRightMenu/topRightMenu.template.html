@@ -1,0 +1,33 @@
+<div class="top-right-menu" data-uib-dropdown>
+    <button class="btn btn-primary text-left" type="button" data-uib-dropdown-toggle>
+        <i class="fa fa-user" aria-hidden="true"></i>
+    </button>
+    <ul class="dropdown-menu-right container-fluid" data-uib-dropdown-menu data-uib-dropdown-menu-auto-close="outsideClick" data-ng-click="$event.stopPropagation()">
+        <li class="row">
+            <div class="col-md-6">
+                <label for="admin-mode" data-translate="top_right_menu_admin_mode"></label>
+            </div>
+            <div class="col-md-6">
+                <input id="admin-mode" name="admin-mode" data-toggle="toggle" data-bs-switch data-switch-size="mini" type="checkbox" data-ng-model="topRightMenuCtrl.sagremorParams.adminMode">
+            </div>
+        </li>
+        <li class="row">
+            <div class="col-md-6">
+                <label for="sag-lang" data-translate="top_right_menu_lang"></label>
+            </div>
+            <div class="col-md-6">
+                <select id="sag-lang" name="sag-lang" data-ng-model="topRightMenuCtrl.selectedLang" data-ng-options="lang.name as lang.display for lang in topRightMenuCtrl.langList" data-ng-change="topRightMenuCtrl.changeLang()"></select>
+            </div>
+        </li>
+        <li class="row">
+            <div class="col-md-6">
+                <label for="sag-refresh" data-translate="top_right_menu_refresh"></label>
+            </div>
+            <div class="col-md-6">
+                <button id="sag-refresh" name="sag-refresh" type="button" class="btn btn-primary" data-ng-click="topRightMenuCtrl.refresh()">
+                    <i class="fa fa-refresh" aria-hidden="true"></i>
+                </button>
+            </div>
+        </li>
+    </ul>
+</div>

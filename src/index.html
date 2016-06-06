@@ -21,12 +21,12 @@
     <!-- endinject -->
     <!-- endbuild -->
 </head>
-<body data-ng-controller="angharadCtrl as angharadCtrl">
+<body data-ng-controller="angharadCtrl" data-ng-controller-as="angharadCtrl">
     <!--[if lt IE 10]>
     <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
         your browser</a> to improve your experience.</p>
     <![endif]-->
-    <toaster-container></toaster-container>
+    <data-toaster-container></data-toaster-container>
     
     <nav class="nav-collapse">
       <ul>
@@ -47,7 +47,11 @@
       </ul>
     </nav>
     
-    <div role="main" class="main" data-ui-view></div>
+    <div role="main" class="main">
+        <data-top-right-menu></data-top-right-menu>
+        <div data-ui-view>
+        </div>
+    </div>
     
     <!-- build:js(src) scripts/vendor.js -->
     <!-- bower:js -->
