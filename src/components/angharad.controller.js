@@ -27,6 +27,7 @@ angular.module('sagremorApp')
         self.getAuth().then(function() {
             popLoader();
             self.initAngharadSubmodules().then(function (result) {
+				self.initAngharad();
                 for (key in result) {
                     sharedData.add("submodules", result[key].name, result[key]);
                     if (result[key].name === "benoic" && result[key].enabled) {
@@ -104,14 +105,14 @@ angular.module('sagremorApp')
     });
     
     this.initBenoic = function () {
-        var promiseList = [
-            benoicFactory.getDeviceTypes(),
-            benoicFactory.getDeviceList()
-        ];
+        var promiseList = {
+            deviceTypesResult: benoicFactory.getDeviceTypes(),
+            deviceResult: benoicFactory.getDeviceList()
+        };
         
         $q.all(promiseList).then(function (result) {
-            var deviceTypesResult = result[0];
-            var deviceResult = result[1];
+            var deviceTypesResult = result.deviceTypesResult;
+            var deviceResult = result.deviceResult;
             
             // Handle device types
             _.forEach(deviceTypesResult, function (type) {
@@ -145,6 +146,31 @@ angular.module('sagremorApp')
             toaster.pop("error", "Benoic", "Error loading benoic");
         });
     }
+    
+    this.initAngharad = function () {
+		var promiseList = {
+			scripts: angharadFactory.getScriptList(),
+			schedulers: angharadFactory.getSchedulerList(),
+			triggers: angharadFactory.getTriggerList()
+		};
+		
+		$q.all(promiseList).then(function (result) {
+			for (sc in result.scripts) {
+				sharedData.add("angharadScripts", sc, result.script[sc]);
+			}
+			$scope.$broadcast('angharadScriptsChanged');
+			for (sh in result.schedulers) {
+				sharedData.add("angharadSchedulers", sh, result.schedulers[sh]);
+			}
+			$scope.$broadcast('angharadSchedulersChanged');
+			for (tr in result.triggers) {
+				sharedData.add("angharadTriggers", tr, result.triggers[tr]);
+			}
+			$scope.$broadcast('angharadTriggersChanged');
+        }, function (error) {
+            toaster.pop("error", "Benoic", "Error loading angharad");
+        });
+	};
     
     init();
   }

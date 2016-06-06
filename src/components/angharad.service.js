@@ -56,6 +56,70 @@ angular.module('sagremorApp')
             return angharadBackendService.httpRequest("GET", urlBase + 'submodule/' + name + '/enable/' + (enabled?'1':'0'));
         };
 
+        dataFactory.getScriptList = function () {
+            return angharadBackendService.httpRequest("GET", urlBase + 'script/');
+        };
+
+        dataFactory.getScript = function (name) {
+            return angharadBackendService.httpRequest("GET", urlBase + 'script/' + name);
+        };
+
+        dataFactory.addScript = function (script) {
+            return angharadBackendService.httpRequest("POST", urlBase + 'script/', script);
+        };
+
+        dataFactory.setScript = function (name, script) {
+            return angharadBackendService.httpRequest("GET", urlBase + 'script/' + name, script);
+        };
+
+        dataFactory.removeScript = function () {
+            return angharadBackendService.httpRequest("GET", urlBase + 'script/');
+        };
+
+        dataFactory.runScript = function (name) {
+            return angharadBackendService.httpRequest("GET", urlBase + 'script/' + name + '/run');
+        };
+
+        dataFactory.getSchedulerList = function () {
+            return angharadBackendService.httpRequest("GET", urlBase + 'scheduler/');
+        };
+
+        dataFactory.getScheduler = function (name) {
+            return angharadBackendService.httpRequest("GET", urlBase + 'scheduler/' + name);
+        };
+
+        dataFactory.addScheduler = function (scheduler) {
+            return angharadBackendService.httpRequest("POST", urlBase + 'scheduler/', scheduler);
+        };
+
+        dataFactory.setScheduler = function (name, scheduler) {
+            return angharadBackendService.httpRequest("GET", urlBase + 'scheduler/' + name, scheduler);
+        };
+
+        dataFactory.removeScheduler = function () {
+            return angharadBackendService.httpRequest("GET", urlBase + 'scheduler/');
+        };
+
+        dataFactory.getTriggerList = function () {
+            return angharadBackendService.httpRequest("GET", urlBase + 'trigger/');
+        };
+
+        dataFactory.getTrigger = function (name) {
+            return angharadBackendService.httpRequest("GET", urlBase + 'trigger/' + name);
+        };
+
+        dataFactory.addTrigger = function (trigger) {
+            return angharadBackendService.httpRequest("POST", urlBase + 'trigger/', trigger);
+        };
+
+        dataFactory.setTrigger = function (name, trigger) {
+            return angharadBackendService.httpRequest("GET", urlBase + 'trigger/' + name, trigger);
+        };
+
+        dataFactory.removeTrigger = function () {
+            return angharadBackendService.httpRequest("GET", urlBase + 'trigger/');
+        };
+
         return dataFactory;
     }
 );

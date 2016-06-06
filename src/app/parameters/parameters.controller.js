@@ -8,9 +8,8 @@ angular.module('sagremorApp')
     'angharadFactory',
     'benoicFactory',
     'sharedData',
-    'sagremorParams',
     'sagremorConfirm',
-    function($scope, $rootScope, $q, $translate, toaster, angharadFactory, benoicFactory, sharedData, sagremorParams, sagremorConfirm) {
+    function($scope, $rootScope, $q, $translate, toaster, angharadFactory, benoicFactory, sharedData, sagremorConfirm) {
       
       var self = this;
       

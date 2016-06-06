@@ -5,8 +5,6 @@ function topRightMenuCtrl ($translate, sagremorParams) {
 
     self.selectedLang = $translate.use();
 
-    console.log(self.sagremorParams);
-    
     self.langList = [
         {name: "fr", display: "Fr"},
         {name: "en", display: "En"}
