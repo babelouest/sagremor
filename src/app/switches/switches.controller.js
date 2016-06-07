@@ -5,12 +5,14 @@ angular.module('sagremorApp')
     'sagremorService',
     'benoicFactory',
     'sharedData',
-    function($scope, $translate, sagremorService, benoicFactory, sharedData) {
+    'sagremorParams',
+    function($scope, $translate, sagremorService, benoicFactory, sharedData, sagremorParams) {
       
         var self = this;
         
         this.switchList = [];
         this.dimmerList = [];
+        this.sagremorParams = sagremorParams;
         
         this.init = function () {
 			$translate(["edit", "monitor"]).then(function (results) {

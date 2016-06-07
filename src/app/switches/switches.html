@@ -7,7 +7,8 @@
             <data-sag-container data-menu="switchesCtrl.menuSwitcher"
                                 data-size="1"
                                 data-title="switcher.display"
-                                data-element="switcher">
+                                data-element="switcher"
+                                data-ng-if="switcher.enabled || switchesCtrl.sagremorParams.adminMode">
 				<data-sag-switch data-switcher="switcher"></data-sag-switch>
 			</data-sag-container>
         </div>
@@ -19,7 +20,8 @@
             <data-sag-container data-menu="switchesCtrl.menuDimmer"
                                 data-size="1"
                                 data-title="dimmer.display"
-                                data-element="dimmer">
+                                data-element="dimmer"
+                                data-ng-if="dimmer.enabled || switchesCtrl.sagremorParams.adminMode">
                 <data-sag-dimmer data-dimmer="dimmer"></data-sag-dimmer>
             </data-sag-container>
         </div>

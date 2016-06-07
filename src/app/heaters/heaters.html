@@ -6,7 +6,8 @@
             <data-sag-container data-menu="heatersCtrl.menuSensor"
                                 data-size="1"
                                 data-title="heater.display"
-                                data-element="heater">
+                                data-element="heater"
+                                data-ng-if="heater.enabled || heatersCtrl.sagremorParams.adminMode">
 				<data-sag-heater data-heater="heater"></data-sag-heater>
 			</data-sag-container>
         </div>
