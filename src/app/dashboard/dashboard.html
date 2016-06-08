@@ -1,3 +1,21 @@
 <div class="container">
     <h1 data-translate="dashboard_title"></h1>
+
+    <div>
+        <a class="btn btn-primary" data-ng-click="addWidget()" href="#">Add Widget</a>
+    </div>
+    <br>
+    <div class="row" style="height: 100px;">
+        <div class="col-md-12" style="height: 100px;">
+            <div style="height: 100px;" data-gridstack class="grid-stack grid1" data-options="options" data-on-change="onChange(event,items)" data-on-drag-start="onDragStart(event,ui)" data-on-drag-stop="onDragStop(event,ui)" data-on-resize-start="onResizeStart(event,ui)" data-on-resize-stop="onResizeStop(event,ui)">
+                <div data-gridstack-item data-ng-repeat="w in widgets" class="grid-stack-item" data-gs-item-x="w.x" data-gs-item-y="w.y"
+                     data-gs-item-width="w.width" data-gs-item-height="w.height" data-gs-item-autopos="1" data-on-item-added="onItemAdded(item)" data-on-item-removed="onItemRemoved(item)">
+                        <div class="grid-stack-item-content">
+                            <a class="btn btn-primary" data-ng-click="removeWidget(w)" href="#">remove</a>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>

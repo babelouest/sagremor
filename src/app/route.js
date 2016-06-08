@@ -4,7 +4,9 @@ angular.module('sagremorApp')
         $stateProvider
             .state('dashboard', {
                 url: '/',
-                templateUrl: 'app/dashboard/dashboard.html'
+                templateUrl: 'app/dashboard/dashboard.html',
+                controller: 'DashboardCtrl',
+                controllerAs: 'DashboardCtrl'
             })
             .state('login', {
                 url: '/login',
