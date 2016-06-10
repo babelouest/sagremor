@@ -14,7 +14,7 @@ angular.module('sagremorApp')
         this.sagremorParams = sagremorParams;
         
         this.init = function () {
-			$translate(["edit", "monitor"]).then(function (results) {
+			$translate(["edit", "monitor", "add_to_dashboard"]).then(function (results) {
 				self.menuSensor = [
 					{
 						name: "edit", 
@@ -28,6 +28,15 @@ angular.module('sagremorApp')
 						display: results.monitor, 
 						action: function (param) {
 							sagremorService.monitor(param);
+						}
+					},
+					{
+						name: "add_dashboard", 
+						display: results.add_to_dashboard, 
+						action: function (param) {
+							if (sagremorService.addToDashboard(param)) {
+                                $scope.$broadcast("refreshDashboard");
+                            }
 						}
 					}
 				];
