@@ -44,7 +44,9 @@ angular.module('sagremorApp')
             })
             .state('weather', {
                 url: '/weather',
-                templateUrl: 'app/weather/weather.html'
+                templateUrl: 'app/weather/weather.html',
+                controller: 'weatherCtrl',
+                controllerAs: 'weatherCtrl'
             })
             .state('scripts', {
                 url: '/scripts',

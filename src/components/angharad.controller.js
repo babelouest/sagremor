@@ -9,9 +9,10 @@ angular.module('sagremorApp')
   'toaster',
   'angharadFactory',
   'benoicFactory',
+  'carleonFactory',
   'sharedData',
   'sagremorParams',
-  function($scope, $http, $q, $location, $cookieStore, $translate, toaster, angharadFactory, benoicFactory, sharedData, sagremorParams) {
+  function($scope, $http, $q, $location, $cookieStore, $translate, toaster, angharadFactory, benoicFactory, carleonFactory, sharedData, sagremorParams) {
     var self = this;
     
     this.loaderToast;
@@ -33,6 +34,7 @@ angular.module('sagremorApp')
                     if (result[key].name === "benoic" && result[key].enabled) {
                         self.initBenoic();
                     } else if (result[key].name === "carleon" && result[key].enabled) {
+						self.initCarleon();
                     } else if (result[key].name === "gareth" && result[key].enabled) {
                     }
                 }
@@ -147,6 +149,15 @@ angular.module('sagremorApp')
         });
     }
     
+	this.initCarleon = function () {
+		carleonFactory.getServiceList().then(function (result) {
+			for (key in result) {
+				sharedData.add('carleonServices', result[key].name, result[key]);
+			}
+			$scope.$broadcast('carleonServicesChanged');
+		});
+	};
+    
     this.initAngharad = function () {
 		var promiseList = {
 			scripts: angharadFactory.getScriptList(),
@@ -171,7 +182,7 @@ angular.module('sagremorApp')
             toaster.pop("error", "Benoic", "Error loading angharad");
         });
 	};
-    
+	
     init();
   }
 ]);
