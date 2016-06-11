@@ -37,7 +37,7 @@ angular.module('sagremorApp')
             self.sensor.display = self.sensor.newDisplay;
             self.sensor.monitor = self.sensor.monitorChecked?1:0;
             benoicFactory.updateElement(self.sensor.device, "sensor", self.sensor.name, self.sensor).then(function (response) {
-                $scope.$broadcast('benoicSensoresChanged');
+                $scope.$broadcast('benoicSensorsChanged');
                 toaster.pop("success", self.messages.sensor_save, self.messages.sensor_save_success);
             }, function (error) {
                 toaster.pop("error", self.messages.sensor_save, self.messages.sensor_save_error);
