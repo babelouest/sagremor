@@ -11,9 +11,9 @@ function carleonMockController (carleonFactory, sagremorParams, $translate, toas
     
     ctrl.command = function () {
 		carleonFactory.commandMock(ctrl.mock.name, ctrl.param.command, ctrl.param.param1, ctrl.param.param2, ctrl.param.param3).then(function (result) {
-			toaster.pop("success", ctrl.messages.carleon_mock_command, ctrl.messages.carleon_mock_command_success);
+			toaster.pop("success", $translate.instant('carleon_mock_command'), $translate.instant('carleon_mock_command_success'));
 		}, function (error) {
-			toaster.pop("error", ctrl.messages.carleon_mock_command, ctrl.messages.carleon_mock_command_success);
+			toaster.pop("error", $translate.instant('carleon_mock_command'), $translate.instant('carleon_mock_command_error'));
 		});
 	};
     

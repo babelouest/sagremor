@@ -1,0 +1,11 @@
+{
+    "carleon_mock_command": "Mock Command",
+    "carleon_mock_command_success": "Success",
+    "carleon_mock_command_error": "Error",
+    "carleon_mock_modal_title": "Mock",
+    "carleon_mock_modal_name": "Name",
+    "carleon_mock_modal_description": "Description",
+    "carleon_mock_save": "Save",
+    "carleon_mock_save_succes": "Success",
+    "carleon_mock_save_error": "Error"
+}
