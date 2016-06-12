@@ -1,12 +1,13 @@
 angular.module('sagremorApp')
     .controller('heatersCtrl', [
     '$scope',
+    '$location',
     '$translate',
     'sagremorService',
     'benoicFactory',
     'sharedData',
     'sagremorParams',
-    function($scope, $translate, sagremorService, benoicFactory, sharedData, sagremorParams) {
+    function($scope, $location, $translate, sagremorService, benoicFactory, sharedData, sagremorParams) {
       
         var self = this;
         
@@ -14,6 +15,9 @@ angular.module('sagremorApp')
         this.sagremorParams = sagremorParams;
         
         this.init = function () {
+			if (!sagremorParams.loggedIn) {
+				$location.path("/login");
+			}
 			$translate(["edit", "monitor", "add_to_dashboard"]).then(function (results) {
 				self.menuSensor = [
 					{

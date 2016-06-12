@@ -1,6 +1,7 @@
 angular.module('sagremorApp')
     .controller('weatherCtrl', [
     '$scope',
+    '$location',
     '$translate',
     '$uibModal',
     'toaster',
@@ -8,7 +9,7 @@ angular.module('sagremorApp')
     'carleonFactory',
     'sharedData',
     'sagremorParams',
-    function($scope, $translate, $uibModal, toaster, sagremorService, carleonFactory, sharedData, sagremorParams) {
+    function($scope, $location, $translate, $uibModal, toaster, sagremorService, carleonFactory, sharedData, sagremorParams) {
       
         var self = this;
         
@@ -16,6 +17,9 @@ angular.module('sagremorApp')
         this.sagremorParams = sagremorParams;
         
         this.init = function () {
+			if (!sagremorParams.loggedIn) {
+				$location.path("/login");
+			}
 			$translate(["edit", "remove", "add_to_dashboard"]).then(function (results) {
 				self.menuMock = [
 					{

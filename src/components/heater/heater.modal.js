@@ -14,13 +14,9 @@ angular.module('sagremorApp')
         this.heater.newDisplay = this.heater.display;
         
         this.monitorEveryEnum = angharadConstant.monitoredEveryEnum;
-        this.messages = {};
         
         function init() {
 			self.heater.menu = false;
-            $translate(["heater_save", "heater_save_success", "heater_save_error"]).then(function (results) {
-                self.messages = results;
-            });
             
             _.forEach(self.monitorEveryEnum, function(monitorEvery) {
                 $translate(monitorEvery.label).then(function (trLabel) {
@@ -38,9 +34,9 @@ angular.module('sagremorApp')
             self.heater.monitor = self.heater.monitorChecked?1:0;
             benoicFactory.updateElement(self.heater.device, "heater", self.heater.name, self.heater).then(function (response) {
                 $scope.$broadcast('benoicHeatersChanged');
-                toaster.pop("success", self.messages.heater_save, self.messages.heater_save_success);
+                toaster.pop("success", $translate.instant('heater_save'), $translate.instant('heater_save_success'));
             }, function (error) {
-                toaster.pop("error", self.messages.heater_save, self.messages.heater_save_error);
+                toaster.pop("error", $translate.instant('heater_save'), $translate.instant('heater_save_error'));
             })['finally'](function () {
                 $uibModalInstance.dismiss('close');
             });

@@ -35,20 +35,8 @@ angular.module('sagremorApp', [
         ]
 	})
     .config(['$translateProvider', '$translatePartialLoaderProvider', function ($translateProvider, $translatePartialLoaderProvider) {
-        $translatePartialLoaderProvider.addPart('core');
-        $translatePartialLoaderProvider.addPart('home');
-        $translatePartialLoaderProvider.addPart('parameters');
-        $translatePartialLoaderProvider.addPart('switches');
-        $translatePartialLoaderProvider.addPart('sensors');
-        $translatePartialLoaderProvider.addPart('heaters');
-        $translatePartialLoaderProvider.addPart('scripts');
-        $translatePartialLoaderProvider.addPart('components/topRightMenu');
-        $translatePartialLoaderProvider.addPart('components/monitor');
-        $translatePartialLoaderProvider.addPart('components/switch');
-        $translatePartialLoaderProvider.addPart('components/dimmer');
-        $translatePartialLoaderProvider.addPart('components/sensor');
-        $translatePartialLoaderProvider.addPart('components/heater');
-        $translatePartialLoaderProvider.addPart('components/carleonMock');
+        $translatePartialLoaderProvider.addPart('app');
+        $translatePartialLoaderProvider.addPart('components');
         $translateProvider.useLoader('$translatePartialLoader', {
             urlTemplate: '/i18n/{part}/{lang}.json'
         });

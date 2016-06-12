@@ -4,7 +4,6 @@ function sagHeaterController (benoicFactory, sagremorParams, $translate) {
     ctrl.heater.valueChecked = (ctrl.heater.value === 1);
     ctrl.adminMode = sagremorParams.adminMode;
     ctrl.heater.newDisplay = ctrl.heater.display;
-    ctrl.messages = {};
     
     function init() {
         ctrl.heater.type = "heater";

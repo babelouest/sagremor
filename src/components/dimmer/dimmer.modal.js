@@ -14,13 +14,9 @@ angular.module('sagremorApp')
         this.dimmer.newDisplay = this.dimmer.display;
         
         this.monitorEveryEnum = angharadConstant.monitoredEveryEnum;
-        this.messages = {};
         
         function init() {
 			self.dimmer.menu = false;
-            $translate(["dimmer_save", "dimmer_save_success", "dimmer_save_error"]).then(function (results) {
-                self.messages = results;
-            });
             
             _.forEach(self.monitorEveryEnum, function(monitorEvery) {
                 $translate(monitorEvery.label).then(function (trLabel) {
@@ -38,9 +34,9 @@ angular.module('sagremorApp')
             self.dimmer.monitor = self.dimmer.monitorChecked?1:0;
             benoicFactory.updateElement(self.dimmer.device, "dimmer", self.dimmer.name, self.dimmer).then(function (response) {
                 $scope.$broadcast('benoicDimmersChanged');
-                toaster.pop("success", self.messages.dimmer_save, self.messages.dimmer_save_success);
+                toaster.pop("success", $translate.instant('dimmer_save'), $translate.instant('dimmer_save_success'));
             }, function (error) {
-                toaster.pop("error", self.messages.dimmer_save, self.messages.dimmer_save_error);
+                toaster.pop("error", $translate.instant('dimmer_save'), $translate.instant('dimmer_save_error'));
             })['finally'](function () {
                 $uibModalInstance.dismiss('close');
             });

@@ -21,6 +21,14 @@
         </li>
         <li class="row">
             <div class="col-md-6">
+                <label for="sag-lang" data-translate="top_right_menu_profile"></label>
+            </div>
+            <div class="col-md-6">
+                <select id="sag-lang" name="sag-lang" data-ng-model="topRightMenuCtrl.currentProfileName" data-ng-options="profile.name for profile in topRightMenuCtrl.profiles" data-ng-change="topRightMenuCtrl.changeProfile()"></select>
+            </div>
+        </li>
+        <li class="row">
+            <div class="col-md-6">
                 <label for="sag-refresh" data-translate="top_right_menu_refresh"></label>
             </div>
             <div class="col-md-6">

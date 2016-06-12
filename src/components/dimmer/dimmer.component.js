@@ -4,7 +4,6 @@ function sagDimmerController (benoicFactory, sagremorParams, $translate) {
     ctrl.dimmer.valueChecked = (ctrl.dimmer.value === 1);
     ctrl.adminMode = sagremorParams.adminMode;
     ctrl.dimmer.newDisplay = ctrl.dimmer.display;
-    ctrl.messages = {};
     
     function init() {
         ctrl.dimmer.type = "dimmer";

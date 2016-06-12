@@ -1,16 +1,20 @@
 angular.module('sagremorApp')
     .controller('DashboardCtrl', [
     '$scope',
+    '$location',
     '$translate',
     'sagremorService',
     'sagremorParams',
-    function($scope, $translate, sagremorService, sagremorParams) {
+    function($scope, $location, $translate, sagremorService, sagremorParams) {
       
         var self = this;
         
         this.dashboardWidgets = sagremorParams.dashboardWidgets;
         
         this.init = function () {
+			if (!sagremorParams.loggedIn) {
+				$location.path("/login");
+			}
             if (!self.dashboardWidgets) {
                 self.dashboardWidgets = [];
                 sagremorParams.dashboardWidgets = [];

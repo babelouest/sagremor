@@ -14,13 +14,9 @@ angular.module('sagremorApp')
         this.sensor.newDisplay = this.sensor.display;
         
         this.monitorEveryEnum = angharadConstant.monitoredEveryEnum;
-        this.messages = {};
         
         function init() {
 			self.sensor.menu = false;
-            $translate(["sensor_save", "sensor_save_success", "sensor_save_error"]).then(function (results) {
-                self.messages = results;
-            });
             
             _.forEach(self.monitorEveryEnum, function(monitorEvery) {
                 $translate(monitorEvery.label).then(function (trLabel) {
@@ -38,9 +34,9 @@ angular.module('sagremorApp')
             self.sensor.monitor = self.sensor.monitorChecked?1:0;
             benoicFactory.updateElement(self.sensor.device, "sensor", self.sensor.name, self.sensor).then(function (response) {
                 $scope.$broadcast('benoicSensorsChanged');
-                toaster.pop("success", self.messages.sensor_save, self.messages.sensor_save_success);
+                toaster.pop("success", $translate.instant('sensor_save'), $translate.instant('sensor_save_success'));
             }, function (error) {
-                toaster.pop("error", self.messages.sensor_save, self.messages.sensor_save_error);
+                toaster.pop("error", $translate.instant('sensor_save'), $translate.instant('sensor_save_error'));
             })['finally'](function () {
                 $uibModalInstance.dismiss('close');
             });

@@ -3,13 +3,15 @@ angular.module('sagremorApp')
     '$scope',
     '$rootScope',
     '$q',
+    '$location',
     '$translate',
     'toaster',
     'angharadFactory',
     'benoicFactory',
     'sharedData',
     'sagremorConfirm',
-    function($scope, $rootScope, $q, $translate, toaster, angharadFactory, benoicFactory, sharedData, sagremorConfirm) {
+    'sagremorParams',
+    function($scope, $rootScope, $q, $location, $translate, toaster, angharadFactory, benoicFactory, sharedData, sagremorConfirm, sagremorParams) {
       
       var self = this;
       
@@ -30,21 +32,24 @@ angular.module('sagremorApp')
       this.messages = {};
       
       this.init = function() {
-          $translate(["device_add", "device_add_success", "device_add_error",
-                      "device_connect", "device_connect_success", "device_connect_error",
-                      "device_disconnect", "device_disconnect_success", "device_disconnect_error",
-                      "device_enable", "device_enable_success", "device_enable_error",
-                      "device_disable", "device_disable_success", "device_disable_error",
-                      "device_save", "device_save_success", "device_save_error",
-                      "device_remove", "device_remove_confirm", "device_remove_success", "device_remove_error",
-                      "submodules", "submodules_enable_success", "submodules_enable_error"
-                      ]).then(function (results) {
-            self.messages = results;
-          });
-          self.submodules = sharedData.all("submodules");
-          self.deviceList = sharedData.all('benoicDevices');
-          self.initDeviceTypes();
-          self.selectedLang = $translate.use();
+		if (!sagremorParams.loggedIn) {
+			$location.path("/login");
+		}
+		$translate(["device_add", "device_add_success", "device_add_error",
+					"device_connect", "device_connect_success", "device_connect_error",
+					"device_disconnect", "device_disconnect_success", "device_disconnect_error",
+					"device_enable", "device_enable_success", "device_enable_error",
+					"device_disable", "device_disable_success", "device_disable_error",
+					"device_save", "device_save_success", "device_save_error",
+					"device_remove", "device_remove_confirm", "device_remove_success", "device_remove_error",
+					"submodules", "submodules_enable_success", "submodules_enable_error"
+		]).then(function (results) {
+			self.messages = results;
+		});
+		self.submodules = sharedData.all("submodules");
+		self.deviceList = sharedData.all('benoicDevices');
+		self.initDeviceTypes();
+		self.selectedLang = $translate.use();
       };
       
       $scope.$on('submodulesChanged', function () {
@@ -248,7 +253,7 @@ angular.module('sagremorApp')
           }
       };
       
-      self.init();
+      this.init();
     }
 ]).filter('deviceTypeName', [
     'sharedData',
