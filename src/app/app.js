@@ -42,7 +42,11 @@ angular.module('sagremorApp', [
         };
         
         var get = function(share, name) {
-            return sharedData[share][name];
+			if (!!sharedData[share] && !!sharedData[share][name]) {
+				return sharedData[share][name];
+			} else {
+				return undefined;
+			}
         };
         
         var remove = function(share, name) {

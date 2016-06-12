@@ -16,5 +16,6 @@
   "dashboard_title": "Angharad Web Client",
   "init_message_loading": "Loading",
   "init_message_loading_complete": "Loading complete",
-  "init_message_loading_error": "Loading error"
+  "init_message_loading_error": "Loading error",
+  "remove_from_dashboard": "Remove"
 }

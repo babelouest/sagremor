@@ -1,5 +1,8 @@
 {
 	"btn_ok": "Valider",
 	"btn_cancel": "Annuler",
-	"btn_close": "Fermer"
+	"btn_close": "Fermer",
+	"edit": "Modifier",
+	"remove": "Supprimer",
+	"add_to_dashboard": "Ajouter au tableau de bord"
 }

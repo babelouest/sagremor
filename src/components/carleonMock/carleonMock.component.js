@@ -2,7 +2,7 @@ function carleonMockController (carleonFactory, sagremorParams, $translate, toas
     var ctrl = this;
     
     ctrl.adminMode = sagremorParams.adminMode;
-    ctrl.param = {};
+    ctrl.param = {command: "command1", param1: "test", param2: 42, param3: 7.3};
     ctrl.commandList = ['command1', 'command2', 'command3'];
     ctrl.messages = {};
     

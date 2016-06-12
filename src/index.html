@@ -4,7 +4,7 @@
     
     <meta charset="utf-8">
     <title>Angharad</title>
-    <meta name="description" content="">
+    <meta name="description" content="Angharad Home Automation Manager">
     <meta name="viewport" content="width=device-width">
 
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -21,34 +21,18 @@
     <!-- endinject -->
     <!-- endbuild -->
 </head>
-<body data-ng-controller="angharadCtrl" data-ng-controller-as="angharadCtrl">
+<body data-ng-controller="sagremorCtrl" data-ng-controller-as="sagremorCtrl">
     <!--[if lt IE 10]>
     <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
         your browser</a> to improve your experience.</p>
     <![endif]-->
     <data-toaster-container></data-toaster-container>
     
-    <nav class="nav-collapse">
-      <ul>
-        <li><a data-ng-href="#/"><i class="fa fa-home"></i><span class="left-menu" data-translate="menu_home"></span></a></li>
-        <li><a data-ng-href="#/switches"><i class="fa fa-lightbulb-o"></i><span class="left-menu" data-translate="menu_lights"></span></a></li>
-        <li><a data-ng-href="#/heaters"><i class="fa fa-fire"></i><span class="left-menu" data-translate="menu_heaters"></span></a></li>
-        <li><a data-ng-href="#/sensors"><i class="fa fa-line-chart"></i><span class="left-menu" data-translate="menu_sensors"></span></a></li>
-        <li><a data-ng-href="#/cameras"><i class="fa fa-video-camera"></i><span class="left-menu" data-translate="menu_camera"></span></a></li>
-        <li><a data-ng-href="#/music"><i class="fa fa-music"></i><span class="left-menu" data-translate="menu_music"></span></a></li>
-        <li><a data-ng-href="#/maps"><i class="fa fa-map"></i><span class="left-menu" data-translate="menu_maps"></span></a></li>
-        <li><a data-ng-href="#/weather"><i class="fa fa-sun-o"></i><span class="left-menu" data-translate="menu_weather"></span></a></li>
-        <li><a data-ng-href="#/scripts"><i class="fa fa-tasks"></i><span class="left-menu" data-translate="menu_scripts"></span></a></li>
-        <li><a data-ng-href="#/events"><i class="fa fa-calendar"></i><span class="left-menu" data-translate="menu_events"></span></a></li>
-        <li><a data-ng-href="#/monitors"><i class="fa fa-bar-chart"></i><span class="left-menu" data-translate="menu_monitor"></span></a></li>
-        <li><a data-ng-href="#/logs"><i class="fa fa-history"></i><span class="left-menu" data-translate="menu_logs"></span></a></li>
-        <li><a data-ng-href="#/parameters"><i class="fa fa-cogs"></i><span class="left-menu" data-translate="menu_parameters"></span></a></li>
-        <li><a href="" data-ng-click="angharadCtrl.logout()"><i class="fa fa-sign-out"></i><span class="left-menu" data-translate="menu_logout"></span></a></li>
-      </ul>
-    </nav>
-    
     <div role="main" class="main">
-        <data-top-right-menu></data-top-right-menu>
+        <div class="top">
+            <data-top-left-menu></data-top-left-menu>
+            <data-top-right-menu></data-top-right-menu>
+        </div>
         <div data-ui-view>
         </div>
     </div>
@@ -69,8 +53,5 @@
     <!-- endinject -->
     <!-- endbuild -->
 
-    <script>
-      var nav = responsiveNav(".nav-collapse");
-    </script>
   </body>
 </html>

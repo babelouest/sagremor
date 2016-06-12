@@ -1,5 +1,8 @@
 {
 	"btn_ok": "OK",
 	"btn_cancel": "Cancel",
-	"btn_close": "Close"
+	"btn_close": "Close",
+	"edit": "Edit",
+	"remove": "Remove",
+	"add_to_dashboard": "Add to dashboard"
 }

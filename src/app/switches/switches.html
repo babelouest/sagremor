@@ -3,12 +3,11 @@
     
     <h2 data-translate="switch_title"></h2>
     <div class="row">
-        <div data-ng-repeat="switcher in switchesCtrl.switchList">
+        <div data-ng-repeat="switcher in switchesCtrl.switchList" class="col-sm-2" data-ng-if="switcher.enabled || switchesCtrl.sagremorParams.adminMode">
             <data-sag-container data-menu="switchesCtrl.menuSwitcher"
                                 data-size="1"
                                 data-title="switcher.display"
-                                data-element="switcher"
-                                data-ng-if="switcher.enabled || switchesCtrl.sagremorParams.adminMode">
+                                data-element="switcher">
 				<data-sag-switch data-switcher="switcher"></data-sag-switch>
 			</data-sag-container>
         </div>
@@ -16,12 +15,11 @@
     
     <h2 data-translate="dimmer_title"></h2>
     <div class="row">
-        <div data-ng-repeat="dimmer in switchesCtrl.dimmerList">
+        <div data-ng-repeat="dimmer in switchesCtrl.dimmerList" class="col-sm-2" data-ng-if="dimmer.enabled || switchesCtrl.sagremorParams.adminMode">
             <data-sag-container data-menu="switchesCtrl.menuDimmer"
                                 data-size="1"
                                 data-title="dimmer.display"
-                                data-element="dimmer"
-                                data-ng-if="dimmer.enabled || switchesCtrl.sagremorParams.adminMode">
+                                data-element="dimmer">
                 <data-sag-dimmer data-dimmer="dimmer"></data-sag-dimmer>
             </data-sag-container>
         </div>

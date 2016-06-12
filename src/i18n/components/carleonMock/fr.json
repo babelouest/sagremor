@@ -6,6 +6,8 @@
     "carleon_mock_modal_name": "Nom",
     "carleon_mock_modal_description": "Description",
     "carleon_mock_save": "Sauvegarde",
-    "carleon_mock_save_succes": "Succès",
-    "carleon_mock_save_error": "Erreur"
+    "carleon_mock_save_success": "Succès",
+    "carleon_mock_save_error": "Erreur",
+    "carleon_mock": "Mock Service",
+    "carleon_mock_error": "Erreur de chargement"
 }

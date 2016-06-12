@@ -3,5 +3,6 @@
   "switch_title": "Interrupteurs",
   "dimmer_title": "Gradateurs",
   "edit": "Modifier",
-  "monitor": "Moniteur"
+  "monitor": "Moniteur",
+  "add_to_dashboard": "Ajouter au tableau de bord"
 }

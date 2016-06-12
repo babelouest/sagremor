@@ -1,3 +1,37 @@
 <div class="container">
     <h1 data-translate="dashboard_title"></h1>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div data-gridstack class="grid-stack grid1"
+                 data-options="options"
+                 data-on-change="onChange(event,items)">
+                <div data-gridstack-item
+                     data-ng-repeat="w in DashboardCtrl.dashboardWidgets"
+                     class="grid-stack-item"
+                     data-gs-no-resize="true"
+                     data-gs-item-x="w.x"
+                     data-gs-item-y="w.y"
+                     data-gs-item-width="w.width"
+                     data-gs-item-height="w.height"
+                     data-gs-item-autopos="1"
+                     data-on-item-added="onItemAdded(item)"
+                     data-on-item-removed="onItemRemoved(item)">
+                    <div class="grid-stack-item-content">
+                        <data-sag-container data-menu="DashboardCtrl.menu"
+                                            data-size="1"
+                                            data-title="w.element.display || w.element.name"
+                                            data-element="w.element">
+                            <data-sag-switch data-switcher="w.element" data-ng-if="w.type === 'switch'"></data-sag-switch>
+                            <data-sag-dimmer data-dimmer="w.element" data-ng-if="w.type === 'dimmer'"></data-sag-dimmer>
+                            <data-sag-sensor data-sensor="w.element" data-ng-if="w.type === 'sensor'"></data-sag-sensor>
+                            <data-sag-heater data-heater="w.element" data-ng-if="w.type === 'heater'"></data-sag-heater>
+                            <data-sag-heater data-heater="w.element" data-ng-if="w.type === 'heater'"></data-sag-heater>
+                            <data-carleon-mock data-mock="w.element" data-ng-if="w.type === 'mock-service'"></data-sag-heater>
+                        </data-sag-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -16,5 +16,6 @@
   "dashboard_title": "Client Web Angharad",
   "init_message_loading": "Chargement",
   "init_message_loading_complete": "Chargement terminé",
-  "init_message_loading_error": "Erreur lors du chargement"
+  "init_message_loading_error": "Erreur lors du chargement",
+  "remove_from_dashboard": "Enlever"
 }
