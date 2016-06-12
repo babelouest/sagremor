@@ -1,5 +1,5 @@
 angular.module('sagremorApp')
-  .controller('angharadCtrl', [
+  .controller('sagremorCtrl', [
   '$scope',
   '$http',
   '$q',
@@ -152,6 +152,9 @@ angular.module('sagremorApp')
 	this.initCarleon = function () {
 		carleonFactory.getServiceList().then(function (result) {
 			for (key in result) {
+				_.forEach(result[key].element, function (element) {
+					element.type = result[key].name;
+				});
 				sharedData.add('carleonServices', result[key].name, result[key]);
 			}
 			$scope.$broadcast('carleonServicesChanged');

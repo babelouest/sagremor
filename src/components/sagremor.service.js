@@ -32,7 +32,10 @@ angular.module('sagremorApp')
                 }
                 var dashboardElement = { type: element.type, element: element, x: 0, y: 0, width: 2, height: curHeight };
                 dashboardWidgets.push(dashboardElement);
-            }
+            } else if (element.type === "mock-service") {
+                var dashboardElement = { type: element.type, element: element, x: 0, y: 0, width: 2, height: 3 };
+                dashboardWidgets.push(dashboardElement);
+			}
             sagremorParams.dashboardWidgets = dashboardWidgets;
             return true;
         };

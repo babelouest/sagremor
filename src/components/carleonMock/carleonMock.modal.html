@@ -3,16 +3,22 @@
         <h3 class="modal-title" data-translate="carleon_mock_modal_title"></h3>
     </div>
     <div class="modal-body">
-        <div class="row">
-            <span class="col-md-6" data-translate="carleon_mock_modal_name"></span>
-            <div class="col-md-6">
-                <input type="text" name="carleonMockDisplay" id="carleonMockDisplay" data-ng-model="CarleonMockModalCtrl.mock.name" class="modal-input-text">
+        <div class="row-fluid">
+            <span class="col-xs-6" data-translate="carleon_mock_modal_name"></span>
+            <div class="col-xs-6">
+                <input type="text" 
+					   name="carleonMockName" 
+					   id="carleonMockName" 
+					   data-ng-model="CarleonMockModalCtrl.mock.name" 
+					   data-ng-disabled="!CarleonMockModalCtrl.add"
+					   class="modal-input-text" 
+					   size="10">
             </div>
         </div>
         <div class="row">
-            <span class="col-md-6" data-translate="carleon_mock_modal_description"></span>
-            <div class="col-md-6">
-                <input type="text" name="carleonMockDescription" id="carleonMockDescription" data-ng-model="CarleonMockModalCtrl.mock.description" class="modal-input-text">
+            <span class="col-xs-6" data-translate="carleon_mock_modal_description"></span>
+            <div class="col-xs-6">
+                <input type="text" name="carleonMockDescription" id="carleonMockDescription" data-ng-model="CarleonMockModalCtrl.mock.description" class="modal-input-text" size="10">
             </div>
         </div>
     <div class="modal-footer">

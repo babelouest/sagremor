@@ -7,5 +7,7 @@
     "carleon_mock_modal_description": "Description",
     "carleon_mock_save": "Save",
     "carleon_mock_save_succes": "Success",
-    "carleon_mock_save_error": "Error"
+    "carleon_mock_save_error": "Error",
+    "carleon_mock": "Mock Service",
+    "carleon_mock_error": "Loading error"
 }

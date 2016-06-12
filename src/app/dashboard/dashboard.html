@@ -20,12 +20,14 @@
                     <div class="grid-stack-item-content">
                         <data-sag-container data-menu="DashboardCtrl.menu"
                                             data-size="1"
-                                            data-title="w.element.display"
+                                            data-title="w.element.display || w.element.name"
                                             data-element="w.element">
                             <data-sag-switch data-switcher="w.element" data-ng-if="w.type === 'switch'"></data-sag-switch>
                             <data-sag-dimmer data-dimmer="w.element" data-ng-if="w.type === 'dimmer'"></data-sag-dimmer>
                             <data-sag-sensor data-sensor="w.element" data-ng-if="w.type === 'sensor'"></data-sag-sensor>
                             <data-sag-heater data-heater="w.element" data-ng-if="w.type === 'heater'"></data-sag-heater>
+                            <data-sag-heater data-heater="w.element" data-ng-if="w.type === 'heater'"></data-sag-heater>
+                            <data-carleon-mock data-mock="w.element" data-ng-if="w.type === 'mock-service'"></data-sag-heater>
                         </data-sag-container>
                     </div>
                 </div>

@@ -16,7 +16,7 @@ angular.module('sagremorApp')
         this.sagremorParams = sagremorParams;
         
         this.init = function () {
-			$translate(["edit", "remove"]).then(function (results) {
+			$translate(["edit", "remove", "add_to_dashboard"]).then(function (results) {
 				self.menuMock = [
 					{
 						name: "edit", 
@@ -31,21 +31,41 @@ angular.module('sagremorApp')
 						action: function (param) {
 							self.removeMock(param.name);
 						}
+					},
+					{
+						name: "add_dashboard", 
+						display: results.add_to_dashboard, 
+						action: function (param) {
+							if (sagremorService.addToDashboard(param)) {
+                                $scope.$broadcast("refreshDashboard");
+                            }
+						}
 					}
 				];
 				
-				self.updateMockList();
+				self.initMockList();
 			});
 		};
 		
 		/* Mock service */
+		
 		this.mockServiceList = [];
 		
+		this.initMockList = function () {
+			self.mockServiceList = [];
+			var mockService = sharedData.get('carleonServices', "mock-service");
+			if (!!mockService) {
+				_.forEach(mockService.element, function (mock) {
+					mock.type = "mock-service";
+					self.mockServiceList.push(mock);
+				});
+			}
+		};
+		
 		this.updateMockList = function () {
-			carleonFactory.getMockList().then(function (result) {
-				self.mockServiceList = result;
-			}, function (error) {
-			});
+			var mockService = sharedData.get('carleonServices', "mock-service");
+			mockService.element = self.mockServiceList;
+			sharedData.set('carleonServices', "mock-service", self.mockServiceList);
 		};
 		
 		this.addMock = function () {
@@ -57,7 +77,7 @@ angular.module('sagremorApp')
 				size: 'sm',
 				resolve: {
 					mock: function () {
-						return {};
+						return false;
 					}
 				}
 			});
@@ -80,15 +100,19 @@ angular.module('sagremorApp')
 		
 		this.removeMock = function (name) {
 			carleonFactory.removeMock(name).then(function () {
-                $scope.$broadcast('carleonMockChanged');
-                toaster.pop("success", self.messages.carleon_mock_remove, self.messages.carleon_mock_remove_success);
+                toaster.pop("success", $translate.instant('carleon_mock_remove'), $translate.instant('carleon_mock_remove_success'));
+                var mockService = sharedData.get('carleonServices', "mock-service");
+                _.remove(mockService.element, function (mock) {
+					return mock.name === name;
+				});
+				self.initMockList();
 			}, function (error) {
-                toaster.pop("error", self.messages.carleon_mock_remove, self.messages.carleon_mock_remove_error);
+                toaster.pop("error", $translate.instant('carleon_mock_remove'), $translate.instant('carleon_mock_remove_error'));
 			});
 		};
 		
-		$scope.$on('carleonMockChanged', function () {
-			self.updateMockList();
+		$scope.$on('carleonServicesChanged', function () {
+			self.initMockList();
 		});
         
         this.init();
