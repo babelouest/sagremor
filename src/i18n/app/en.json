@@ -96,5 +96,21 @@
 	"switches_title": "Lights and switches",
 	"switch_title": "Switches",
 	"dimmer_title": "Dimmers",
-	"add_to_dashboard": "Add to dashboard"
+	"add_to_dashboard": "Add to dashboard",
+	"param_profiles_list": "Profiles",
+	"profile_name": "Name",
+	"profile_description": "Description",
+	"profile_default": "Default profile",
+	"profile_use": "Change",
+	"profile_action": "Action",
+	"profiles": "Profiles",
+	"profiles_add_success": "Success",
+	"profiles_add_error": "Error",
+	"profiles_remove_success": "Success",
+	"profiles_remove_error": "Error",
+	"profile_remove": "Profile",
+	"profile_remove_confirm": "Are you sure you want to delete this profile ?",
+	"profiles_save_success": "Success",
+	"profiles_save_error": "Error",
+	"profile_used": "Current profile"
 }

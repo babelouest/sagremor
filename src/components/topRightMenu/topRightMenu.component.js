@@ -1,4 +1,4 @@
-function topRightMenuCtrl ($scope, $translate, sagremorParams) {
+function topRightMenuCtrl ($scope, $rootScope, $translate, $cookieStore, sagremorParams) {
     var self = this;
 
     self.sagremorParams = sagremorParams;
@@ -21,11 +21,18 @@ function topRightMenuCtrl ($scope, $translate, sagremorParams) {
 		_.forEach(sagremorParams.profiles, function (profile) {
 			if (profile.name === self.currentProfileName) {
 				sagremorParams.currentProfile = profile;
+				$cookieStore.put("ANGHARAD_PROFILE", self.currentProfileName);
+				$rootScope.$broadcast('carleonProfileUpdated');
 			}
 		});
 	};
 	
 	$scope.$on('carleonProfilesChanged', function () {
+		self.profiles = sagremorParams.profiles;
+		self.currentProfileName = !!sagremorParams.currentProfile?sagremorParams.currentProfile.name:"";
+	});
+	
+	$scope.$on('carleonProfileUpdated', function () {
 		self.profiles = sagremorParams.profiles;
 		self.currentProfileName = !!sagremorParams.currentProfile?sagremorParams.currentProfile.name:"";
 	});

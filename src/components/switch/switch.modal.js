@@ -14,13 +14,9 @@ angular.module('sagremorApp')
         this.switcher.newDisplay = this.switcher.display;
         
         this.monitorEveryEnum = angharadConstant.monitoredEveryEnum;
-        this.messages = {};
         
         function init() {
 			self.switcher.menu = false;
-            $translate(["switch_save", "switch_save_success", "switch_save_error"]).then(function (results) {
-                self.messages = results;
-            });
             
             _.forEach(self.monitorEveryEnum, function(monitorEvery) {
                 $translate(monitorEvery.label).then(function (trLabel) {

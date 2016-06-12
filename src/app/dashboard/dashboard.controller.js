@@ -12,9 +12,6 @@ angular.module('sagremorApp')
         this.dashboardWidgets = sagremorParams.dashboardWidgets;
         
         this.init = function () {
-			if (!sagremorParams.loggedIn) {
-				$location.path("/login");
-			}
             if (!self.dashboardWidgets) {
                 self.dashboardWidgets = [];
                 sagremorParams.dashboardWidgets = [];

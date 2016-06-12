@@ -96,5 +96,21 @@
 	"switches_title": "Lumières et interrupteurs",
 	"switch_title": "Interrupteurs",
 	"dimmer_title": "Gradateurs",
-	"add_to_dashboard": "Ajouter au tableau de bord"
+	"add_to_dashboard": "Ajouter au tableau de bord",
+	"param_profiles_list": "Profils",
+	"profile_name": "Nom",
+	"profile_description": "Description",
+	"profile_default": "Profil par défaut",
+	"profile_use": "Changer",
+	"profile_action": "Action",
+	"profiles": "Profils",
+	"profiles_add_success": "Succès",
+	"profiles_add_error": "Erreur",
+	"profiles_remove_success": "Succès",
+	"profiles_remove_error": "Erreur",
+	"profile_remove": "Profil",
+	"profile_remove_confirm": "Êtes-vous sûr de vouloir supprimer ce profil ?",
+	"profiles_save_success": "Succès",
+	"profiles_save_error": "Erreur",
+	"profile_used": "Profil courant"
 }
