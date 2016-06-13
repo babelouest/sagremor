@@ -20,7 +20,13 @@ angular.module('sagremorApp')
 			});
 		};
         
-        sagremorFactory.addToDashboard = function (element) {
+        sagremorFactory.addToDashboard = function (element, allProfiles) {
+			if (allProfiles) {
+				if (!!element.device) {
+				} else {
+				}
+			} else {
+			}
             var dashboardWidgets = sagremorParams.dashboardWidgets;
             if (dashboardWidgets === undefined) {
                 dashboardWidgets = [];
