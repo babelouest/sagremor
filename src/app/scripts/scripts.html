@@ -2,7 +2,7 @@
     <h1 data-translate="scripts_title"></h1>
 
     <div class="row" data-ng-if="scriptsCtrl.sagremorParams.adminMode">
-		<button type="button" class="btn btn-primary" name="addScript" id="addScript" data-ng-click="scriptsCtrl.newScript" data-translate="scripts_button_add"></button>
+		<button type="button" class="btn btn-primary" name="addScript" id="addScript" data-ng-click="scriptsCtrl.newScript()" data-translate="scripts_button_add"></button>
     </div>
     <div class="row">
         <div data-ng-repeat="script in scriptsCtrl.scriptList">
@@ -10,7 +10,7 @@
                                 data-size="1"
                                 data-title="script.display"
                                 data-element="script">
-				<data-sag-script data-sensor="script"></data-sag-script>
+				<data-sag-script data-script="script"></data-sag-script>
 			</data-sag-container>
         </div>
     </div>

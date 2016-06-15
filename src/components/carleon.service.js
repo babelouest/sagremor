@@ -1,11 +1,11 @@
 angular.module('sagremorApp')
     .factory('carleonFactory', [
     '$http', 
-    'angharadConstant',
+    'angharadConfig',
     'angharadBackendService',
-    function($http, angharadConstant, angharadBackendService) {
+    function($http, angharadConfig, angharadBackendService) {
 
-    var urlBase = angharadConstant.baseUrl + angharadConstant.prefixCarleon;
+    var urlBase = angharadConfig.baseUrl + angharadConfig.prefixCarleon;
     var dataFactory = {};
 
     /* Base Carleon endpoints */

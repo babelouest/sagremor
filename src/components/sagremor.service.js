@@ -110,6 +110,21 @@ angular.module('sagremorApp')
 				}
 			});
 		};
+		
+		sagremorFactory.editScript = function (script) {
+			var modalInstance = $uibModal.open({
+				animation: true,
+				templateUrl: 'components/script/script.modal.html',
+				controller: 'ScriptModalCtrl',
+				controllerAs: 'ScriptModalCtrl',
+				size: 'sm',
+				resolve: {
+					script: function () {
+						return script;
+					}
+				}
+			});
+		};
     
 		return sagremorFactory;
 	}

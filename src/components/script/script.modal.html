@@ -1,0 +1,50 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h3 class="modal-title" data-translate="script_modal_title"></h3>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <span class="col-md-4" data-translate="script_name"></span>
+            <div class="col-md-8">
+                <input type="text" name="scriptName" id="scriptName" data-ng-model="ScriptModalCtrl.script.name" class="modal-input-text" size="16">
+            </div>
+        </div>
+        <div class="row">
+            <span class="col-md-4" data-translate="script_description"></span>
+            <div class="col-md-8">
+                <input type="text" name="scriptDecription" id="scriptDecription" data-ng-model="ScriptModalCtrl.script.description" class="modal-input-text" size="16">
+            </div>
+        </div>
+        <hr>
+        <div data-ng-repeat="action in ScriptModalCtrl.script.actions">
+			<div class="row">
+				<span class="col-md-4" data-translate="script_submodule"></span>
+				<div class="col-md-8">
+					<select data-ng-model="action.submodule">
+						<option data-ng-value="benoic" data-ng-bind="script_submodule_benoic"></option>
+						<option data-ng-value="carleon" data-ng-bind="script_submodule_carleon"></option>
+					</select>
+				</div>
+			</div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-4">
+                <button type="button" class="button" data-ng-click="ScriptModalCtrl.addAction()" data-translate="script_add_action"></button>
+            </div>
+        </div>
+        <div data-ng-if="ScriptModalCtrl.newAction">
+			<div class="row">
+				<span class="col-md-4" data-translate="script_submodule"></span>
+				<div class="col-md-8">
+					<select data-ng-model="newAction.element" data-ng-options="element.name as ScriptModalCtrl.tr(element.label) for element in ScriptModalCtrl.scriptActionElements track by element">
+					</select>
+				</div>
+			</div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" data-ng-click="ScriptModalCtrl.save()" data-translate="btn_ok"></button>
+        <button class="btn btn-warning" type="button" data-ng-click="ScriptModalCtrl.cancel()" data-dismiss="modal" data-translate="btn_cancel"></button>
+    </div>
+</div>

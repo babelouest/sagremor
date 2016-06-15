@@ -9,6 +9,31 @@ angular.module('sagremorApp', [
     'chart.js'
     ])
     .constant('_', window._)
+    .constant('angharadConstant', {
+		'scriptActionElements': [
+			{name: "switch", label: "script_action_benoic_switch"},
+			{name: "dimmer", label: "script_action_benoic_dimmer"},
+			{name: "heater", label: "script_action_benoic_heater"},
+			{name: "sag-mock", label: "script_action_sagremor_mock"}
+		],
+        'monitoredEveryEnum': [
+            {value: 60, label: "1_minute"},
+            {value: 120, label: "2_minutes"},
+            {value: 300, label: "5_minutes"},
+            {value: 600, label: "10_minutes"},
+            {value: 900, label: "15_minutes"},
+            {value: 1200, label: "20_minutes"},
+            {value: 1800, label: "30_minutes"},
+            {value: 3600, label: "1_hour"},
+            {value: 7200, label: "2_hours"},
+            {value: 10800, label: "3_hours"},
+            {value: 14400, label: "4_hours"},
+            {value: 18000, label: "5_hours"},
+            {value: 21600, label: "6_hours"},
+            {value: 43200, label: "12_hours"},
+            {value: 86400, label: "1_day"}
+        ]
+	})
     .config(['$translateProvider', '$translatePartialLoaderProvider', function ($translateProvider, $translatePartialLoaderProvider) {
         $translatePartialLoaderProvider.addPart('core');
         $translatePartialLoaderProvider.addPart('home');

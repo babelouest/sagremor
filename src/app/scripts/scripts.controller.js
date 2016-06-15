@@ -28,6 +28,11 @@ angular.module('sagremorApp')
             }
         };
         
+        this.newScript = function () {
+			console.log("plop");
+			sagremorService.editScript(null);
+		};
+		
         this.init();
         
     }

@@ -1,11 +1,11 @@
 angular.module('sagremorApp')
     .factory('benoicFactory', [
     '$http', 
-    'angharadConstant',
+    'angharadConfig',
     'angharadBackendService',
-    function($http, angharadConstant, angharadBackendService) {
+    function($http, angharadConfig, angharadBackendService) {
 
-    var urlBase = angharadConstant.baseUrl + angharadConstant.prefixBenoic;
+    var urlBase = angharadConfig.baseUrl + angharadConfig.prefixBenoic;
     var dataFactory = {};
 
     dataFactory.getDeviceTypes = function () {
