@@ -3,55 +3,149 @@ angular.module('sagremorApp')
     '$scope',
     '$location',
     '$translate',
+    '$timeout',
+    'sharedData',
     'sagremorService',
-    'sagremorParams',
-    function($scope, $location, $translate, sagremorService, sagremorParams) {
+    'benoicFactory',
+    function($scope, $location, $translate, $timeout, sharedData, sagremorService, benoicFactory) {
       
         var self = this;
         
-        this.dashboardWidgets = sagremorParams.dashboardWidgets;
+        this._timeout = null;
         
         this.init = function () {
-            if (!self.dashboardWidgets) {
-                self.dashboardWidgets = [];
-                sagremorParams.dashboardWidgets = [];
-            }
+            self.dashboardWidgets = [];
+            getDashboardElements();
 			$translate(["remove_from_dashboard"]).then(function (results) {
 				self.menu = [
 					{
 						name: "remove_from_dashboard", 
 						display: results.remove_from_dashboard, 
 						action: function (param) {
-							if (sagremorService.removeFromDashboard(param)) {
-                                $scope.$broadcast("refreshDashboard");
-                            }
+							removeFromDashboard(param);
 						}
 					}
 				];
             });
 		};
         
-        $scope.options = {
+        function getDashboardElements () {
+            self.dashboardWidgets = [];
+            getDashboardElementsAllProfiles();
+        }
+        
+        function getDashboardElementsAllProfiles () {
+            var devices = sharedData.all('benoicDevices');
+            _.forEach(devices, function (device, deviceName) {
+                _.forEach(device.element.switches, function(switcher, name) {
+                    _.forEach(switcher.options.tags, function (tag) {
+                        if (tag.indexOf("SGMR$D") === 0) {
+                            switcher.type = 'switch';
+                            switcher.device = deviceName;
+                            switcher.name = name;
+                            addBenoicElementToDashboard(switcher, tag);
+                        }
+                    });
+                });
+
+                _.forEach(device.element.dimmers, function(dimmer, name) {
+                    _.forEach(dimmer.options.tags, function (tag) {
+                        if (tag.indexOf("SGMR$D") === 0) {
+                            dimmer.type = 'dimmer';
+                            dimmer.device = deviceName;
+                            dimmer.name = name;
+                            addBenoicElementToDashboard(dimmer, tag);
+                        }
+                    });
+                });
+
+                _.forEach(device.element.sensors, function(sensor, name) {
+                    _.forEach(sensor.options.tags, function (tag) {
+                        if (tag.indexOf("SGMR$D") === 0) {
+                            sensor.type = 'sensor';
+                            sensor.device = deviceName;
+                            sensor.name = name;
+                            addBenoicElementToDashboard(sensor, tag);
+                        }
+                    });
+                });
+
+                _.forEach(device.element.heaters, function(heater, name) {
+                    _.forEach(heater.options.tags, function (tag) {
+                        if (tag.indexOf("SGMR$D") === 0) {
+                            heater.type = 'heater';
+                            heater.device = deviceName;
+                            heater.name = name;
+                            addBenoicElementToDashboard(heater, tag);
+                        }
+                    });
+                });
+            });
+        }
+        
+        function addBenoicElementToDashboard(element, tag) {
+            var tagParams = tag.split("$");
+            if (tagParams.length >= 4) {
+                var x = tagParams[2];
+                var y = tagParams[3];
+                var curHeight = 1;
+                if (element.type === "dimmer" || element.type === "heater") {
+                    curHeight = 2;
+                }
+                var dashboardElement = { type: element.type, device: element.device, name: element.name, element: element, x: x, y: y, width: 2, height: curHeight, tag: tag };
+                self.dashboardWidgets.push(dashboardElement);
+            }
+        }
+        
+        this.options = {
             cellHeight: 100,
             verticalHargin: 10
         };
-
-        $scope.removeWidget = function(w) {
-            var index = $scope.widgets.indexOf(w);
-            $scope.widgets.splice(index, 1);
+        
+        function removeFromDashboard(w) {
+            benoicFactory.removeTag(w.element.device, w.element.type, w.element.name, w.tag).then(function () {
+                var index = self.dashboardWidgets.indexOf(w);
+                self.dashboardWidgets.splice(index, 1);
+            });
         };
 
         $scope.onChange = function(event, items) {
-            console.log("onChange event: ",event," items:",items);
+            if(self._timeout) { // if there is already a timeout in process cancel it
+                $timeout.cancel(self._timeout);
+            }
+            self._timeout = $timeout(function() {
+                _.forEach(items, function (item) {
+                    var element = _.find(self.dashboardWidgets, function (widget) {
+                        return widget.type === $(item.el).attr('data-sag-type') &&
+                                widget.name === $(item.el).attr('data-sag-name') &&
+                                (!widget.device || widget.device === $(item.el).attr('data-sag-device'));
+                    });
+                    if (!!element) {
+                        var newTag = "SGMR$D$" + item.x + "$" + item.y;
+                        updateTag(element, newTag);
+                    }
+                });
+                self._timeout = null;
+            }, 500);
         };
-
-        $scope.onItemAdded = function(item) {
-            console.log("onItemAdded item: ",item);
-        };
-
-        $scope.onItemRemoved = function(item) {
-            console.log("onItemRemoved item: ",item);
-        };
+        
+        function updateTag(element, newTag) {
+            if (newTag !== element.tag) {
+                benoicFactory.removeTag(element.device, element.type, element.name, element.tag).then(function () {
+                    benoicFactory.addTag(element.device, element.type, element.name, newTag).then(function () {
+                        element.tag = newTag;
+                    });
+                });
+            }
+        }
+        
+        $scope.$on("refreshDashboard", function () {
+            getDashboardElements();
+        });
+        
+        $scope.$on('benoicDevicesChanged', function () {
+            getDashboardElements();
+        });
             
         this.init();
         

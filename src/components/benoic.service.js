@@ -59,6 +59,14 @@ angular.module('sagremorApp')
     dataFactory.getMonitor = function (deviceName, elementType, elementName) {
         return angharadBackendService.httpRequest("GET", urlBase + 'monitor/' + deviceName + '/' + elementType + '/' + elementName);
     };
+    
+    dataFactory.addTag = function (deviceName, elementType, elementName, tag) {
+        return angharadBackendService.httpRequest("PUT", urlBase + 'device/' + deviceName + '/' + elementType + '/' + elementName + '/' + tag);
+    };
+
+    dataFactory.removeTag = function (deviceName, elementType, elementName, tag) {
+        return angharadBackendService.httpRequest("DELETE", urlBase + 'device/' + deviceName + '/' + elementType + '/' + elementName + '/' + tag);
+    };
 
     return dataFactory;
 }]);

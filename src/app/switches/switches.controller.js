@@ -19,7 +19,7 @@ angular.module('sagremorApp')
 			if (!sagremorParams.loggedIn) {
 				$location.path("/login");
 			}
-			$translate(["edit", "monitor", "add_to_dashboard"]).then(function (results) {
+			$translate(["edit", "monitor", "add_to_dashboard_current_profile", "add_to_dashboard_all_profiles"]).then(function (results) {
 				self.menuSwitcher = [
 					{
 						name: "edit", 
@@ -36,10 +36,19 @@ angular.module('sagremorApp')
 						}
 					},
 					{
-						name: "add_dashboard", 
-						display: results.add_to_dashboard, 
+						name: "add_to_dashboard_current_profile", 
+						display: results.add_to_dashboard_current_profile, 
 						action: function (param) {
-							if (sagremorService.addToDashboard(param)) {
+							if (sagremorService.addToDashboard(param, false)) {
+                                $scope.$broadcast("refreshDashboard");
+                            }
+						}
+					},
+					{
+						name: "add_to_dashboard_all_profiles", 
+						display: results.add_to_dashboard_all_profiles, 
+						action: function (param) {
+							if (sagremorService.addToDashboard(param, true)) {
                                 $scope.$broadcast("refreshDashboard");
                             }
 						}
@@ -61,10 +70,19 @@ angular.module('sagremorApp')
 						}
 					},
 					{
-						name: "add_dashboard", 
-						display: results.add_to_dashboard, 
+						name: "add_to_dashboard_current_profile", 
+						display: results.add_to_dashboard_current_profile, 
 						action: function (param) {
-							if (sagremorService.addToDashboard(param)) {
+							if (sagremorService.addToDashboard(param, false)) {
+                                $scope.$broadcast("refreshDashboard");
+                            }
+						}
+					},
+					{
+						name: "add_to_dashboard_all_profiles", 
+						display: results.add_to_dashboard_all_profiles, 
+						action: function (param) {
+							if (sagremorService.addToDashboard(param, true)) {
                                 $scope.$broadcast("refreshDashboard");
                             }
 						}

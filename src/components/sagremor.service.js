@@ -2,7 +2,9 @@ angular.module('sagremorApp')
     .factory('sagremorService', [
     '$uibModal',
     'sagremorParams',
-    function($uibModal, sagremorParams) {
+    'benoicFactory',
+    'carleonFactory',
+    function($uibModal, sagremorParams, benoicFactory, carleonFactory) {
 		var sagremorFactory = {};
 		
 		sagremorFactory.monitor = function (element) {
@@ -21,28 +23,25 @@ angular.module('sagremorApp')
 		};
         
         sagremorFactory.addToDashboard = function (element, allProfiles) {
+            // add tag
+            var promise = null;
+            var tag = "SGMR$D$0$0";
 			if (allProfiles) {
 				if (!!element.device) {
+                    promise = benoicFactory.addTag(element.device, element.type, element.name, tag);
 				} else {
+                    promise = carleonFactory.elementAddTag(element.uid, element.name, tag);
 				}
 			} else {
 			}
-            var dashboardWidgets = sagremorParams.dashboardWidgets;
-            if (dashboardWidgets === undefined) {
-                dashboardWidgets = [];
-            }
-            if (!!element.device) {
-                var curHeight = 1;
-                if (element.type === "dimmer" || element.type === "heater") {
-                    curHeight = 2;
+            promise.then(function (result) {
+                if (!element.options.tags) {
+                    element.options.tags = [];
                 }
-                var dashboardElement = { type: element.type, element: element, x: 0, y: 0, width: 2, height: curHeight };
-                dashboardWidgets.push(dashboardElement);
-            } else if (element.type === "mock-service") {
-                var dashboardElement = { type: element.type, element: element, x: 0, y: 0, width: 2, height: 3 };
-                dashboardWidgets.push(dashboardElement);
-			}
-            sagremorParams.dashboardWidgets = dashboardWidgets;
+                element.options.tags.push(tag);
+            }, function (error) {
+                console.log(error);
+            });
             return true;
         };
         

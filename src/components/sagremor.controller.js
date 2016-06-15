@@ -69,6 +69,7 @@ angular.module('sagremorApp')
     function initParameters() {
         $http.defaults.headers.common["ANGHARAD_SESSION_ID"] = $cookieStore.get("ANGHARAD_SESSION_ID");
         sagremorParams.adminMode = false;
+        sagremorParams.loggedIn = true;
     }
     
     this.getAuth = function() {
@@ -80,6 +81,7 @@ angular.module('sagremorApp')
 			}
 		},
 		function(error) {
+            console.log(error);
 			if (error.status === 401) {
 				sagremorParams.loggedIn = false;
 				$location.path("/login");

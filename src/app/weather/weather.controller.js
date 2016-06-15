@@ -70,6 +70,7 @@ angular.module('sagremorApp')
 			if (!!mockService) {
 				_.forEach(mockService.element, function (mock) {
 					mock.type = "mock-service";
+                    mock.uid = mockService.uid;
 					self.mockServiceList.push(mock);
 				});
 			}
