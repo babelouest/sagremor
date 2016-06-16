@@ -1,12 +1,5 @@
 angular.module('sagremorApp')
-    .controller('CarleonMockModalCtrl', [
-    '$rootScope',
-    '$uibModalInstance',
-    '$translate',
-    'sharedData',
-    'toaster',
-    'carleonFactory',
-    'mock',
+    .controller('CarleonMockModalCtrl', 
     function($rootScope, $uibModalInstance, $translate, sharedData, toaster, carleonFactory, mock) {
         var self = this;
 
@@ -57,4 +50,4 @@ angular.module('sagremorApp')
 
         init();
     }
-]);
+);

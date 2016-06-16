@@ -81,6 +81,20 @@ angular.module('sagremorApp')
                     });
                 });
             });
+            
+            var services = sharedData.all('carleonServices');
+            _.forEach(services, function (service) {
+                _.forEach(service.element, function(element) {
+                    _.forEach(element.tags, function (tag) {
+                        if (tag.indexOf("SGMR$D") === 0) {
+                            element.type = service.uid;
+                            element.name = name;
+                            addBenoicElementToDashboard(element, tag);
+                        }
+                    });
+                });
+
+			});
         }
         
         function addBenoicElementToDashboard(element, tag) {

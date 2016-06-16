@@ -1,8 +1,5 @@
 angular.module('sagremorApp')
-    .factory('benoicFactory', [
-    '$http', 
-    'angharadConfig',
-    'angharadBackendService',
+    .factory('benoicFactory', 
     function($http, angharadConfig, angharadBackendService) {
 
     var urlBase = angharadConfig.baseUrl + angharadConfig.prefixBenoic;
@@ -69,4 +66,4 @@ angular.module('sagremorApp')
     };
 
     return dataFactory;
-}]);
+});

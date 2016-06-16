@@ -1,8 +1,5 @@
 angular.module('sagremorApp')
-    .factory('carleonFactory', [
-    '$http', 
-    'angharadConfig',
-    'angharadBackendService',
+    .factory('carleonFactory', 
     function($http, angharadConfig, angharadBackendService) {
 
     var urlBase = angharadConfig.baseUrl + angharadConfig.prefixCarleon;
@@ -72,4 +69,4 @@ angular.module('sagremorApp')
     };
 
     return dataFactory;
-}]);
+});

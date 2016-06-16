@@ -35,10 +35,10 @@ angular.module('sagremorApp')
 			} else {
 			}
             promise.then(function (result) {
-                if (!element.options.tags) {
-                    element.options.tags = [];
+                if (!element.tags) {
+                    element.tags = [];
                 }
-                element.options.tags.push(tag);
+                element.tags.push(tag);
             }, function (error) {
                 console.log(error);
             });
