@@ -18,11 +18,11 @@ angular.module('sagremorApp')
         return angharadBackendService.httpRequest("PUT", urlBase + 'service/' + service_uid + '/' + element + '/cleanup');
     };
 
-    dataFactory.elementAddTag = function (service_uid, element, tag) {
+    dataFactory.addTag = function (service_uid, element, tag) {
         return angharadBackendService.httpRequest("PUT", urlBase + 'service/' + service_uid + '/' + element + '/' + tag);
     };
 
-    dataFactory.elementRemoveTag = function (service_uid, element, tag) {
+    dataFactory.removeTag = function (service_uid, element, tag) {
         return angharadBackendService.httpRequest("DELETE", urlBase + 'service/' + service_uid + '/' + element + '/' + tag);
     };
 

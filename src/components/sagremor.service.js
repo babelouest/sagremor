@@ -1,10 +1,6 @@
 angular.module('sagremorApp')
-    .factory('sagremorService', [
-    '$uibModal',
-    'sagremorParams',
-    'benoicFactory',
-    'carleonFactory',
-    function($uibModal, sagremorParams, benoicFactory, carleonFactory) {
+    .factory('sagremorService', 
+    function($uibModal, toaster, sagremorParams, benoicFactory, carleonFactory) {
 		var sagremorFactory = {};
 		
 		sagremorFactory.monitor = function (element) {
@@ -30,18 +26,50 @@ angular.module('sagremorApp')
 				if (!!element.device) {
                     promise = benoicFactory.addTag(element.device, element.type, element.name, tag);
 				} else {
-                    promise = carleonFactory.elementAddTag(element.uid, element.name, tag);
+                    promise = carleonFactory.addTag(element.uid, element.name, tag);
 				}
+                promise.then(function () {
+                    if (!element.tags) {
+                        element.tags = [];
+                    }
+                    element.tags.push(tag);
+                    toaster.pop({type: 'success', title: $translate.instant('angharad_add_to_dashboard'), body: $translate.instant('angharad_add_to_dashboard_success')});
+                }, function () {
+                    toaster.pop({type: 'error', title: $translate.instant('angharad_add_to_dashboard'), body: $translate.instant('angharad_add_to_dashboard_error')});
+                });
 			} else {
-			}
-            promise.then(function (result) {
-                if (!element.tags) {
-                    element.tags = [];
+                var profile = sagremorParams.currentProfile;
+                if (!profile.addTo) {
+                    profile.addTo = {};
                 }
-                element.tags.push(tag);
-            }, function (error) {
-                console.log(error);
-            });
+                if (!profile.addTo.D) {
+                    profile.addTo.D = [];
+                }
+                if (!!element.device) {
+                    var newElement = {
+                        device: element.device,
+                        type: element.type,
+                        name: element.name,
+                        x: 0,
+                        y: 0
+                    };
+                    profile.addTo.D.push(newElement);
+                } else {
+                    var newElement = {
+                        uid: element.uid,
+                        type: element.service,
+                        name: element.name,
+                        x: 0,
+                        y: 0
+                    };
+                    profile.addTo.D.push(newElement);
+                }
+                carleonFactory.setProfile(profile.name, profile).then(function () {
+                    toaster.pop({type: 'success', title: $translate.instant('angharad_add_to_dashboard'), body: $translate.instant('angharad_add_to_dashboard_success')});
+                }, function () {
+                    toaster.pop({type: 'error', title: $translate.instant('angharad_add_to_dashboard'), body: $translate.instant('angharad_add_to_dashboard_error')});
+                });
+			}
             return true;
         };
         
@@ -133,4 +161,4 @@ angular.module('sagremorApp')
     
 		return sagremorFactory;
 	}
-]);
+);

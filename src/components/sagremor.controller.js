@@ -1,17 +1,5 @@
 angular.module('sagremorApp')
-  .controller('sagremorCtrl', [
-  '$scope',
-  '$http',
-  '$q',
-  '$location',
-  '$cookieStore',
-  '$translate',
-  'toaster',
-  'angharadFactory',
-  'benoicFactory',
-  'carleonFactory',
-  'sharedData',
-  'sagremorParams',
+  .controller('sagremorCtrl', 
   function($scope, $http, $q, $location, $cookieStore, $translate, toaster, angharadFactory, benoicFactory, carleonFactory, sharedData, sagremorParams) {
     var self = this;
     
@@ -235,4 +223,4 @@ angular.module('sagremorApp')
 	
     init();
   }
-]);
+);

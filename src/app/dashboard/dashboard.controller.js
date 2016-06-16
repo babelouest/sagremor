@@ -1,13 +1,6 @@
 angular.module('sagremorApp')
-    .controller('DashboardCtrl', [
-    '$scope',
-    '$location',
-    '$translate',
-    '$timeout',
-    'sharedData',
-    'sagremorService',
-    'benoicFactory',
-    function($scope, $location, $translate, $timeout, sharedData, sagremorService, benoicFactory) {
+    .controller('DashboardCtrl', 
+    function($scope, $location, $translate, $timeout, sharedData, sagremorParams, sagremorService, benoicFactory, carleonFactory) {
       
         var self = this;
         
@@ -32,6 +25,7 @@ angular.module('sagremorApp')
         function getDashboardElements () {
             self.dashboardWidgets = [];
             getDashboardElementsAllProfiles();
+            getDashboardElementsCurrentProfiles();
         }
         
         function getDashboardElementsAllProfiles () {
@@ -87,14 +81,29 @@ angular.module('sagremorApp')
                 _.forEach(service.element, function(element) {
                     _.forEach(element.tags, function (tag) {
                         if (tag.indexOf("SGMR$D") === 0) {
-                            element.type = service.uid;
-                            element.name = name;
-                            addBenoicElementToDashboard(element, tag);
+                            element.type = service.name;
+                            element.uid = service.uid;
+                            addCarleonElementToDashboard(element, tag);
                         }
                     });
                 });
 
 			});
+        }
+        
+        function getDashboardElementsCurrentProfiles() {
+            var profile = sagremorParams.currentProfile;
+            if (!!profile && !!profile.addTo && !!profile.addTo.D) {
+                _.forEach(profile.addTo.D, function (element) {
+                    if (!!element.device) {
+                        var tag = "SGMR$D$" + element.x + "$" + element.y;
+                        addBenoicElementToDashboard(element, tag);
+                    } else {
+                        var tag = "SGMR$D$" + element.x + "$" + element.y;
+                        addCarleonElementToDashboard(element, tag);
+                    }
+                });
+            }
         }
         
         function addBenoicElementToDashboard(element, tag) {
@@ -111,16 +120,34 @@ angular.module('sagremorApp')
             }
         }
         
+        function addCarleonElementToDashboard(element, tag) {
+            var tagParams = tag.split("$");
+            if (tagParams.length >= 4) {
+                var x = tagParams[2];
+                var y = tagParams[3];
+                var curHeight = 3;
+                var dashboardElement = { type: element.type, uid: element.uid, name: element.name, element: element, x: x, y: y, width: 2, height: curHeight, tag: tag };
+                self.dashboardWidgets.push(dashboardElement);
+            }
+        }
+        
         this.options = {
             cellHeight: 100,
             verticalHargin: 10
         };
         
         function removeFromDashboard(w) {
-            benoicFactory.removeTag(w.element.device, w.element.type, w.element.name, w.tag).then(function () {
-                var index = self.dashboardWidgets.indexOf(w);
-                self.dashboardWidgets.splice(index, 1);
-            });
+            if (!!w.element.device) {
+                benoicFactory.removeTag(w.element.device, w.element.type, w.element.name, w.tag).then(function () {
+                    var index = self.dashboardWidgets.indexOf(w);
+                    self.dashboardWidgets.splice(index, 1);
+                });
+            } else {
+                carleonFactory.removeTag(w.element.uid, w.element.name, w.tag).then(function () {
+                    var index = self.dashboardWidgets.indexOf(w);
+                    self.dashboardWidgets.splice(index, 1);
+                });
+            }
         };
 
         $scope.onChange = function(event, items) {
@@ -132,7 +159,8 @@ angular.module('sagremorApp')
                     var element = _.find(self.dashboardWidgets, function (widget) {
                         return widget.type === $(item.el).attr('data-sag-type') &&
                                 widget.name === $(item.el).attr('data-sag-name') &&
-                                (!widget.device || widget.device === $(item.el).attr('data-sag-device'));
+                                (!widget.device || widget.device === $(item.el).attr('data-sag-device')) &&
+                                (!widget.uid || widget.uid === $(item.el).attr('data-sag-uid'));
                     });
                     if (!!element) {
                         var newTag = "SGMR$D$" + item.x + "$" + item.y;
@@ -145,11 +173,19 @@ angular.module('sagremorApp')
         
         function updateTag(element, newTag) {
             if (newTag !== element.tag) {
-                benoicFactory.removeTag(element.device, element.type, element.name, element.tag).then(function () {
-                    benoicFactory.addTag(element.device, element.type, element.name, newTag).then(function () {
-                        element.tag = newTag;
+                if (!!element.device) {
+                    benoicFactory.removeTag(element.device, element.type, element.name, element.tag).then(function () {
+                        benoicFactory.addTag(element.device, element.type, element.name, newTag).then(function () {
+                            element.tag = newTag;
+                        });
                     });
-                });
+                } else {
+                    carleonFactory.removeTag(element.uid, element.name, element.tag).then(function () {
+                        carleonFactory.addTag(element.uid, element.name, newTag).then(function () {
+                            element.tag = newTag;
+                        });
+                    });
+                }
             }
         }
         
@@ -163,4 +199,4 @@ angular.module('sagremorApp')
             
         this.init();
         
-}]);
+});
