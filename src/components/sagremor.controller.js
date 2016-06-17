@@ -69,7 +69,6 @@ angular.module('sagremorApp')
 			}
 		},
 		function(error) {
-            console.log(error);
 			if (error.status === 401) {
 				sagremorParams.loggedIn = false;
 				$location.path("/login");

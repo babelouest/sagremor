@@ -1,8 +1,9 @@
 angular.module('sagremorApp')
     .controller('DashboardCtrl', 
-    function($scope, $location, $translate, $timeout, sharedData, sagremorParams, sagremorService, benoicFactory, carleonFactory) {
+    function($scope, $location, $translate, $timeout, sharedData, sagremorParams, sagremorService, benoicFactory, carleonFactory, sagGenericInjectorManager) {
       
         var self = this;
+        self.sagGenericInjectorManager = sagGenericInjectorManager;
         
         this._timeout = null;
         
@@ -194,11 +195,9 @@ angular.module('sagremorApp')
 						});
 					}
 				} else {
-					console.log(sagremorParams.currentProfile);
 					var splitted = newTag.split("$");
 					element.x = splitted[2];
 					element.y = splitted[3];
-					console.log(sagremorParams.currentProfile);
 				}
             }
         }

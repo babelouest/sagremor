@@ -1,17 +1,17 @@
 function sagDimmerController (benoicFactory, sagremorParams, $translate) {
     var ctrl = this;
     
-    ctrl.dimmer.valueChecked = (ctrl.dimmer.value === 1);
+    ctrl.element.valueChecked = (ctrl.element.value === 1);
     ctrl.adminMode = sagremorParams.adminMode;
-    ctrl.dimmer.newDisplay = ctrl.dimmer.display;
+    ctrl.element.newDisplay = ctrl.element.display;
     
     function init() {
-        ctrl.dimmer.type = "dimmer";
+        ctrl.element.type = "dimmer";
     }
     
     ctrl.setDimmer = function (value) {
-        benoicFactory.setElement(ctrl.dimmer.device, 'dimmer', ctrl.dimmer.name, value).then(function () {
-            ctrl.dimmer.value = value;
+        benoicFactory.setElement(ctrl.element.device, 'dimmer', ctrl.element.name, value).then(function () {
+            ctrl.element.value = value;
         });
     };
     
@@ -22,6 +22,13 @@ angular.module('sagremorApp').component('sagDimmer', {
     templateUrl: 'components/dimmer/dimmer.template.html',
     controller: sagDimmerController,
     bindings: {
-        dimmer: '='
+        element: '='
     }
+})
+.run(function(sagGenericInjectorManager) {
+    sagGenericInjectorManager.add({
+        title: "Chauffages",
+        type: "dimmer",
+        directive: "sag-dimmer"
+    });
 });

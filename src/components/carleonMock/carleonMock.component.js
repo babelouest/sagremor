@@ -10,7 +10,7 @@ function carleonMockController (carleonFactory, sagremorParams, $translate, toas
     }
     
     ctrl.command = function () {
-		carleonFactory.commandMock(ctrl.mock.name, ctrl.param.command, ctrl.param.param1, ctrl.param.param2, ctrl.param.param3).then(function (result) {
+		carleonFactory.commandMock(ctrl.element.name, ctrl.param.command, ctrl.param.param1, ctrl.param.param2, ctrl.param.param3).then(function (result) {
 			toaster.pop("success", $translate.instant('carleon_mock_command'), $translate.instant('carleon_mock_command_success'));
 		}, function (error) {
 			toaster.pop("error", $translate.instant('carleon_mock_command'), $translate.instant('carleon_mock_command_error'));
@@ -24,6 +24,13 @@ angular.module('sagremorApp').component('carleonMock', {
     templateUrl: 'components/carleonMock/carleonMock.template.html',
     controller: carleonMockController,
     bindings: {
-        mock: '='
+        element: '='
     }
+})
+.run(function(sagGenericInjectorManager) {
+    sagGenericInjectorManager.add({
+        title: "Chauffages",
+        type: "mock",
+        directive: "carleon-mock"
+    });
 });
