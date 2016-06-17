@@ -37,6 +37,7 @@ angular.module('sagremorApp')
                             switcher.type = 'switch';
                             switcher.device = deviceName;
                             switcher.name = name;
+                            switcher.profile = "all";
                             addBenoicElementToDashboard(switcher, tag);
                         }
                     });
@@ -48,6 +49,7 @@ angular.module('sagremorApp')
                             dimmer.type = 'dimmer';
                             dimmer.device = deviceName;
                             dimmer.name = name;
+                            dimmer.profile = "all";
                             addBenoicElementToDashboard(dimmer, tag);
                         }
                     });
@@ -59,6 +61,7 @@ angular.module('sagremorApp')
                             sensor.type = 'sensor';
                             sensor.device = deviceName;
                             sensor.name = name;
+                            sensor.profile = "all";
                             addBenoicElementToDashboard(sensor, tag);
                         }
                     });
@@ -70,6 +73,7 @@ angular.module('sagremorApp')
                             heater.type = 'heater';
                             heater.device = deviceName;
                             heater.name = name;
+                            heater.profile = "all";
                             addBenoicElementToDashboard(heater, tag);
                         }
                     });
@@ -83,6 +87,7 @@ angular.module('sagremorApp')
                         if (tag.indexOf("SGMR$D") === 0) {
                             element.type = service.name;
                             element.uid = service.uid;
+                            element.profile = "all";
                             addCarleonElementToDashboard(element, tag);
                         }
                     });
@@ -95,12 +100,13 @@ angular.module('sagremorApp')
             var profile = sagremorParams.currentProfile;
             if (!!profile && !!profile.addTo && !!profile.addTo.D) {
                 _.forEach(profile.addTo.D, function (element) {
+					element.profile = "current";
                     if (!!element.device) {
-                        var tag = "SGMR$D$" + element.x + "$" + element.y;
-                        addBenoicElementToDashboard(element, tag);
+                        element.tag = "SGMR$D$" + element.x + "$" + element.y;
+                        addBenoicElementToDashboard(element, element.tag);
                     } else {
-                        var tag = "SGMR$D$" + element.x + "$" + element.y;
-                        addCarleonElementToDashboard(element, tag);
+                        element.tag = "SGMR$D$" + element.x + "$" + element.y;
+                        addCarleonElementToDashboard(element, element.tag);
                     }
                 });
             }
@@ -163,8 +169,8 @@ angular.module('sagremorApp')
                                 (!widget.uid || widget.uid === $(item.el).attr('data-sag-uid'));
                     });
                     if (!!element) {
-                        var newTag = "SGMR$D$" + item.x + "$" + item.y;
-                        updateTag(element, newTag);
+						var newTag = "SGMR$D$" + item.x + "$" + item.y;
+						updateTag(element, newTag);
                     }
                 });
                 self._timeout = null;
@@ -173,19 +179,27 @@ angular.module('sagremorApp')
         
         function updateTag(element, newTag) {
             if (newTag !== element.tag) {
-                if (!!element.device) {
-                    benoicFactory.removeTag(element.device, element.type, element.name, element.tag).then(function () {
-                        benoicFactory.addTag(element.device, element.type, element.name, newTag).then(function () {
-                            element.tag = newTag;
-                        });
-                    });
-                } else {
-                    carleonFactory.removeTag(element.uid, element.name, element.tag).then(function () {
-                        carleonFactory.addTag(element.uid, element.name, newTag).then(function () {
-                            element.tag = newTag;
-                        });
-                    });
-                }
+				if (element.profile === "all") {
+					if (!!element.device) {
+						benoicFactory.removeTag(element.device, element.type, element.name, element.tag).then(function () {
+							benoicFactory.addTag(element.device, element.type, element.name, newTag).then(function () {
+								element.tag = newTag;
+							});
+						});
+					} else {
+						carleonFactory.removeTag(element.uid, element.name, element.tag).then(function () {
+							carleonFactory.addTag(element.uid, element.name, newTag).then(function () {
+								element.tag = newTag;
+							});
+						});
+					}
+				} else {
+					console.log(sagremorParams.currentProfile);
+					var splitted = newTag.split("$");
+					element.x = splitted[2];
+					element.y = splitted[3];
+					console.log(sagremorParams.currentProfile);
+				}
             }
         }
         

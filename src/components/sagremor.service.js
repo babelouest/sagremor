@@ -1,6 +1,6 @@
 angular.module('sagremorApp')
     .factory('sagremorService', 
-    function($uibModal, toaster, sagremorParams, benoicFactory, carleonFactory) {
+    function($uibModal, $translate, toaster, sagremorParams, benoicFactory, carleonFactory) {
 		var sagremorFactory = {};
 		
 		sagremorFactory.monitor = function (element) {
