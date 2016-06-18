@@ -11,7 +11,6 @@ angular.module('sagremorApp').directive('sagGenericInjector', function ($compile
         },
         link: function(scope, element) {
             var config = _.find(sagGenericInjectorManager.components, {type: scope.type});
-            var content;
             if (!!config) {
                 content = $compile(template.replace(/directive/g, config.directive))(scope);
             } else {

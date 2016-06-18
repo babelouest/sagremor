@@ -1,6 +1,6 @@
 angular.module('sagremorApp')
     .factory('sagremorService', 
-    function($uibModal, $translate, toaster, sagremorParams, benoicFactory, carleonFactory) {
+    function($uibModal, $translate, toaster, sharedData, sagremorParams, benoicFactory, carleonFactory) {
 		var sagremorFactory = {};
 		
 		sagremorFactory.monitor = function (element) {
@@ -18,58 +18,38 @@ angular.module('sagremorApp')
 			});
 		};
         
-        sagremorFactory.addToDashboard = function (element, allProfiles) {
+        sagremorFactory.addToDashboard = function (element) {
             // add tag
-            var promise = null;
             var tag = "SGMR$D$0$0";
-			if (allProfiles) {
-				if (!!element.device) {
-                    promise = benoicFactory.addTag(element.device, element.type, element.name, tag);
-				} else {
-                    promise = carleonFactory.addTag(element.uid, element.name, tag);
-				}
-                promise.then(function () {
-                    if (!element.tags) {
-                        element.tags = [];
-                    }
-                    element.tags.push(tag);
-                    toaster.pop({type: 'success', title: $translate.instant('angharad_add_to_dashboard'), body: $translate.instant('angharad_add_to_dashboard_success')});
-                }, function () {
-                    toaster.pop({type: 'error', title: $translate.instant('angharad_add_to_dashboard'), body: $translate.instant('angharad_add_to_dashboard_error')});
-                });
-			} else {
-                var profile = sagremorParams.currentProfile;
-                if (!profile.addTo) {
-                    profile.addTo = {};
-                }
-                if (!profile.addTo.D) {
-                    profile.addTo.D = [];
-                }
-                if (!!element.device) {
-                    var newElement = {
-                        device: element.device,
-                        type: element.type,
-                        name: element.name,
-                        x: 0,
-                        y: 0
-                    };
-                    profile.addTo.D.push(newElement);
-                } else {
-                    var newElement = {
-                        uid: element.uid,
-                        type: element.service,
-                        name: element.name,
-                        x: 0,
-                        y: 0
-                    };
-                    profile.addTo.D.push(newElement);
-                }
-                carleonFactory.setProfile(profile.name, profile).then(function () {
-                    toaster.pop({type: 'success', title: $translate.instant('angharad_add_to_dashboard'), body: $translate.instant('angharad_add_to_dashboard_success')});
-                }, function () {
-                    toaster.pop({type: 'error', title: $translate.instant('angharad_add_to_dashboard'), body: $translate.instant('angharad_add_to_dashboard_error')});
-                });
+			var profile = sagremorParams.currentProfile;
+			if (!profile.addTo) {
+				profile.addTo = {};
 			}
+			if (!profile.addTo.D) {
+				profile.addTo.D = [];
+			}
+			if (!!element.device) {
+				var newElement = {
+					device: element.device,
+					type: element.type,
+					name: element.name,
+					tag: tag
+				};
+				profile.addTo.D.push(newElement);
+			} else {
+				var newElement = {
+					uid: element.uid,
+					type: element.type,
+					name: element.name,
+					tag: tag
+				};
+				profile.addTo.D.push(newElement);
+			}
+			carleonFactory.setProfile(profile.name, profile).then(function () {
+				toaster.pop({type: 'success', title: $translate.instant('angharad_add_to_dashboard'), body: $translate.instant('angharad_add_to_dashboard_success')});
+			}, function () {
+				toaster.pop({type: 'error', title: $translate.instant('angharad_add_to_dashboard'), body: $translate.instant('angharad_add_to_dashboard_error')});
+			});
             return true;
         };
         
@@ -157,6 +137,46 @@ angular.module('sagremorApp')
 					}
 				}
 			});
+		};
+		
+		sagremorFactory.getBenoicElement = function (device, type, name) {
+			var elements = sharedData.get("benoicDevices", device);
+			if (!!elements) {
+				switch (type) {
+					case "switch":
+						if (elements.element.switches[name]) {
+							return elements.element.switches[name];
+						}
+						break;
+					case "dimmer":
+						if (elements.element.dimmers[name]) {
+							return elements.element.dimmers[name];
+						}
+						break;
+					case "heater":
+						if (elements.element.heaters[name]) {
+							return elements.element.heaters[name];
+						}
+						break;
+					case "sensor":
+						if (elements.element.sensors[name]) {
+							return elements.element.sensors[name];
+						}
+						break;
+				}
+			}
+			return false;
+		};
+		
+		sagremorFactory.getCarleonElement = function (service, name) {
+			var service = sharedData.get("carleonServices", service);
+			if (!!service) {
+				var element = _.find(service.element, function(elt) {
+					return elt.name === name;
+				});
+				return element||false;
+			}
+			return false;
 		};
     
 		return sagremorFactory;

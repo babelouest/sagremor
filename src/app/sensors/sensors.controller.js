@@ -18,7 +18,7 @@ angular.module('sagremorApp')
 			if (!sagremorParams.loggedIn) {
 				$location.path("/login");
 			}
-			$translate(["edit", "monitor", "add_to_dashboard_current_profile", "add_to_dashboard_all_profiles"]).then(function (results) {
+			$translate(["edit", "monitor", "add_to_dashboard"]).then(function (results) {
 				self.menuSensor = [
 					{
 						name: "edit", 
@@ -35,19 +35,10 @@ angular.module('sagremorApp')
 						}
 					},
 					{
-						name: "add_to_dashboard_current_profile", 
-						display: results.add_to_dashboard_current_profile, 
+						name: "add_to_dashboard", 
+						display: results.add_to_dashboard, 
 						action: function (param) {
 							if (sagremorService.addToDashboard(param, false)) {
-                                $scope.$broadcast("refreshDashboard");
-                            }
-						}
-					},
-					{
-						name: "add_to_dashboard_all_profiles", 
-						display: results.add_to_dashboard_all_profiles, 
-						action: function (param) {
-							if (sagremorService.addToDashboard(param, true)) {
                                 $scope.$broadcast("refreshDashboard");
                             }
 						}

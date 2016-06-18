@@ -30,7 +30,7 @@ angular.module('sagremorApp').component('carleonMock', {
 .run(function(sagGenericInjectorManager) {
     sagGenericInjectorManager.add({
         title: "Chauffages",
-        type: "mock",
+        type: "mock-service",
         directive: "carleon-mock"
     });
 });

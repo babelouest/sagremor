@@ -7,8 +7,7 @@
 	"btn_close": "Close",
 	"edit": "Edit",
 	"remove": "Remove",
-	"add_to_dashboard_current_profile": "Add to dashboard (Current profile)",
-	"add_to_dashboard_all_profiles": "Add to dashboard (All profiles)",
+	"add_to_dashboard": "Add to dashboard",
     "angharad_add_to_dashboard": "Add to dashboard",
     "angharad_add_to_dashboard_success": "Success",
     "angharad_add_to_dashboard_error": "Error",
@@ -115,5 +114,5 @@
 	"profile_remove_confirm": "Are you sure you want to delete this profile ?",
 	"profiles_save_success": "Success",
 	"profiles_save_error": "Error",
-	"profile_used": "Current profile"
+	"profile_used": "Current profile",
 }
