@@ -16,31 +16,56 @@
  *   }
  * 
  */
-angular.module('sagremorApp')
-    .controller('ScriptModalCtrl', [
-    '$scope',
-    '$uibModalInstance',
-    '$translate',
-    'toaster',
-    'angharadConstant',
-    'benoicFactory',
-    'script',
-    function($scope, $uibModalInstance, $translate, toaster, angharadConstant, angharadFactory, script) {
+angular.module("sagremorApp")
+    .controller("ScriptModalCtrl",
+    function($scope, $uibModalInstance, $translate, toaster, sagremorConstant, sagremorService, angharadFactory, sharedData, script) {
         var self = this;
         
         this.script = script;
+        this.add = false;
         this.newAction = false;
-        this.scriptActionElements = angharadConstant.scriptActionElements;
+        this.scriptActionElements = sagremorConstant.scriptActionElements;
+        this.benoicElements = {
+			switches: [],
+			dimmers: [],
+			heaters: []
+		}
         
         function init() {
+			if (!self.script) {
+				self.add = true;
+				self.script = {
+					actions: []
+				};
+			}
+			_.forEach(sharedData.all("benoicDevices"), function (device) {
+				_.forEach(device.element.switches, function(element, name) {
+					var elt = {
+						device: device.name,
+						type: "switch",
+						name: name,
+						display: element.display,
+						value: true
+					}
+					self.benoicElements.switches.push(elt);
+				});
+			});
         }
         
-        this.addAction = function () {
-			self.newAction = true;
+        this.trackBenoicElement = function(element, type) {
+			return element.device + "$" + type + "$" + element.name;
 		};
         
+        this.addAction = function () {
+			self.newAction = {
+				switcher : {
+					value: true
+				}
+			};
+		};
+		
         this.cancel = function () {
-            $uibModalInstance.dismiss('cancel');
+            $uibModalInstance.dismiss("cancel");
         };
         
         this.tr = function (id) {
@@ -48,18 +73,49 @@ angular.module('sagremorApp')
 		};
 
         this.save = function () {
-            self.sensor.display = self.sensor.newDisplay;
-            self.sensor.monitor = self.sensor.monitorChecked?1:0;
-            benoicFactory.updateElement(self.sensor.device, "sensor", self.sensor.name, self.sensor).then(function (response) {
-                $scope.$broadcast('benoicSensorsChanged');
-                toaster.pop("success", self.messages.sensor_save, self.messages.sensor_save_success);
-            }, function (error) {
-                toaster.pop("error", self.messages.sensor_save, self.messages.sensor_save_error);
-            })['finally'](function () {
-                $uibModalInstance.dismiss('close');
-            });
+			if (self.add) {
+			} else {
+			}
         };
+        
+        this.getBenoicElementDisplay = function (action) {
+			var element = sagremorService.getBenoicElement(action.parameters.device, action.parameters.type, action.element);
+			if (!!element) {
+				return element.display;
+			} else {
+				return $translate.instant("not_found");
+			}
+		};
+		
+		this.getBenoicElementValue = function (action) {
+			switch (action.parameters.type) {
+				case "switch":
+					return action.command==="1"?$translate.instant("switch_on"):$translate.instant("switch_off");
+					break;
+			}
+		};
+        
+        this.cancelAddAction = function () {
+			self.newAction = false;
+		};
+		
+		this.saveNewAction = function () {
+			switch (self.newAction.element.name) {
+				case "switch":
+					self.script.actions.push({
+						submodule: "benoic",
+						element: self.newAction.switcher.name,
+						command: self.newAction.switcher.value?"1":"0",
+						parameters: {
+							device: self.newAction.switcher.device,
+							type: "switch"
+						}
+					});
+					self.newAction = false;
+					break;
+			}
+		};
         
         init();
     }
-]);
+);

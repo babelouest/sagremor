@@ -16,29 +16,59 @@
             </div>
         </div>
         <hr>
+        <h4 data-translate="script_actions"></h4>
         <div data-ng-repeat="action in ScriptModalCtrl.script.actions">
-			<div class="row">
-				<span class="col-md-4" data-translate="script_submodule"></span>
+			<div class="row" data-ng-if="action.submodule === 'benoic' && action.parameters.type === 'switch'">
 				<div class="col-md-8">
-					<select data-ng-model="action.submodule">
-						<option data-ng-value="benoic" data-ng-bind="script_submodule_benoic"></option>
-						<option data-ng-value="carleon" data-ng-bind="script_submodule_carleon"></option>
-					</select>
+					<strong data-ng-bind="ScriptModalCtrl.getBenoicElementDisplay(action)"></strong>
+				</div>
+				<div class="col-md-4">
+					<strong  data-ng-bind="ScriptModalCtrl.getBenoicElementValue(action)"></strong>
 				</div>
 			</div>
         </div>
-        <hr>
+		<hr>
         <div class="row">
-            <div class="col-md-4">
-                <button type="button" class="button" data-ng-click="ScriptModalCtrl.addAction()" data-translate="script_add_action"></button>
+            <div class="col-md-12">
+                <button type="button" class="btn btn-primary" data-ng-click="ScriptModalCtrl.addAction()" data-translate="script_add_action"></button>
             </div>
         </div>
+        <hr>
         <div data-ng-if="ScriptModalCtrl.newAction">
 			<div class="row">
-				<span class="col-md-4" data-translate="script_submodule"></span>
+				<span class="col-md-4" data-translate="script_action"></span>
 				<div class="col-md-8">
-					<select data-ng-model="newAction.element" data-ng-options="element.name as ScriptModalCtrl.tr(element.label) for element in ScriptModalCtrl.scriptActionElements track by element">
+					<select data-ng-model="ScriptModalCtrl.newAction.element" data-ng-options="element as ScriptModalCtrl.tr(element.label) for element in ScriptModalCtrl.scriptActionElements track by element.name">
 					</select>
+				</div>
+			</div>
+			<div data-ng-if="ScriptModalCtrl.newAction.element.name === 'switch'">
+				<div class="row">
+					<span class="col-md-4" data-translate="script_switch_select"></span>
+					<div class="col-md-8">
+						<select data-ng-model="ScriptModalCtrl.newAction.switcher" data-ng-options="switch as switch.display for switch in ScriptModalCtrl.benoicElements.switches track by ScriptModalCtrl.trackBenoicElement(switch, 'switch')">
+						</select>
+					</div>
+				</div>
+				<div class="row">
+					<span class="col-md-4" data-translate="script_switch_value"></span>
+					<div class="col-md-8">
+						<input type="checkbox"
+								data-bs-switch
+								data-toggle="toggle"
+								data-switch-size="mini"
+								data-ng-model="ScriptModalCtrl.newAction.switcher.value"
+								data-ng-checked="false">
+					</div>
+				</div>
+			</div>
+			<hr>
+			<div class="row">
+				<div class="col-md-6">
+					<button type="button" class="btn btn-primary" data-ng-click="ScriptModalCtrl.saveNewAction()" data-translate="btn_add"></button>
+				</div>
+				<div class="col-md-6">
+					<button type="button" class="btn btn-primary" data-ng-click="ScriptModalCtrl.cancelAddAction()" data-translate="btn_cancel"></button>
 				</div>
 			</div>
         </div>

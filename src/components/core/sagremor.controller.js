@@ -1,5 +1,5 @@
-angular.module('sagremorApp')
-  .controller('sagremorCtrl', 
+angular.module("sagremorApp")
+  .controller("sagremorCtrl", 
   function($scope, $rootScope, $http, $q, $location, $cookieStore, $translate, toaster, angharadFactory, benoicFactory, carleonFactory, sharedData, sagremorParams) {
     var self = this;
     
@@ -25,7 +25,7 @@ angular.module('sagremorApp')
                 }
                 $scope.$broadcast("submodulesChanged");
             }, function (error) {
-				toaster.pop({type: 'error', title: $translate.instant('angharad_loading_title'), body: $translate.instant('init_message_loading_error')});
+				toaster.pop({type: "error", title: $translate.instant("angharad_loading_title"), body: $translate.instant("init_message_loading_error")});
             });
 		});
     }
@@ -45,14 +45,14 @@ angular.module('sagremorApp')
     function closeLoader(result) {
         toaster.clear(self.loaderToast);
         if (result) {
-            toaster.pop({type: 'success', title: $translate.instant('angharad_loading_title'), body: $translate.instant('init_message_loading_complete')});
+            toaster.pop({type: "success", title: $translate.instant("angharad_loading_title"), body: $translate.instant("init_message_loading_complete")});
         } else {
-            toaster.pop({type: 'error', title: $translate.instant('angharad_loading_title'), body: $translate.instant('init_message_loading_error')});
+            toaster.pop({type: "error", title: $translate.instant("angharad_loading_title"), body: $translate.instant("init_message_loading_error")});
         }
     }
     
     function popLoader() {
-        self.loaderToast = toaster.pop({type: 'wait', title: $translate.instant('angharad_loading_title'), body: $translate.instant('init_message_loading'), timeout: 0, showCloseButton: false});
+        self.loaderToast = toaster.pop({type: "wait", title: $translate.instant("angharad_loading_title"), body: $translate.instant("init_message_loading"), timeout: 0, showCloseButton: false});
     }
     
     function initParameters() {
@@ -98,9 +98,9 @@ angular.module('sagremorApp')
             
             // Handle device types
             _.forEach(deviceTypesResult, function (type) {
-                sharedData.add('benoicDeviceTypes', type.name, type);
+                sharedData.add("benoicDeviceTypes", type.name, type);
             });
-            $scope.$broadcast('benoicDeviceTypesChanged');
+            $scope.$broadcast("benoicDeviceTypesChanged");
             
             // Handle devices
             var deviceList = [];
@@ -110,22 +110,22 @@ angular.module('sagremorApp')
                     deviceList.push(benoicFactory.getDeviceOverview(deviceResult[index].name));
                     deviceListName.push(deviceResult[index].name);
                 }
-                sharedData.add('benoicDevices', deviceResult[index].name, deviceResult[index]);
+                sharedData.add("benoicDevices", deviceResult[index].name, deviceResult[index]);
             }
             $q.all(deviceList).then(function (responses) {
                 for (index in responses) {
-                    var curDevice = sharedData.get('benoicDevices', deviceListName[index]);
+                    var curDevice = sharedData.get("benoicDevices", deviceListName[index]);
                     curDevice.element = responses[index];
                 }
-                $scope.$broadcast('benoicDevicesChanged');
+                $scope.$broadcast("benoicDevicesChanged");
             }, function (error) {
-                toaster.pop("error", $translate.instant('benoic_loading_title'), $translate.instant('benoic_loading_error'));
-            })['finally'](function () {
+                toaster.pop("error", $translate.instant("benoic_loading_title"), $translate.instant("benoic_loading_error"));
+            })["finally"](function () {
                 self.benoicInitComplete = true;
                 $scope.$broadcast("initComplete");
             });
         }, function (error) {
-            toaster.pop("error", $translate.instant('benoic_loading_title'), $translate.instant('benoic_loading_error'));
+            toaster.pop("error", $translate.instant("benoic_loading_title"), $translate.instant("benoic_loading_error"));
         });
     }
     
@@ -140,9 +140,9 @@ angular.module('sagremorApp')
 				_.forEach(results.services[key].element, function (element) {
 					element.type = results.services[key].name;
 				});
-				sharedData.add('carleonServices', results.services[key].name, results.services[key]);
+				sharedData.add("carleonServices", results.services[key].name, results.services[key]);
 			}
-			$scope.$broadcast('carleonServicesChanged');
+			$scope.$broadcast("carleonServicesChanged");
 			
 			if (results.profiles.length === 0) {
 				self.setDefaultProfile();
@@ -164,9 +164,9 @@ angular.module('sagremorApp')
 					self.setDefaultProfile();
 				}
 			}
-			$scope.$broadcast('carleonProfilesChanged');
+			$scope.$broadcast("carleonProfilesChanged");
 		}, function (error) {
-			toaster.pop({type: 'error', title: $translate.instant('carleon_loading_title'), body: $translate.instant('carleon_loading_error')});
+			toaster.pop({type: "error", title: $translate.instant("carleon_loading_title"), body: $translate.instant("carleon_loading_error")});
 		});
 		
 	};
@@ -207,17 +207,17 @@ angular.module('sagremorApp')
 			for (sc in result.scripts) {
 				sharedData.add("angharadScripts", sc, result.script[sc]);
 			}
-			$scope.$broadcast('angharadScriptsChanged');
+			$scope.$broadcast("angharadScriptsChanged");
 			for (sh in result.schedulers) {
 				sharedData.add("angharadSchedulers", sh, result.schedulers[sh]);
 			}
-			$scope.$broadcast('angharadSchedulersChanged');
+			$scope.$broadcast("angharadSchedulersChanged");
 			for (tr in result.triggers) {
 				sharedData.add("angharadTriggers", tr, result.triggers[tr]);
 			}
-			$scope.$broadcast('angharadTriggersChanged');
+			$scope.$broadcast("angharadTriggersChanged");
         }, function (error) {
-            toaster.pop("error", $translate.instant('angharad_loading_title'), $translate.instant('angharad_loading_error'));
+            toaster.pop("error", $translate.instant("angharad_loading_title"), $translate.instant("angharad_loading_error"));
         });
 	};
 	

@@ -13,4 +13,13 @@ angular.module('sagremorApp').component('sagScript', {
     bindings: {
         script: '='
     }
+})
+.config(function run($translatePartialLoaderProvider) {
+	$translatePartialLoaderProvider.addPart("script");
+})
+.run(function(sagGenericInjectorManager) {
+    sagGenericInjectorManager.add({
+        type: "mock-service",
+        directive: "carleon-mock"
+    });
 });

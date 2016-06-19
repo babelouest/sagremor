@@ -14,6 +14,9 @@ angular.module('sagremorApp')
         this.sagremorParams = sagremorParams;
         
         this.init = function () {
+			// TODO Remove when script is done
+			self.sagremorParams.adminMode = true;
+			// /TODO
 			self.updateScripts();
 		};
         
@@ -29,7 +32,6 @@ angular.module('sagremorApp')
         };
         
         this.newScript = function () {
-			console.log("plop");
 			sagremorService.editScript(null);
 		};
 		

@@ -117,6 +117,8 @@ angular.module("sagremorApp").component("carleonMock", {
 			title: "carleon_mock_title",
 			icon: '<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>',
 			target: "carleonMock"
+		},
+		commands: {
 		}
     });
 });
