@@ -1,0 +1,19 @@
+{
+    "carleon_mock_command": "Mock Command",
+    "carleon_mock_command_success": "Success",
+    "carleon_mock_command_error": "Error",
+    "carleon_mock_modal_title": "Mock",
+    "carleon_mock_modal_name": "Name",
+    "carleon_mock_modal_description": "Description",
+    "carleon_mock_save": "Save",
+    "carleon_mock_save_succes": "Success",
+    "carleon_mock_save_error": "Error",
+    "carleon_mock": "Mock Service",
+    "carleon_mock_error": "Loading error",
+	"carleon_mock_title": "Mock Service",
+	"carleon_mock_remove": "Remove",
+	"carleon_mock_confirm": "Are yo sure you want to remove this service?",
+	"carleon_mock_remove": "Remove service",
+	"carleon_mock_remove_success": "Success",
+	"carleon_mock_remove_error": "Error"
+}

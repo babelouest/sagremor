@@ -28,7 +28,7 @@
           </div>
       </div>
     </div>
-    <h3 data-translate="param_device_list"></h2>
+    <h3 data-translate="param_device_list"></h3>
     <form name="deviceList" class="css-form">
       <button type="button" data-ng-click="ParametersCtrl.addDevice()" class="btn">
           <i class="fa fa-plus" aria-hidden="true"></i>
@@ -111,4 +111,73 @@
           </div>
       </div>
     </form>
+    <h3 data-translate="param_profiles_list"></h3>
+      <button type="button" data-ng-click="ParametersCtrl.addProfile()" class="btn">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+      </button>
+      <table class="table table-hover">
+          <thead>
+              <tr>
+                  <th data-translate="profile_name"></th>
+                  <th data-translate="profile_description"></th>
+                  <th data-translate="profile_default"></th>
+                  <th data-translate="profile_use"></th>
+                  <th data-translate="profile_action"></th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr data-ng-repeat="profile in ParametersCtrl.profileList track by profile.name" >
+                  <td data-ng-if="!profile.update">{{profile.name}}</td>
+                  <td data-ng-if="!profile.update">{{profile.description}}</td>
+                  <td data-ng-if="profile.update">
+					  <input type="text" name="profileName" id="profileName" data-ng-model="profile.newName">
+				  </td>
+                  <td data-ng-if="profile.update">
+					  <input type="text" name="profileDescription" id="profileDescription" data-ng-model="profile.newDescription">
+				  </td>
+                  <td>
+                      <input data-toggle="toggle" data-bs-switch data-switch-size="mini" type="checkbox" data-ng-model="profile.default" data-ng-change="ParametersCtrl.setDefaultProfile(profile)">
+                  </td>
+                  <td>
+					  <button type="button" class="btn" name="useProfile" id="useProfile" data-ng-click="ParametersCtrl.useProfile(profile)" data-ng-if="profile.name !== ParametersCtrl.currentProfile.name">
+						  <i class="fa fa-check" aria-hidden="true"></i>
+					  </button>
+					  <span data-ng-if="profile.name === ParametersCtrl.currentProfile.name" data-translate="profile_used"></span>
+                  </td>
+                  <td data-ng-if="!profile.update">
+                      <button type="button" class="btn" data-ng-click="ParametersCtrl.editProfile(profile)">
+                          <i class="fa fa-pencil" aria-hidden="true"></i>
+                      </button>
+                      <button type="button" class="btn" data-ng-click="ParametersCtrl.removeProfile(profile)">
+                          <i class="fa fa-trash" aria-hidden="true"></i>
+                      </button>
+                  </td>
+                  <td data-ng-if="profile.update">
+                      <button type="button" class="btn" data-ng-click="ParametersCtrl.saveProfile(profile)" data-ng-disabled="!ParametersCtrl.isUpdateProfileValid(profile)">
+                          <i class="fa fa-check" aria-hidden="true"></i>
+                      </button>
+                      <button type="button" class="btn" data-ng-click="ParametersCtrl.cancelEditProfile(profile)">
+                          <i class="fa fa-times" aria-hidden="true"></i>
+                      </button>
+                  </td>
+              </tr>
+              <tr data-ng-if="ParametersCtrl.profileAdded">
+                  <td><input type="text" data-ng-model="ParametersCtrl.newProfileName" data-ng-required data-ng-maxlength="64" maxlength="64"></td>
+                  <td><input type="text" data-ng-model="ParametersCtrl.newProfileDescription" data-ng-maxlength="128" maxlength="128"></td>
+                  <td>
+                      <input data-toggle="toggle" data-bs-switch data-switch-size="mini" type="checkbox" data-ng-model="ParametersCtrl.newProfileDefault">
+                  </td>
+                  <td>
+                  </td>
+                  <td>
+                      <button type="button" class="btn" data-ng-click="ParametersCtrl.saveNewProfile()" data-ng-disabled="!ParametersCtrl.isProfileValid()">
+                          <i class="fa fa-check" aria-hidden="true"></i>
+                      </button>
+                      <button type="button" class="btn" data-ng-click="ParametersCtrl.cancelNewProfile()">
+                          <i class="fa fa-times" aria-hidden="true"></i>
+                      </button>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
 </div>

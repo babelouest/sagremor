@@ -1,8 +1,8 @@
-<div data-ng-if="$ctrl.heater.enabled || $ctrl.adminMode">
+<div data-ng-if="$ctrl.element.enabled || $ctrl.adminMode">
     <div class="text-center" data-ng-class="{'text-italic': $ctrl.adminMode}">
 		<div class="row">
 			<span class="heater-on">
-				<i class="fa fa-fire" aria-hidden="true" data-ng-if="$ctrl.heater.value.on"></i>
+				<i class="fa fa-fire" aria-hidden="true" data-ng-if="$ctrl.element.value.on"></i>
 			</span>
 		</div>
         <div class="ring">
@@ -25,7 +25,7 @@
         </div>
         <div class="row">
 			<label for="heaterMode" data-translate="heater_mode_title"></label>
-			<select name="heaterMode" value="heaterMode" data-ng-model="$ctrl.heater.value.mode" data-ng-change="$ctrl.setHeater(null)">
+			<select name="heaterMode" value="heaterMode" data-ng-model="$ctrl.element.value.mode" data-ng-change="$ctrl.setHeater(null)">
 				<option value="off" data-translate="heater_mode_off"></option>
 				<option value="auto" data-translate="heater_mode_auto"></option>
 				<option value="manual" data-translate="heater_mode_manual"></option>

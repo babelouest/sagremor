@@ -2,20 +2,20 @@ function sagSensorController (benoicFactory, sagremorParams, $translate) {
     var ctrl = this;
     
     ctrl.adminMode = sagremorParams.adminMode;
-    ctrl.sensor.newDisplay = ctrl.sensor.display;
+    ctrl.element.newDisplay = ctrl.element.display;
     ctrl.messages = {};
     
     function init() {
-        ctrl.sensor.type = "sensor";
+        ctrl.element.type = "sensor";
     }
     
-    ctrl.sensorDisplayValue = function() {
-		var value = ctrl.sensor.value;
+    ctrl.elementDisplayValue = function() {
+		var value = ctrl.element.value;
 		if (!isNaN(parseFloat(value)) && isFinite(value)) {
 			value = (Math.round(value * 100) / 100);
 		}
-        if (!!ctrl.sensor.options.unit) {
-			value += " " + ctrl.sensor.options.unit
+        if (!!ctrl.element.options.unit) {
+			value += " " + ctrl.element.options.unit
 		}
 		return value;
 	};
@@ -27,6 +27,13 @@ angular.module('sagremorApp').component('sagSensor', {
     templateUrl: 'components/sensor/sensor.template.html',
     controller: sagSensorController,
     bindings: {
-        sensor: '='
+        element: '='
     }
+})
+.run(function(sagGenericInjectorManager) {
+    sagGenericInjectorManager.add({
+        title: "Chauffages",
+        type: "sensor",
+        directive: "sag-sensor"
+    });
 });

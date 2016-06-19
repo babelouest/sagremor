@@ -1,30 +1,29 @@
 function sagHeaterController (benoicFactory, sagremorParams, $translate) {
     var ctrl = this;
     
-    ctrl.heater.valueChecked = (ctrl.heater.value === 1);
+    ctrl.element.valueChecked = (ctrl.element.value === 1);
     ctrl.adminMode = sagremorParams.adminMode;
-    ctrl.heater.newDisplay = ctrl.heater.display;
-    ctrl.messages = {};
+    ctrl.element.newDisplay = ctrl.element.display;
     
     function init() {
-        ctrl.heater.type = "heater";
+        ctrl.element.type = "heater";
     }
     
     ctrl.setHeater = function (value) {
 		if (value == null) {
-			value = ctrl.heater.value.command;
+			value = ctrl.element.value.command;
 		} else {
-			value = ctrl.heater.value.command + value;
+			value = ctrl.element.value.command + value;
 		}
-        benoicFactory.setElement(ctrl.heater.device, 'heater', ctrl.heater.name, value, {mode: ctrl.heater.value.mode}).then(function () {
-            ctrl.heater.value.command = value;
+        benoicFactory.setElement(ctrl.element.device, 'heater', ctrl.element.name, value, {mode: ctrl.element.value.mode}).then(function () {
+            ctrl.element.value.command = value;
         });
     };
     
     ctrl.displayCommandValue = function () {
-		var command = (Math.round(ctrl.heater.value.command * 100) / 100);
-        if (!!ctrl.heater.options.unit) {
-			command += " " + ctrl.heater.options.unit
+		var command = (Math.round(ctrl.element.value.command * 100) / 100);
+        if (!!ctrl.element.options.unit) {
+			command += " " + ctrl.element.options.unit
 		}
 		return command;
 	};
@@ -36,8 +35,8 @@ function sagHeaterController (benoicFactory, sagremorParams, $translate) {
 		} else {
 			value = "+" + command;
 		}
-        if (!!ctrl.heater.options.unit) {
-			value += " " + ctrl.heater.options.unit
+        if (!!ctrl.element.options.unit) {
+			value += " " + ctrl.element.options.unit
 		}
 		return value
 	};
@@ -49,6 +48,13 @@ angular.module('sagremorApp').component('sagHeater', {
     templateUrl: 'components/heater/heater.template.html',
     controller: sagHeaterController,
     bindings: {
-        heater: '='
+        element: '='
     }
+})
+.run(function(sagGenericInjectorManager) {
+    sagGenericInjectorManager.add({
+        title: "Chauffages",
+        type: "heater",
+        directive: "sag-heater"
+    });
 });

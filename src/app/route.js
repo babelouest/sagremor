@@ -1,5 +1,5 @@
 angular.module('sagremorApp')
-    .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
+    .config(function ($stateProvider, $urlRouterProvider) {
         
         $stateProvider
             .state('dashboard', {
@@ -32,23 +32,11 @@ angular.module('sagremorApp')
                 controller: 'sensorsCtrl',
                 controllerAs: 'sensorsCtrl'
             })
-            .state('cameras', {
-                url: '/cameras',
-                templateUrl: 'app/cameras/cameras.html'
-            })
-            .state('music', {
-                url: '/music',
-                templateUrl: 'app/music/music.html'
-            })
-            .state('maps', {
-                url: '/maps',
-                templateUrl: 'app/maps/maps.html'
-            })
-            .state('weather', {
-                url: '/weather',
-                templateUrl: 'app/weather/weather.html',
-                controller: 'weatherCtrl',
-                controllerAs: 'weatherCtrl'
+            .state('service', {
+                url: '/service/:service',
+                templateUrl: 'app/service/service.html',
+                controller: 'serviceCtrl',
+                controllerAs: 'serviceCtrl'
             })
             .state('scripts', {
                 url: '/scripts',

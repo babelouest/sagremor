@@ -1,12 +1,13 @@
 angular.module('sagremorApp')
     .controller('sensorsCtrl', [
     '$scope',
+    '$location',
     '$translate',
     'sagremorService',
     'benoicFactory',
     'sharedData',
     'sagremorParams',
-    function($scope, $translate, sagremorService, benoicFactory, sharedData, sagremorParams) {
+    function($scope, $location, $translate, sagremorService, benoicFactory, sharedData, sagremorParams) {
       
         var self = this;
         
@@ -14,6 +15,9 @@ angular.module('sagremorApp')
         this.sagremorParams = sagremorParams;
         
         this.init = function () {
+			if (!sagremorParams.loggedIn) {
+				$location.path("/login");
+			}
 			$translate(["edit", "monitor", "add_to_dashboard"]).then(function (results) {
 				self.menuSensor = [
 					{
@@ -31,10 +35,10 @@ angular.module('sagremorApp')
 						}
 					},
 					{
-						name: "add_dashboard", 
+						name: "add_to_dashboard", 
 						display: results.add_to_dashboard, 
 						action: function (param) {
-							if (sagremorService.addToDashboard(param)) {
+							if (sagremorService.addToDashboard(param, false)) {
                                 $scope.$broadcast("refreshDashboard");
                             }
 						}

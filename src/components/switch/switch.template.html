@@ -1,11 +1,11 @@
-<div data-ng-if="$ctrl.switcher.enabled || $ctrl.adminMode">
+<div data-ng-if="$ctrl.element.enabled || $ctrl.adminMode">
     <div class="text-center" data-ng-class="{'text-italic': $ctrl.adminMode}">
         <div>
             <input type="checkbox" 
                     data-bs-switch 
                     data-toggle="toggle" 
                     data-switch-size="mini" 
-                    data-ng-model="$ctrl.switcher.valueChecked" 
+                    data-ng-model="$ctrl.element.valueChecked" 
                     data-ng-change="$ctrl.toggleSwitcher()">
         </div>
     </div>
