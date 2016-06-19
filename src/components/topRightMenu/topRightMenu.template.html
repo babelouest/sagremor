@@ -3,7 +3,7 @@
         <i class="fa fa-user" aria-hidden="true"></i>
     </button>
     <ul class="dropdown-menu-right container-fluid" data-uib-dropdown-menu data-uib-dropdown-menu-auto-close="outsideClick" data-ng-click="$event.stopPropagation()">
-        <li class="row">
+        <li class="row" data-ng-if="topRightMenuCtrl.sagremorParams.loggedIn">
             <div class="col-md-6">
                 <label for="admin-mode" data-translate="top_right_menu_admin_mode"></label>
             </div>
@@ -19,7 +19,7 @@
                 <select id="sag-lang" name="sag-lang" data-ng-model="topRightMenuCtrl.selectedLang" data-ng-options="lang.name as lang.display for lang in topRightMenuCtrl.langList" data-ng-change="topRightMenuCtrl.changeLang()"></select>
             </div>
         </li>
-        <li class="row">
+        <li class="row" data-ng-if="topRightMenuCtrl.sagremorParams.loggedIn">
             <div class="col-md-6">
                 <label for="sag-lang" data-translate="top_right_menu_profile"></label>
             </div>
@@ -27,7 +27,7 @@
                 <select id="sag-lang" name="sag-lang" data-ng-model="topRightMenuCtrl.currentProfileName" data-ng-options="profile.name as profile.name for profile in topRightMenuCtrl.profiles" data-ng-change="topRightMenuCtrl.changeProfile()"></select>
             </div>
         </li>
-        <li class="row">
+        <li class="row" data-ng-if="topRightMenuCtrl.sagremorParams.loggedIn">
             <div class="col-md-6">
                 <label for="sag-refresh" data-translate="top_right_menu_refresh"></label>
             </div>

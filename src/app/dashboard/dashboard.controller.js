@@ -1,9 +1,8 @@
 angular.module('sagremorApp')
     .controller('DashboardCtrl', 
-    function($scope, $location, $translate, $timeout, toaster, sharedData, sagremorParams, sagremorService, benoicFactory, carleonFactory, sagGenericInjectorManager) {
+    function($scope, $location, $translate, $timeout, toaster, sharedData, sagremorParams, sagremorService, benoicFactory, carleonFactory) {
 
         var self = this;
-        self.sagGenericInjectorManager = sagGenericInjectorManager;
 
 		this._timeout = null;
 		

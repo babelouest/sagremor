@@ -43,30 +43,5 @@ angular.module('sagremorApp')
         return angharadBackendService.httpRequest("DELETE", urlBase + 'profile/' + profile_id);
     };
 
-	/* Mock service */
-    dataFactory.getMockList = function () {
-        return angharadBackendService.httpRequest("GET", urlBase + 'mock-service/');
-    };
-
-    dataFactory.getMock = function (name) {
-        return angharadBackendService.httpRequest("GET", urlBase + 'mock-service/' + name);
-    };
-
-    dataFactory.addMock = function (mock) {
-        return angharadBackendService.httpRequest("POST", urlBase + 'mock-service/', mock);
-    };
-
-    dataFactory.setMock = function (name, mock) {
-        return angharadBackendService.httpRequest("PUT", urlBase + 'mock-service/' + name, mock);
-    };
-
-    dataFactory.removeMock = function (name) {
-        return angharadBackendService.httpRequest("DELETE", urlBase + 'mock-service/' + name);
-    };
-
-    dataFactory.commandMock = function (name, command, param1, param2, param3) {
-        return angharadBackendService.httpRequest("GET", urlBase + 'mock-service/' + name + '/command/' + command + '/' + param1 + '/' + param2 + '/' + param3);
-    };
-
     return dataFactory;
 });

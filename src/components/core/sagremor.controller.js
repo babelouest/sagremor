@@ -1,6 +1,6 @@
 angular.module('sagremorApp')
   .controller('sagremorCtrl', 
-  function($scope, $http, $q, $location, $cookieStore, $translate, toaster, angharadFactory, benoicFactory, carleonFactory, sharedData, sagremorParams) {
+  function($scope, $rootScope, $http, $q, $location, $cookieStore, $translate, toaster, angharadFactory, benoicFactory, carleonFactory, sharedData, sagremorParams) {
     var self = this;
     
     this.loaderToast;
@@ -10,6 +10,7 @@ angular.module('sagremorApp')
     function init() {
 		initParameters();
         self.getAuth().then(function() {
+			$rootScope.$broadcast("authChanged");
             popLoader();
             self.initAngharadSubmodules().then(function (result) {
 				self.initAngharad();

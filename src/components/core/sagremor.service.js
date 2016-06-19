@@ -141,7 +141,7 @@ angular.module('sagremorApp')
 		
 		sagremorFactory.getBenoicElement = function (device, type, name) {
 			var elements = sharedData.get("benoicDevices", device);
-			if (!!elements) {
+			if (!!elements && !!elements.element) {
 				switch (type) {
 					case "switch":
 						if (elements.element.switches[name]) {

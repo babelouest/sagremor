@@ -6,17 +6,17 @@ angular.module("sagremorApp", [
 "toaster", 
 "ui.bootstrap.contextMenu", 
 "pascalprecht.translate",
-"chart.js"
+"chart.js",
+"ngSanitize"
 ])
 .constant("_", window._)
-.constant("angharadConstant", {
-    "scriptActionElements": [
+.constant("sagremorConstant", {
+    scriptActionElements: [
         {name: "switch", label: "script_action_benoic_switch"},
         {name: "dimmer", label: "script_action_benoic_dimmer"},
-        {name: "heater", label: "script_action_benoic_heater"},
-        {name: "sag-mock", label: "script_action_sagremor_mock"}
+        {name: "heater", label: "script_action_benoic_heater"}
     ],
-    "monitoredEveryEnum": [
+    monitoredEveryEnum: [
         {value: 60, label: "1_minute"},
         {value: 120, label: "2_minutes"},
         {value: 300, label: "5_minutes"},
@@ -32,18 +32,22 @@ angular.module("sagremorApp", [
         {value: 21600, label: "6_hours"},
         {value: 43200, label: "12_hours"},
         {value: 86400, label: "1_day"}
+    ],
+    langList: [
+        {name: "fr", display: "Fr"},
+        {name: "en", display: "En"}
     ]
+
 })
-.config(["$translateProvider", "$translatePartialLoaderProvider", function ($translateProvider, $translatePartialLoaderProvider) {
-    $translatePartialLoaderProvider.addPart("app");
-    $translatePartialLoaderProvider.addPart("components");
+.config(function ($translateProvider, $translatePartialLoaderProvider) {
     $translateProvider.useLoader("$translatePartialLoader", {
-        urlTemplate: "/i18n/{part}/{lang}.json"
+        urlTemplate: "components/{part}/i18n/{lang}.json"
     });
+    $translatePartialLoaderProvider.addPart("core");
     $translateProvider.determinePreferredLanguage();
     $translateProvider.useCookieStorage();
     $translateProvider.useSanitizeValueStrategy("escape");
-}])
+})
 .factory("sharedData", function() {
     var sharedData = {};
     

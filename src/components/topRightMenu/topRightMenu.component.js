@@ -1,14 +1,11 @@
-function topRightMenuCtrl ($scope, $rootScope, $translate, $cookieStore, sagremorParams) {
+function topRightMenuCtrl ($scope, $rootScope, $translate, $cookieStore, sagremorConstant, sagremorParams) {
     var self = this;
 
     self.sagremorParams = sagremorParams;
 
     self.selectedLang = $translate.use();
 
-    self.langList = [
-        {name: "fr", display: "Fr"},
-        {name: "en", display: "En"}
-    ];
+    self.langList = sagremorConstant.langList;
     
     self.profiles = sagremorParams.profiles;
     self.currentProfileName = !!sagremorParams.currentProfile?sagremorParams.currentProfile.name:"";

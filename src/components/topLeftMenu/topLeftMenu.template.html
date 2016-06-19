@@ -1,4 +1,4 @@
-<div class="top-left-menu" data-uib-dropdown>
+<div class="top-left-menu" data-uib-dropdown data-ng-if="topLeftMenuCtrl.sagremorParams.loggedIn">
     <button class="btn btn-primary text-left" type="button" data-uib-dropdown-toggle>
         <i class="fa fa-bars" aria-hidden="true"></i>
     </button>
@@ -27,28 +27,10 @@
                 <span data-translate="menu_sensors"></span>
             </a>
         </li>
-        <li class="row">
-            <a data-ng-href="#/cameras">
-                <i class="fa fa-video-camera"></i>
-                <span data-translate="menu_camera"></span>
-            </a>
-        </li>
-        <li class="row">
-            <a data-ng-href="#/music">
-                <i class="fa fa-music"></i>
-                <span data-translate="menu_music"></span>
-            </a>
-        </li>
-        <li class="row">
-            <a data-ng-href="#/maps">
-                <i class="fa fa-map"></i>
-                <span data-translate="menu_maps"></span>
-            </a>
-        </li>
-        <li class="row">
-            <a data-ng-href="#/weather">
-                <i class="fa fa-sun-o"></i>
-                <span data-translate="menu_weather"></span>
+        <li class="row" data-ng-repeat="service in topLeftMenuCtrl.serviceList">
+            <a data-ng-href="#/service/{{service.target}}">
+				<data-ng-bind-html data-ng-bind-html="service.icon"></data-ng-bind-html>
+                <span data-translate="{{service.title}}"></span>
             </a>
         </li>
         <li class="row">

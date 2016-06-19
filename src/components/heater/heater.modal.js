@@ -4,16 +4,16 @@ angular.module('sagremorApp')
     '$uibModalInstance',
     '$translate',
     'toaster',
-    'angharadConstant',
+    'sagremorConstant',
     'benoicFactory',
     'heater',
-    function($scope, $uibModalInstance, $translate, toaster, angharadConstant, benoicFactory, heater) {
+    function($scope, $uibModalInstance, $translate, toaster, sagremorConstant, benoicFactory, heater) {
         var self = this;
         
         this.heater = heater;
         this.heater.newDisplay = this.heater.display;
         
-        this.monitorEveryEnum = angharadConstant.monitoredEveryEnum;
+        this.monitorEveryEnum = sagremorConstant.monitoredEveryEnum;
         
         function init() {
 			self.heater.menu = false;
