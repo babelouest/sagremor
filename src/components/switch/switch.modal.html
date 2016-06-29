@@ -3,39 +3,44 @@
         <h3 class="modal-title" data-translate="switch_update_title"></h3>
     </div>
     <div class="modal-body">
-        <div class="row">
+        <div class="row control-group">
             <span class="col-md-6" data-translate="switch_update_name"></span>
-            <div class="col-md-6">
-                <input type="text" name="switcherDisplay" id="switcherDisplay" data-ng-model="SwitchesModalCtrl.switcher.newDisplay" class="modal-input-text">
+            <div class="col-md-6 controls">
+                <input type="text" name="switcherDisplay" id="switcherDisplay" data-ng-model="SwitchesModalCtrl.switcher.newDisplay" class="modal-input-text form-control">
             </div>
         </div>
-        <div class="row">
+        <div class="row control-group">
             <span class="col-md-6" data-translate="switch_update_enabled"></span>
-            <div class="col-md-6"><input type="checkbox" 
-                    data-bs-switch 
-                    data-toggle="toggle" 
-                    data-switch-size="mini" 
-                    data-ng-model="SwitchesModalCtrl.switcher.enabled">
+            <div class="col-md-6 controls">
+				<input type="checkbox" 
+						class="form-control"
+						data-bs-switch 
+						data-toggle="toggle" 
+						data-switch-size="mini" 
+						data-ng-model="SwitchesModalCtrl.switcher.enabled">
             </div>
         </div>
         <div class="row">
             <hr>
         </div>
-        <div class="row">
+        <div class="row control-group">
             <span class="col-md-6" data-translate="switch_update_monitor"></span>
-            <div class="col-md-6"><input type="checkbox" 
-                    data-bs-switch 
-                    data-toggle="toggle" 
-                    data-switch-size="mini" 
-                    data-ng-model="SwitchesModalCtrl.switcher.monitored">
+            <div class="col-md-6 controls">
+				<input type="checkbox" 
+						class="form-control"
+						data-bs-switch 
+						data-toggle="toggle" 
+						data-switch-size="mini" 
+						data-ng-model="SwitchesModalCtrl.switcher.monitored">
             </div>
         </div>
-        <div class="row" data-ng-if="SwitchesModalCtrl.switcher.monitored">
+        <div class="row control-group" data-ng-if="SwitchesModalCtrl.switcher.monitored">
             <span class="col-md-6" data-translate="switch_update_monitor_every"></span>
-            <div class="col-md-6">
+            <div class="col-md-6 controls">
                 <select id="bddAddUserGrant"
-                    data-ng-model="SwitchesModalCtrl.switcher.monitored_every"
-                    data-ng-options="monitorEvery.value as monitorEvery.trLabel for monitorEvery in SwitchesModalCtrl.monitorEveryEnum">
+						class="form-control"
+						data-ng-model="SwitchesModalCtrl.switcher.monitored_every"
+						data-ng-options="monitorEvery.value as SwitchesModalCtrl.tr(monitorEvery.label) for monitorEvery in SwitchesModalCtrl.monitorEveryEnum">
                 </select>
             </div>
         </div>

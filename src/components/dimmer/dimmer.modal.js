@@ -29,6 +29,10 @@ angular.module('sagremorApp')
             $uibModalInstance.dismiss('cancel');
         };
         
+        this.tr = function (id) {
+			return $translate.instant(id);
+		};
+        
         this.saveDimmer = function () {
             self.dimmer.display = self.dimmer.newDisplay;
             self.dimmer.monitor = self.dimmer.monitorChecked?1:0;

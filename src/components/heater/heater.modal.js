@@ -29,6 +29,10 @@ angular.module('sagremorApp')
             $uibModalInstance.dismiss('cancel');
         };
         
+        this.tr = function (id) {
+			return $translate.instant(id);
+		};
+        
         this.saveHeater = function () {
             self.heater.display = self.heater.newDisplay;
             self.heater.monitor = self.heater.monitorChecked?1:0;

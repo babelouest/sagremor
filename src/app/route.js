@@ -46,7 +46,9 @@ angular.module('sagremorApp')
             })
             .state('events', {
                 url: '/events',
-                templateUrl: 'app/events/events.html'
+                templateUrl: 'app/events/events.html',
+                controller: 'eventsCtrl',
+                controllerAs: 'eventsCtrl'
             })
             .state('monitors', {
                 url: '/monitors',

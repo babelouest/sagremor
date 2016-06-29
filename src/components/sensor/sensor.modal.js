@@ -25,6 +25,10 @@ angular.module('sagremorApp')
             });
         }
         
+        this.tr = function (id) {
+			return $translate.instant(id);
+		};
+        
         this.cancel = function () {
             $uibModalInstance.dismiss('cancel');
         };

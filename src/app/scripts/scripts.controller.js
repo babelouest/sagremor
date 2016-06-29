@@ -1,11 +1,5 @@
 angular.module("sagremorApp")
-    .controller("scriptsCtrl", [
-    "$scope",
-    "$translate",
-    "sagremorService",
-    "angharadFactory",
-    "sharedData",
-    "sagremorParams",
+    .controller("scriptsCtrl",
     function($scope, $translate, sagremorService, angharadFactory, sharedData, sagremorParams) {
       
         var self = this;
@@ -14,9 +8,6 @@ angular.module("sagremorApp")
         this.sagremorParams = sagremorParams;
         
         this.init = function () {
-			// TODO Remove when script is done
-			self.sagremorParams.adminMode = true;
-			// /TODO
 
 			$translate(["edit", "remove", "add_to_dashboard"]).then(function (results) {
 				self.menuScript = [
@@ -49,7 +40,6 @@ angular.module("sagremorApp")
 				
 				self.updateScripts();
 			});
-			self.updateScripts();
 		};
         
         $scope.$on("angharadScriptsChanged", function () {
@@ -71,4 +61,4 @@ angular.module("sagremorApp")
         this.init();
         
     }
-]);
+);

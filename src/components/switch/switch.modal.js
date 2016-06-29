@@ -29,6 +29,10 @@ angular.module('sagremorApp')
             $uibModalInstance.dismiss('cancel');
         };
         
+        this.tr = function (id) {
+			return $translate.instant(id);
+		};
+        
         this.saveSwitcher = function () {
             self.switcher.display = self.switcher.newDisplay;
             self.switcher.monitor = self.switcher.monitorChecked?1:0;
