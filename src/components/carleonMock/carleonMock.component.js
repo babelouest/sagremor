@@ -3,7 +3,7 @@ function carleonMockController ($translatePartialLoader, $translate, carleonMock
     
     ctrl.adminMode = sagremorParams.adminMode;
     ctrl.param = {command: "command1", param1: "test", param2: 42, param3: 7.3};
-    ctrl.commandList = ["command1", "command2", "command3"];
+    ctrl.commandList = ["exec1", "exec2"];
     ctrl.messages = {};
     
     function init() {
@@ -119,6 +119,20 @@ angular.module("sagremorApp").component("carleonMock", {
 			target: "carleonMock"
 		},
 		commands: {
+			exec1: {
+				title: "carleon_mock_command_exec1_title",
+				parameters: {
+					param1: "carleon_mock_command_exec1_parameter_param1_title",
+					param2: "carleon_mock_command_exec1_parameter_param2_title",
+					param3: "carleon_mock_command_exec1_parameter_param3_title"
+				}
+			},
+			exec2: {
+				title: "carleon_mock_command_exec2_title",
+				parameters: {
+					param1: "carleon_mock_command_exec2_parameter_param1_title"
+				}
+			}
 		}
     });
 });

@@ -1,17 +1,25 @@
-function sagScriptController (benoicFactory, sagremorParams, $translate) {
+function sagScriptController ($translate, toaster, angharadFactory, sagremorParams) {
     var ctrl = this;
     
     function init() {
     }
     
+    this.runScript = function 	() {
+		angharadFactory.runScript(ctrl.script.name).then(function () {
+			toaster.pop("success", $translate.instant("script_run", {name: ctrl.script.name}), $translate.instant("script_run_success"));
+		}, function (error) {
+			toaster.pop("error", $translate.instant("script_run", {name: ctrl.script.name}), $translate.instant("script_run_error"));
+		});
+	};
+    
     init();
 }
 
-angular.module('sagremorApp').component('sagScript', {
-    templateUrl: 'components/script/script.template.html',
+angular.module("sagremorApp").component("sagScript", {
+    templateUrl: "components/script/script.template.html",
     controller: sagScriptController,
     bindings: {
-        script: '='
+        script: "="
     }
 })
 .config(function run($translatePartialLoaderProvider) {
@@ -19,7 +27,7 @@ angular.module('sagremorApp').component('sagScript', {
 })
 .run(function(sagGenericInjectorManager) {
     sagGenericInjectorManager.add({
-        type: "mock-service",
-        directive: "carleon-mock"
+        type: "script",
+        directive: "sag-script"
     });
 });

@@ -15,5 +15,11 @@
 	"carleon_mock_confirm": "Voulez-vous supprimer ce service ?",
 	"carleon_mock_remove": "Suppression du service",
 	"carleon_mock_remove_success": "Succès",
-	"carleon_mock_remove_error": "Erreur"
+	"carleon_mock_remove_error": "Erreur",
+	"carleon_mock_command_exec1_title": "Commande factice 1",
+	"carleon_mock_command_exec1_parameter_param1_title": "Premier paramètre",
+	"carleon_mock_command_exec1_parameter_param2_title": "Second paramètre",
+	"carleon_mock_command_exec1_parameter_param3_title": "Troisième paramètre",
+	"carleon_mock_command_exec2_title": "Commande factice 2",
+	"carleon_mock_command_exec2_parameter_param1_title": "Autre paramètre"
 }

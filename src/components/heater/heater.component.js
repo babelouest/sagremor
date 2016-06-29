@@ -53,7 +53,6 @@ angular.module('sagremorApp').component('sagHeater', {
 })
 .run(function(sagGenericInjectorManager) {
     sagGenericInjectorManager.add({
-        title: "Chauffages",
         type: "heater",
         directive: "sag-heater"
     });

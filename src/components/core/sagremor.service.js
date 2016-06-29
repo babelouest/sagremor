@@ -1,15 +1,15 @@
-angular.module('sagremorApp')
-    .factory('sagremorService', 
-    function($uibModal, $translate, toaster, sharedData, sagremorParams, benoicFactory, carleonFactory) {
+angular.module("sagremorApp")
+    .factory("sagremorService", 
+    function($uibModal, $translate, toaster, sharedData, sagremorParams, sagremorConfirm, angharadFactory, benoicFactory, carleonFactory) {
 		var sagremorFactory = {};
 		
 		sagremorFactory.monitor = function (element) {
 			var modalInstance = $uibModal.open({
 				animation: true,
-				templateUrl: 'components/monitor/monitor.modal.html',
-				controller: 'MonitorModalCtrl',
-				controllerAs: 'MonitorModalCtrl',
-				size: 'sm',
+				templateUrl: "components/monitor/monitor.modal.html",
+				controller: "MonitorModalCtrl",
+				controllerAs: "MonitorModalCtrl",
+				size: "sm",
 				resolve: {
 					element: function () {
 						return element;
@@ -46,9 +46,9 @@ angular.module('sagremorApp')
 				profile.addTo.D.push(newElement);
 			}
 			carleonFactory.setProfile(profile.name, profile).then(function () {
-				toaster.pop({type: 'success', title: $translate.instant('angharad_add_to_dashboard'), body: $translate.instant('angharad_add_to_dashboard_success')});
+				toaster.pop({type: "success", title: $translate.instant("angharad_add_to_dashboard"), body: $translate.instant("angharad_add_to_dashboard_success")});
 			}, function () {
-				toaster.pop({type: 'error', title: $translate.instant('angharad_add_to_dashboard'), body: $translate.instant('angharad_add_to_dashboard_error')});
+				toaster.pop({type: "error", title: $translate.instant("angharad_add_to_dashboard"), body: $translate.instant("angharad_add_to_dashboard_error")});
 			});
             return true;
         };
@@ -67,10 +67,10 @@ angular.module('sagremorApp')
 		sagremorFactory.editSwitcher = function (switcher) {
 			var modalInstance = $uibModal.open({
 				animation: true,
-				templateUrl: 'components/switch/switch.modal.html',
-				controller: 'SwitchesModalCtrl',
-				controllerAs: 'SwitchesModalCtrl',
-				size: 'sm',
+				templateUrl: "components/switch/switch.modal.html",
+				controller: "SwitchesModalCtrl",
+				controllerAs: "SwitchesModalCtrl",
+				size: "sm",
 				resolve: {
 					switcher: function () {
 						return switcher;
@@ -82,10 +82,10 @@ angular.module('sagremorApp')
 		sagremorFactory.editSensor = function (sensor) {
 			var modalInstance = $uibModal.open({
 				animation: true,
-				templateUrl: 'components/sensor/sensor.modal.html',
-				controller: 'SensorsModalCtrl',
-				controllerAs: 'SensorsModalCtrl',
-				size: 'sm',
+				templateUrl: "components/sensor/sensor.modal.html",
+				controller: "SensorsModalCtrl",
+				controllerAs: "SensorsModalCtrl",
+				size: "sm",
 				resolve: {
 					sensor: function () {
 						return sensor;
@@ -97,10 +97,10 @@ angular.module('sagremorApp')
 		sagremorFactory.editHeater = function (heater) {
 			var modalInstance = $uibModal.open({
 				animation: true,
-				templateUrl: 'components/heater/heater.modal.html',
-				controller: 'HeatersModalCtrl',
-				controllerAs: 'HeatersModalCtrl',
-				size: 'sm',
+				templateUrl: "components/heater/heater.modal.html",
+				controller: "HeatersModalCtrl",
+				controllerAs: "HeatersModalCtrl",
+				size: "sm",
 				resolve: {
 					heater: function () {
 						return heater;
@@ -112,10 +112,10 @@ angular.module('sagremorApp')
 		sagremorFactory.editDimmer = function (dimmer) {
 			var modalInstance = $uibModal.open({
 				animation: true,
-				templateUrl: 'components/dimmer/dimmer.modal.html',
-				controller: 'DimmersModalCtrl',
-				controllerAs: 'DimmersModalCtrl',
-				size: 'sm',
+				templateUrl: "components/dimmer/dimmer.modal.html",
+				controller: "DimmersModalCtrl",
+				controllerAs: "DimmersModalCtrl",
+				size: "sm",
 				resolve: {
 					dimmer: function () {
 						return dimmer;
@@ -127,15 +127,26 @@ angular.module('sagremorApp')
 		sagremorFactory.editScript = function (script) {
 			var modalInstance = $uibModal.open({
 				animation: true,
-				templateUrl: 'components/script/script.modal.html',
-				controller: 'ScriptModalCtrl',
-				controllerAs: 'ScriptModalCtrl',
-				size: 'sm',
+				templateUrl: "components/script/script.modal.html",
+				controller: "ScriptModalCtrl",
+				controllerAs: "ScriptModalCtrl",
+				size: "sm",
 				resolve: {
 					script: function () {
 						return script;
 					}
 				}
+			});
+		};
+		
+		sagremorFactory.removeScript = function (script) {
+			return sagremorConfirm.open($translate.instant("script_remove"), $translate.instant("script_remove_confirm")).then (function(result) {
+				return angharadFactory.removeScript(script.name).then(function () {
+					sharedData.remove("angharadScripts", script.name);
+					toaster.pop("success", $translate.instant("script_remove"), $translate.instant("script_remove_success"));
+				}, function (error) {
+					toaster.pop("error", $translate.instant("script_remove"), $translate.instant("script_remove_error"));
+				});
 			});
 		};
 		
@@ -169,9 +180,9 @@ angular.module('sagremorApp')
 		};
 		
 		sagremorFactory.getCarleonElement = function (service, name) {
-			var service = sharedData.get("carleonServices", service);
-			if (!!service) {
-				var element = _.find(service.element, function(elt) {
+			if (!!service && !!name) {
+				var cService = sharedData.get("carleonServices", service);
+				var element = _.find(cService.element, function(elt) {
 					return elt.name === name;
 				});
 				return element||false;

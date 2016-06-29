@@ -27,7 +27,6 @@ angular.module('sagremorApp').component('sagSwitch', {
 })
 .run(function(sagGenericInjectorManager) {
     sagGenericInjectorManager.add({
-        title: "Chauffages",
         type: "switch",
         directive: "sag-switch"
     });

@@ -32,7 +32,6 @@ angular.module('sagremorApp').component('sagSensor', {
 })
 .run(function(sagGenericInjectorManager) {
     sagGenericInjectorManager.add({
-        title: "Chauffages",
         type: "sensor",
         directive: "sag-sensor"
     });

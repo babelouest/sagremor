@@ -205,7 +205,7 @@ angular.module("sagremorApp")
 		
 		$q.all(promiseList).then(function (result) {
 			for (sc in result.scripts) {
-				sharedData.add("angharadScripts", sc, result.script[sc]);
+				sharedData.add("angharadScripts", result.scripts[sc].name, result.scripts[sc]);
 			}
 			$scope.$broadcast("angharadScriptsChanged");
 			for (sh in result.schedulers) {

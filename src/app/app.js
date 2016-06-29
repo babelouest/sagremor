@@ -12,9 +12,9 @@ angular.module("sagremorApp", [
 .constant("_", window._)
 .constant("sagremorConstant", {
     scriptActionElements: [
-        {name: "switch", label: "script_action_benoic_switch"},
-        {name: "dimmer", label: "script_action_benoic_dimmer"},
-        {name: "heater", label: "script_action_benoic_heater"}
+        {name: "switch", label: "script_action_benoic_switch", submodule: "benoic"},
+        {name: "dimmer", label: "script_action_benoic_dimmer", submodule: "benoic"},
+        {name: "heater", label: "script_action_benoic_heater", submodule: "benoic"}
     ],
     monitoredEveryEnum: [
         {value: 60, label: "1_minute"},

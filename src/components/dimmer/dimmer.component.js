@@ -27,7 +27,6 @@ angular.module('sagremorApp').component('sagDimmer', {
 })
 .run(function(sagGenericInjectorManager) {
     sagGenericInjectorManager.add({
-        title: "Chauffages",
         type: "dimmer",
         directive: "sag-dimmer"
     });
