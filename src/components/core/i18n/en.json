@@ -203,5 +203,13 @@
 	"profiles_save_success": "Success",
 	"profiles_save_error": "Error",
 	"profile_used": "Current profile",
-	"service_add": "Add"
+	"service_add": "Add",
+	"event_modal_title": "Modifier un événement",
+	"events_title": "Events",
+	"events_button_add": "Add an event",
+	"event_type_select": "Event type",
+	"event_type_scheduler": "Scheduled",
+	"event_type_trigger": "Triggered",
+	"event_script_select": "Scripts run",
+	"script_modal_title": "Script"
 }

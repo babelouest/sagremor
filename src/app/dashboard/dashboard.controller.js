@@ -1,10 +1,11 @@
-angular.module('sagremorApp')
-    .controller('DashboardCtrl', 
-    function($scope, $location, $translate, $timeout, toaster, sharedData, sagremorParams, sagremorService, benoicFactory, carleonFactory) {
+angular.module("sagremorApp")
+    .controller("DashboardCtrl", 
+    function($scope, $location, $translate, $timeout, toaster, sharedData, sagremorParams, sagremorService, sagremorEdit, benoicFactory, carleonFactory) {
 
         var self = this;
 
 		this._timeout = null;
+		this.sagremorParams = sagremorParams;
 		
         this.options = {
             cellHeight: 100,
@@ -14,17 +15,21 @@ angular.module('sagremorApp')
         this.init = function () {
             self.dashboardWidgets = [];
             getDashboardElements();
-			$translate(["remove_from_dashboard"]).then(function (results) {
-				self.menu = [
-					{
-						name: "remove_from_dashboard", 
-						display: results.remove_from_dashboard, 
-						action: function (param) {
-							removeFromDashboard(param);
-						}
+			self.menu = [
+				{
+					name: "remove_from_dashboard", 
+					display: $translate.instant("remove_from_dashboard"), 
+					action: function (param) {
+						removeFromDashboard(param);
 					}
-				];
-            });
+				}
+			];
+		};
+		
+		this.addTitleLine = function () {
+			return sagremorEdit.open($translate.instant("dashboard_add_line"), $translate.instant("dashboard_add_line_value")).then(function (result) {
+				newDashboardSeparator(result.value);
+			});
 		};
 
         function getDashboardElements () {
@@ -38,6 +43,10 @@ angular.module('sagremorApp')
                 _.forEach(profile.addTo.D, function (element) {
                     if (!!element.device) {
                         addBenoicElementToDashboard(element, element.tag);
+					} else if (element.type === "script") {
+						addScriptToDashboard(element, element.tag);
+					} else if (element.type === "scheduler") {
+						addSchedulerToDashboard(element, element.tag);
                     } else {
                         addCarleonElementToDashboard(element, element.tag);
                     }
@@ -62,16 +71,51 @@ angular.module('sagremorApp')
             }
         }
         
+        function addScriptToDashboard(element, tag) {
+			var elt = sharedData.get("angharadScripts", element.name);
+			if (!!elt) {
+				var tagParams = tag.split("$");
+				if (tagParams.length >= 4) {
+					var x = tagParams[2];
+					var y = tagParams[3];
+					var curHeight = 2;
+					var dashboardElement = { type: element.type, name: element.name, element: elt, x: x, y: y, width: 2, height: curHeight, tag: tag };
+					self.dashboardWidgets.push(dashboardElement);
+				}
+			}
+		}
+        
+        function addSchedulerToDashboard(element, tag) {
+			var elt = sharedData.get("angharadSchedulers", element.name);
+			if (!!elt) {
+				var tagParams = tag.split("$");
+				if (tagParams.length >= 4) {
+					var x = tagParams[2];
+					var y = tagParams[3];
+					var curHeight = 2;
+					var dashboardElement = { type: element.type, name: element.name, element: elt, x: x, y: y, width: 2, height: curHeight, tag: tag };
+					self.dashboardWidgets.push(dashboardElement);
+				}
+			}
+		}
+        
         function addCarleonElementToDashboard(element, tag) {
             var tagParams = tag.split("$");
             if (tagParams.length >= 4) {
                 var x = tagParams[2];
                 var y = tagParams[3];
-                var curHeight = 3;
-                var dashboardElement = { type: element.type, uid: element.uid, name: element.name, element: element, x: x, y: y, width: 2, height: curHeight, tag: tag };
+                var curHeight = 2;
+                var dashboardElement = { type: element.type, name: element.name, element: element, x: x, y: y, width: 2, height: curHeight, tag: tag };
                 self.dashboardWidgets.push(dashboardElement);
             }
         }
+        
+        function addDashboardSeparator(value, y) {
+			
+		}
+		
+		function newDashboardSeparator(value) {
+		}
         
         function removeFromDashboard(w) {
             var profile = sagremorParams.currentProfile;
@@ -88,7 +132,7 @@ angular.module('sagremorApp')
 			carleonFactory.setProfile(profile.name, profile).then(function () {
 				toaster.pop("success", $translate.instant("profile_save"), $translate.instant("profile_save_success"));
 			}, function () {
-				toaster.pop("error", $translate.instant('profile_save'), $translate.instant('profiles_save_error'));
+				toaster.pop("error", $translate.instant("profile_save"), $translate.instant("profiles_save_error"));
 			});
         };
 
@@ -99,10 +143,10 @@ angular.module('sagremorApp')
             self._timeout = $timeout(function() {
 				_.forEach(items, function (item) {
 					var element = _.find(self.dashboardWidgets, function (widget) {
-						return widget.type === $(item.el).attr('data-sag-type') &&
-								widget.name === $(item.el).attr('data-sag-name') &&
-								(!widget.device || widget.device === $(item.el).attr('data-sag-device')) &&
-								(!widget.uid || widget.uid === $(item.el).attr('data-sag-uid'));
+						return widget.type === $(item.el).attr("data-sag-type") &&
+								widget.name === $(item.el).attr("data-sag-name") &&
+								(!widget.device || widget.device === $(item.el).attr("data-sag-device")) &&
+								(!widget.uid || widget.uid === $(item.el).attr("data-sag-uid"));
 					});
 					if (!!element) {
 						var newTag = "SGMR$D$" + item.x + "$" + item.y;
@@ -125,7 +169,7 @@ angular.module('sagremorApp')
 						carleonFactory.setProfile(sagremorParams.currentProfile.name, sagremorParams.currentProfile).then(function () {
 							toaster.pop("success", $translate.instant("profile_save"), $translate.instant("profile_save_success"));
 						}, function () {
-							toaster.pop("error", $translate.instant('profile_save'), $translate.instant('profiles_save_error'));
+							toaster.pop("error", $translate.instant("profile_save"), $translate.instant("profiles_save_error"));
 						});
 					}
 				}
@@ -147,11 +191,11 @@ angular.module('sagremorApp')
             getDashboardElements();
         });
         
-        $scope.$on('benoicDevicesChanged', function () {
+        $scope.$on("benoicDevicesChanged", function () {
             getDashboardElements();
         });
         
-        $scope.$on('carleonServicesChanged', function () {
+        $scope.$on("carleonServicesChanged", function () {
             getDashboardElements();
         });
         

@@ -1,12 +1,5 @@
 angular.module('sagremorApp')
-    .controller('switchesCtrl', [
-    '$scope',
-    '$location',
-    '$translate',
-    'sagremorService',
-    'benoicFactory',
-    'sharedData',
-    'sagremorParams',
+    .controller('switchesCtrl',
     function($scope, $location, $translate, sagremorService, benoicFactory, sharedData, sagremorParams) {
       
         var self = this;
@@ -119,4 +112,4 @@ angular.module('sagremorApp')
         this.init();
         
     }
-]);
+);

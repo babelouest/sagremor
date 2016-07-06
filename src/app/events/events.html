@@ -5,13 +5,14 @@
 		<button type="button" class="btn btn-primary" name="addEvent" id="addEvent" data-ng-click="eventsCtrl.newEvent()" data-translate="events_button_add"></button>
     </div>
     <hr>
+    <h2 data-translate="schedulers_title"></h2>
     <div class="row">
-        <div data-ng-repeat="event in eventsCtrl.eventList track by event.name" class="col-sm-2">
-            <data-sag-container data-menu="eventsCtrl.menuEvent"
+        <div data-ng-repeat="scheduler in eventsCtrl.schedulerList track by $index" class="col-sm-2">
+            <data-sag-container data-menu="eventsCtrl.menuScheduler"
                                 data-size="1"
-                                data-title="event.name"
-                                data-element="event">
-				<data-sag-event data-event="event"></data-sag-event>
+                                data-title="scheduler.name"
+                                data-element="scheduler">
+				<data-sag-scheduler data-element="scheduler"></data-sag-scheduler>
 			</data-sag-container>
         </div>
     </div>

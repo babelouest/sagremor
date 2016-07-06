@@ -147,7 +147,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<label for="newActionHeaterValue" class="col-md-4" data-translate="script_heater_value"></label>
+					<label for="newActionHeaterValue" class="col-md-4" data-translate="script_heater_command"></label>
 					<div class="col-md-8">
 						<input id="newActionHeaterValue" 
 								class="form-control" 
@@ -156,6 +156,7 @@
 								min="0" 
 								max="100" 
 								data-ng-model="ScriptModalCtrl.newAction.command">
+						<span data-ng-bind="ScriptModalCtrl.tmpElement.options.unit"></span>
 					</div>
 				</div>
 				<div class="row control-group" data-ng-class="{'has-error': !ScriptModalCtrl.newAction.heater.mode}">

@@ -1,12 +1,5 @@
 angular.module('sagremorApp')
-  .controller('LoginCtrl', [
-  '$scope',
-  '$rootScope',
-  '$location',
-  '$cookieStore',
-  '$http',
-  'toaster',
-  'angharadFactory',
+  .controller('LoginCtrl',
   function($scope, $rootScope, $location, $cookieStore, $http, toaster, angharadFactory) {
       
       var self = this;
@@ -44,4 +37,4 @@ angular.module('sagremorApp')
       
       self.init();
   }
-]);
+);

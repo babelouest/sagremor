@@ -7,7 +7,7 @@
 			<select id="mockCommand" data-ng-model="$ctrl.param.command" data-ng-options="command for command in $ctrl.commandList"></select>
 		</div>
 	</div>
-	<div class="row">
+	<div class="row" data-ng-if="$ctrl.param.command === 'exec1' || $ctrl.param.command === 'exec2'">
 		<div class="span6">
 			param1
 		</div>
@@ -15,7 +15,7 @@
 			<input type="text" data-ng-model="$ctrl.param.param1" size="4">
 		</div>
 	</div>
-	<div class="row">
+	<div class="row" data-ng-if="$ctrl.param.command === 'exec1'">
 		<div class="span6">
 			param2
 		</div>
@@ -23,7 +23,7 @@
 			<input type="number" data-ng-model="$ctrl.param.param2" style="width: 7em">
 		</div>
 	</div>
-	<div class="row">
+	<div class="row" data-ng-if="$ctrl.param.command === 'exec1'">
 		<div class="span6">
 			param3
 		</div>

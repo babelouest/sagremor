@@ -209,11 +209,11 @@ angular.module("sagremorApp")
 			}
 			$scope.$broadcast("angharadScriptsChanged");
 			for (sh in result.schedulers) {
-				sharedData.add("angharadSchedulers", sh, result.schedulers[sh]);
+				sharedData.add("angharadSchedulers", result.schedulers[sh].name, result.schedulers[sh]);
 			}
 			$scope.$broadcast("angharadSchedulersChanged");
 			for (tr in result.triggers) {
-				sharedData.add("angharadTriggers", tr, result.triggers[tr]);
+				sharedData.add("angharadTriggers", result.triggers[tr].name, result.triggers[tr]);
 			}
 			$scope.$broadcast("angharadTriggersChanged");
         }, function (error) {

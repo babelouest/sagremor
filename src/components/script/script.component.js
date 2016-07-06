@@ -5,10 +5,10 @@ function sagScriptController ($translate, toaster, angharadFactory, sagremorPara
     }
     
     this.runScript = function 	() {
-		angharadFactory.runScript(ctrl.script.name).then(function () {
-			toaster.pop("success", $translate.instant("script_run", {name: ctrl.script.name}), $translate.instant("script_run_success"));
+		angharadFactory.runScript(ctrl.element.name).then(function () {
+			toaster.pop("success", $translate.instant("script_run", {name: ctrl.element.name}), $translate.instant("script_run_success"));
 		}, function (error) {
-			toaster.pop("error", $translate.instant("script_run", {name: ctrl.script.name}), $translate.instant("script_run_error"));
+			toaster.pop("error", $translate.instant("script_run", {name: ctrl.element.name}), $translate.instant("script_run_error"));
 		});
 	};
     
@@ -19,11 +19,8 @@ angular.module("sagremorApp").component("sagScript", {
     templateUrl: "components/script/script.template.html",
     controller: sagScriptController,
     bindings: {
-        script: "="
+        element: "="
     }
-})
-.config(function run($translatePartialLoaderProvider) {
-	$translatePartialLoaderProvider.addPart("script");
 })
 .run(function(sagGenericInjectorManager) {
     sagGenericInjectorManager.add({

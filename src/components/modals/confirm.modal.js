@@ -1,8 +1,5 @@
-angular.module('sagremorApp')
-    .controller('ConfirmModalCtrl', [
-    '$uibModalInstance',
-    'title',
-    'message',
+angular.module("sagremorApp")
+    .controller("ConfirmModalCtrl",
     function($uibModalInstance, title, message) {
         var self = this;
         
@@ -10,12 +7,12 @@ angular.module('sagremorApp')
         this.message = message;
         
         this.cancel = function () {
-            $uibModalInstance.dismiss('cancel');
+            $uibModalInstance.dismiss("cancel");
         };
         
         this.ok = function () {
-            $uibModalInstance.close('ok');
+            $uibModalInstance.close("ok");
         };
         
     }
-]);
+);

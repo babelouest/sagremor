@@ -1,18 +1,5 @@
 angular.module('sagremorApp')
-    .controller('ParametersCtrl', [
-    '$scope',
-    '$rootScope',
-    '$q',
-    '$location',
-    '$translate',
-    '$cookieStore',
-    'toaster',
-    'angharadFactory',
-    'benoicFactory',
-    'carleonFactory',
-    'sharedData',
-    'sagremorConfirm',
-    'sagremorParams',
+    .controller('ParametersCtrl',
     function($scope, $rootScope, $q, $location, $translate, $cookieStore, toaster, angharadFactory, benoicFactory, carleonFactory, sharedData, sagremorConfirm, sagremorParams) {
       
 		var self = this;
@@ -403,7 +390,7 @@ angular.module('sagremorApp')
 
 		this.init();
     }
-]).filter('deviceTypeName', [
+).filter('deviceTypeName', [
     'sharedData',
     function(sharedData) {
         return function(input) {

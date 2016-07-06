@@ -9,7 +9,7 @@
  *   "parameters": {                  // Required for submodule benoic, depends on the element for submodule carleon
  *     "device": "device_name"        // Required for submodule benoic
  *     "element_type": "element_type" // Required for submodule benoic
- *     "service": "service_uid"       // Required for carleon
+ *     "service": "service_name"      // Required for carleon
  *     "param1": "value1",            // for a string value
  *     "param2": 2,                   // for an integer value
  *     "param3", 3.3                  // for a real value
@@ -294,6 +294,10 @@ angular.module("sagremorApp")
 			}
 			
 			if (self.newActionType.submodule === "carleon") {
+				if (!self.tmpElement) {
+					return false;
+				}
+				
 				var ret = true;
 				_.forEach(self.carleonCommandsParameters[self.newActionType.name], function (parameter, parameterName) {
 					if (parameter.required && !self.newAction.parameters[parameter.name]) {

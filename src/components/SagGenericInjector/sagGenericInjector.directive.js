@@ -2,7 +2,7 @@ angular.module('sagremorApp').directive('sagGenericInjector', function ($compile
     
     var template = "<directive element='elt'></directive>";
     
-    var templateNotFound = "<p>Not found!</p>";
+    var templateNotFound = "<div class=\"has-error\" data-translate=\"injector_not_found\"></div>";
      
     return{
         scope: {
@@ -14,6 +14,7 @@ angular.module('sagremorApp').directive('sagGenericInjector', function ($compile
             if (!!config) {
                 content = $compile(template.replace(/directive/g, config.directive))(scope);
             } else {
+				console.log(scope.type, scope.elt);
                 content = $compile(templateNotFound)(scope);
             }
             element.append(content);

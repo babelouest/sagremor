@@ -7,7 +7,8 @@ angular.module("sagremorApp", [
 "ui.bootstrap.contextMenu", 
 "pascalprecht.translate",
 "chart.js",
-"ngSanitize"
+"ngSanitize",
+"ui.bootstrap.datetimepicker"
 ])
 .constant("_", window._)
 .constant("sagremorConstant", {
@@ -15,6 +16,12 @@ angular.module("sagremorApp", [
         {name: "switch", label: "script_action_benoic_switch", submodule: "benoic"},
         {name: "dimmer", label: "script_action_benoic_dimmer", submodule: "benoic"},
         {name: "heater", label: "script_action_benoic_heater", submodule: "benoic"}
+    ],
+    conditionList: [
+        {name: "switch", label: "event_condition_benoic_switch", submodule: "benoic"},
+        {name: "dimmer", label: "event_condition_benoic_dimmer", submodule: "benoic"},
+        {name: "heater", label: "event_condition_benoic_heater", submodule: "benoic"},
+        {name: "sensor", label: "event_condition_benoic_sensor", submodule: "benoic"}
     ],
     monitoredEveryEnum: [
         {value: 60, label: "monitor_1_minute"},
@@ -32,6 +39,14 @@ angular.module("sagremorApp", [
         {value: 21600, label: "monitor_6_hours"},
         {value: 43200, label: "monitor_12_hours"},
         {value: 86400, label: "monitor_1_day"}
+    ],
+    schedulerRepeatEveryEnum: [
+        {value: 0, label: "event_scheduler_repeat_every_minutes"},
+        {value: 1, label: "event_scheduler_repeat_every_hours"},
+        {value: 2, label: "event_scheduler_repeat_every_days"},
+        {value: 3, label: "event_scheduler_repeat_every_days_of_week"},
+        {value: 4, label: "event_scheduler_repeat_every_months"},
+        {value: 5, label: "event_scheduler_repeat_every_year"},
     ],
     langList: [
         {name: "fr", display: "Fr"},
@@ -91,9 +106,31 @@ angular.module("sagremorApp", [
     var open = function (title, message) {
         return modalInstance = $uibModal.open({
             animation: true,
-            templateUrl: "components/confirm/confirm.modal.html",
+            templateUrl: "components/modals/confirm.modal.html",
             controller: "ConfirmModalCtrl",
             controllerAs: "ConfirmModalCtrl",
+            size: "sm",
+            resolve: {
+                title: function () {
+                    return title;
+                },
+                message: function () {
+                    return message;
+                }
+            }
+        }).result;
+    };
+    
+    return {open: open};
+})
+.factory("sagremorEdit", function ($uibModal) {
+    
+    var open = function (title, message) {
+        return modalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: "components/modals/edit.modal.html",
+            controller: "EditModalCtrl",
+            controllerAs: "EditModalCtrl",
             size: "sm",
             resolve: {
                 title: function () {

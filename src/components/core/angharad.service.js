@@ -88,16 +88,20 @@ angular.module("sagremorApp")
             return angharadBackendService.httpRequest("GET", urlBase + "scheduler/" + name);
         };
 
+        dataFactory.enableScheduler = function (name, enabled) {
+            return angharadBackendService.httpRequest("GET", urlBase + "scheduler/" + name + "/enable/" + (enabled?"1":"0"));
+        };
+
         dataFactory.addScheduler = function (scheduler) {
             return angharadBackendService.httpRequest("POST", urlBase + "scheduler/", scheduler);
         };
 
         dataFactory.setScheduler = function (name, scheduler) {
-            return angharadBackendService.httpRequest("GET", urlBase + "scheduler/" + name, scheduler);
+            return angharadBackendService.httpRequest("PUT", urlBase + "scheduler/" + name, scheduler);
         };
 
         dataFactory.removeScheduler = function () {
-            return angharadBackendService.httpRequest("GET", urlBase + "scheduler/");
+            return angharadBackendService.httpRequest("DELETE", urlBase + "scheduler/");
         };
 
         dataFactory.getTriggerList = function () {
@@ -108,16 +112,20 @@ angular.module("sagremorApp")
             return angharadBackendService.httpRequest("GET", urlBase + "trigger/" + name);
         };
 
+        dataFactory.enableTrigger = function (name, enabled) {
+            return angharadBackendService.httpRequest("GET", urlBase + "trigger/" + name + "/enable/" + (enabled?"1":"0"));
+        };
+
         dataFactory.addTrigger = function (trigger) {
             return angharadBackendService.httpRequest("POST", urlBase + "trigger/", trigger);
         };
 
         dataFactory.setTrigger = function (name, trigger) {
-            return angharadBackendService.httpRequest("GET", urlBase + "trigger/" + name, trigger);
+            return angharadBackendService.httpRequest("PUT", urlBase + "trigger/" + name, trigger);
         };
 
         dataFactory.removeTrigger = function () {
-            return angharadBackendService.httpRequest("GET", urlBase + "trigger/");
+            return angharadBackendService.httpRequest("DELETE", urlBase + "trigger/");
         };
 
         return dataFactory;

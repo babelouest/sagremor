@@ -10,20 +10,20 @@ angular.module("sagremorApp")
         return angharadBackendService.httpRequest("GET", urlBase + "service");
     };
 
-    dataFactory.enableService = function (service_uid, enable) {
-        return angharadBackendService.httpRequest("PUT", urlBase + "service/" + service_uid + "/enable/" + (enable?"1":"0"));
+    dataFactory.enableService = function (service_name, enable) {
+        return angharadBackendService.httpRequest("PUT", urlBase + "service/" + service_name + "/enable/" + (enable?"1":"0"));
     };
 
-    dataFactory.elementCleanup = function (service_uid, element) {
-        return angharadBackendService.httpRequest("PUT", urlBase + "service/" + service_uid + "/" + element + "/cleanup");
+    dataFactory.elementCleanup = function (service_name, element) {
+        return angharadBackendService.httpRequest("PUT", urlBase + "service/" + service_name + "/" + element + "/cleanup");
     };
 
-    dataFactory.addTag = function (service_uid, element, tag) {
-        return angharadBackendService.httpRequest("PUT", urlBase + "service/" + service_uid + "/" + element + "/" + tag);
+    dataFactory.addTag = function (service_name, element, tag) {
+        return angharadBackendService.httpRequest("PUT", urlBase + "service/" + service_name + "/" + element + "/" + tag);
     };
 
-    dataFactory.removeTag = function (service_uid, element, tag) {
-        return angharadBackendService.httpRequest("DELETE", urlBase + "service/" + service_uid + "/" + element + "/" + tag);
+    dataFactory.removeTag = function (service_name, element, tag) {
+        return angharadBackendService.httpRequest("DELETE", urlBase + "service/" + service_name + "/" + element + "/" + tag);
     };
 
     /* Profile endpoints */

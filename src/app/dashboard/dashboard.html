@@ -1,6 +1,10 @@
 <div class="container">
     <h1 data-translate="dashboard_title"></h1>
 
+    <div class="row" data-ng-if="DashboardCtrl.sagremorParams.adminMode">
+		<button type="button" class="btn btn-primary" name="addTitleLine" id="addTitleLine" data-ng-click="DashboardCtrl.addTitleLine()" data-translate="dashboard_button_add_title_line"></button>
+    </div>
+	
     <div class="row">
         <div class="col-md-12">
             <div data-gridstack class="grid-stack grid1"
@@ -15,8 +19,6 @@
                      data-gs-item-width="w.width"
                      data-gs-item-height="w.height"
                      data-gs-item-autopos="0"
-                     data-on-item-added="DashboardCtrl.onItemAdded(w)"
-                     data-on-item-removed="DashboardCtrl.onItemRemoved(w)"
                      data-sag-type="{{w.type}}"
                      data-sag-device="{{w.device}}"
                      data-sag-name="{{w.name}}"

@@ -4,21 +4,19 @@ angular.module("sagremorApp")
       
         var self = this;
         
-        this.eventList = [];
+        this.schedulerList = [];
+        this.triggerList = [];
         this.sagremorParams = sagremorParams;
         
         this.init = function () {
-			// TODO Remove when event is done
-			self.sagremorParams.adminMode = true;
-			// /TODO
 
 			$translate(["edit", "remove", "add_to_dashboard"]).then(function (results) {
-				self.menuEvent = [
+				self.menuScheduler = [
 					{
 						name: "edit", 
 						display: results.edit, 
 						action: function (param) {
-							sagremorService.editEvent(param);
+							sagremorService.editEvent(param, "scheduler");
 						}
 					},
 					{
@@ -34,6 +32,7 @@ angular.module("sagremorApp")
 						name: "add_to_dashboard", 
 						display: results.add_to_dashboard, 
 						action: function (param) {
+							param.type = !!param.next_time?"scheduler":"trigger";
 							if (sagremorService.addToDashboard(param)) {
                                 $scope.$broadcast("refreshDashboard");
                             }
@@ -41,19 +40,32 @@ angular.module("sagremorApp")
 					}
 				];
 				
-				self.updateEvents();
+				self.updateSchedulers();
+				self.updateTriggers();
 			});
 		};
         
-        $scope.$on("angharadEventsChanged", function () {
-            self.updateEvents();
+        $scope.$on("angharadSchedulersChanged", function () {
+            self.updateSchedulers();
         });
         
-        this.updateEvents = function () {
-            var events = sharedData.all("angharadEvents");
-            self.eventList = [];
+        $scope.$on("angharadTriggersChanged", function () {
+            self.updateTriggers();
+        });
+        
+        this.updateSchedulers = function () {
+            var events = sharedData.all("angharadSchedulers");
+            self.schedulerList = [];
             for (key in events) {
-				self.eventList.push(events[key]);
+				self.schedulerList.push(events[key]);
+            }
+        };
+        
+        this.updateTriggers = function () {
+            var events = sharedData.all("angharadTriggers");
+            self.triggerList = [];
+            for (key in events) {
+				self.triggerList.push(events[key]);
             }
         };
         

@@ -1,12 +1,5 @@
 angular.module('sagremorApp')
-    .controller('sensorsCtrl', [
-    '$scope',
-    '$location',
-    '$translate',
-    'sagremorService',
-    'benoicFactory',
-    'sharedData',
-    'sagremorParams',
+    .controller('sensorsCtrl',
     function($scope, $location, $translate, sagremorService, benoicFactory, sharedData, sagremorParams) {
       
         var self = this;
@@ -75,4 +68,4 @@ angular.module('sagremorApp')
         this.init();
         
     }
-]);
+);

@@ -2,8 +2,8 @@ function carleonMockController ($translatePartialLoader, $translate, carleonMock
     var ctrl = this;
     
     ctrl.adminMode = sagremorParams.adminMode;
-    ctrl.param = {command: "command1", param1: "test", param2: 42, param3: 7.3};
-    ctrl.commandList = ["exec1", "exec2"];
+    ctrl.param = {command: "exec1", param1: "test", param2: 42, param3: 7.3};
+    ctrl.commandList = ["exec1", "exec2", "exec3", "exec4"];
     ctrl.messages = {};
     
     function init() {
@@ -53,7 +53,13 @@ angular.module("sagremorApp").component("carleonMock", {
     };
 
     mockFactory.commandMock = function (name, command, param1, param2, param3) {
-        return angharadBackendService.httpRequest("GET", urlBase + "mock-service/" + name + "/command/" + command + "/" + param1 + "/" + param2 + "/" + param3);
+		if (command === "exec3" || command === "exec4") {
+			return angharadBackendService.httpRequest("GET", urlBase + "mock-service/" + name + "/command/" + command);
+		} else if (command === "exec2") {
+			return angharadBackendService.httpRequest("GET", urlBase + "mock-service/" + name + "/command/" + command + "/" + param1);
+		} else {
+			return angharadBackendService.httpRequest("GET", urlBase + "mock-service/" + name + "/command/" + command + "/" + param1 + "/" + param2 + "/" + param3);
+		}
     };
 
 	mockFactory.addService = function () {
@@ -125,12 +131,48 @@ angular.module("sagremorApp").component("carleonMock", {
 					param1: "carleon_mock_command_exec1_parameter_param1_title",
 					param2: "carleon_mock_command_exec1_parameter_param2_title",
 					param3: "carleon_mock_command_exec1_parameter_param3_title"
+				},
+				result: {
+					value1: {
+						type: "integer",
+						title: "carleon_mock_command_exec1_result_value1_title"
+					},
+					value2: {
+						type: "boolean",
+						title: "carleon_mock_command_exec1_result_value2_title"
+					}
 				}
 			},
 			exec2: {
 				title: "carleon_mock_command_exec2_title",
 				parameters: {
 					param1: "carleon_mock_command_exec2_parameter_param1_title"
+				},
+				result: {
+					type: "string",
+					title: "carleon_mock_command_exec2_result_title"
+				}
+			},
+			exec3: {
+				title: "carleon_mock_command_exec3_title",
+				parameters: {},
+				result: {
+					type: "string",
+					title: "carleon_mock_command_exec3_result_title"
+				}
+			},
+			exec4: {
+				title: "carleon_mock_command_exec4_title",
+				parameters: {},
+				result: {
+					value1: {
+						type: "integer",
+						title: "carleon_mock_command_exec4_result_value1_title"
+					},
+					value2: {
+						type: "boolean",
+						title: "carleon_mock_command_exec4_result_value2_title"
+					}
 				}
 			}
 		}

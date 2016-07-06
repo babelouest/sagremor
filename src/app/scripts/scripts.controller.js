@@ -31,6 +31,7 @@ angular.module("sagremorApp")
 						name: "add_to_dashboard", 
 						display: results.add_to_dashboard, 
 						action: function (param) {
+							param.type = "script";
 							if (sagremorService.addToDashboard(param)) {
                                 $scope.$broadcast("refreshDashboard");
                             }

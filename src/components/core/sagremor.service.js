@@ -130,7 +130,7 @@ angular.module("sagremorApp")
 				templateUrl: "components/script/script.modal.html",
 				controller: "ScriptModalCtrl",
 				controllerAs: "ScriptModalCtrl",
-				size: "sm",
+				size: "md",
 				resolve: {
 					script: function () {
 						return script;
@@ -146,6 +146,35 @@ angular.module("sagremorApp")
 					toaster.pop("success", $translate.instant("script_remove"), $translate.instant("script_remove_success"));
 				}, function (error) {
 					toaster.pop("error", $translate.instant("script_remove"), $translate.instant("script_remove_error"));
+				});
+			});
+		};
+		
+		sagremorFactory.editEvent = function (event, eventType) {
+			var modalInstance = $uibModal.open({
+				animation: true,
+				templateUrl: "components/event/event.modal.html",
+				controller: "EventModalCtrl",
+				controllerAs: "EventModalCtrl",
+				size: "md",
+				resolve: {
+					event: function () {
+						return event;
+					},
+					eventType: function () {
+						return eventType;
+					}
+				}
+			});
+		};
+		
+		sagremorFactory.removeEvent = function (event) {
+			return sagremorConfirm.open($translate.instant("event_remove"), $translate.instant("event_remove_confirm")).then (function(result) {
+				return angharadFactory.removeEvent(event.name).then(function () {
+					sharedData.remove("angharadEvents", event.name);
+					toaster.pop("success", $translate.instant("event_remove"), $translate.instant("event_remove_success"));
+				}, function (error) {
+					toaster.pop("error", $translate.instant("event_remove"), $translate.instant("event_remove_error"));
 				});
 			});
 		};

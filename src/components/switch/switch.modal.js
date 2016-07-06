@@ -1,12 +1,5 @@
 angular.module('sagremorApp')
-    .controller('SwitchesModalCtrl', [
-    '$scope',
-    '$uibModalInstance',
-    '$translate',
-    'toaster',
-    'sagremorConstant',
-    'benoicFactory',
-    'switcher',
+    .controller('SwitchesModalCtrl',
     function($scope, $uibModalInstance, $translate, toaster, sagremorConstant, benoicFactory, switcher) {
         var self = this;
         
@@ -48,4 +41,4 @@ angular.module('sagremorApp')
         
         init();
     }
-]);
+);
