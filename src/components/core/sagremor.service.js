@@ -19,7 +19,6 @@ angular.module("sagremorApp")
 		};
         
         sagremorFactory.addToDashboard = function (element) {
-            // add tag
             var tag = "SGMR$D$0$0";
 			var profile = sagremorParams.currentProfile;
 			if (!profile.addTo) {
@@ -38,7 +37,6 @@ angular.module("sagremorApp")
 				profile.addTo.D.push(newElement);
 			} else {
 				var newElement = {
-					uid: element.uid,
 					type: element.type,
 					name: element.name,
 					tag: tag

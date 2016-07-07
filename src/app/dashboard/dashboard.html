@@ -22,10 +22,8 @@
                      data-sag-type="{{w.type}}"
                      data-sag-device="{{w.device}}"
                      data-sag-name="{{w.name}}"
-                     data-sag-uid="{{w.uid}}"
                      data-sag-profile="{{w.profile}}">
-                    <div class="grid-stack-item-content">
-
+                    <div class="grid-stack-item-content" data-ng-if="w.type !== 'separator'">
                         <data-sag-container data-menu="DashboardCtrl.menu"
                                             data-size="1"
                                             data-title="w.element.display || w.element.name"
@@ -33,6 +31,9 @@
                             <div data-sag-generic-injector data-type="w.type" data-elt="w.element"></div>
                         </data-sag-container>
                     </div>
+					<fieldset class="grid-stack-item-content" dir="ltr" data-ng-if="w.type === 'separator'">
+						<legend data-ng-bind="w.name" style="border-color: black;"></legend>
+					</fieldset>
                 </div>
             </div>
         </div>
