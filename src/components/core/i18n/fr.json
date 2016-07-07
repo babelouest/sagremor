@@ -310,5 +310,8 @@
 	"script_sensor_value": "Valeur",
 	"dashboard_button_add_title_line": "Ajouter un séparateur",
 	"dashboard_add_line": "Ajout d'un séparateur",
-	"dashboard_add_line_value": "Titre"
+	"dashboard_add_line_value": "Titre",
+	"dimmer_switch_off": "Éteindre",
+	"login": "Nom d'utilisateur",
+	"password": "Mot de passe"
 }

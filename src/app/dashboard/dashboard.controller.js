@@ -26,6 +26,10 @@ angular.module("sagremorApp")
 			];
 		};
 		
+		this.menuSelect = function(menuItem, element) {
+			menuItem.action(element);
+		};
+		
 		this.addTitleLine = function () {
 			return sagremorEdit.open($translate.instant("dashboard_add_line"), $translate.instant("dashboard_add_line_value")).then(function (result) {
 				newDashboardSeparator(result.value);
@@ -80,7 +84,7 @@ angular.module("sagremorApp")
 				if (tagParams.length >= 4) {
 					var x = tagParams[2];
 					var y = tagParams[3];
-					var curHeight = 2;
+					var curHeight = 1;
 					var dashboardElement = { type: element.type, name: element.name, element: elt, x: x, y: y, width: 2, height: curHeight, tag: tag };
 					self.dashboardWidgets.push(dashboardElement);
 				}
@@ -144,11 +148,11 @@ angular.module("sagremorApp")
 			});
 		}
         
-        function removeFromDashboard(w) {
+        this.removeFromDashboard = function (w) {
             var profile = sagremorParams.currentProfile;
             if (!!profile && !!profile.addTo && !!profile.addTo.D) {
                 _.forEach(profile.addTo.D, function (element, key) {
-					if (element && element.type === w.element.type && element.name === w.element.name && w.tag === element.tag) {
+					if (element && element.type === w.type && element.name === w.name && w.tag === element.tag) {
 						profile.addTo.D.splice(key, 1);
 					}
 				});
@@ -164,7 +168,8 @@ angular.module("sagremorApp")
         };
 
         this.onChange = function(event, items) {
-			if(self._timeout) { // if there is already a timeout in process cancel it
+			if(self._timeout) {
+				// if there is already a timeout in process cancel it
 				$timeout.cancel(self._timeout);
 			}
             self._timeout = $timeout(function() {
@@ -179,10 +184,21 @@ angular.module("sagremorApp")
 						var newTag = "SGMR$D$" + item.x + "$" + item.y;
 						if (updateTag(element, newTag)) {
 							changed = true;
+							element.tag = newTag;
 						}
 					}
 				});
 				if (changed) {
+					var dashboardWidgets = _(sagremorParams.currentProfile.addTo.D).chain().sortBy(function (widget) {
+						var splitted = widget.tag.split("$");
+						return splitted[2];
+					}).sortBy(function (widget) {
+						var splitted = widget.tag.split("$");
+						return splitted[3];
+					}).value();
+					sagremorParams.currentProfile.addTo.D = dashboardWidgets;
+					
+					
 					carleonFactory.setProfile(sagremorParams.currentProfile.name, sagremorParams.currentProfile).then(function () {
 						toaster.pop("success", $translate.instant("profile_save"), $translate.instant("profile_save_success"));
 					}, function () {

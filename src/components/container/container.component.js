@@ -19,6 +19,8 @@ angular.module("sagremorApp").component("sagContainer", {
         menu: "=",
         title: "=",
         size: "=",
-        element: "="
+        element: "=",
+        dashboard: "=",
+        sagParams: "="
     }
 });

@@ -229,7 +229,6 @@ angular.module("sagremorApp")
 		this.getCarleonElementParameters = function (action) {
 			var toReturn = [];
 			_.forEach(action.parameters, function (parameter, key) {
-				console.log(key, parameter);
 				if (key !== "service") {
 					toReturn.push({name: key, value: parameter});
 				}

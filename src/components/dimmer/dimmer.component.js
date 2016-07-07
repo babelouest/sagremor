@@ -15,6 +15,10 @@ function sagDimmerController (benoicFactory, sagremorParams, $translate) {
         });
     };
     
+    ctrl.Dimmervalue = function () {
+		return ctrl.element.value + "%"
+	};
+    
     init();
 }
 

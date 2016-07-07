@@ -1,12 +1,14 @@
-<div class="sag-container">
+<div data-ng-class="{'sag-container': !$ctrl.dashboard, 'sag-container-dashboard': ($ctrl.dashboard && $ctrl.element.type !== 'script')}">
 	<div class="row">
-        <div class="sag-container-header-menu col-sm-2" data-ng-if="!!$ctrl.menu" data-uib-dropdown>
-            <button class="btn btn-primary text-left" type="button" data-uib-dropdown-toggle data-ng-click="">#</button>
+        <div class="sag-container-header-menu col-sm-2" data-ng-if="(!!$ctrl.menu && !$ctrl.dashboard) || $ctrl.dashboard && $ctrl.sagParams.adminMode" data-uib-dropdown>
+            <button class="btn btn-primary text-left" type="button" data-uib-dropdown-toggle data-ng-click="">
+				<i class="fa fa-bars" aria-hidden="true"></i>
+            </button>
             <ul data-uib-dropdown-menu>
                 <li data-ng-repeat="menuItem in $ctrl.menu"><a href="" data-ng-click="$ctrl.menuSelect(menuItem, $ctrl.element)" data-ng-bind="menuItem.display"></a></li>
             </ul>
         </div>
-        <div class="sag-container-header-title col-xs-10">
+        <div data-ng-if="$ctrl.element.type !== 'script'" class="sag-container-header-title col-xs-10" data-ng-class="{'sag-container-header-title-dashboard': $ctrl.dashboard}">
             <span data-ng-bind="$ctrl.title" class="text-center"></span>
         </div>
     </div>

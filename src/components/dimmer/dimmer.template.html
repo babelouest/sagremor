@@ -7,21 +7,27 @@
                 <span class="quarter-value">100%</span>
             </div>
             <div class="quarter quarter2" data-ng-click="$ctrl.setDimmer(0)"
-				 data-ng-class="{'quarter-off': $ctrl.element.value === 0, 'quarter-on': $ctrl.element.value > 0}">
-                <span class="quarter-value">0%</span>
+				 data-ng-class="{'quarter-off': $ctrl.element.value < 25, 'quarter-on': $ctrl.element.value >= 25}">
+                <span class="quarter-value">25%</span>
             </div>
-            <div class="quarter quarter3" data-ng-click="$ctrl.setDimmer(50)"
+            <div class="quarter quarter3" data-ng-click="$ctrl.setDimmer(75)"
+				 data-ng-class="{'quarter-off': $ctrl.element.value < 75, 'quarter-on': $ctrl.element.value >= 75}">
+                <span class="quarter-value"><br/>75%</span>
+            </div>
+            <div class="quarter quarter4" data-ng-click="$ctrl.setDimmer(50)"
 				 data-ng-class="{'quarter-off': $ctrl.element.value < 50, 'quarter-on': $ctrl.element.value >= 50}">
                 <span class="quarter-value"><br/>50%</span>
             </div>
-            <div class="quarter quarter4" data-ng-click="$ctrl.setDimmer(25)"
-				 data-ng-class="{'quarter-off': $ctrl.element.value < 25, 'quarter-on': $ctrl.element.value >= 25}">
-                <span class="quarter-value"><br/>25%</span>
-            </div>
             <div class="cutout">
-                <div class="ring-value" data-ng-bind="$ctrl.element.value">
+                <div class="ring-value" data-ng-bind="$ctrl.Dimmervalue()">
                 </div>
             </div>
+        </div>
+		<hr class="dimmer-hr">
+        <div class="clearfix control-group">
+			<button type="button" data-ng-click="$ctrl.setDimmer(0)" class="btn btn-primary" data-translate="dimmer_switch_off">
+				<i class="fa fa-power-off" aria-hidden="true"></i>
+			</button>
         </div>
     </div>
 </div>

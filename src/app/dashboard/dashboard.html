@@ -27,13 +27,23 @@
                         <data-sag-container data-menu="DashboardCtrl.menu"
                                             data-size="1"
                                             data-title="w.element.display || w.element.name"
-                                            data-element="w">
+                                            data-element="w"
+                                            data-dashboard="true"
+                                            data-sag-params="DashboardCtrl.sagremorParams">
                             <div data-sag-generic-injector data-type="w.type" data-elt="w.element"></div>
                         </data-sag-container>
                     </div>
-					<fieldset class="grid-stack-item-content" dir="ltr" data-ng-if="w.type === 'separator'">
-						<legend data-ng-bind="w.name" style="border-color: black;"></legend>
-					</fieldset>
+                    <div data-ng-if="w.type === 'separator'">
+						<div class="sag-container-header-menu" data-uib-dropdown>
+							<button class="btn btn-primary text-left" data-ng-if="DashboardCtrl.sagremorParams.adminMode" type="button" data-uib-dropdown-toggle data-ng-click="">#</button>
+							<ul data-uib-dropdown-menu>
+								<li><a href="" data-ng-click="DashboardCtrl.removeFromDashboard(w)" data-translate="remove_from_dashboard"></a></li>
+							</ul>
+							<fieldset class="grid-stack-item-content" dir="ltr">
+								<legend data-ng-bind="w.name" class="sag-separator"></legend>
+							</fieldset>
+						</div>
+                    </div>
                 </div>
             </div>
         </div>

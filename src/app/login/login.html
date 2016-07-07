@@ -3,9 +3,9 @@
         <form class="form-signin">
             <h2 class="form-signin-heading" data-translate="login_sign_in"></h2>
             <label class="sr-only" for="inputLogin" data-translate="login_username"></label>
-            <input id="inputLogin" class="form-control" type="text" autofocus="" required="" placeholder="Email address" data-ng-model="LoginCtrl.username">
+            <input id="inputLogin" class="form-control" type="text" autofocus="" required="" placeholder="{{'login' | translate}}" data-ng-model="LoginCtrl.username">
             <label class="sr-only" for="inputPassword" data-translate="login_password"></label>
-            <input id="password" class="form-control" type="password" required="" placeholder="Password" data-ng-model="LoginCtrl.password">
+            <input id="password" class="form-control" type="password" required="" placeholder="{{'password' | translate}}" data-ng-model="LoginCtrl.password">
             <div class="checkbox">
                 <label>
                     <input type="checkbox" value="remember-me" data-ng-model="LoginCtrl.rememberMe">

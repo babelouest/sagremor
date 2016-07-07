@@ -14,7 +14,6 @@ angular.module('sagremorApp').directive('sagGenericInjector', function ($compile
             if (!!config) {
                 content = $compile(template.replace(/directive/g, config.directive))(scope);
             } else {
-				console.log(scope.type, scope.elt);
                 content = $compile(templateNotFound)(scope);
             }
             element.append(content);
