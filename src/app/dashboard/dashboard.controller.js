@@ -20,7 +20,7 @@ angular.module("sagremorApp")
 					name: "remove_from_dashboard", 
 					display: $translate.instant("remove_from_dashboard"), 
 					action: function (param) {
-						removeFromDashboard(param);
+						self.removeFromDashboard(param);
 					}
 				}
 			];
