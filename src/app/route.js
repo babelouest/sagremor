@@ -52,7 +52,9 @@ angular.module('sagremorApp')
             })
             .state('monitors', {
                 url: '/monitors',
-                templateUrl: 'app/monitors/monitors.html'
+                templateUrl: 'app/monitors/monitors.html',
+                controller: 'monitorsCtrl',
+                controllerAs: 'monitorsCtrl'
             })
             .state('logs', {
                 url: '/logs',

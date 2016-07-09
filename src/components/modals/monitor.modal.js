@@ -1,12 +1,6 @@
-angular.module('sagremorApp')
-    .controller('MonitorModalCtrl', [
-    '$scope',
-    '$uibModalInstance',
-    'toaster',
-    'angharadConstant',
-    'benoicFactory',
-    'element',
-    function($scope, $uibModalInstance, toaster, angharadConstant, benoicFactory, element) {
+angular.module("sagremorApp")
+    .controller("MonitorModalCtrl",
+    function($scope, $uibModalInstance, $filter, toaster, benoicFactory, element) {
         var self = this;
         
         this.element = element;
@@ -19,9 +13,8 @@ angular.module('sagremorApp')
                 var myData = [];
                 if (!!result && result.length > 0) {
 					_.forEach(mediumValues(result, 12), function (monitor) {
-						var d = new Date();
-						d.setUTCSeconds(monitor.timestamp);
-						self.labels.push(d);
+						var d = new Date(monitor.timestamp * 1000);
+						self.labels.push($filter("date")(d, "MM/dd hh:mm"));
 						myData.push(monitor.value);
 					});
 					self.data.push(myData);
@@ -57,9 +50,9 @@ angular.module('sagremorApp')
         };
         
         this.close = function () {
-            $uibModalInstance.dismiss('close');
+            $uibModalInstance.dismiss("close");
         };
         
         init();
     }
-]);
+);

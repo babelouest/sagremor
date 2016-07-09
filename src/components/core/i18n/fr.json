@@ -125,7 +125,7 @@
 	"menu_weather": "Météo",
 	"menu_scripts": "Tâches",
 	"menu_events": "Événements",
-	"menu_monitor": "Graphiques",
+	"menu_monitor": "Mesures",
 	"menu_logs": "Journaux",
 	"menu_parameters": "Paramètres",
 	"menu_logout": "Déconnexion",
@@ -313,5 +313,6 @@
 	"dashboard_add_line_value": "Titre",
 	"dimmer_switch_off": "Éteindre",
 	"login": "Nom d'utilisateur",
-	"password": "Mot de passe"
+	"password": "Mot de passe",
+	"monitors_title": "Historique des mesures"
 }

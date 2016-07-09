@@ -19,25 +19,26 @@ function topRightMenuCtrl ($scope, $rootScope, $translate, $cookieStore, sagremo
 			if (profile.name === self.currentProfileName) {
 				sagremorParams.currentProfile = profile;
 				$cookieStore.put("ANGHARAD_PROFILE", self.currentProfileName);
-				$rootScope.$broadcast('carleonProfileUpdated');
+				$rootScope.$broadcast("carleonProfileUpdated");
+				$rootScope.$broadcast("refreshDashboard");
 			}
 		});
 	};
 	
-	$scope.$on('carleonProfilesChanged', function () {
+	$scope.$on("carleonProfilesChanged", function () {
 		self.profiles = sagremorParams.profiles;
 		self.currentProfileName = !!sagremorParams.currentProfile?sagremorParams.currentProfile.name:"";
 	});
 	
-	$scope.$on('carleonProfileUpdated', function () {
+	$scope.$on("carleonProfileUpdated", function () {
 		self.profiles = sagremorParams.profiles;
 		self.currentProfileName = !!sagremorParams.currentProfile?sagremorParams.currentProfile.name:"";
 	});
 
 }
 
-angular.module('sagremorApp').component('topRightMenu', {
-    templateUrl: 'components/topRightMenu/topRightMenu.template.html',
+angular.module("sagremorApp").component("topRightMenu", {
+    templateUrl: "components/topRightMenu/topRightMenu.template.html",
     controller: topRightMenuCtrl,
-    controllerAs: 'topRightMenuCtrl'
+    controllerAs: "topRightMenuCtrl"
 });

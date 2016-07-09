@@ -25,8 +25,8 @@ function topLeftMenuCtrl ($scope, $location, $http, $translate, angharadFactory,
     init();
 }
 
-angular.module('sagremorApp').component('topLeftMenu', {
-    templateUrl: 'components/topLeftMenu/topLeftMenu.template.html',
+angular.module("sagremorApp").component("topLeftMenu", {
+    templateUrl: "components/topLeftMenu/topLeftMenu.template.html",
     controller: topLeftMenuCtrl,
-    controllerAs: 'topLeftMenuCtrl'
+    controllerAs: "topLeftMenuCtrl"
 });

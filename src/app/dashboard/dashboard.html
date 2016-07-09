@@ -1,5 +1,7 @@
 <div class="container">
     <h1 data-translate="dashboard_title"></h1>
+    <h2 data-ng-bind="DashboardCtrl.profileName">
+    </h2>
 
     <div class="row" data-ng-if="DashboardCtrl.sagremorParams.adminMode">
 		<button type="button" class="btn btn-primary" name="addTitleLine" id="addTitleLine" data-ng-click="DashboardCtrl.addTitleLine()" data-translate="dashboard_button_add_title_line"></button>

@@ -15,6 +15,12 @@ function sagDimmerController (benoicFactory, sagremorParams, $translate) {
         });
     };
     
+    ctrl.addDimmer = function (value) {
+        benoicFactory.setElement(ctrl.element.device, 'dimmer', ctrl.element.name, ctrl.element.value + value).then(function () {
+            ctrl.element.value += value;
+        });
+	}
+    
     ctrl.Dimmervalue = function () {
 		return ctrl.element.value + "%"
 	};

@@ -1,11 +1,12 @@
 angular.module("sagremorApp")
     .controller("DashboardCtrl", 
-    function($scope, $location, $translate, $timeout, toaster, sharedData, sagremorParams, sagremorService, sagremorEdit, benoicFactory, carleonFactory) {
+    function($scope, $location, $translate, $timeout, toaster, sharedData, sagremorParams, sagremorService, sagremorEdit, benoicFactory, carleonFactory, sagGenericInjectorManager) {
 
         var self = this;
 
 		this._timeout = null;
 		this.sagremorParams = sagremorParams;
+		this.profileName = "";
 		
         this.options = {
             cellHeight: 100,
@@ -13,7 +14,6 @@ angular.module("sagremorApp")
         };
         
         this.init = function () {
-            self.dashboardWidgets = [];
             getDashboardElements();
 			self.menu = [
 				{
@@ -43,21 +43,24 @@ angular.module("sagremorApp")
 
         function getDashboardElementsCurrentProfiles() {
             var profile = sagremorParams.currentProfile;
-            if (!!profile && !!profile.addTo && !!profile.addTo.D) {
-                _.forEach(profile.addTo.D, function (element) {
-                    if (!!element.device) {
-                        addBenoicElementToDashboard(element, element.tag);
-					} else if (element.type === "script") {
-						addScriptToDashboard(element, element.tag);
-					} else if (element.type === "scheduler") {
-						addSchedulerToDashboard(element, element.tag);
-					} else if (element.type === "separator") {
-						addDashboardSeparator(element.name, element.tag);
-                    } else {
-                        addCarleonElementToDashboard(element, element.tag);
-                    }
-                });
-            }
+            if (!!profile) {
+				self.profileName = profile.name
+				if (!!profile && !!profile.addTo && !!profile.addTo.D) {
+					_.forEach(profile.addTo.D, function (element) {
+						if (!!element.device) {
+							addBenoicElementToDashboard(element, element.tag);
+						} else if (element.type === "script") {
+							addScriptToDashboard(element, element.tag);
+						} else if (element.type === "scheduler") {
+							addSchedulerToDashboard(element, element.tag);
+						} else if (element.type === "separator") {
+							addDashboardSeparator(element.name, element.tag);
+						} else {
+							addCarleonElementToDashboard(element, element.tag);
+						}
+					});
+				}
+			}
         }
 
         function addBenoicElementToDashboard(element, tag) {
@@ -106,11 +109,14 @@ angular.module("sagremorApp")
 		}
         
         function addCarleonElementToDashboard(element, tag) {
+			var injector = _.find(sagGenericInjectorManager.components, function (inject) {
+				return inject.type === element.type;
+			});
             var tagParams = tag.split("$");
             if (tagParams.length >= 4) {
                 var x = tagParams[2];
                 var y = tagParams[3];
-                var curHeight = 3;
+                var curHeight = injector.widgetHeight;
                 var dashboardElement = { type: element.type, name: element.name, element: element, x: x, y: y, width: 2, height: curHeight, tag: tag };
                 self.dashboardWidgets.push(dashboardElement);
             }

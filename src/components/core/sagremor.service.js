@@ -6,10 +6,10 @@ angular.module("sagremorApp")
 		sagremorFactory.monitor = function (element) {
 			var modalInstance = $uibModal.open({
 				animation: true,
-				templateUrl: "components/monitor/monitor.modal.html",
+				templateUrl: "components/modals/monitor.modal.html",
 				controller: "MonitorModalCtrl",
 				controllerAs: "MonitorModalCtrl",
-				size: "sm",
+				size: "md",
 				resolve: {
 					element: function () {
 						return element;
