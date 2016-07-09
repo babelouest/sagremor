@@ -3,7 +3,7 @@
 exports.projectDirectory = __dirname;
 
 exports.angular = {
-    module: "angharadApp",
+    module: "sagremorApp",
 }
 
 exports.less = true;

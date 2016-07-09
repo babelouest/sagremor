@@ -57,7 +57,8 @@
     "ui-navbar": "~0.4.3",
     "gridstack": "~0.2.5",
     "angular-sanitize": "^1.5.7",
-    "bootstrap-ui-datetime-picker": "^2.4.0"
+    "bootstrap-ui-datetime-picker": "^2.4.0",
+    "components-font-awesome": "^4.6.3"
   },
   "devDependencies": {
     "angular-mocks": "~1.5.3"
