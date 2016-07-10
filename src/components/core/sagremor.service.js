@@ -216,6 +216,17 @@ angular.module("sagremorApp")
 			}
 			return false;
 		};
+		
+		sagremorFactory.removeMonitor = function (monitor) {
+			_.remove(sagremorParams.currentProfile.monitorList, function (curMonitor) {
+				return curMonitor.name === monitor.name;
+			});
+			return carleonFactory.saveCurrentProfile().then(function () {
+				toaster.pop("success", $translate.instant("monitor_save"), $translate.instant("monitor_save_success"));
+			}, function () {
+				toaster.pop("error", $translate.instant("monitor_save"), $translate.instant("monitor_save_error"));
+			});
+		};
     
 		return sagremorFactory;
 	}

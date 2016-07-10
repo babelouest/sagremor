@@ -1,3 +1,45 @@
-<div class="text-center">
-	Monitor
+<div class="row control-group">
+	<div class="col-md-1">
+	</div>
+	<div class="col-md-2">
+		<label for="monitorNewElement" data-translate="monitor_new_element"></label>
+	</div>
+	<div class="col-md-3 controls">
+		<select id="monitorNewElement"
+				class="form-control"
+				data-ng-model="$ctrl.newElement"
+				data-ng-options="element.display for element in $ctrl.elementListDisplayed">
+		</select>
+	</div>
+	<div class="col-md-3">
+		<select id="monitorNewElementColor"
+				class="form-control"
+				data-ng-model="$ctrl.newElementColor">
+			<option data-ng-repeat="color in $ctrl.colorList" style="background:{{color.value}}" value="{{color.value}}" data-ng-bind="$ctrl.tr(color.label)"></option>
+		</select>
+	</div>
+	<div class="col-md-3 controls">
+		<button type="button" data-ng-click="$ctrl.addElement()" class="btn btn-primary" data-ng-disabled="!$ctrl.newElementValid()" data-translate="monitor_new_element_button"></button>
+	</div>
+</div>
+<div class="row text-center">
+    <div class="col-md-12">
+        <canvas id="line" class="chart chart-bar" 
+                data-chart-dataset-override="$ctrl.datasetOverride"
+                data-chart-data="$ctrl.data"
+                data-chart-labels="$ctrl.labels" 
+                data-chart-legend="true" 
+                data-chart-series="$ctrl.series"
+                data-chart-options="$ctrl.options"
+                data-chart-colors="$ctrl.colors">
+        </canvas> 
+    </div>
+</div>
+<div class="row text-center">
+    <div class="col-md-2" data-ng-repeat="serie in $ctrl.element.elements" style="margin: 5px;">
+		<button type="button" class="btn" data-ng-click="$ctrl.removeSerie(serie)" style="background-color:{{serie.color}};" data-ng-disabled="$ctrl.element.elements.length <= 1">
+			<span data-ng-bind="serie.display"></span>
+			<i class="fa fa-trash-o" aria-hidden="true"></i>
+		</button>
+    </div>
 </div>

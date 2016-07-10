@@ -1,6 +1,6 @@
 angular.module("sagremorApp")
     .factory("carleonFactory", 
-    function($http, angharadConfig, angharadBackendService) {
+    function($http, $q, angharadConfig, angharadBackendService, sagremorParams) {
 
     var urlBase = angharadConfig.baseUrl + angharadConfig.prefixCarleon;
     var dataFactory = {};
@@ -42,6 +42,17 @@ angular.module("sagremorApp")
     dataFactory.removeProfile = function (profile_id) {
         return angharadBackendService.httpRequest("DELETE", urlBase + "profile/" + profile_id);
     };
+    
+    dataFactory.saveCurrentProfile = function () {
+		var profile = sagremorParams.currentProfile;
+		var deferred = $q.defer();
+		if (!!profile) {
+			return dataFactory.setProfile(profile.name, profile);
+		} else {
+			deferred.reject(error);
+			return deferred.promise;
+		}
+	};
 
     return dataFactory;
 });

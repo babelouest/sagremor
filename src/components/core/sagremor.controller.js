@@ -155,6 +155,7 @@ angular.module("sagremorApp")
 					_.forEach(results.profiles, function (profile) {
 						if (profile.name === profile_name) {
 							sagremorParams.currentProfile = profile;
+							$scope.$broadcast("angharadProfileChanged");
 						}
 					});
 					if (!sagremorParams.currentProfile) {
@@ -193,6 +194,7 @@ angular.module("sagremorApp")
 				toaster.pop("error", $translate.instant("profile_save"), $translate.instant("profile_save_error"));
 			});
 			$cookieStore.put("ANGHARAD_PROFILE", $translate.instant("profile_default"));
+			$scope.$broadcast("angharadProfileChanged");
 		}
 	};
     

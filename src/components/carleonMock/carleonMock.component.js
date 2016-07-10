@@ -121,7 +121,7 @@ angular.module("sagremorApp").component("carleonMock", {
         service: carleonMockFactory,
         leftMenu: {
 			title: "carleon_mock_title",
-			icon: '<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>',
+			icon: '<i class="fa fa-thumbs-o-up"></i>',
 			target: "carleonMock"
 		},
 		widgetHeight: 3,

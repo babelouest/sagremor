@@ -1,5 +1,5 @@
-angular.module('sagremorApp')
-    .controller('HeatersModalCtrl',
+angular.module("sagremorApp")
+    .controller("HeatersModalCtrl",
     function($scope, $uibModalInstance, $translate, toaster, sagremorConstant, benoicFactory, heater) {
         var self = this;
         
@@ -19,7 +19,7 @@ angular.module('sagremorApp')
         }
         
         this.cancel = function () {
-            $uibModalInstance.dismiss('cancel');
+            $uibModalInstance.dismiss("cancel");
         };
         
         this.tr = function (id) {
@@ -30,12 +30,12 @@ angular.module('sagremorApp')
             self.heater.display = self.heater.newDisplay;
             self.heater.monitor = self.heater.monitorChecked?1:0;
             benoicFactory.updateElement(self.heater.device, "heater", self.heater.name, self.heater).then(function (response) {
-                $scope.$broadcast('benoicHeatersChanged');
-                toaster.pop("success", $translate.instant('heater_save'), $translate.instant('heater_save_success'));
+                $scope.$broadcast("benoicHeatersChanged");
+                toaster.pop("success", $translate.instant("heater_save"), $translate.instant("heater_save_success"));
             }, function (error) {
-                toaster.pop("error", $translate.instant('heater_save'), $translate.instant('heater_save_error'));
-            })['finally'](function () {
-                $uibModalInstance.dismiss('close');
+                toaster.pop("error", $translate.instant("heater_save"), $translate.instant("heater_save_error"));
+            })["finally"](function () {
+                $uibModalInstance.dismiss("close");
             });
         };
         

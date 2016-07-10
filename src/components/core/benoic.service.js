@@ -53,8 +53,8 @@ angular.module("sagremorApp")
         return angharadBackendService.httpRequest("PUT", urlBase + "device/" + deviceName + "/" + elementType + "/" + elementName, element);
     };
 
-    dataFactory.getMonitor = function (deviceName, elementType, elementName) {
-        return angharadBackendService.httpRequest("GET", urlBase + "monitor/" + deviceName + "/" + elementType + "/" + elementName);
+    dataFactory.getMonitor = function (deviceName, elementType, elementName, from) {
+        return angharadBackendService.httpRequest("GET", urlBase + "monitor/" + deviceName + "/" + elementType + "/" + elementName, null, !!from?{from: from}:null);
     };
     
     dataFactory.addTag = function (deviceName, elementType, elementName, tag) {

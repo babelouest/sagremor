@@ -1,58 +1,112 @@
 angular.module("sagremorApp")
     .controller("MonitorModalCtrl",
-    function($scope, $uibModalInstance, $filter, toaster, benoicFactory, element) {
+    function($scope, $uibModalInstance, $translate, toaster, benoicFactory, sagremorConstant, element) {
         var self = this;
         
         this.element = element;
-        this.labels = [];
         this.series = [element.display];
         this.data = [];
+        this.labels = [];
+        this.durationList = sagremorConstant.durationList;
+        this.duration = {value: 4};
         
+		this.options = {
+			responsive: true,
+			tooltips: {
+				callbacks: {
+					label: function(tooltipItem, data) {
+						return tooltipItem.yLabel + " " + element.options.unit;
+					}
+				}
+			},
+			scales: {
+				xAxes: [{
+					type: "time",
+					display: true,
+					time: {
+						tooltipFormat: "YYYY/MM/DD hh:mm"
+					}
+				}],
+				yAxes: [{
+					scaleLabel: {
+						display: true,
+						labelString: element.options.unit
+					}
+				}]
+			},
+			elements: {
+				line: {
+					lineTension: 0.4
+				},
+				point: {
+					radius: 0
+				}
+			}
+		};
+    
         function init() {
-            benoicFactory.getMonitor(element.device, element.type, element.name).then(function (result) {
+			self.getMonitor();
+        }
+        
+        this.getMonitor = function () {
+			var from = new Date();
+			
+			switch (self.duration.value) {
+				case 0:
+					from.setTime(from.getTime() - 1*60*60*1000);
+					break;
+				case 1:
+					from.setTime(from.getTime() - 2*60*60*1000);
+					break;
+				case 2:
+					from.setTime(from.getTime() - 6*60*60*1000);
+					break;
+				case 3:
+					from.setTime(from.getTime() - 12*60*60*1000);
+					break;
+				case 4:
+					from.setTime(from.getTime() - 24*60*60*1000);
+					break;
+				case 5:
+					from.setTime(from.getTime() - 48*60*60*1000);
+					break;
+				case 6:
+					from.setTime(from.getTime() - 72*60*60*1000);
+					break;
+				case 7:
+					from.setTime(from.getTime() - 168*60*60*1000);
+					break;
+				case 8:
+					from.setMonth(from.getMonth() - 1);
+					break;
+			}
+			
+            benoicFactory.getMonitor(element.device, element.type, element.name, Math.round(from.getTime() / 1000)).then(function (result) {
+                self.data = [];
+                self.labels = [];
                 var myData = [];
                 if (!!result && result.length > 0) {
-					_.forEach(mediumValues(result, 12), function (monitor) {
-						var d = new Date(monitor.timestamp * 1000);
-						self.labels.push($filter("date")(d, "MM/dd hh:mm"));
+					_.forEach(result, function (monitor) {
+						self.labels.push(new Date(monitor.timestamp * 1000));
 						myData.push(monitor.value);
 					});
 					self.data.push(myData);
 				}
             });
-        }
-        
-        function mediumValues(monitorData, nbValues) {
-			var subTabLength = Math.round(monitorData.length / nbValues);
-			var counter = 0;
-			var tmpArray = [];
-			var result = [];
-			if (monitorData.length <= nbValues) {
-				return monitorData;
-			}
-			_.forEach(monitorData, function(data) {
-				tmpArray.push(data);
-				counter++;
-				if (counter >= subTabLength) {
-					tmpArray.sort(function (x, y) {
-						return (x.value - y.value);
-					});
-					result.push(tmpArray[Math.round(tmpArray.length/2)]);
-					counter = 0;
-					tmpArray = [];
-				}
-			});
-			return result;
 		}
         
-        this.onClick = function (points, evt) {
-          console.log(points, evt);
-        };
+        this.tr = function (value) {
+			return $translate.instant(value);
+		};
         
         this.close = function () {
             $uibModalInstance.dismiss("close");
         };
         
+        this.displayTitle = function () {
+			return $translate.instant("monitor_title") + element.display;
+		};
+		
         init();
     }
 );

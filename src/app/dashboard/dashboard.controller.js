@@ -248,6 +248,10 @@ angular.module("sagremorApp")
 			return false;
 		}
         
+        $scope.$on("angharadProfileChanged", function () {
+            getDashboardElements();
+        });
+        
         $scope.$on("refreshDashboard", function () {
             getDashboardElements();
         });

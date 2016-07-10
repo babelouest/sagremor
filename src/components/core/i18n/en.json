@@ -28,7 +28,7 @@
 	"heater_mode_off": "Off",
 	"heater_mode_auto": "Auto",
 	"heater_mode_manual": "Manual",
-	"monitor_title": "Monitor",
+	"monitor_title": "Monitor: ",
 	"monitor_close": "Close",
 	"monitor_1_minute": "1 minute",
 	"monitor_2_minutes": "2 minutes",

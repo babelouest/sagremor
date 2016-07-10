@@ -1,15 +1,29 @@
 <div class="modal-content">
     <div class="modal-header">
-        <h3 class="modal_title" data-translate="monitor_title"></h3>
+        <h3 class="modal_title" data-ng-bind="MonitorModalCtrl.displayTitle()"></h3>
     </div>
     <div class="modal-body">
-        <canvas id="line" class="chart chart-line" 
-                data-chart-data="MonitorModalCtrl.data"
-                data-chart-labels="MonitorModalCtrl.labels" 
-                data-chart-legend="true" 
-                data-chart-series="MonitorModalCtrl.series"
-                data-chart-click="MonitorModalCtrl.onClick">
-        </canvas> 
+		<div class="row control-group">
+			<div class="col-md-6">
+				<label for="monitorSelectDuration" data-translate="monitor_select_duration"></label>
+			</div>
+			<div class="col-md-6 controls">
+				<select id="monitorSelectDuration"
+						class="form-control"
+						data-ng-model="MonitorModalCtrl.duration"
+						data-ng-change="MonitorModalCtrl.getMonitor()"
+						data-ng-options="duration as MonitorModalCtrl.tr(duration.label) for duration in MonitorModalCtrl.durationList track by duration.value">
+				</select>
+			</div>
+		</div>
+		<div class="row">
+			<canvas id="line" class="chart chart-line" 
+					data-chart-data="MonitorModalCtrl.data"
+					data-chart-labels="MonitorModalCtrl.labels" 
+					data-chart-series="MonitorModalCtrl.series"
+					data-chart-options="MonitorModalCtrl.options">
+			</canvas> 
+		</div>
     </div>
     <div class="modal-footer">
         <button class="btn btn-primary" type="button" data-ng-click="MonitorModalCtrl.close()" data-translate="monitor_close"></button>
