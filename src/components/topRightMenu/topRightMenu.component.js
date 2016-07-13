@@ -11,7 +11,9 @@ function topRightMenuCtrl ($scope, $rootScope, $translate, $cookieStore, sagremo
     self.currentProfileName = !!sagremorParams.currentProfile?sagremorParams.currentProfile.name:"";
 
     self.changeLang = function () {
-        $translate.use(self.selectedLang);
+        $translate.use(self.selectedLang).then(function () {
+			$rootScope.$broadcast("changeLang");
+		});
     };
     
     self.changeProfile = function () {

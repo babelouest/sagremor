@@ -1,6 +1,6 @@
 angular.module("sagremorApp")
   .controller("sagremorCtrl", 
-  function($scope, $rootScope, $http, $q, $location, $cookieStore, $translate, toaster, angharadFactory, benoicFactory, carleonFactory, sharedData, sagremorParams) {
+  function($scope, $rootScope, $http, $q, $location, $cookieStore, $translate, toaster, angharadFactory, benoicFactory, carleonFactory, garethFactory, sharedData, sagremorParams) {
     var self = this;
     
     this.loaderToast;
@@ -21,6 +21,7 @@ angular.module("sagremorApp")
                     } else if (result[key].name === "carleon" && result[key].enabled) {
 						self.initCarleon();
                     } else if (result[key].name === "gareth" && result[key].enabled) {
+						self.initGareth();
                     }
                 }
                 $scope.$broadcast("submodulesChanged");
@@ -170,6 +171,28 @@ angular.module("sagremorApp")
 			toaster.pop({type: "error", title: $translate.instant("carleon_loading_title"), body: $translate.instant("carleon_loading_error")});
 		});
 		
+	};
+	
+	this.initGareth = function () {
+		var qList = {
+			filters: garethFactory.getFilterList(),
+			alerts: garethFactory.getAlertList()
+		}
+		
+		$q.all(qList).then(function (results) {
+			for (key in results.filters) {
+				sharedData.add("garethFilters", results.filters[key].name, results.filters[key]);
+			}
+			for (key in results.alerts.smtp) {
+				sharedData.add("garethAlertsSmtp", results.alerts.smtp[key].name, results.alerts.smtp[key]);
+			}
+			for (key in results.alerts.http) {
+				sharedData.add("garethAlertsHttp", results.alerts.http[key].name, results.alerts.http[key]);
+			}
+			$scope.$broadcast("garethChange");
+		}, function (error) {
+			toaster.pop({type: "error", title: $translate.instant("gareth_loading_title"), body: $translate.instant("gareth_loading_error")});
+		});
 	};
 	
 	this.setDefaultProfile = function () {

@@ -6,6 +6,8 @@ function sagMonitorController ($scope, $q, $translate, toaster, angharadFactory,
     this.colorList = [];
     this.newElement = false;
     this.newElementColor = false;
+    this.durationList = sagremorConstant.durationList;
+    this.duration = {value: 4};
     
     this.data = [];
     this.labels = [];
@@ -17,42 +19,42 @@ function sagMonitorController ($scope, $q, $translate, toaster, angharadFactory,
 	}];
 	
 	this.options = {
-			responsive: true,
-			tooltips: {
-				callbacks: {
-					label: function(tooltipItem, data) {
-						return tooltipItem.yLabel;
-					}
-				}
-			},
-			scales: {
-				xAxes: [{
-					type: "time",
-					display: true,
-					time: {
-						tooltipFormat: "YYYY/MM/DD hh:mm"
-					}
-				}],
-				yAxes: [{
-					scaleLabel: {
-						display: true,
-					}
-				}]
-			},
-			elements: {
-				line: {
-					lineTension: 0.4,
-					fill: false
-				},
-				point: {
-					radius: 3
+		responsive: true,
+		tooltips: {
+			callbacks: {
+				label: function(tooltipItem, data) {
+					return tooltipItem.yLabel;
 				}
 			}
+		},
+		scales: {
+			xAxes: [{
+				type: "time",
+				display: true,
+				time: {
+					tooltipFormat: "YYYY/MM/DD hh:mm"
+				}
+			}],
+			yAxes: [{
+				scaleLabel: {
+					display: true,
+				}
+			}]
+		},
+		elements: {
+			line: {
+				lineTension: 0.4,
+				fill: false
+			},
+			point: {
+				radius: 3
+			}
+		}
 	};
     
     function init() {
 		updateDevices();
-		displayMonitor();
+		ctrl.displayMonitor();
     }
     
     this.tr = function (value) {
@@ -60,7 +62,7 @@ function sagMonitorController ($scope, $q, $translate, toaster, angharadFactory,
 	};
 	
     $scope.$on("updateMonitor-"+ctrl.element.name, function () {
-		displayMonitor();
+		ctrl.displayMonitor();
 	});
 	
 	function updateDevices() {
@@ -142,13 +144,44 @@ function sagMonitorController ($scope, $q, $translate, toaster, angharadFactory,
 		});
 	};
 	
-	function displayMonitor() {
+	this.displayMonitor = function() {
+		var from = new Date();
+		
+		switch (ctrl.duration.value) {
+			case 0:
+				from.setTime(from.getTime() - 1*60*60*1000);
+				break;
+			case 1:
+				from.setTime(from.getTime() - 2*60*60*1000);
+				break;
+			case 2:
+				from.setTime(from.getTime() - 6*60*60*1000);
+				break;
+			case 3:
+				from.setTime(from.getTime() - 12*60*60*1000);
+				break;
+			case 4:
+				from.setTime(from.getTime() - 24*60*60*1000);
+				break;
+			case 5:
+				from.setTime(from.getTime() - 48*60*60*1000);
+				break;
+			case 6:
+				from.setTime(from.getTime() - 72*60*60*1000);
+				break;
+			case 7:
+				from.setTime(from.getTime() - 168*60*60*1000);
+				break;
+			case 8:
+				from.setMonth(from.getMonth() - 1);
+				break;
+		}
 		ctrl.colorList = angular.copy(sagremorConstant.colorList);
 		ctrl.elementListDisplayed = angular.copy(ctrl.elementList);
 		var httpMonitor = [];
 		
 		_.forEach(ctrl.element.elements, function (element) {
-			httpMonitor.push(benoicFactory.getMonitor(element.device, element.type, element.name));
+			httpMonitor.push(benoicFactory.getMonitor(element.device, element.type, element.name, Math.round(from.getTime() / 1000)));
 		});
 		
 		ctrl.data = [];

@@ -9,7 +9,8 @@ angular.module("sagremorApp", [
 "pascalprecht.translate",
 "chart.js",
 "ngSanitize",
-"ui.bootstrap.datetimepicker"
+"ui.bootstrap.datetimepicker",
+"datatables"
 ])
 .constant("_", window._)
 .constant("sagremorConstant", {

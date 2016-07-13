@@ -1,5 +1,5 @@
-angular.module('sagremorApp')
-    .controller('ParametersCtrl',
+angular.module("sagremorApp")
+    .controller("ParametersCtrl",
     function($scope, $rootScope, $q, $location, $translate, $cookieStore, toaster, angharadFactory, benoicFactory, carleonFactory, sharedData, sagremorConfirm, sagremorParams) {
       
 		var self = this;
@@ -28,22 +28,22 @@ angular.module('sagremorApp')
 			}
 
 			self.submodules = sharedData.all("submodules");
-			self.deviceList = sharedData.all('benoicDevices');
+			self.deviceList = sharedData.all("benoicDevices");
 			self.initDeviceTypes();
 			self.selectedLang = $translate.use();
 			self.profileList = sagremorParams.profiles;
 			self.currentProfile = sagremorParams.currentProfile;
 		};
 
-		$scope.$on('submodulesChanged', function () {
+		$scope.$on("submodulesChanged", function () {
 			self.submodules = sharedData.all("submodules");
 		});
 
-		$scope.$on('benoicDevicesChanged', function () {
-			self.deviceList = sharedData.all('benoicDevices');
+		$scope.$on("benoicDevicesChanged", function () {
+			self.deviceList = sharedData.all("benoicDevices");
 		});
 
-		$scope.$on('benoicDeviceTypesChanged', function () {
+		$scope.$on("benoicDeviceTypesChanged", function () {
 			self.initDeviceTypes();
 		});
 
@@ -97,18 +97,18 @@ angular.module('sagremorApp')
 			benoicFactory.addDevice({name: deviceName, display: self.newDeviceName, description: self.newDeviceDescription, enabled: true, type_uid: self.newDeviceType, options: curOptions}).then(function (response) {
 				if (self.newDeviceConnect) {
 					self.connectDevice({name: deviceName, connected: true}).then(function(result) {
-						toaster.pop("success", $translate.instant('device_add'), $translate.instant('device_add_success'));
+						toaster.pop("success", $translate.instant("device_add"), $translate.instant("device_add_success"));
 						$rootScope.$broadcast("reinitBenoic");
 					});
 				} else {
-					toaster.pop("success", $translate.instant('device_add'), $translate.instant('device_add_success'));
+					toaster.pop("success", $translate.instant("device_add"), $translate.instant("device_add_success"));
 					$rootScope.$broadcast("reinitBenoic");
 				}
 			}, function (error) {
-				toaster.pop("error", $translate.instant('device_add'), $translate.instant('device_add_error'));
-			})['finally'](function () {
+				toaster.pop("error", $translate.instant("device_add"), $translate.instant("device_add_error"));
+			})["finally"](function () {
 				self.deviceAdded = false;
-				self.deviceList = sharedData.all('benoicDevices');
+				self.deviceList = sharedData.all("benoicDevices");
 				self.newDeviceName = "";
 				self.newDeviceDescription = "";
 				self.newDeviceType = "";
@@ -137,16 +137,16 @@ angular.module('sagremorApp')
 		this.connectDevice = function (device) {
 			if (device.connected) {
 				return benoicFactory.connectDevice(device.name).then(function (response) {
-					toaster.pop("success", $translate.instant('device_connect'), $translate.instant('device_connect_success'));
+					toaster.pop("success", $translate.instant("device_connect"), $translate.instant("device_connect_success"));
 				}, function (error) {
-					toaster.pop("error", $translate.instant('device_connect'), $translate.instant('device_connect_error'));
+					toaster.pop("error", $translate.instant("device_connect"), $translate.instant("device_connect_error"));
 					device.connected = false;
 				});
 			} else {
 				return benoicFactory.disconnectDevice(device.name).then(function (response) {
-					toaster.pop("success", $translate.instant('device_disconnect'), $translate.instant('device_disconnect_success'));
+					toaster.pop("success", $translate.instant("device_disconnect"), $translate.instant("device_disconnect_success"));
 				}, function (error) {
-					toaster.pop("error", $translate.instant('device_disconnect'), $translate.instant('device_disconnect_error'));
+					toaster.pop("error", $translate.instant("device_disconnect"), $translate.instant("device_disconnect_error"));
 					device.connected = true;
 				});
 			}
@@ -157,15 +157,15 @@ angular.module('sagremorApp')
 			delete copyDevice.element;
 			benoicFactory.setDevice(copyDevice).then(function () {
 				if (copyDevice.enabled) {
-					toaster.pop("success", $translate.instant('device_disable'), $translate.instant('device_enable_success'));
+					toaster.pop("success", $translate.instant("device_disable"), $translate.instant("device_enable_success"));
 				} else {
-					toaster.pop("success", $translate.instant('device_disable'), $translate.instant('device_disable_success'));
+					toaster.pop("success", $translate.instant("device_disable"), $translate.instant("device_disable_success"));
 				}
 			}, function (error) {
 				if (copyDevice.enabled) {
-					toaster.pop("error", $translate.instant('device_disable'), $translate.instant('device_enable_error'));
+					toaster.pop("error", $translate.instant("device_disable"), $translate.instant("device_enable_error"));
 				} else {
-					toaster.pop("error", $translate.instant('device_disable'), $translate.instant('device_disable_error'));
+					toaster.pop("error", $translate.instant("device_disable"), $translate.instant("device_disable_error"));
 				}
 			});
 		};
@@ -178,10 +178,10 @@ angular.module('sagremorApp')
 		this.saveDevice = function (device) {
 			device.description = device.newDescription;
 			benoicFactory.setDevice(device).then(function (response) {
-				toaster.pop("success", $translate.instant('device_save'), $translate.instant('device_save_success'));
+				toaster.pop("success", $translate.instant("device_save"), $translate.instant("device_save_success"));
 			}, function (error) {
-				toaster.pop("error", $translate.instant('device_save'), $translate.instant('device_save_error'));
-			})['finally'](function () {
+				toaster.pop("error", $translate.instant("device_save"), $translate.instant("device_save_error"));
+			})["finally"](function () {
 				device.update = false;
 			});
 		};
@@ -192,19 +192,19 @@ angular.module('sagremorApp')
 		};
 
 		this.removeDevice = function (device) {
-			sagremorConfirm.open($translate.instant('device_remove'), $translate.instant('device_remove_confirm')).then (function(result) {
+			sagremorConfirm.open($translate.instant("device_remove"), $translate.instant("device_remove_confirm")).then (function(result) {
 				benoicFactory.removeDevice(device.name).then(function (response) {
-					sharedData.remove('benoicDevices', device.name);
-					self.deviceList = sharedData.all('benoicDevices');
-					toaster.pop("success", $translate.instant('device_remove'), $translate.instant('device_remove_success'));
+					sharedData.remove("benoicDevices", device.name);
+					self.deviceList = sharedData.all("benoicDevices");
+					toaster.pop("success", $translate.instant("device_remove"), $translate.instant("device_remove_success"));
 				}, function (error) {
-					toaster.pop("error", $translate.instant('device_remove'), $translate.instant('device_remove_error'));
+					toaster.pop("error", $translate.instant("device_remove"), $translate.instant("device_remove_error"));
 				});
 			});
 		};
 
 		this.initDeviceTypes = function () {
-			self.deviceTypes = sharedData.all('benoicDeviceTypes');
+			self.deviceTypes = sharedData.all("benoicDeviceTypes");
 			_.forEach(self.deviceTypes, function (type) {
 				$translate(type.uid + "_device_type").then(function(translate) {
 					type.translate = translate;
@@ -217,21 +217,21 @@ angular.module('sagremorApp')
 		this.submoduleEnable = function(submodule) {
 			if (submodule === "benoic") {
 				angharadFactory.enableSubmodule(submodule, self.submodules.benoic.enabled).then(function (response) {
-					toaster.pop("success", $translate.instant('submodules'), $translate.instant('submodules_enable_success'));
+					toaster.pop("success", $translate.instant("submodules"), $translate.instant("submodules_enable_success"));
 				}, function (error) {
-					toaster.pop("error", $translate.instant('submodules'), $translate.instant('submodules_enable_error'));
+					toaster.pop("error", $translate.instant("submodules"), $translate.instant("submodules_enable_error"));
 				});
 			} else if (submodule === "carleon") {
 				angharadFactory.enableSubmodule(submodule, self.submodules.carleon.enabled).then(function (response) {
-					toaster.pop("success", $translate.instant('submodules'), $translate.instant('submodules_enable_success'));
+					toaster.pop("success", $translate.instant("submodules"), $translate.instant("submodules_enable_success"));
 				}, function (error) {
-					toaster.pop("error", $translate.instant('submodules'), $translate.instant('submodules_enable_error'));
+					toaster.pop("error", $translate.instant("submodules"), $translate.instant("submodules_enable_error"));
 				});
 			} else if (submodule === "gareth") {
 				angharadFactory.enableSubmodule(submodule, self.submodules.gareth.enabled).then(function (response) {
-					toaster.pop("success", $translate.instant('submodules'), $translate.instant('submodules_enable_success'));
+					toaster.pop("success", $translate.instant("submodules"), $translate.instant("submodules_enable_success"));
 				}, function (error) {
-					toaster.pop("error", $translate.instant('submodules'), $translate.instant('submodules_enable_error'));
+					toaster.pop("error", $translate.instant("submodules"), $translate.instant("submodules_enable_error"));
 				});
 			}
 		};
@@ -260,26 +260,26 @@ angular.module('sagremorApp')
 		this.saveNewProfile = function () {
 			var newProfile = {name: self.newProfileName, description: self.newProfileDescription, default: self.newProfileDefault};
 			carleonFactory.setProfile(self.newProfileName, newProfile).then(function () {
-				toaster.pop("success", $translate.instant('profiles'), $translate.instant('profiles_add_success'));
-				$scope.$broadcast('carleonProfilesChanged');
+				toaster.pop("success", $translate.instant("profiles"), $translate.instant("profiles_add_success"));
+				$scope.$broadcast("carleonProfilesChanged");
 				self.profileList.push(newProfile);
 			}, function (error) {
-				toaster.pop("error", $translate.instant('profiles'), $translate.instant('profiles_add_error'));
-			})['finally'](function () {
+				toaster.pop("error", $translate.instant("profiles"), $translate.instant("profiles_add_error"));
+			})["finally"](function () {
 				self.profileAdded = false;
 			});
 		};
 
 		this.removeProfile = function (profile) {
-			sagremorConfirm.open($translate.instant('profile_remove'), $translate.instant('profile_remove_confirm')).then (function(result) {
+			sagremorConfirm.open($translate.instant("profile_remove"), $translate.instant("profile_remove_confirm")).then (function(result) {
 				carleonFactory.removeProfile(profile.name).then(function () {
-					toaster.pop("success", $translate.instant('profiles'), $translate.instant('profiles_remove_success'));
-					$scope.$broadcast('carleonProfilesChanged');
+					toaster.pop("success", $translate.instant("profiles"), $translate.instant("profiles_remove_success"));
+					$scope.$broadcast("carleonProfilesChanged");
 					_.remove(self.profileList, function (curProfile) {
 						return profile.name === curProfile.name;
 					});
 				}, function (error) {
-					toaster.pop("error", $translate.instant('profiles'), $translate.instant('profiles_remove_error'));
+					toaster.pop("error", $translate.instant("profiles"), $translate.instant("profiles_remove_error"));
 				});
 			});
 		};
@@ -322,10 +322,10 @@ angular.module('sagremorApp')
 				}
 
 				$q.all(promises).then(function (results) {
-					$scope.$broadcast('carleonProfilesChanged');
-					toaster.pop("success", $translate.instant('profiles'), $translate.instant('profiles_save_success'));
+					$scope.$broadcast("carleonProfilesChanged");
+					toaster.pop("success", $translate.instant("profiles"), $translate.instant("profiles_save_success"));
 				}, function (error) {
-					toaster.pop("error", $translate.instant('profiles'), $translate.instant('profiles_save_error'));
+					toaster.pop("error", $translate.instant("profiles"), $translate.instant("profiles_save_error"));
 				});
 			} else {
 			  // Update profile
@@ -333,10 +333,10 @@ angular.module('sagremorApp')
 				delete profile.savedDescription;
 				delete profile.update;
 				carleonFactory.setProfile(profile.name, profile).then(function (result) {
-					$scope.$broadcast('carleonProfilesChanged');
-					toaster.pop("success", $translate.instant('profiles'), $translate.instant('profiles_save_success'));
+					$scope.$broadcast("carleonProfilesChanged");
+					toaster.pop("success", $translate.instant("profiles"), $translate.instant("profiles_save_success"));
 				}, function (error) {
-					toaster.pop("error", $translate.instant('profiles'), $translate.instant('profiles_save_error'));
+					toaster.pop("error", $translate.instant("profiles"), $translate.instant("profiles_save_error"));
 				});
 			}
 		};
@@ -348,10 +348,10 @@ angular.module('sagremorApp')
 				delete profile.savedDescription;
 				delete profile.update;
 				carleonFactory.setProfile(profile.name, profile).then(function (result) {
-					$scope.$broadcast('carleonProfilesChanged');
-					toaster.pop("success", $translate.instant('profiles'), $translate.instant('profiles_save_success'));
+					$scope.$broadcast("carleonProfilesChanged");
+					toaster.pop("success", $translate.instant("profiles"), $translate.instant("profiles_save_success"));
 				}, function (error) {
-					toaster.pop("error", $translate.instant('profiles'), $translate.instant('profiles_save_error'));
+					toaster.pop("error", $translate.instant("profiles"), $translate.instant("profiles_save_error"));
 				});
 			} else {
 				// Set this one to default, and set the other default to false
@@ -362,14 +362,14 @@ angular.module('sagremorApp')
 							curProfile.default = false;
 							carleonFactory.setProfile(curProfile.name, curProfile).then(function (result) {
 							}, function (error) {
-								toaster.pop("error", $translate.instant('profiles'), $translate.instant('profiles_save_error'));
+								toaster.pop("error", $translate.instant("profiles"), $translate.instant("profiles_save_error"));
 							});
 						}
 					});
-					$scope.$broadcast('carleonProfilesChanged');
-					toaster.pop("success", $translate.instant('profiles'), $translate.instant('profiles_save_success'));
+					$scope.$broadcast("carleonProfilesChanged");
+					toaster.pop("success", $translate.instant("profiles"), $translate.instant("profiles_save_success"));
 				}, function (error) {
-				  toaster.pop("error", $translate.instant('profiles'), $translate.instant('profiles_save_error'));
+				  toaster.pop("error", $translate.instant("profiles"), $translate.instant("profiles_save_error"));
 				});
 			}
 		};
@@ -377,24 +377,24 @@ angular.module('sagremorApp')
 		this.useProfile = function (profile) {
 			sagremorParams.currentProfile = profile;
 			$cookieStore.put("ANGHARAD_PROFILE", profile.name);
-			$rootScope.$broadcast('carleonProfileUpdated');
+			$rootScope.$broadcast("carleonProfileUpdated");
 		};
 		
-		$scope.$on('carleonProfilesChanged', function () {
+		$scope.$on("carleonProfilesChanged", function () {
 			self.profileList = sagremorParams.profiles;
 		});
 
-		$scope.$on('carleonProfileUpdated', function () {
+		$scope.$on("carleonProfileUpdated", function () {
 			self.currentProfile = sagremorParams.currentProfile;
 		});
 
 		this.init();
     }
-).filter('deviceTypeName', [
-    'sharedData',
+).filter("deviceTypeName", [
+    "sharedData",
     function(sharedData) {
         return function(input) {
-          var types = sharedData.all('benoicDeviceTypes');
+          var types = sharedData.all("benoicDeviceTypes");
           for (key in types) {
             if (types[key].uid === input) {
               return types[key].name;

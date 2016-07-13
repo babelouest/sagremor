@@ -1,6 +1,21 @@
 <div class="row control-group">
 	<div class="col-md-1">
 	</div>
+	<div class="col-md-5">
+		<label for="monitorSelectDuration" data-translate="monitor_select_duration"></label>
+	</div>
+	<div class="col-md-5 controls">
+		<select id="monitorSelectDuration"
+				class="form-control"
+				data-ng-model="$ctrl.duration"
+				data-ng-change="$ctrl.displayMonitor()"
+				data-ng-options="duration as $ctrl.tr(duration.label) for duration in $ctrl.durationList track by duration.value">
+		</select>
+	</div>
+</div>
+<div class="row control-group">
+	<div class="col-md-1">
+	</div>
 	<div class="col-md-2">
 		<label for="monitorNewElement" data-translate="monitor_new_element"></label>
 	</div>
@@ -36,10 +51,10 @@
     </div>
 </div>
 <div class="row text-center">
-    <div class="col-md-2" data-ng-repeat="serie in $ctrl.element.elements" style="margin: 5px;">
+    <span data-ng-repeat="serie in $ctrl.element.elements" style="margin: 5px; color: white;">
 		<button type="button" class="btn" data-ng-click="$ctrl.removeSerie(serie)" style="background-color:{{serie.color}};" data-ng-disabled="$ctrl.element.elements.length <= 1">
 			<span data-ng-bind="serie.display"></span>
 			<i class="fa fa-trash-o" aria-hidden="true"></i>
 		</button>
-    </div>
+    </span>
 </div>
