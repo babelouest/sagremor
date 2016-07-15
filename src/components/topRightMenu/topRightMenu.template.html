@@ -2,38 +2,48 @@
     <button class="btn btn-primary text-left" type="button" data-uib-dropdown-toggle>
         <i class="fa fa-user" aria-hidden="true"></i>
     </button>
-	<ul class="dropdown-menu-right container-fluid controls" data-uib-dropdown-menu data-uib-dropdown-menu-auto-close="outsideClick" data-ng-click="$event.stopPropagation()">
-		<li class="row" data-ng-if="topRightMenuCtrl.sagremorParams.loggedIn">
-			<div class="col-md-6">
+	<ul class="container-fluid dropdown-menu dropdown-menu-right" data-uib-dropdown-menu data-uib-dropdown-menu-auto-close="outsideClick" data-ng-click="$event.stopPropagation()">
+		<li class="row control-group" data-ng-if="topRightMenuCtrl.sagremorParams.loggedIn">
+			<div class="col-md-6 controls">
 				<label for="admin-mode" data-translate="top_right_menu_admin_mode"></label>
 			</div>
-			<div class="col-md-6">
+			<div class="col-md-6 controls">
 				<input class="form-control" id="admin-mode" name="admin-mode" data-toggle="toggle" data-bs-switch data-switch-size="mini" type="checkbox" data-ng-model="topRightMenuCtrl.sagremorParams.adminMode">
 			</div>
 		</li>
-		<li class="row">
-			<div class="col-md-6">
+		<li class="row control-group">
+			<div class="col-md-6 controls">
 				<label for="sag-lang" data-translate="top_right_menu_lang"></label>
 			</div>
-			<div class="col-md-6">
+			<div class="col-md-6 controls">
 				<select class="form-control" id="sag-lang" name="sag-lang" data-ng-model="topRightMenuCtrl.selectedLang" data-ng-options="lang.name as lang.display for lang in topRightMenuCtrl.langList" data-ng-change="topRightMenuCtrl.changeLang()"></select>
 			</div>
 		</li>
-		<li class="row" data-ng-if="topRightMenuCtrl.sagremorParams.loggedIn">
-			<div class="col-md-6">
+		<li class="row control-group" data-ng-if="topRightMenuCtrl.sagremorParams.loggedIn">
+			<div class="col-md-6 controls">
 				<label for="sag-lang" data-translate="top_right_menu_profile"></label>
 			</div>
-			<div class="col-md-6">
+			<div class="col-md-6 controls">
 				<select class="form-control" id="sag-lang" name="sag-lang" data-ng-model="topRightMenuCtrl.currentProfileName" data-ng-options="profile.name as profile.name for profile in topRightMenuCtrl.profiles" data-ng-change="topRightMenuCtrl.changeProfile()"></select>
 			</div>
 		</li>
-		<li class="row" data-ng-if="topRightMenuCtrl.sagremorParams.loggedIn">
-			<div class="col-md-6">
+		<li class="row control-group" data-ng-if="topRightMenuCtrl.sagremorParams.loggedIn">
+			<div class="col-md-6 controls">
 				<label for="sag-refresh" data-translate="top_right_menu_refresh"></label>
 			</div>
-			<div class="col-md-6">
-				<button id="sag-refresh" name="sag-refresh" type="button" class="btn btn-primary form-control" data-ng-click="topRightMenuCtrl.refresh()">
+			<div class="col-md-6 controls">
+				<button id="sag-refresh" name="sag-refresh" type="button" class="btn btn-primary btn-sm" data-ng-click="topRightMenuCtrl.refresh()">
 					<i class="fa fa-refresh" aria-hidden="true"></i>
+				</button>
+			</div>
+		</li>
+		<li class="row control-group" data-ng-if="topRightMenuCtrl.sagremorParams.loggedIn">
+			<div class="col-md-6 controls">
+				<label for="sag-refresh" data-translate="top_right_menu_logout"></label>
+			</div>
+			<div class="col-md-6 controls">
+				<button id="sag-logout" name="sag-logout" type="button" class="btn btn-primary btn-sm" data-ng-click="topRightMenuCtrl.logout()">
+					<i class="fa fa-sign-out" aria-hidden="true"></i>
 				</button>
 			</div>
 		</li>

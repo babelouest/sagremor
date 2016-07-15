@@ -52,6 +52,7 @@ angular.module('sagremorApp')
         
         this.updateHeaters = function () {
             var devices = sharedData.all('benoicDevices');
+			self.heaterList = [];
             for (key in devices) {
                 var deviceName = devices[key].name;
                 if (devices[key].connected && devices[key].enabled) {

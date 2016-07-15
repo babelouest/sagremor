@@ -81,6 +81,7 @@ angular.module('sagremorApp')
         
         this.updateSwitchers = function () {
             var devices = sharedData.all('benoicDevices');
+			self.switchList = [];
             for (key in devices) {
                 var deviceName = devices[key].name;
                 if (devices[key].connected && devices[key].enabled) {
@@ -96,6 +97,7 @@ angular.module('sagremorApp')
         
         this.updateDimmers = function () {
             var devices = sharedData.all('benoicDevices');
+			self.dimmerList = [];
             for (key in devices) {
                 var deviceName = devices[key].name;
                 if (devices[key].connected && devices[key].enabled) {

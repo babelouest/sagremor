@@ -52,6 +52,7 @@ angular.module('sagremorApp')
         
         this.updateSensors = function () {
             var devices = sharedData.all('benoicDevices');
+			self.sensorList = [];
             for (key in devices) {
                 var deviceName = devices[key].name;
                 if (devices[key].connected && devices[key].enabled) {

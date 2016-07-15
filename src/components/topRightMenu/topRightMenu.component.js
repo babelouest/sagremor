@@ -1,4 +1,4 @@
-function topRightMenuCtrl ($scope, $rootScope, $translate, $cookieStore, sagremorConstant, sagremorParams) {
+function topRightMenuCtrl ($scope, $rootScope, $location, $http, $translate, $cookieStore, angharadFactory, sagremorConstant, sagremorParams) {
     var self = this;
 
     self.sagremorParams = sagremorParams;
@@ -27,6 +27,20 @@ function topRightMenuCtrl ($scope, $rootScope, $translate, $cookieStore, sagremo
 		});
 	};
 	
+	self.refresh = function () {
+		$rootScope.$broadcast("refresh");
+	};
+	
+    self.logout = function() {
+		angharadFactory.deleteAuth()
+			.then(function(response) {
+			sagremorParams.loggedIn = false;
+			$scope.isLogged = false;
+			$location.path("/login");
+			$http.defaults.headers.common["ANGHARAD_SESSION_ID"] = "";
+		});
+    };
+    
 	$scope.$on("carleonProfilesChanged", function () {
 		self.profiles = sagremorParams.profiles;
 		self.currentProfileName = !!sagremorParams.currentProfile?sagremorParams.currentProfile.name:"";

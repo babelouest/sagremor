@@ -1,4 +1,4 @@
-function topLeftMenuCtrl ($scope, $location, $http, $translate, angharadFactory, sagremorParams, sagGenericInjectorManager) {
+function topLeftMenuCtrl ($scope, $translate, sagremorParams, sagGenericInjectorManager) {
     var self = this;
     
     this.serviceList = [];
@@ -12,16 +12,6 @@ function topLeftMenuCtrl ($scope, $location, $http, $translate, angharadFactory,
 		});
 	}
 
-    self.logout = function() {
-		angharadFactory.deleteAuth()
-			.then(function(response) {
-			sagremorParams.loggedIn = false;
-			$scope.isLogged = false;
-			$location.path("/login");
-			$http.defaults.headers.common["ANGHARAD_SESSION_ID"] = "";
-		});
-    };
-    
     init();
 }
 

@@ -1,47 +1,68 @@
 angular.module("sagremorApp")
   .controller("sagremorCtrl", 
-  function($scope, $rootScope, $http, $q, $location, $cookieStore, $translate, toaster, angharadFactory, benoicFactory, carleonFactory, garethFactory, sharedData, sagremorParams) {
+  function($scope, $rootScope, $interval, $window, $http, $q, $location, $cookieStore, $translate, toaster, angharadFactory, benoicFactory, carleonFactory, garethFactory, sharedData, sagremorParams) {
     var self = this;
     
     this.loaderToast;
     this.benoicInitComplete = false;
     this.benoicInitError = false;
+    this.shoudRefresh = false;
+    this.hasFocus = true;
+    this.refreshTimeout = null;
     
     function init() {
 		initParameters();
         self.getAuth().then(function() {
 			$rootScope.$broadcast("authChanged");
             popLoader();
-            self.initAngharadSubmodules().then(function (result) {
-				self.initAngharad();
-                for (key in result) {
-                    sharedData.add("submodules", result[key].name, result[key]);
-                    if (result[key].name === "benoic" && result[key].enabled) {
-                        self.initBenoic();
-                    } else if (result[key].name === "carleon" && result[key].enabled) {
-						self.initCarleon();
-                    } else if (result[key].name === "gareth" && result[key].enabled) {
-						self.initGareth();
-                    }
-                }
-                $scope.$broadcast("submodulesChanged");
-            }, function (error) {
-				toaster.pop({type: "error", title: $translate.instant("angharad_loading_title"), body: $translate.instant("init_message_loading_error")});
-            });
+            getApiData();
+            self.refreshTimeout = startRefreshTimeout();
 		});
     }
     
-    $scope.$on("loginSuccess", function () {
-        init();
-    });
+    function getApiData() {
+		return self.initAngharadSubmodules().then(function (result) {
+			self.initAngharad();
+			for (key in result) {
+				sharedData.add("submodules", result[key].name, result[key]);
+				if (result[key].name === "benoic" && result[key].enabled) {
+					self.initBenoic();
+				} else if (result[key].name === "carleon" && result[key].enabled) {
+					self.initCarleon();
+				} else if (result[key].name === "gareth" && result[key].enabled) {
+					self.initGareth();
+				}
+			}
+			$scope.$broadcast("submodulesChanged");
+		}, function (error) {
+			toaster.pop({type: "error", title: $translate.instant("angharad_loading_title"), body: $translate.instant("init_message_loading_error")});
+		});
+	}
+	
+	function startRefreshTimeout() {
+		// Refresh every 5 minutes if the window has the focus
+		// If the window has not the focus, set a flag to refresh the page when it will have the focus
+		return $interval(function () {
+			if (self.hasFocus) {
+				getApiData();
+				self.shouldRefresh = false;
+			} else {
+				self.shouldRefresh = true;
+			}
+		}, 1000 * 60 * 5);
+	}
+	
+	$window.onblur = function() {  
+		self.hasFocus = false;  
+	};
     
-    $scope.$on("initComplete", function() {
-        if (self.benoicInitComplete) {
-            closeLoader(true);
-        } else if (self.benoicInitError) {
-            closeLoader(false);
-        }
-    });
+	$window.onfocus = function() {  
+		self.hasFocus = true;  
+		if (self.shouldRefresh) {
+			getApiData();
+			self.shouldRefresh = false;
+		}
+	};
     
     function closeLoader(result) {
         toaster.clear(self.loaderToast);
@@ -82,10 +103,6 @@ angular.module("sagremorApp")
     this.initAngharadSubmodules = function () {
         return angharadFactory.getSumboduleList();
     };
-    
-    $scope.$on("reinitBenoic", function () {
-        self.initBenoic();
-    });
     
     this.initBenoic = function () {
         var promiseList = {
@@ -246,6 +263,32 @@ angular.module("sagremorApp")
         });
 	};
 	
+    $scope.$on("reinitBenoic", function () {
+        self.initBenoic();
+    });
+    
+    $scope.$on("refresh", function () {
+		popLoader();
+		getApiData().then(function () {
+		}, function (error) {
+			toaster.pop({type: "error", title: $translate.instant("angharad_loading_title"), body: $translate.instant("init_message_loading_error")});
+		})["finally"](function () {
+			closeLoader(true);
+		});
+	});
+    
+    $scope.$on("loginSuccess", function () {
+        init();
+    });
+    
+    $scope.$on("initComplete", function() {
+        if (self.benoicInitComplete) {
+            closeLoader(true);
+        } else if (self.benoicInitError) {
+            closeLoader(false);
+        }
+    });
+    
     init();
   }
 );
