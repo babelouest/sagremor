@@ -128,6 +128,8 @@ angular.module("sagremorApp")
 						addSchedulerToDashboard(element, element.tag);
 					} else if (element.type === "separator") {
 						addDashboardSeparator(element.name, element.tag);
+					} else if (element.type === "monitor") {
+						addMonitorToDashboard(element, element.tag);
 					} else if (sagremorParams.carleonEnabled) {
 						addCarleonElementToDashboard(element, element.tag);
 					}
@@ -193,6 +195,22 @@ angular.module("sagremorApp")
                 self.dashboardWidgets.push(dashboardElement);
             }
         }
+        
+        function addMonitorToDashboard(element, tag) {
+			var elt = _.find(sagremorParams.currentProfile.monitorList, function (monitor) {
+				return monitor.name === element.name;
+			});
+			if (!!elt) {
+				var tagParams = tag.split("$");
+				if (tagParams.length >= 4) {
+					var x = tagParams[2];
+					var y = tagParams[3];
+					var curHeight = 4;
+					var dashboardElement = { type: element.type, name: element.name, element: elt, x: x, y: y, width: 6, height: curHeight, tag: tag };
+					self.dashboardWidgets.push(dashboardElement);
+				}
+			}
+		}
         
         function addDashboardSeparator(value, tag) {
             var tagParams = tag.split("$");
