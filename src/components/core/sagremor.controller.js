@@ -4,7 +4,7 @@ angular.module("sagremorApp")
     var self = this;
     
     this.loaderToast;
-    this.benoicInitComplete = false;
+    this.initComplete = false;
     this.benoicInitError = false;
     this.shoudRefresh = false;
     this.hasFocus = true;
@@ -22,18 +22,31 @@ angular.module("sagremorApp")
     
     function getApiData() {
 		return self.initAngharadSubmodules().then(function (result) {
-			self.initAngharad();
+			var promises = [ self.initAngharad() ];
+			sagremorParams.benoicEnabled = false;
+			sagremorParams.carleonEnabled = false;
+			sagremorParams.garethEnabled = false;
 			for (key in result) {
 				sharedData.add("submodules", result[key].name, result[key]);
 				if (result[key].name === "benoic" && result[key].enabled) {
-					self.initBenoic();
+					sagremorParams.benoicEnabled = true;
+					promises.push(self.initBenoic());
 				} else if (result[key].name === "carleon" && result[key].enabled) {
-					self.initCarleon();
+					sagremorParams.carleonEnabled = true;
+					promises.push(self.initCarleon());
 				} else if (result[key].name === "gareth" && result[key].enabled) {
-					self.initGareth();
+					sagremorParams.garethEnabled = true;
+					promises.push(self.initGareth());
 				}
 			}
-			$scope.$broadcast("submodulesChanged");
+			$q.all(promises).then(function () {
+				$scope.$broadcast("submodulesChanged");
+			}, function () {
+				toaster.pop({type: "error", title: $translate.instant("angharad_loading_title"), body: $translate.instant("init_message_loading_error")});
+			})["finally"](function () {
+                self.initComplete = true;
+                $scope.$broadcast("initComplete");
+			});
 		}, function (error) {
 			toaster.pop({type: "error", title: $translate.instant("angharad_loading_title"), body: $translate.instant("init_message_loading_error")});
 		});
@@ -110,7 +123,7 @@ angular.module("sagremorApp")
             deviceResult: benoicFactory.getDeviceList()
         };
         
-        $q.all(promiseList).then(function (result) {
+        return $q.all(promiseList).then(function (result) {
             var deviceTypesResult = result.deviceTypesResult;
             var deviceResult = result.deviceResult;
             
@@ -123,6 +136,7 @@ angular.module("sagremorApp")
             // Handle devices
             var deviceList = [];
             var deviceListName = [];
+            sharedData.removeAll("benoicDevices");
             for (index in deviceResult) {
                 if (deviceResult[index].connected && deviceResult[index].enabled) {
                     deviceList.push(benoicFactory.getDeviceOverview(deviceResult[index].name));
@@ -138,9 +152,6 @@ angular.module("sagremorApp")
                 $scope.$broadcast("benoicDevicesChanged");
             }, function (error) {
                 toaster.pop("error", $translate.instant("benoic_loading_title"), $translate.instant("benoic_loading_error"));
-            })["finally"](function () {
-                self.benoicInitComplete = true;
-                $scope.$broadcast("initComplete");
             });
         }, function (error) {
             toaster.pop("error", $translate.instant("benoic_loading_title"), $translate.instant("benoic_loading_error"));
@@ -153,7 +164,9 @@ angular.module("sagremorApp")
 			profiles: carleonFactory.getProfileList()
 		}
 		
-		$q.all(qList).then(function (results) {
+		sharedData.removeAll("carleonServices");
+		
+		return $q.all(qList).then(function (results) {
 			for (key in results.services) {
 				_.forEach(results.services[key].element, function (element) {
 					element.type = results.services[key].name;
@@ -191,12 +204,15 @@ angular.module("sagremorApp")
 	};
 	
 	this.initGareth = function () {
+		sharedData.removeAll("garethFilters");
+		sharedData.removeAll("garethAlertsSmtp");
+		sharedData.removeAll("garethAlertsHttp");
 		var qList = {
 			filters: garethFactory.getFilterList(),
 			alerts: garethFactory.getAlertList()
 		}
 		
-		$q.all(qList).then(function (results) {
+		return $q.all(qList).then(function (results) {
 			for (key in results.filters) {
 				sharedData.add("garethFilters", results.filters[key].name, results.filters[key]);
 			}
@@ -245,7 +261,7 @@ angular.module("sagremorApp")
 			triggers: angharadFactory.getTriggerList()
 		};
 		
-		$q.all(promiseList).then(function (result) {
+		return $q.all(promiseList).then(function (result) {
 			for (sc in result.scripts) {
 				sharedData.add("angharadScripts", result.scripts[sc].name, result.scripts[sc]);
 			}
@@ -267,6 +283,30 @@ angular.module("sagremorApp")
         self.initBenoic();
     });
     
+    $scope.$on("reinitCarleon", function () {
+        self.initCarleon();
+    });
+    
+    $scope.$on("reinitGareth", function () {
+        self.initGareth();
+    });
+    
+    $scope.$on("closeBenoic", function () {
+        sharedData.removeAll("benoicDevices");
+    });
+    
+    $scope.$on("closeCarleon", function () {
+        sharedData.removeAll("carleonServices");
+		sagremorParams.profiles = [];
+		sagremorParams.currentProfile = false;
+    });
+    
+    $scope.$on("closeGareth", function () {
+		sharedData.removeAll("garethFilters");
+		sharedData.removeAll("garethAlertsSmtp");
+		sharedData.removeAll("garethAlertsHttp");
+    });
+    
     $scope.$on("refresh", function () {
 		popLoader();
 		getApiData().then(function () {
@@ -282,7 +322,7 @@ angular.module("sagremorApp")
     });
     
     $scope.$on("initComplete", function() {
-        if (self.benoicInitComplete) {
+        if (self.initComplete) {
             closeLoader(true);
         } else if (self.benoicInitError) {
             closeLoader(false);

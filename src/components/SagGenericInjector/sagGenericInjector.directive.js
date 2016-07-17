@@ -1,6 +1,6 @@
-angular.module('sagremorApp').directive('sagGenericInjector', function ($compile, sagGenericInjectorManager) {
+angular.module("sagremorApp").directive("sagGenericInjector", function ($compile, sagGenericInjectorManager) {
     
-    var template = "<directive element='elt'></directive>";
+    var template = "<directive element=\"elt\"></directive>";
     
     var templateNotFound = "<div class=\"has-error\" data-translate=\"injector_not_found\"></div>";
      

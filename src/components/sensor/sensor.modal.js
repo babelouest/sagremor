@@ -1,5 +1,5 @@
-angular.module('sagremorApp')
-    .controller('SensorsModalCtrl',
+angular.module("sagremorApp")
+    .controller("SensorsModalCtrl",
     function($scope, $uibModalInstance, $translate, toaster, sagremorConstant, benoicFactory, sensor) {
         var self = this;
         
@@ -23,19 +23,19 @@ angular.module('sagremorApp')
 		};
         
         this.cancel = function () {
-            $uibModalInstance.dismiss('cancel');
+            $uibModalInstance.dismiss("cancel");
         };
         
         this.saveSensor = function () {
             self.sensor.display = self.sensor.newDisplay;
             self.sensor.monitor = self.sensor.monitorChecked?1:0;
             benoicFactory.updateElement(self.sensor.device, "sensor", self.sensor.name, self.sensor).then(function (response) {
-                $scope.$broadcast('benoicSensorsChanged');
-                toaster.pop("success", $translate.instant('sensor_save'), $translate.instant('sensor_save_success'));
+                $scope.$broadcast("benoicSensorsChanged");
+                toaster.pop("success", $translate.instant("sensor_save"), $translate.instant("sensor_save_success"));
             }, function (error) {
-                toaster.pop("error", $translate.instant('sensor_save'), $translate.instant('sensor_save_error'));
-            })['finally'](function () {
-                $uibModalInstance.dismiss('close');
+                toaster.pop("error", $translate.instant("sensor_save"), $translate.instant("sensor_save_error"));
+            })["finally"](function () {
+                $uibModalInstance.dismiss("close");
             });
         };
         

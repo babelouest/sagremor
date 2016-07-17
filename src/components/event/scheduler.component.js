@@ -8,9 +8,9 @@ function sagSchedulerController ($translate, toaster, angharadFactory, sagremorP
 		angharadFactory.enableScheduler(ctrl.element.name, ctrl.element.enabled).then(function (result) {
 			sharedData.add("angharadSchedulers", result.name, result);
 			ctrl.element = result;
-			toaster.pop("success", $translate.instant('scheduler_enable'), $translate.instant('scheduler_enable_success'));
+			toaster.pop("success", $translate.instant("scheduler_enable"), $translate.instant("scheduler_enable_success"));
 		}, function () {
-			toaster.pop("error", $translate.instant('scheduler_enable'), $translate.instant('scheduler_enable_error'));
+			toaster.pop("error", $translate.instant("scheduler_enable"), $translate.instant("scheduler_enable_error"));
 		});
 	};
     

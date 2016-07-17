@@ -81,27 +81,23 @@ angular.module("sagremorApp")
 			});
 			
 			_.forEach(sharedData.all("carleonServices"), function (service, serviceName) {
-				var injectors = _.filter(sagGenericInjectorManager.components, function (inject) {
+				var injector = _.find(sagGenericInjectorManager.components, function (inject) {
 					return inject.type === serviceName;
 				});
-				_.forEach(injectors, function (inject) {
-					if (serviceName === inject.type) {
-						_.forEach(inject.commands, function (command, commandName) {
-							var newAction = {label: command.title, name: serviceName + "$" + commandName, submodule: "carleon"};
-							self.carleonElementsList[serviceName + "$" + commandName] = service.element;
-							self.scriptActionElements.push(newAction);
-							if (!!service.commands[commandName]) {
-								self.carleonCommandsParameters[serviceName + "$" + commandName] = [];
-								_.forEach(service.commands[commandName].parameters, function (serviceParameter, serviceParameterName) {
-									var commandParameter = {
-										name: serviceParameterName,
-										title: !!command.parameters[serviceParameterName]?$translate.instant(command.parameters[serviceParameterName]):serviceParameterName,
-										type: serviceParameter.type,
-										required: serviceParameter.required
-									};
-									self.carleonCommandsParameters[serviceName + "$" + commandName].push(commandParameter);
-								});
-							}
+				_.forEach(injector.commands, function (command, commandName) {
+					var newAction = {label: command.title, name: serviceName + "$" + commandName, submodule: "carleon"};
+					self.carleonElementsList[serviceName + "$" + commandName] = service.element;
+					self.scriptActionElements.push(newAction);
+					if (!!service.commands[commandName]) {
+						self.carleonCommandsParameters[serviceName + "$" + commandName] = [];
+						_.forEach(service.commands[commandName].parameters, function (serviceParameter, serviceParameterName) {
+							var commandParameter = {
+								name: serviceParameterName,
+								title: !!command.parameters[serviceParameterName]?$translate.instant(command.parameters[serviceParameterName]):serviceParameterName,
+								type: serviceParameter.type,
+								required: serviceParameter.required
+							};
+							self.carleonCommandsParameters[serviceName + "$" + commandName].push(commandParameter);
 						});
 					}
 				});

@@ -1,10 +1,10 @@
-angular.module('sagremorApp')
-.controller('GridstackController', ['$scope', function($scope) {
+angular.module("sagremorApp")
+.controller("GridstackController", ["$scope", function($scope) {
 
     var gridstack = null;
 
     this.init = function(element, options) {
-      gridstack = element.gridstack(options).data('gridstack');
+      gridstack = element.gridstack(options).data("gridstack");
       return gridstack;
     };
 

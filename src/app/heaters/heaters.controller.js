@@ -1,5 +1,5 @@
-angular.module('sagremorApp')
-    .controller('heatersCtrl',
+angular.module("sagremorApp")
+    .controller("heatersCtrl",
     function($scope, $location, $translate, sagremorService, benoicFactory, sharedData, sagremorParams) {
       
         var self = this;
@@ -31,9 +31,9 @@ angular.module('sagremorApp')
 						name: "add_to_dashboard", 
 						display: results.add_to_dashboard, 
 						action: function (param) {
-							if (sagremorService.addToDashboard(param, false)) {
-                                $scope.$broadcast("refreshDashboard");
-                            }
+							sagremorService.addToDashboard(param).then(function () {
+								$scope.$broadcast("refreshDashboard");
+							});
 						}
 					}
 				];
@@ -42,16 +42,16 @@ angular.module('sagremorApp')
 			});
 		};
         
-        $scope.$on('benoicDevicesChanged', function () {
+        $scope.$on("benoicDevicesChanged", function () {
             self.updateHeaters();
         });
         
-        $scope.$on('benoicHeatersChanged', function () {
+        $scope.$on("benoicHeatersChanged", function () {
             self.updateHeaters();
         });
         
         this.updateHeaters = function () {
-            var devices = sharedData.all('benoicDevices');
+            var devices = sharedData.all("benoicDevices");
 			self.heaterList = [];
             for (key in devices) {
                 var deviceName = devices[key].name;

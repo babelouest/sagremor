@@ -163,43 +163,39 @@ angular.module("sagremorApp")
 			});
 			
 			_.forEach(sharedData.all("carleonServices"), function (service, serviceName) {
-				var injectors = _.filter(sagGenericInjectorManager.components, function (inject) {
+				var injector = _.find(sagGenericInjectorManager.components, function (inject) {
 					return inject.type === serviceName;
 				});
-				_.forEach(injectors, function (inject) {
-					if (serviceName === inject.type) {
-						_.forEach(inject.commands, function (command, commandName) {
-							var newAction = {label: command.title, name: serviceName + "$" + commandName, submodule: "carleon"};
-							self.globalConditionList.push(newAction);
-							self.carleonElementsList[serviceName + "$" + commandName] = service.element;
-							if (!!service.commands[commandName]) {
-								self.carleonCommandsParameters[serviceName + "$" + commandName] = [];
-								_.forEach(service.commands[commandName].parameters, function (serviceParameter, serviceParameterName) {
-									var commandParameter = {
-										name: serviceParameterName,
-										title: !!command.parameters[serviceParameterName]?$translate.instant(command.parameters[serviceParameterName]):serviceParameterName,
-										type: serviceParameter.type,
-										required: serviceParameter.required
-									};
-									self.carleonCommandsParameters[serviceName + "$" + commandName].push(commandParameter);
-								});
-								self.carleonResultParameters[serviceName + "$" + commandName] = [];
-								_.forEach(service.commands[commandName].result, function (serviceResult, serviceResultName) {
-									if (serviceResultName === "type") {
-										var commandResult = {
-											title: $translate.instant("condition_result_one_value"),
-											type: serviceResult
-										}
-										self.carleonResultParameters[serviceName + "$" + commandName].push(commandResult);
-									} else {
-										var commandResult = {
-											name: serviceResultName,
-											title: $translate.instant(command.result[serviceResultName].title),
-											type: serviceResult.type
-										}
-										self.carleonResultParameters[serviceName + "$" + commandName].push(commandResult);
-									}
-								});
+				_.forEach(injector.commands, function (command, commandName) {
+					var newAction = {label: command.title, name: serviceName + "$" + commandName, submodule: "carleon"};
+					self.globalConditionList.push(newAction);
+					self.carleonElementsList[serviceName + "$" + commandName] = service.element;
+					if (!!service.commands[commandName]) {
+						self.carleonCommandsParameters[serviceName + "$" + commandName] = [];
+						_.forEach(service.commands[commandName].parameters, function (serviceParameter, serviceParameterName) {
+							var commandParameter = {
+								name: serviceParameterName,
+								title: !!command.parameters[serviceParameterName]?$translate.instant(command.parameters[serviceParameterName]):serviceParameterName,
+								type: serviceParameter.type,
+								required: serviceParameter.required
+							};
+							self.carleonCommandsParameters[serviceName + "$" + commandName].push(commandParameter);
+						});
+						self.carleonResultParameters[serviceName + "$" + commandName] = [];
+						_.forEach(service.commands[commandName].result, function (serviceResult, serviceResultName) {
+							if (serviceResultName === "type") {
+								var commandResult = {
+									title: $translate.instant("condition_result_one_value"),
+									type: serviceResult
+								}
+								self.carleonResultParameters[serviceName + "$" + commandName].push(commandResult);
+							} else {
+								var commandResult = {
+									name: serviceResultName,
+									title: $translate.instant(command.result[serviceResultName].title),
+									type: serviceResult.type
+								}
+								self.carleonResultParameters[serviceName + "$" + commandName].push(commandResult);
 							}
 						});
 					}
@@ -207,23 +203,19 @@ angular.module("sagremorApp")
 			});
 
 			_.forEach(sharedData.all("carleonServices"), function (service, serviceName) {
-				var injectors = _.filter(sagGenericInjectorManager.components, function (inject) {
+				var injector = _.find(sagGenericInjectorManager.components, function (inject) {
 					return inject.type === serviceName;
 				});
-				_.forEach(injectors, function (inject) {
-					if (serviceName === inject.type) {
-						_.forEach(inject.results, function (result, resultName) {
-							if (!!result.type && !!result.title) {
-								var newCondition = {label: result.title, name: serviceName + "$" + resultName, submodule: "carleon", type: result.type};
-								self.globalConditionList.push(newCondition);
-								self.carleonElementsList[serviceName + "$" + resultName] = service.element;
-							} else {
-								_.forEach(result, function (curResult, curResultName) {
-									var newCondition = {label: curResult.title, name: serviceName + "$" + curResultName, submodule: "carleon", type: curResult.type, field: curResultName};
-									self.globalConditionList.push(newCondition);
-									self.carleonElementsList[serviceName + "$" + curResultName] = service.element;
-								});
-							}
+				_.forEach(injector.results, function (result, resultName) {
+					if (!!result.type && !!result.title) {
+						var newCondition = {label: result.title, name: serviceName + "$" + resultName, submodule: "carleon", type: result.type};
+						self.globalConditionList.push(newCondition);
+						self.carleonElementsList[serviceName + "$" + resultName] = service.element;
+					} else {
+						_.forEach(result, function (curResult, curResultName) {
+							var newCondition = {label: curResult.title, name: serviceName + "$" + curResultName, submodule: "carleon", type: curResult.type, field: curResultName};
+							self.globalConditionList.push(newCondition);
+							self.carleonElementsList[serviceName + "$" + curResultName] = service.element;
 						});
 					}
 				});
@@ -453,21 +445,21 @@ angular.module("sagremorApp")
 				
 				if (self.add) {
 					angharadFactory.addScheduler(self.scheduler).then(function () {
-						toaster.pop("success", $translate.instant('scheduler_save'), $translate.instant('scheduler_save_success'));
+						toaster.pop("success", $translate.instant("scheduler_save"), $translate.instant("scheduler_save_success"));
 						sharedData.add("angharadSchedulers", self.scheduler.name, self.scheduler);
 						$rootScope.$broadcast("angharadSchedulersChanged");
 					}, function () {
-						toaster.pop("error", $translate.instant('scheduler_save'), $translate.instant('scheduler_save_error'));
+						toaster.pop("error", $translate.instant("scheduler_save"), $translate.instant("scheduler_save_error"));
 					})["finally"](function () {
 						$uibModalInstance.dismiss("close");
 					});
 				} else {
 					angharadFactory.setScheduler(self.scheduler.name, self.scheduler).then(function () {
-						toaster.pop("success", $translate.instant('scheduler_save'), $translate.instant('scheduler_save_success'));
+						toaster.pop("success", $translate.instant("scheduler_save"), $translate.instant("scheduler_save_success"));
 						sharedData.add("angharadSchedulers", self.scheduler.name, self.scheduler);
 						$rootScope.$broadcast("angharadSchedulersChanged");
 					}, function () {
-						toaster.pop("error", $translate.instant('scheduler_save'), $translate.instant('scheduler_save_error'));
+						toaster.pop("error", $translate.instant("scheduler_save"), $translate.instant("scheduler_save_error"));
 					})["finally"](function () {
 						$uibModalInstance.dismiss("close");
 					});

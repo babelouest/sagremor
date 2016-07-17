@@ -10,13 +10,13 @@ function sagDimmerController (benoicFactory, sagremorParams, $translate) {
     }
     
     ctrl.setDimmer = function (value) {
-        benoicFactory.setElement(ctrl.element.device, 'dimmer', ctrl.element.name, value).then(function () {
+        benoicFactory.setElement(ctrl.element.device, "dimmer", ctrl.element.name, value).then(function () {
             ctrl.element.value = value;
         });
     };
     
     ctrl.addDimmer = function (value) {
-        benoicFactory.setElement(ctrl.element.device, 'dimmer', ctrl.element.name, ctrl.element.value + value).then(function () {
+        benoicFactory.setElement(ctrl.element.device, "dimmer", ctrl.element.name, ctrl.element.value + value).then(function () {
             ctrl.element.value += value;
         });
 	}
@@ -28,11 +28,11 @@ function sagDimmerController (benoicFactory, sagremorParams, $translate) {
     init();
 }
 
-angular.module('sagremorApp').component('sagDimmer', {
-    templateUrl: 'components/dimmer/dimmer.template.html',
+angular.module("sagremorApp").component("sagDimmer", {
+    templateUrl: "components/dimmer/dimmer.template.html",
     controller: sagDimmerController,
     bindings: {
-        element: '='
+        element: "="
     }
 })
 .run(function(sagGenericInjectorManager) {

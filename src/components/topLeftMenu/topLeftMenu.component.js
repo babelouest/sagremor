@@ -11,6 +11,10 @@ function topLeftMenuCtrl ($scope, $translate, sagremorParams, sagGenericInjector
 			}
 		});
 	}
+	
+	$scope.$on("submodulesChanged", function () {
+		self.sagremorParams = sagremorParams;
+	});
 
     init();
 }

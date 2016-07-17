@@ -16,4 +16,11 @@
         <div data-ng-transclude class="sag-container-element col-md-12">
         </div>
     </div>
+	<div class="row">
+		<div class="col-md-12">
+			<span data-ng-repeat="script in $ctrl.scripts">
+				<button type="button" class="btn btn-xs btn-primary" data-ng-bind="script.name" data-ng-click="$ctrl.runScript(script)"></button>
+			</span>
+		</div>
+    </div>
 </div>

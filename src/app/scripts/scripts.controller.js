@@ -9,18 +9,18 @@ angular.module("sagremorApp")
         
         this.init = function () {
 
-			$translate(["edit", "remove", "add_to_dashboard"]).then(function (results) {
+			$translate(["edit", "monitor", "bind_to_element", "add_to_dashboard"]).then(function (results) {
 				self.menuScript = [
 					{
 						name: "edit", 
-						display: results.edit, 
+						display: $translate.instant("edit"), 
 						action: function (param) {
 							sagremorService.editScript(param);
 						}
 					},
 					{
 						name: "remove", 
-						display: results.remove, 
+						display: $translate.instant("remove"),
 						action: function (param) {
 							sagremorService.removeScript(param).then(function () {
 								$scope.$broadcast("angharadScriptsChanged");
@@ -28,17 +28,23 @@ angular.module("sagremorApp")
 						}
 					},
 					{
+						name: "bind_to_element", 
+						display: $translate.instant("bind_to_element"),
+						action: function (param) {
+							sagremorService.bindToElement(param);
+						}
+					},
+					{
 						name: "add_to_dashboard", 
-						display: results.add_to_dashboard, 
+						display: $translate.instant("add_to_dashboard"),
 						action: function (param) {
 							param.type = "script";
-							if (sagremorService.addToDashboard(param)) {
-                                $scope.$broadcast("refreshDashboard");
-                            }
+							sagremorService.addToDashboard(param).then(function () {
+								$scope.$broadcast("refreshDashboard");
+							});
 						}
 					}
 				];
-				
 				self.updateScripts();
 			});
 		};

@@ -293,7 +293,7 @@ angular.module("sagremorApp")
 				self.existingHttpAlert = "";
 				self.newAlertHttp = false;
 			} else {
-				if (self.customHttpAlertMethodSelect !== 'custom') {
+				if (self.customHttpAlertMethodSelect !== "custom") {
 					self.customHttpAlert.method = self.customHttpAlertMethodSelect;
 				}
 				garethFactory.addAlert("http", self.customHttpAlert).then(function () {

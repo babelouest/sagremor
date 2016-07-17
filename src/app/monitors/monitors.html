@@ -9,6 +9,7 @@
         <div data-ng-repeat="monitor in monitorsCtrl.monitorList track by monitor.name" class="col-sm-6">
             <data-sag-container data-menu="monitorsCtrl.menu"
                                 data-title="monitor.name"
+                                data-type="'monitor'"
                                 data-element="monitor">
 				<data-sag-monitor data-element="monitor"></data-sag-monitor>
 			</data-sag-container>

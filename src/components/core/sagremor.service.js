@@ -43,13 +43,27 @@ angular.module("sagremorApp")
 				};
 				profile.addTo.D.push(newElement);
 			}
-			carleonFactory.setProfile(profile.name, profile).then(function () {
+			return carleonFactory.setProfile(profile.name, profile).then(function () {
 				toaster.pop({type: "success", title: $translate.instant("angharad_add_to_dashboard"), body: $translate.instant("angharad_add_to_dashboard_success")});
 			}, function () {
 				toaster.pop({type: "error", title: $translate.instant("angharad_add_to_dashboard"), body: $translate.instant("angharad_add_to_dashboard_error")});
 			});
-            return true;
         };
+        
+        sagremorFactory.bindToElement = function (script) {
+			return modalInstance = $uibModal.open({
+				animation: true,
+				templateUrl: "components/modals/scriptBindElement.modal.html",
+				controller: "ScriptBindElementModalCtrl",
+				controllerAs: "ScriptBindElementModalCtrl",
+				size: "md",
+				resolve: {
+					script: function () {
+						return script;
+					}
+				}
+			});
+		};
         
         sagremorFactory.removeFromDashboard = function (element) {
             var dashboardWidgets = sagremorParams.dashboardWidgets;

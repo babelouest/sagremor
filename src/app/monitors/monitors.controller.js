@@ -25,9 +25,9 @@ angular.module("sagremorApp")
 						display: results.add_to_dashboard, 
 						action: function (param) {
 							param.type = "monitor";
-							if (sagremorService.addToDashboard(param)) {
-                                $scope.$broadcast("refreshDashboard");
-                            }
+							sagremorService.addToDashboard(param).then(function () {
+								$scope.$broadcast("refreshDashboard");
+							});
 						}
 					}
 				];

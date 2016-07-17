@@ -1,5 +1,5 @@
-angular.module('sagremorApp')
-    .controller('DimmersModalCtrl',
+angular.module("sagremorApp")
+    .controller("DimmersModalCtrl",
     function($scope, $uibModalInstance, $translate, toaster, sagremorConstant, benoicFactory, dimmer) {
         var self = this;
         
@@ -19,7 +19,7 @@ angular.module('sagremorApp')
         }
         
         this.cancel = function () {
-            $uibModalInstance.dismiss('cancel');
+            $uibModalInstance.dismiss("cancel");
         };
         
         this.tr = function (id) {
@@ -30,12 +30,12 @@ angular.module('sagremorApp')
             self.dimmer.display = self.dimmer.newDisplay;
             self.dimmer.monitor = self.dimmer.monitorChecked?1:0;
             benoicFactory.updateElement(self.dimmer.device, "dimmer", self.dimmer.name, self.dimmer).then(function (response) {
-                $scope.$broadcast('benoicDimmersChanged');
-                toaster.pop("success", $translate.instant('dimmer_save'), $translate.instant('dimmer_save_success'));
+                $scope.$broadcast("benoicDimmersChanged");
+                toaster.pop("success", $translate.instant("dimmer_save"), $translate.instant("dimmer_save_success"));
             }, function (error) {
-                toaster.pop("error", $translate.instant('dimmer_save'), $translate.instant('dimmer_save_error'));
-            })['finally'](function () {
-                $uibModalInstance.dismiss('close');
+                toaster.pop("error", $translate.instant("dimmer_save"), $translate.instant("dimmer_save_error"));
+            })["finally"](function () {
+                $uibModalInstance.dismiss("close");
             });
         };
         

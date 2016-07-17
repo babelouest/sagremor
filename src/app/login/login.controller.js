@@ -1,5 +1,5 @@
-angular.module('sagremorApp')
-  .controller('LoginCtrl',
+angular.module("sagremorApp")
+  .controller("LoginCtrl",
   function($scope, $rootScope, $location, $cookieStore, $http, toaster, angharadFactory) {
       
       var self = this;
@@ -28,10 +28,10 @@ angular.module('sagremorApp')
                 $rootScope.$broadcast("loginSuccess");
                 $scope.isLogged = true;
                 $location.path("/");
-                toaster.pop({type: 'success', title: "Login success"});
+                toaster.pop({type: "success", title: "Login success"});
             },
             function (error) {
-                toaster.pop({type: 'error', title: "Login error"});
+                toaster.pop({type: "error", title: "Login error"});
             });
       };
       

@@ -1,5 +1,5 @@
-angular.module('sagremorApp')
-    .controller('sensorsCtrl',
+angular.module("sagremorApp")
+    .controller("sensorsCtrl",
     function($scope, $location, $translate, sagremorService, benoicFactory, sharedData, sagremorParams) {
       
         var self = this;
@@ -31,9 +31,9 @@ angular.module('sagremorApp')
 						name: "add_to_dashboard", 
 						display: results.add_to_dashboard, 
 						action: function (param) {
-							if (sagremorService.addToDashboard(param, false)) {
-                                $scope.$broadcast("refreshDashboard");
-                            }
+							sagremorService.addToDashboard(param).then(function () {
+								$scope.$broadcast("refreshDashboard");
+							});
 						}
 					}
 				];
@@ -42,16 +42,16 @@ angular.module('sagremorApp')
 			});
 		};
         
-        $scope.$on('benoicDevicesChanged', function () {
+        $scope.$on("benoicDevicesChanged", function () {
             self.updateSensors();
         });
         
-        $scope.$on('benoicSensorsChanged', function () {
+        $scope.$on("benoicSensorsChanged", function () {
             self.updateSensors();
         });
         
         this.updateSensors = function () {
-            var devices = sharedData.all('benoicDevices');
+            var devices = sharedData.all("benoicDevices");
 			self.sensorList = [];
             for (key in devices) {
                 var deviceName = devices[key].name;

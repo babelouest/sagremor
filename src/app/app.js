@@ -127,6 +127,10 @@ angular.module("sagremorApp", [
         return delete sharedData[share][name];
     };
     
+    var removeAll = function (share) {
+		sharedData[share] = {};
+	};
+    
     var all = function(share) {
         return sharedData[share];
     };
@@ -135,7 +139,8 @@ angular.module("sagremorApp", [
         all: all,
         get: get,
         add: add,
-        remove: remove
+        remove: remove,
+        removeAll: removeAll
     };
 })
 .factory("sagremorParams", function () {

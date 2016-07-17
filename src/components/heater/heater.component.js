@@ -15,7 +15,7 @@ function sagHeaterController (benoicFactory, sagremorParams, $translate) {
 		} else {
 			value = ctrl.element.value.command + value;
 		}
-        benoicFactory.setElement(ctrl.element.device, 'heater', ctrl.element.name, value, {mode: ctrl.element.value.mode}).then(function () {
+        benoicFactory.setElement(ctrl.element.device, "heater", ctrl.element.name, value, {mode: ctrl.element.value.mode}).then(function () {
             ctrl.element.value.command = value;
         });
     };
@@ -44,11 +44,11 @@ function sagHeaterController (benoicFactory, sagremorParams, $translate) {
     init();
 }
 
-angular.module('sagremorApp').component('sagHeater', {
-    templateUrl: 'components/heater/heater.template.html',
+angular.module("sagremorApp").component("sagHeater", {
+    templateUrl: "components/heater/heater.template.html",
     controller: sagHeaterController,
     bindings: {
-        element: '='
+        element: "="
     }
 })
 .run(function(sagGenericInjectorManager) {

@@ -10,7 +10,8 @@ angular.module("sagremorApp")
 		
         this.options = {
             cellHeight: 100,
-            verticalHargin: 10
+            verticalHargin: 10,
+            disableResize: false
         };
         
         this.init = function () {
@@ -38,28 +39,95 @@ angular.module("sagremorApp")
 
         function getDashboardElements () {
             self.dashboardWidgets = [];
-            getDashboardElementsCurrentProfiles();
+            if (!!sagremorParams.currentProfile) {
+				getDashboardElementsCurrentProfiles();
+			} else {
+				getDashboardElementsNoProfile();
+			}
         }
+        
+        function getDashboardElementsNoProfile () {
+			// Carleon not enabled, adding all benoic elements to the dashboard (if enabled)
+			if (sagremorParams.benoicEnabled) {
+				var defaultTag = "SGMR$D$";
+				var defaultY = 0;
+				
+				var x = 0;
+				_.forEach(sharedData.all("benoicDevices"), function (device) {
+					if (!!device.element) {
+						_.forEach(device.element.sensors, function (element, name) {
+							element.type = "sensor";
+							element.device = device.name;
+							element.name = name;
+							addBenoicElementToDashboard(element, defaultTag + x + "$" + defaultY);
+							x += 2;
+						});
+					}
+				});
+				addDashboardSeparator($translate.instant("sensors_title"), defaultTag + x + "$" + defaultY);
+				
+				var x = 0;
+				_.forEach(sharedData.all("benoicDevices"), function (device) {
+					if (!!device.element) {
+						_.forEach(device.element.heaters, function (element, name) {
+							element.type = "heater";
+							element.device = device.name;
+							element.name = name;
+							addBenoicElementToDashboard(element, defaultTag + x + "$" + defaultY);
+							x += 2;
+						});
+					}
+				});
+				addDashboardSeparator($translate.instant("heaters_title"), defaultTag + x + "$" + defaultY);;
+				
+				var x = 0;
+				_.forEach(sharedData.all("benoicDevices"), function (device) {
+					if (!!device.element) {
+						_.forEach(device.element.dimmers, function (element, name) {
+							element.type = "dimmer";
+							element.device = device.name;
+							element.name = name;
+							addBenoicElementToDashboard(element, defaultTag + x + "$" + defaultY);
+							x += 2;
+						});
+					}
+				});
+				var x = 0;
+				_.forEach(sharedData.all("benoicDevices"), function (device) {
+					if (!!device.element) {
+						_.forEach(device.element.switches, function (element, name) {
+							element.type = "switch";
+							element.device = device.name;
+							element.name = name;
+							addBenoicElementToDashboard(element, defaultTag + x + "$" + defaultY);
+							x += 2;
+						});
+					}
+				});
+				addDashboardSeparator($translate.instant("switches_title"), defaultTag + x + "$" + defaultY);
+				
+			}
+		}
 
-        function getDashboardElementsCurrentProfiles() {
+        function getDashboardElementsCurrentProfiles () {
             var profile = sagremorParams.currentProfile;
-            if (!!profile) {
-				self.profileName = profile.name
-				if (!!profile && !!profile.addTo && !!profile.addTo.D) {
-					_.forEach(profile.addTo.D, function (element) {
-						if (!!element.device) {
+			if (!!profile && !!profile.addTo && !!profile.addTo.D) {
+				self.profileName = profile.name;
+				_.forEach(profile.addTo.D, function (element) {
+					if (!!element.device) {
+						if (sagremorParams.benoicEnabled) {
 							addBenoicElementToDashboard(element, element.tag);
-						} else if (element.type === "script") {
-							addScriptToDashboard(element, element.tag);
-						} else if (element.type === "scheduler") {
-							addSchedulerToDashboard(element, element.tag);
-						} else if (element.type === "separator") {
-							addDashboardSeparator(element.name, element.tag);
-						} else {
-							addCarleonElementToDashboard(element, element.tag);
 						}
-					});
-				}
+					} else if (element.type === "script") {
+						addScriptToDashboard(element, element.tag);
+					} else if (element.type === "scheduler") {
+						addSchedulerToDashboard(element, element.tag);
+					} else if (element.type === "separator") {
+						addDashboardSeparator(element.name, element.tag);
+					} else if (sagremorParams.carleonEnabled) {
+						addCarleonElementToDashboard(element, element.tag);
+					}
+				});
 			}
         }
 
@@ -179,37 +247,38 @@ angular.module("sagremorApp")
 				$timeout.cancel(self._timeout);
 			}
             self._timeout = $timeout(function() {
-				var changed = false;
-				_.forEach(items, function (item) {
-					var element = _.find(self.dashboardWidgets, function (widget) {
-						return widget.type === $(item.el).attr("data-sag-type") &&
-								widget.name === $(item.el).attr("data-sag-name") &&
-								(!widget.device || widget.device === $(item.el).attr("data-sag-device"));
-					});
-					if (!!element) {
-						var newTag = "SGMR$D$" + item.x + "$" + item.y;
-						if (updateTag(element, newTag)) {
-							changed = true;
-							element.tag = newTag;
+				if (sagremorParams.carleonEnabled) {
+					var changed = false;
+					_.forEach(items, function (item) {
+						var element = _.find(self.dashboardWidgets, function (widget) {
+							return widget.type === $(item.el).attr("data-sag-type") &&
+									widget.name === $(item.el).attr("data-sag-name") &&
+									(!widget.device || widget.device === $(item.el).attr("data-sag-device"));
+						});
+						if (!!element) {
+							var newTag = "SGMR$D$" + item.x + "$" + item.y;
+							if (updateTag(element, newTag)) {
+								changed = true;
+								element.tag = newTag;
+							}
 						}
-					}
-				});
-				if (changed) {
-					var dashboardWidgets = _(sagremorParams.currentProfile.addTo.D).chain().sortBy(function (widget) {
-						var splitted = widget.tag.split("$");
-						return splitted[2];
-					}).sortBy(function (widget) {
-						var splitted = widget.tag.split("$");
-						return splitted[3];
-					}).value();
-					sagremorParams.currentProfile.addTo.D = dashboardWidgets;
-					
-					
-					carleonFactory.setProfile(sagremorParams.currentProfile.name, sagremorParams.currentProfile).then(function () {
-						toaster.pop("success", $translate.instant("profile_save"), $translate.instant("profile_save_success"));
-					}, function () {
-						toaster.pop("error", $translate.instant("profile_save"), $translate.instant("profiles_save_error"));
 					});
+					if (changed) {
+						var dashboardWidgets = _(sagremorParams.currentProfile.addTo.D).chain().sortBy(function (widget) {
+							var splitted = widget.tag.split("$");
+							return splitted[2];
+						}).sortBy(function (widget) {
+							var splitted = widget.tag.split("$");
+							return splitted[3];
+						}).value();
+						sagremorParams.currentProfile.addTo.D = dashboardWidgets;
+						
+						carleonFactory.setProfile(sagremorParams.currentProfile.name, sagremorParams.currentProfile).then(function () {
+							toaster.pop("success", $translate.instant("profile_save"), $translate.instant("profile_save_success"));
+						}, function () {
+							toaster.pop("error", $translate.instant("profile_save"), $translate.instant("profiles_save_error"));
+						});
+					}
 				}
 				self._timeout = null;
 			}, 500);

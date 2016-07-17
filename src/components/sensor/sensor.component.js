@@ -23,11 +23,11 @@ function sagSensorController (benoicFactory, sagremorParams, $translate) {
     init();
 }
 
-angular.module('sagremorApp').component('sagSensor', {
-    templateUrl: 'components/sensor/sensor.template.html',
+angular.module("sagremorApp").component("sagSensor", {
+    templateUrl: "components/sensor/sensor.template.html",
     controller: sagSensorController,
     bindings: {
-        element: '='
+        element: "="
     }
 })
 .run(function(sagGenericInjectorManager) {

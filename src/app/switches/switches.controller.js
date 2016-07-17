@@ -1,5 +1,5 @@
-angular.module('sagremorApp')
-    .controller('switchesCtrl',
+angular.module("sagremorApp")
+    .controller("switchesCtrl",
     function($scope, $location, $translate, sagremorService, benoicFactory, sharedData, sagremorParams) {
       
         var self = this;
@@ -32,9 +32,9 @@ angular.module('sagremorApp')
 						name: "add_to_dashboard", 
 						display: results.add_to_dashboard, 
 						action: function (param) {
-							if (sagremorService.addToDashboard(param, false)) {
-                                $scope.$broadcast("refreshDashboard");
-                            }
+							sagremorService.addToDashboard(param).then(function () {
+								$scope.$broadcast("refreshDashboard");
+							});
 						}
 					}
 				];
@@ -57,9 +57,9 @@ angular.module('sagremorApp')
 						name: "add_to_dashboard", 
 						display: results.add_to_dashboard, 
 						action: function (param) {
-							if (sagremorService.addToDashboard(param, false)) {
-                                $scope.$broadcast("refreshDashboard");
-                            }
+							sagremorService.addToDashboard(param).then(function () {
+								$scope.$broadcast("refreshDashboard");
+							});
 						}
 					}
 				];
@@ -69,18 +69,18 @@ angular.module('sagremorApp')
 			});
 		};
         
-        $scope.$on('benoicDevicesChanged', function () {
+        $scope.$on("benoicDevicesChanged", function () {
             self.updateSwitchers();
             self.updateDimmers();
         });
         
-        $scope.$on('benoicSwitchesChanged', function () {
+        $scope.$on("benoicSwitchesChanged", function () {
             self.updateSwitchers();
             self.updateDimmers();
         });
         
         this.updateSwitchers = function () {
-            var devices = sharedData.all('benoicDevices');
+            var devices = sharedData.all("benoicDevices");
 			self.switchList = [];
             for (key in devices) {
                 var deviceName = devices[key].name;
@@ -96,7 +96,7 @@ angular.module('sagremorApp')
         };
         
         this.updateDimmers = function () {
-            var devices = sharedData.all('benoicDevices');
+            var devices = sharedData.all("benoicDevices");
 			self.dimmerList = [];
             for (key in devices) {
                 var deviceName = devices[key].name;

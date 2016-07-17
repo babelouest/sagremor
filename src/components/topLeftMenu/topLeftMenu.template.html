@@ -2,32 +2,32 @@
     <button class="btn btn-primary text-left" type="button" data-uib-dropdown-toggle data-ng-click="">
         <i class="fa fa-bars" aria-hidden="true"></i>
     </button>
-    <ul class="container-fluid" data-uib-dropdown-menu data-uib-dropdown-menu-auto-close="outsideClick">
+    <ul class="container-fluid top-left-menu-list" data-uib-dropdown-menu data-uib-dropdown-menu-auto-close="outsideClick">
         <li class="row-fluid">
             <a data-ng-href="#/">
                 <i class="fa fa-home"></i>
                 <span data-translate="menu_home"></span>
             </a>
         </li>
-        <li class="row-fluid">
+        <li class="row-fluid" data-ng-if="topLeftMenuCtrl.sagremorParams.benoicEnabled">
             <a data-ng-href="#/switches">
                 <i class="fa fa-lightbulb-o"></i>
                 <span data-translate="menu_lights"></span>
             </a>
         </li>
-        <li class="row-fluid">
+        <li class="row-fluid" data-ng-if="topLeftMenuCtrl.sagremorParams.benoicEnabled">
             <a data-ng-href="#/heaters">
                 <i class="fa fa-fire"></i>
                 <span data-translate="menu_heaters"></span>
             </a>
         </li>
-        <li class="row-fluid">
+        <li class="row-fluid" data-ng-if="topLeftMenuCtrl.sagremorParams.benoicEnabled">
             <a data-ng-href="#/sensors">
                 <i class="fa fa-line-chart"></i>
                 <span data-translate="menu_sensors"></span>
             </a>
         </li>
-        <li class="row-fluid" data-ng-repeat="service in topLeftMenuCtrl.serviceList">
+        <li class="row-fluid" data-ng-repeat="service in topLeftMenuCtrl.serviceList" data-ng-if="topLeftMenuCtrl.sagremorParams.carleonEnabled">
             <a data-ng-href="#/service/{{service.target}}">
 				<data-ng-bind-html data-ng-bind-html="service.icon"></data-ng-bind-html>
                 <span data-translate="{{service.title}}"></span>
@@ -51,7 +51,7 @@
                 <span data-translate="menu_monitor"></span>
             </a>
         </li>
-        <li class="row-fluid">
+        <li class="row-fluid" data-ng-if="topLeftMenuCtrl.sagremorParams.garethEnabled">
             <a data-ng-href="#/logs">
                 <i class="fa fa-history"></i>
                 <span data-translate="menu_logs"></span>
