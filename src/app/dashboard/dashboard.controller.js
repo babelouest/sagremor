@@ -111,8 +111,12 @@ angular.module("sagremorApp")
 
         function getDashboardElementsCurrentProfiles () {
             var profile = sagremorParams.currentProfile;
-			if (!!profile && !!profile.addTo && !!profile.addTo.D) {
+            if (!!profile) {
 				self.profileName = profile.name;
+			} else {
+				self.profileName = "";
+			}
+			if (!!profile && !!profile.addTo && !!profile.addTo.D) {
 				_.forEach(profile.addTo.D, function (element) {
 					if (!!element.device) {
 						if (sagremorParams.benoicEnabled) {

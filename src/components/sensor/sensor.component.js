@@ -14,7 +14,7 @@ function sagSensorController (benoicFactory, sagremorParams, $translate) {
 		if (!isNaN(parseFloat(value)) && isFinite(value)) {
 			value = (Math.round(value * 100) / 100);
 		}
-        if (!!ctrl.element.options.unit) {
+        if (!!ctrl.element && !!ctrl.element.options.unit) {
 			value += " " + ctrl.element.options.unit
 		}
 		return value;

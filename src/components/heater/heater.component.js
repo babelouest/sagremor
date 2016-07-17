@@ -21,8 +21,8 @@ function sagHeaterController (benoicFactory, sagremorParams, $translate) {
     };
     
     ctrl.displayCommandValue = function () {
-		var command = (Math.round(ctrl.element.value.command * 100) / 100);
-        if (!!ctrl.element.options.unit) {
+		var command = !!ctrl.element?(Math.round(ctrl.element.value.command * 100) / 100):0;
+        if (!!ctrl.element && !!ctrl.element.options.unit) {
 			command += " " + ctrl.element.options.unit
 		}
 		return command;
@@ -35,7 +35,7 @@ function sagHeaterController (benoicFactory, sagremorParams, $translate) {
 		} else {
 			value = "+" + command;
 		}
-        if (!!ctrl.element.options.unit) {
+        if (!!ctrl.element && !!ctrl.element.options.unit) {
 			value += " " + ctrl.element.options.unit
 		}
 		return value
