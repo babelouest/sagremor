@@ -3,6 +3,7 @@
         <h3 class="modal-title" data-translate="script_modal_title"></h3>
     </div>
     <div class="modal-body">
+		<!-- Script name and description -->
         <div class="row control-group" data-ng-class="{'has-error': !!ScriptModalCtrl.error.message}">
             <label for="scriptName" class="col-md-4" data-translate="script_name"></label>
             <div class="col-md-8 controls">
@@ -29,6 +30,8 @@
             </div>
         </div>
         <hr>
+        
+        <!-- Script actions list -->
         <h4 data-translate="script_actions"></h4>
         <div data-ng-repeat="action in ScriptModalCtrl.script.actions">
 			<div class="row" data-ng-if="action.submodule === 'benoic'">
@@ -64,6 +67,8 @@
 				</div>
 			</div>
         </div>
+        
+        <!-- New action -->
 		<hr>
         <div class="row">
             <div class="col-md-12">
@@ -162,10 +167,12 @@
 				<div class="row control-group" data-ng-class="{'has-error': !ScriptModalCtrl.newAction.heater.mode}">
 					<label for="newActionHeaterMode" class="col-md-4" data-translate="script_heater_mode_title"></label>
 					<div class="col-md-8 controls">
-						<select class="form-control" id="newActionHeaterMode" name="newActionHeaterMode" data-ng-model="ScriptModalCtrl.newAction.parameters.mode">
-							<option value="off" data-translate="heater_mode_off"></option>
-							<option value="auto" data-translate="heater_mode_auto"></option>
-							<option value="manual" data-translate="heater_mode_manual"></option>
+						<select class="form-control" 
+								id="newActionHeaterMode" 
+								name="newActionHeaterMode" 
+								data-ng-model="ScriptModalCtrl.newAction.parameters.mode"
+								data-ng-options="mode as ScriptModalCtrl.heaterModeDisplay(mode) for mode in ScriptModalCtrl.tmpElement.availableModes">
+							<option value="" data-translate="heater_mode_keep"></option>
 						</select>
 					</div>
 				</div>

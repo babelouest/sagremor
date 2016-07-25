@@ -24,7 +24,7 @@
   "homepage": "https://github.com/babelouest/sagremor",
   "devDependencies": {
     "gulp": "*",
-    "gulp-app-build-tasks": "https://github.com/jimmyfortinx/gulp-app-build-tasks.git",
+    "gulp-app-build-tasks": "https://github.com/babelouest/gulp-app-build-tasks.git",
     "gulp-build": "^0.5.3",
     "jasmine-core": "*",
     "jasmine-terminal-reporter": "*",

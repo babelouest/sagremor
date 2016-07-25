@@ -74,7 +74,7 @@ angular.module("sagremorApp")
 						name: name,
 						display: element.display,
 						value: 20,
-						mode: "auto"
+						availableModes: element.value.availableModes
 					}
 					self.benoicElements.heaters.push(elt);
 				});
@@ -180,6 +180,10 @@ angular.module("sagremorApp")
 			return $translate.instant(id);
 		};
 
+		this.heaterModeDisplay = function (value) {
+			return $translate.instant("heater_mode_" + value);
+		};
+    
         this.save = function () {
 			if (self.add) {
 				angharadFactory.addScript(self.script).then(function () {

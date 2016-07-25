@@ -3,10 +3,15 @@ function sagHeaterController (benoicFactory, sagremorParams, $translate) {
     
     ctrl.element.valueChecked = (ctrl.element.value === 1);
     ctrl.adminMode = sagremorParams.adminMode;
-    ctrl.element.newDisplay = ctrl.element.display;
+    ctrl.element.newDisplay = "";
+    ctrl.availableModes = [];
     
     function init() {
         ctrl.element.type = "heater";
+        if (!!ctrl.element) {
+			ctrl.element.newDisplay = ctrl.element.display;
+			ctrl.availableModes = ctrl.element.value.availableModes;
+		}
     }
     
     ctrl.setHeater = function (value) {
@@ -39,6 +44,10 @@ function sagHeaterController (benoicFactory, sagremorParams, $translate) {
 			value += " " + ctrl.element.options.unit
 		}
 		return value
+	};
+	
+	ctrl.modeDisplay = function (value) {
+		return $translate.instant("heater_mode_" + value.toLowerCase());
 	};
     
     init();

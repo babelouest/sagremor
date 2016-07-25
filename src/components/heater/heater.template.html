@@ -31,10 +31,12 @@
 				<label for="heaterMode" data-translate="heater_mode_title"></label>
 			</div>
 			<div class="col-sm-8 controls">
-				<select class="form-control" name="heaterMode" value="heaterMode" data-ng-model="$ctrl.element.value.mode" data-ng-change="$ctrl.setHeater(null)">
-					<option value="off" data-translate="heater_mode_off"></option>
-					<option value="auto" data-translate="heater_mode_auto"></option>
-					<option value="manual" data-translate="heater_mode_manual"></option>
+				<select class="form-control" 
+						name="heaterMode" 
+						value="heaterMode" 
+						data-ng-model="$ctrl.element.value.mode" 
+						data-ng-change="$ctrl.setHeater(null)"
+						data-ng-options="mode as $ctrl.modeDisplay(mode) for mode in $ctrl.availableModes">
 				</select>
 			</div>
         </div>

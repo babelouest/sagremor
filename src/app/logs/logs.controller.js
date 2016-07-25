@@ -21,7 +21,7 @@ angular.module("sagremorApp")
         this.init = function () {
 			if ($translate.use()) {
 				self.options = DTOptionsBuilder.newOptions()
-								.withLanguageSource("/components/core/i18n/datatables."+$translate.use()+".json")
+								.withLanguageSource("components/core/i18n/datatables."+$translate.use()+".json")
 								.withOption("order", [1, "desc"]);
 				self.getFilters();
 				self.search();
@@ -84,7 +84,7 @@ angular.module("sagremorApp")
 		
 		$scope.$on("changeLang", function () {
 			self.options = DTOptionsBuilder.newOptions()
-							.withLanguageSource("/components/core/i18n/datatables."+$translate.use()+".json");
+							.withLanguageSource("components/core/i18n/datatables."+$translate.use()+".json");
 		});
 		
         this.init();

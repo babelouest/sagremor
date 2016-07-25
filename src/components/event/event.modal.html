@@ -400,11 +400,9 @@
 								id="newConditionHeaterMode" 
 								name="newConditionHeaterMode" 
 								data-ng-disabled="!!EventModalCtrl.newCondition.commandHeat"
-								data-ng-model="EventModalCtrl.newCondition.commandMode">
+								data-ng-model="EventModalCtrl.newCondition.commandMode"
+								data-ng-options="mode as EventModalCtrl.heaterModeDisplay(mode) for mode in EventModalCtrl.tmpElement.availableModes">
 							<option value=""></option>
-							<option value="off" data-translate="heater_mode_off"></option>
-							<option value="auto" data-translate="heater_mode_auto"></option>
-							<option value="manual" data-translate="heater_mode_manual"></option>
 						</select>
 					</div>
 				</div>

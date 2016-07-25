@@ -15,7 +15,7 @@ angular.module("sagremorApp")
 			}
 			if ($translate.use()) {
 				self.options = DTOptionsBuilder.newOptions()
-								.withLanguageSource("/components/core/i18n/datatables."+$translate.use()+".json")
+								.withLanguageSource("components/core/i18n/datatables."+$translate.use()+".json")
 								.withOption("order", [])
 								.withOption("scrollY", "200px")
 								.withOption("paging", false);

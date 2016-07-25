@@ -147,10 +147,12 @@ angular.module("sagremorApp")
                     curHeight = 2;
                 }
                 var bElt = sagremorService.getBenoicElement(element.device, element.type, element.name);
-                bElt.device = element.device;
-                bElt.name = element.name;
-                var dashboardElement = { type: element.type, device: element.device, name: element.name, element: bElt, x: x, y: y, width: 2, height: curHeight, tag: tag };
-                self.dashboardWidgets.push(dashboardElement);
+                if (!!bElt) {
+					bElt.device = element.device;
+					bElt.name = element.name;
+					var dashboardElement = { type: element.type, device: element.device, name: element.name, element: bElt, x: x, y: y, width: 2, height: curHeight, tag: tag };
+					self.dashboardWidgets.push(dashboardElement);
+				}
             }
         }
         
@@ -186,14 +188,20 @@ angular.module("sagremorApp")
 			var injector = _.find(sagGenericInjectorManager.components, function (inject) {
 				return inject.type === element.type;
 			});
-            var tagParams = tag.split("$");
-            if (tagParams.length >= 4) {
-                var x = tagParams[2];
-                var y = tagParams[3];
-                var curHeight = injector.widgetHeight;
-                var dashboardElement = { type: element.type, name: element.name, element: element, x: x, y: y, width: 2, height: curHeight, tag: tag };
-                self.dashboardWidgets.push(dashboardElement);
-            }
+			var service = sharedData.get("carleonServices", element.type);
+			var elt = _.find(service.element, function (cElt) {
+				return cElt.name === element.name;
+			});
+			if (!!elt) {
+				var tagParams = tag.split("$");
+				if (tagParams.length >= 4) {
+					var x = tagParams[2];
+					var y = tagParams[3];
+					var curHeight = injector.widgetHeight;
+					var dashboardElement = { type: element.type, name: element.name, element: element, x: x, y: y, width: 2, height: curHeight, tag: tag };
+					self.dashboardWidgets.push(dashboardElement);
+				}
+			}
         }
         
         function addMonitorToDashboard(element, tag) {
