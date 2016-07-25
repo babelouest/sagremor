@@ -35,8 +35,8 @@ angular.module("sagremorApp")
 		this.error = {
 			message: ""
 		};
-		this.carleonCommandsParameters = {};
-		this.carleonElementsList = {};
+		this.carleonConditionCommandsParameters = {};
+		this.carleonConditionElementsList = {};
         
         function init() {
 			if (!self.script) {
@@ -47,37 +47,39 @@ angular.module("sagremorApp")
 				};
 			}
 			_.forEach(sharedData.all("benoicDevices"), function (device) {
-				_.forEach(device.element.switches, function(element, name) {
-					var elt = {
-						device: device.name,
-						type: "switch",
-						name: name,
-						display: element.display,
-						value: true
-					}
-					self.benoicElements.switches.push(elt);
-				});
-				_.forEach(device.element.dimmers, function(element, name) {
-					var elt = {
-						device: device.name,
-						type: "dimmer",
-						name: name,
-						display: element.display,
-						value: 0
-					}
-					self.benoicElements.dimmers.push(elt);
-				});
-				_.forEach(device.element.heaters, function(element, name) {
-					var elt = {
-						device: device.name,
-						type: "heater",
-						name: name,
-						display: element.display,
-						value: 20,
-						availableModes: element.value.availableModes
-					}
-					self.benoicElements.heaters.push(elt);
-				});
+				if (device.enabled && device.connected) {
+					_.forEach(device.element.switches, function(element, name) {
+						var elt = {
+							device: device.name,
+							type: "switch",
+							name: name,
+							display: element.display,
+							value: true
+						}
+						self.benoicElements.switches.push(elt);
+					});
+					_.forEach(device.element.dimmers, function(element, name) {
+						var elt = {
+							device: device.name,
+							type: "dimmer",
+							name: name,
+							display: element.display,
+							value: 0
+						}
+						self.benoicElements.dimmers.push(elt);
+					});
+					_.forEach(device.element.heaters, function(element, name) {
+						var elt = {
+							device: device.name,
+							type: "heater",
+							name: name,
+							display: element.display,
+							value: 20,
+							availableModes: element.value.availableModes
+						}
+						self.benoicElements.heaters.push(elt);
+					});
+				}
 			});
 			
 			_.forEach(sharedData.all("carleonServices"), function (service, serviceName) {
@@ -86,10 +88,10 @@ angular.module("sagremorApp")
 				});
 				_.forEach(injector.commands, function (command, commandName) {
 					var newAction = {label: command.title, name: serviceName + "$" + commandName, submodule: "carleon"};
-					self.carleonElementsList[serviceName + "$" + commandName] = service.element;
+					self.carleonConditionElementsList[serviceName + "$" + commandName] = service.element;
 					self.scriptActionElements.push(newAction);
 					if (!!service.commands[commandName]) {
-						self.carleonCommandsParameters[serviceName + "$" + commandName] = [];
+						self.carleonConditionCommandsParameters[serviceName + "$" + commandName] = [];
 						_.forEach(service.commands[commandName].parameters, function (serviceParameter, serviceParameterName) {
 							var commandParameter = {
 								name: serviceParameterName,
@@ -97,7 +99,7 @@ angular.module("sagremorApp")
 								type: serviceParameter.type,
 								required: serviceParameter.required
 							};
-							self.carleonCommandsParameters[serviceName + "$" + commandName].push(commandParameter);
+							self.carleonConditionCommandsParameters[serviceName + "$" + commandName].push(commandParameter);
 						});
 					}
 				});
@@ -298,7 +300,7 @@ angular.module("sagremorApp")
 				}
 				
 				var ret = true;
-				_.forEach(self.carleonCommandsParameters[self.newActionType.name], function (parameter, parameterName) {
+				_.forEach(self.carleonConditionCommandsParameters[self.newActionType.name], function (parameter, parameterName) {
 					if (parameter.required && !self.newAction.parameters[parameter.name]) {
 						ret = false;
 					}
@@ -320,8 +322,8 @@ angular.module("sagremorApp")
         };
 		
 		this.carleonParameter = function(parameter, service, command) {
-			if (!!self.carleonCommandsParameters) {
-				var curParameter = _.find(self.carleonCommandsParameters[service + "$" + command], function (param) {
+			if (!!self.carleonConditionCommandsParameters) {
+				var curParameter = _.find(self.carleonConditionCommandsParameters[service + "$" + command], function (param) {
 					return param.name === parameter;
 				});
 				return curParameter?curParameter.title:"not found";

@@ -39,6 +39,34 @@ angular.module("sagremorApp")
 						}
 					}
 				];
+				self.menuTrigger = [
+					{
+						name: "edit", 
+						display: results.edit, 
+						action: function (param) {
+							sagremorService.editEvent(param, "trigger");
+						}
+					},
+					{
+						name: "remove", 
+						display: results.remove, 
+						action: function (param) {
+							sagremorService.removeEvent(param).then(function () {
+								$scope.$broadcast("angharadEventsChanged");
+							});
+						}
+					},
+					{
+						name: "add_to_dashboard", 
+						display: results.add_to_dashboard, 
+						action: function (param) {
+							param.type = !!param.next_time?"scheduler":"trigger";
+							sagremorService.addToDashboard(param).then(function () {
+								$scope.$broadcast("refreshDashboard");
+							});
+						}
+					}
+				];
 				
 				self.updateSchedulers();
 				self.updateTriggers();

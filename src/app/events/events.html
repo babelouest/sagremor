@@ -17,4 +17,17 @@
 			</data-sag-container>
         </div>
     </div>
+    <hr>
+    <h2 data-translate="triggers_title"></h2>
+    <div class="row">
+        <div data-ng-repeat="trigger in eventsCtrl.triggerList track by $index" class="col-sm-2">
+            <data-sag-container data-menu="eventsCtrl.menuTrigger"
+                                data-size="1"
+                                data-title="trigger.name"
+                                data-type="'trigger'"
+                                data-element="trigger">
+				<data-sag-trigger data-element="trigger"></data-sag-trigger>
+			</data-sag-container>
+        </div>
+    </div>
 </div>

@@ -124,8 +124,8 @@ angular.module("sagremorApp")
 						}
 					} else if (element.type === "script") {
 						addScriptToDashboard(element, element.tag);
-					} else if (element.type === "scheduler") {
-						addSchedulerToDashboard(element, element.tag);
+					} else if (element.type === "scheduler" || element.type === "trigger") {
+						addEventToDashboard(element, element.tag);
 					} else if (element.type === "separator") {
 						addDashboardSeparator(element.name, element.tag);
 					} else if (element.type === "monitor") {
@@ -170,14 +170,19 @@ angular.module("sagremorApp")
 			}
 		}
         
-        function addSchedulerToDashboard(element, tag) {
-			var elt = sharedData.get("angharadSchedulers", element.name);
+        function addEventToDashboard(element, tag) {
+			var elt = false;
+			if (element.type === "scheduler") {
+				elt = sharedData.get("angharadSchedulers", element.name);
+			} else {
+				elt = sharedData.get("angharadTriggers", element.name);
+			}
 			if (!!elt) {
 				var tagParams = tag.split("$");
 				if (tagParams.length >= 4) {
 					var x = tagParams[2];
 					var y = tagParams[3];
-					var curHeight = 2;
+					var curHeight = element.type === "scheduler"?2:1;
 					var dashboardElement = { type: element.type, name: element.name, element: elt, x: x, y: y, width: 2, height: curHeight, tag: tag };
 					self.dashboardWidgets.push(dashboardElement);
 				}

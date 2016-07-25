@@ -9,7 +9,8 @@ angular.module("sagremorApp")
 			message: ""
 		};
         this.globalScriptList = angular.copy(sharedData.all("angharadScripts"));
-        this.globalConditionList = angular.copy(sagremorConstant.conditionList);
+        this.globalElementList = angular.copy(sagremorConstant.conditionList);
+        this.globalTriggerElementList = [];
         this.schedulerRepeatEveryEnum = sagremorConstant.schedulerRepeatEveryEnum;
         this.event = event||{
 			name: "",
@@ -31,7 +32,11 @@ angular.module("sagremorApp")
 				saturday: false
 			}
 		};
-        this.trigger = {};
+        this.trigger = {
+			submodule: false,
+			source: false,
+			element: false
+		};
         this.scriptList = [];
         this.conditionList = [];
         this.myDate = new Date();
@@ -41,9 +46,9 @@ angular.module("sagremorApp")
 			heaters: [],
 			sensors: []
 		}
-		this.carleonElementsList = {};
-		this.carleonResultParameters = {};
-		this.carleonCommandsParameters = {};
+		this.carleonConditionElementsList = {};
+		this.carleonConditionResultParameters = {};
+		this.carleonConditionCommandsParameters = {};
 		this.scriptActionElements = [];
 		this.tmpElement = false;
 		this.tmpResult = false;
@@ -53,6 +58,9 @@ angular.module("sagremorApp")
 			parameters: {}
 		};
 		this.eventType = eventType;
+		
+		this.newTrigger = {};
+		this.newTriggerTag = {};
         
         this.datePickerOptions = {
 			buttonBar: {
@@ -111,67 +119,90 @@ angular.module("sagremorApp")
 						};
 					}
 					self.myDate = new Date(event.next_time * 1000);
-					self.scriptList = event.scripts;
-					self.conditionList = event.conditions;
+				} else if (self.eventType === "trigger") {
+					self.trigger.submodule = event.submodule;
+					self.trigger.source = event.source;
+					self.trigger.element = event.element;
 				}
+				self.scriptList = event.scripts;
+				self.conditionList = event.conditions;
 			}
 			
 			_.forEach(sharedData.all("benoicDevices"), function (device) {
-				_.forEach(device.element.switches, function(element, name) {
-					var elt = {
-						device: device.name,
-						type: "switch",
-						name: name,
-						display: element.display,
-						value: true
-					}
-					self.benoicElements.switches.push(elt);
-				});
-				_.forEach(device.element.dimmers, function(element, name) {
-					var elt = {
-						device: device.name,
-						type: "dimmer",
-						name: name,
-						display: element.display,
-						value: 0
-					}
-					self.benoicElements.dimmers.push(elt);
-				});
-				_.forEach(device.element.heaters, function(element, name) {
-					var elt = {
-						device: device.name,
-						type: "heater",
-						name: name,
-						display: element.display,
-						value: 20,
-						options: element.options,
-						availableModes: element.value.availableModes,
-					}
-					self.benoicElements.heaters.push(elt);
-				});
-				_.forEach(device.element.sensors, function(element, name) {
-					var elt = {
-						device: device.name,
-						type: "sensor",
-						name: name,
-						display: element.display,
-						value: 0,
-						options: element.options
-					}
-					self.benoicElements.sensors.push(elt);
-				});
+				if (device.enabled && device.connected) {
+					_.forEach(device.element.switches, function(element, name) {
+						if (element.options.trigger) {
+							self.globalTriggerElementList.push({submodule: "benoic", source: device.name, element: name, display: element.display});
+						}
+						var elt = {
+							device: device.name,
+							type: "switch",
+							name: name,
+							display: element.display,
+							value: true
+						}
+						self.benoicElements.switches.push(elt);
+					});
+					_.forEach(device.element.dimmers, function(element, name) {
+						if (element.options.trigger) {
+							self.globalTriggerElementList.push({submodule: "benoic", source: device.name, element: name, display: element.display});
+						}
+						var elt = {
+							device: device.name,
+							type: "dimmer",
+							name: name,
+							display: element.display,
+							value: 0
+						}
+						self.benoicElements.dimmers.push(elt);
+					});
+					_.forEach(device.element.heaters, function(element, name) {
+						if (element.options.trigger) {
+							self.globalTriggerElementList.push({submodule: "benoic", source: device.name, element: name, display: element.display});
+						}
+						var elt = {
+							device: device.name,
+							type: "heater",
+							name: name,
+							display: element.display,
+							value: 20,
+							options: element.options,
+							availableModes: element.value.availableModes,
+						}
+						self.benoicElements.heaters.push(elt);
+					});
+					_.forEach(device.element.sensors, function(element, name) {
+						if (element.options.trigger) {
+							self.globalTriggerElementList.push({submodule: "benoic", source: device.name, element: name, display: element.display});
+						}
+						var elt = {
+							device: device.name,
+							type: "sensor",
+							name: name,
+							display: element.display,
+							value: 0,
+							options: element.options
+						}
+						self.benoicElements.sensors.push(elt);
+					});
+				}
 			});
 			
 			_.forEach(sharedData.all("carleonServices"), function (service, serviceName) {
 				var injector = _.find(sagGenericInjectorManager.components, function (inject) {
 					return inject.type === serviceName;
 				});
+				_.forEach(service.element, function (element) {
+					if (element.options && element.options.trigger) {
+						self.globalTriggerElementList.push({submodule: "carleon", source: service.name, element: element.name, display: element.name});
+					}
+				});
 				_.forEach(injector.commands, function (command, commandName) {
 					var newAction = {label: command.title, name: serviceName + "$" + commandName, submodule: "carleon"};
-					self.globalConditionList.push(newAction);
-					self.carleonElementsList[serviceName + "$" + commandName] = service.element;
+					self.globalElementList.push(newAction);
+					self.carleonConditionElementsList[serviceName + "$" + commandName] = service.element;
 					if (!!service.commands[commandName]) {
-						self.carleonCommandsParameters[serviceName + "$" + commandName] = [];
+						self.carleonConditionCommandsParameters[serviceName + "$" + commandName] = [];
 						_.forEach(service.commands[commandName].parameters, function (serviceParameter, serviceParameterName) {
 							var commandParameter = {
 								name: serviceParameterName,
@@ -179,23 +210,23 @@ angular.module("sagremorApp")
 								type: serviceParameter.type,
 								required: serviceParameter.required
 							};
-							self.carleonCommandsParameters[serviceName + "$" + commandName].push(commandParameter);
+							self.carleonConditionCommandsParameters[serviceName + "$" + commandName].push(commandParameter);
 						});
-						self.carleonResultParameters[serviceName + "$" + commandName] = [];
+						self.carleonConditionResultParameters[serviceName + "$" + commandName] = [];
 						_.forEach(service.commands[commandName].result, function (serviceResult, serviceResultName) {
 							if (serviceResultName === "type") {
 								var commandResult = {
 									title: $translate.instant("condition_result_one_value"),
 									type: serviceResult
 								}
-								self.carleonResultParameters[serviceName + "$" + commandName].push(commandResult);
+								self.carleonConditionResultParameters[serviceName + "$" + commandName].push(commandResult);
 							} else {
 								var commandResult = {
 									name: serviceResultName,
 									title: $translate.instant(command.result[serviceResultName].title),
 									type: serviceResult.type
 								}
-								self.carleonResultParameters[serviceName + "$" + commandName].push(commandResult);
+								self.carleonConditionResultParameters[serviceName + "$" + commandName].push(commandResult);
 							}
 						});
 					}
@@ -209,13 +240,13 @@ angular.module("sagremorApp")
 				_.forEach(injector.results, function (result, resultName) {
 					if (!!result.type && !!result.title) {
 						var newCondition = {label: result.title, name: serviceName + "$" + resultName, submodule: "carleon", type: result.type};
-						self.globalConditionList.push(newCondition);
-						self.carleonElementsList[serviceName + "$" + resultName] = service.element;
+						self.globalElementList.push(newCondition);
+						self.carleonConditionElementsList[serviceName + "$" + resultName] = service.element;
 					} else {
 						_.forEach(result, function (curResult, curResultName) {
 							var newCondition = {label: curResult.title, name: serviceName + "$" + curResultName, submodule: "carleon", type: curResult.type, field: curResultName};
-							self.globalConditionList.push(newCondition);
-							self.carleonElementsList[serviceName + "$" + curResultName] = service.element;
+							self.globalElementList.push(newCondition);
+							self.carleonConditionElementsList[serviceName + "$" + curResultName] = service.element;
 						});
 					}
 				});
@@ -244,6 +275,10 @@ angular.module("sagremorApp")
 				return "err$err$err";
 			}
 		};
+		
+		this.trackTriggerElement = function (element) {
+			return element.submodule + "$" + element.source + "$" + element.element;
+		};
         
         this.tr = function (id) {
 			return $translate.instant(id);
@@ -270,7 +305,7 @@ angular.module("sagremorApp")
 				}
 				
 				var res = true;
-				_.forEach(self.carleonCommandsParameters[self.newConditionType.name], function (parameter) {
+				_.forEach(self.carleonConditionCommandsParameters[self.newConditionType.name], function (parameter) {
 					if (parameter.required && (!self.newCondition.parameters[parameter.name] && self.newCondition.parameters[parameter.name] !== 0)) {
 						res = false;
 					}
@@ -363,12 +398,12 @@ angular.module("sagremorApp")
 						break;
 				}
 			} else if (!!condition && condition.submodule === "carleon") {
-				var curCondition = _.find(self.globalConditionList, function (cond) {
+				var curCondition = _.find(self.globalElementList, function (cond) {
 					return cond.name === condition.service + "$" + condition.command;
 				});
 				var fieldName = $translate.instant("condition_result_one_value");
 				if (!!condition.field) {
-					var curResult = _.find(self.carleonResultParameters[curCondition.name], function (res) {
+					var curResult = _.find(self.carleonConditionResultParameters[curCondition.name], function (res) {
 						return res.name === condition.field;
 					});
 					fieldName = !!curResult?curResult.title:$translate.instant("condition_result_one_value");
@@ -395,9 +430,16 @@ angular.module("sagremorApp")
 			}
 			
 			if (self.add) {
-				if (!!sharedData.get("angharadSchedulers", self.event.name)) {
-					self.error.message = $translate.instant("event_name_already_exist");
-					return false;
+				if (self.eventType === "scheduler") {
+					if (!!sharedData.get("angharadSchedulers", self.event.name)) {
+						self.error.message = $translate.instant("event_name_already_exist");
+						return false;
+					}
+				} else if (self.eventType === "trigger") {
+					if (!!sharedData.get("angharadTriggers", self.event.name)) {
+						self.error.message = $translate.instant("event_name_already_exist");
+						return false;
+					}
 				}
 			}
 			
@@ -414,6 +456,11 @@ angular.module("sagremorApp")
 					return false;
 				} else if (self.myDate < new Date() && !self.event.repeat) {
 					self.error.message = $translate.instant("event_scheduler_date_future");
+					return false;
+				}
+			} else if (self.eventType === "trigger") {
+				if (!self.trigger.submodule || !self.trigger.source || !self.trigger.element) {
+					self.error.message = $translate.instant("event_trigger_no_element");
 					return false;
 				}
 			}
@@ -464,6 +511,33 @@ angular.module("sagremorApp")
 						$rootScope.$broadcast("angharadSchedulersChanged");
 					}, function () {
 						toaster.pop("error", $translate.instant("scheduler_save"), $translate.instant("scheduler_save_error"));
+					})["finally"](function () {
+						$uibModalInstance.dismiss("close");
+					});
+				}
+			} else if (self.eventType === "trigger") {
+				self.trigger.name = self.event.name;
+				self.trigger.description = self.event.description;
+				self.trigger.enabled = self.event.enabled;
+				self.trigger.scripts = self.scriptList;
+				self.trigger.conditions = self.conditionList;
+				if (self.add) {
+					angharadFactory.addTrigger(self.trigger).then(function () {
+						toaster.pop("success", $translate.instant("trigger_save"), $translate.instant("trigger_save_success"));
+						sharedData.add("angharadTriggers", self.trigger.name, self.trigger);
+						$rootScope.$broadcast("angharadTriggersChanged");
+					}, function () {
+						toaster.pop("error", $translate.instant("trigger_save"), $translate.instant("trigger_save_error"));
+					})["finally"](function () {
+						$uibModalInstance.dismiss("close");
+					});
+				} else {
+					angharadFactory.setTrigger(self.trigger.name, self.trigger).then(function () {
+						toaster.pop("success", $translate.instant("trigger_save"), $translate.instant("trigger_save_success"));
+						sharedData.add("angharadTriggers", self.trigger.name, self.trigger);
+						$rootScope.$broadcast("angharadTriggersChanged");
+					}, function () {
+						toaster.pop("error", $translate.instant("trigger_save"), $translate.instant("trigger_save_error"));
 					})["finally"](function () {
 						$uibModalInstance.dismiss("close");
 					});

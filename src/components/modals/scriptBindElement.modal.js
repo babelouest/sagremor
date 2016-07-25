@@ -22,81 +22,74 @@ angular.module("sagremorApp")
 			}
 			
 			_.forEach(sharedData.all("benoicDevices"), function (device) {
-				_.forEach(device.element.switches, function(element, name) {
-					var selected = !!_.find(self.script.options.tags, function (tag) {
-						return tag === "SGMR$SCR$B$" + device.name + "$switch$" + name;
+				if (device.enabled && device.connected) {
+					_.forEach(device.element.switches, function(element, name) {
+						var selected = !!_.find(self.script.options.tags, function (tag) {
+							return tag === "SGMR$SCR$B$" + device.name + "$switch$" + name;
+						});
+						var elt = {
+							submodule: "benoic", 
+							device: device.name,
+							type: "switch",
+							typeTitle: $translate.instant("switch_title"),
+							name: name,
+							display: element.display,
+							selected: selected
+						}
+						self.elementList.push(elt);
+						self.tmpCheck.push(selected);
 					});
-					var elt = {
-						submodule: "benoic", 
-						device: device.name,
-						type: "switch",
-						typeTitle: $translate.instant("switch_title"),
-						name: name,
-						display: element.display,
-						selected: selected
-					}
-					self.elementList.push(elt);
-					self.tmpCheck.push(selected);
-				});
+					_.forEach(device.element.dimmers, function(element, name) {
+						var selected = !!_.find(self.script.options.tags, function (tag) {
+							return tag === "SGMR$SCR$B$" + device.name + "$dimmer$" + name;
+						});
+						var elt = {
+							submodule: "benoic", 
+							device: device.name,
+							type: "dimmer",
+							typeTitle: $translate.instant("dimmer_title"),
+							name: name,
+							display: element.display,
+							selected: selected
+						}
+						self.elementList.push(elt);
+						self.tmpCheck.push(selected);
+					});
+					_.forEach(device.element.heaters, function(element, name) {
+						var selected = !!_.find(self.script.options.tags, function (tag) {
+							return tag === "SGMR$SCR$B$" + device.name + "$heater$" + name;
+						});
+						var elt = {
+							submodule: "benoic", 
+							device: device.name,
+							type: "heater",
+							typeTitle: $translate.instant("heater_title"),
+							name: name,
+							display: element.display,
+							selected: selected
+						}
+						self.elementList.push(elt);
+						self.tmpCheck.push(selected);
+					});
+					_.forEach(device.element.sensors, function(element, name) {
+						var selected = !!_.find(self.script.options.tags, function (tag) {
+							return tag === "SGMR$SCR$B$" + device.name + "$sensor$" + name;
+						});
+						var elt = {
+							submodule: "benoic", 
+							device: device.name,
+							type: "sensor",
+							typeTitle: $translate.instant("sensor_title"),
+							name: name,
+							display: element.display,
+							selected: selected
+						}
+						self.elementList.push(elt);
+						self.tmpCheck.push(selected);
+					});
+				}
 			});
 			
-			_.forEach(sharedData.all("benoicDevices"), function (device) {
-				_.forEach(device.element.dimmers, function(element, name) {
-					var selected = !!_.find(self.script.options.tags, function (tag) {
-						return tag === "SGMR$SCR$B$" + device.name + "$dimmer$" + name;
-					});
-					var elt = {
-						submodule: "benoic", 
-						device: device.name,
-						type: "dimmer",
-						typeTitle: $translate.instant("dimmer_title"),
-						name: name,
-						display: element.display,
-						selected: selected
-					}
-					self.elementList.push(elt);
-					self.tmpCheck.push(selected);
-				});
-			});
-			
-			_.forEach(sharedData.all("benoicDevices"), function (device) {
-				_.forEach(device.element.heaters, function(element, name) {
-					var selected = !!_.find(self.script.options.tags, function (tag) {
-						return tag === "SGMR$SCR$B$" + device.name + "$heater$" + name;
-					});
-					var elt = {
-						submodule: "benoic", 
-						device: device.name,
-						type: "heater",
-						typeTitle: $translate.instant("heater_title"),
-						name: name,
-						display: element.display,
-						selected: selected
-					}
-					self.elementList.push(elt);
-					self.tmpCheck.push(selected);
-				});
-			});
-			
-			_.forEach(sharedData.all("benoicDevices"), function (device) {
-				_.forEach(device.element.sensors, function(element, name) {
-					var selected = !!_.find(self.script.options.tags, function (tag) {
-						return tag === "SGMR$SCR$B$" + device.name + "$sensor$" + name;
-					});
-					var elt = {
-						submodule: "benoic", 
-						device: device.name,
-						type: "sensor",
-						typeTitle: $translate.instant("sensor_title"),
-						name: name,
-						display: element.display,
-						selected: selected
-					}
-					self.elementList.push(elt);
-					self.tmpCheck.push(selected);
-				});
-			});
-
 			_.forEach(sharedData.all("angharadSchedulers"), function (scheduler) {
 				var selected = !!_.find(self.script.options.tags, function (tag) {
 					return tag === "SGMR$SCR$A$scheduler$" + scheduler.name;

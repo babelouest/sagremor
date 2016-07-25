@@ -186,13 +186,13 @@
 								class="form-control"
 								data-ng-model="ScriptModalCtrl.tmpElement" 
 								data-ng-change="ScriptModalCtrl.setActionCarleonElement()"
-								data-ng-options="element as element.name for element in ScriptModalCtrl.carleonElementsList[ScriptModalCtrl.newActionType.name] track by ScriptModalCtrl.trackCarleonElement(element, ScriptModalCtrl.newActionType.name)">
+								data-ng-options="element as element.name for element in ScriptModalCtrl.carleonConditionElementsList[ScriptModalCtrl.newActionType.name] track by ScriptModalCtrl.trackCarleonElement(element, ScriptModalCtrl.newActionType.name)">
 						</select>
 					</div>
 				</div>
 				<div class="row control-group" 
 					data-ng-class="{'has-error': false}" 
-					data-ng-repeat="parameter in ScriptModalCtrl.carleonCommandsParameters[ScriptModalCtrl.newActionType.name]">
+					data-ng-repeat="parameter in ScriptModalCtrl.carleonConditionCommandsParameters[ScriptModalCtrl.newActionType.name]">
 					<label for="{{ScriptModalCtrl.newActionType.name + '$' + parameter.name}}" class="col-md-4" data-ng-bind="parameter.title"></label>
 					<div class="col-md-8 controls">
 						<input type="text" class="form-control" name="{{ScriptModalCtrl.newActionType.name + '$' + parameter.name}}" id="{{ScriptModalCtrl.newActionType.name + '$' + parameter.name}}" data-ng-if="parameter.type === 'string'" data-ng-model="ScriptModalCtrl.newAction.parameters[parameter.name]">
