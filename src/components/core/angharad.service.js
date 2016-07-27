@@ -100,8 +100,8 @@ angular.module("sagremorApp")
             return angharadBackendService.httpRequest("PUT", urlBase + "scheduler/" + name, scheduler);
         };
 
-        dataFactory.removeScheduler = function () {
-            return angharadBackendService.httpRequest("DELETE", urlBase + "scheduler/");
+        dataFactory.removeScheduler = function (name) {
+            return angharadBackendService.httpRequest("DELETE", urlBase + "scheduler/" + name);
         };
 
         dataFactory.getTriggerList = function () {
@@ -124,8 +124,8 @@ angular.module("sagremorApp")
             return angharadBackendService.httpRequest("PUT", urlBase + "trigger/" + name, trigger);
         };
 
-        dataFactory.removeTrigger = function () {
-            return angharadBackendService.httpRequest("DELETE", urlBase + "trigger/");
+        dataFactory.removeTrigger = function (name) {
+            return angharadBackendService.httpRequest("DELETE", urlBase + "trigger/" + name);
         };
 
         return dataFactory;

@@ -5,3 +5,4 @@ dist
 typings
 coverage
 src/app/config.js
+Makefile

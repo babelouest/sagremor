@@ -23,8 +23,8 @@ angular.module("sagremorApp")
 						name: "remove", 
 						display: results.remove, 
 						action: function (param) {
-							sagremorService.removeEvent(param).then(function () {
-								$scope.$broadcast("angharadEventsChanged");
+							sagremorService.removeScheduler(param).then(function () {
+								$scope.$broadcast("angharadSchedulersChanged");
 							});
 						}
 					},
@@ -51,8 +51,8 @@ angular.module("sagremorApp")
 						name: "remove", 
 						display: results.remove, 
 						action: function (param) {
-							sagremorService.removeEvent(param).then(function () {
-								$scope.$broadcast("angharadEventsChanged");
+							sagremorService.removeTrigger(param).then(function () {
+								$scope.$broadcast("angharadTriggersChanged");
 							});
 						}
 					},

@@ -101,7 +101,22 @@ angular.module("sagremorApp", [
         urlTemplate: "components/{part}/i18n/{lang}.json"
     });
     $translatePartialLoaderProvider.addPart("core");
-    $translateProvider.determinePreferredLanguage();
+	$translateProvider
+	// see: http://angular-translate.github.io/docs/#/guide/09_language-negotiation
+	.registerAvailableLanguageKeys(['en', 'fr'], {
+	  'en_US': 'en',
+	  'en_UK': 'en',
+	  'en_CA': 'en',
+	  'fr_FR': 'fr',
+	  'fr_CA': 'fr',
+	  'fr_BE': 'fr',
+	  '*': 'en'
+	  })
+	.fallbackLanguage('en')
+	.determinePreferredLanguage();
+
+	// interpolation for pluralization
+	//$translateProvider.addInterpolation('$translateMessageFormatInterpolation');
     $translateProvider.useCookieStorage();
     $translateProvider.useSanitizeValueStrategy("escape");
 })

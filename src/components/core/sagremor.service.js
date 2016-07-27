@@ -180,13 +180,24 @@ angular.module("sagremorApp")
 			});
 		};
 		
-		sagremorFactory.removeEvent = function (event) {
-			return sagremorConfirm.open($translate.instant("event_remove"), $translate.instant("event_remove_confirm")).then (function(result) {
-				return angharadFactory.removeEvent(event.name).then(function () {
-					sharedData.remove("angharadEvents", event.name);
-					toaster.pop("success", $translate.instant("event_remove"), $translate.instant("event_remove_success"));
+		sagremorFactory.removeScheduler = function (event) {
+			return sagremorConfirm.open($translate.instant("scheduler_remove"), $translate.instant("scheduler_remove_confirm")).then (function(result) {
+				return angharadFactory.removeScheduler(event.name).then(function () {
+					sharedData.remove("angharadSchedulers", event.name);
+					toaster.pop("success", $translate.instant("scheduler_remove"), $translate.instant("scheduler_remove_success"));
 				}, function (error) {
-					toaster.pop("error", $translate.instant("event_remove"), $translate.instant("event_remove_error"));
+					toaster.pop("error", $translate.instant("scheduler_remove"), $translate.instant("scheduler_remove_error"));
+				});
+			});
+		};
+		
+		sagremorFactory.removeTrigger = function (trigger) {
+			return sagremorConfirm.open($translate.instant("trigger_remove"), $translate.instant("trigger_remove_confirm")).then (function(result) {
+				return angharadFactory.removeTrigger(trigger.name).then(function () {
+					sharedData.remove("angharadTriggers", trigger.name);
+					toaster.pop("success", $translate.instant("trigger_remove"), $translate.instant("trigger_remove_success"));
+				}, function (error) {
+					toaster.pop("error", $translate.instant("trigger_remove"), $translate.instant("trigger_remove_error"));
 				});
 			});
 		};
