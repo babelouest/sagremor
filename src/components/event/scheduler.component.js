@@ -27,7 +27,8 @@ angular.module("sagremorApp").component("sagScheduler", {
 .run(function(sagGenericInjectorManager) {
     sagGenericInjectorManager.add({
         type: "scheduler",
-        directive: "sag-scheduler"
+        directive: "sag-scheduler",
+        carleonService: false
     });
 })
 .filter;

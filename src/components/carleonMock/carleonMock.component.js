@@ -119,6 +119,7 @@ angular.module("sagremorApp").component("carleonMock", {
         directive: "carleon-mock",
         groupTitle: "carleon_mock_title",
         service: carleonMockFactory,
+        carleonService: true,
         leftMenu: {
 			title: "carleon_mock_title",
 			icon: "<i class=\"fa fa-thumbs-o-up\"></i>",

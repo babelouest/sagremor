@@ -1,6 +1,6 @@
 angular.module("sagremorApp")
     .controller("DashboardCtrl", 
-    function($scope, $location, $translate, $timeout, toaster, sharedData, sagremorParams, sagremorService, sagremorEdit, benoicFactory, carleonFactory, sagGenericInjectorManager) {
+    function($scope, $location, $translate, $timeout, toaster, sharedData, sagremorParams, sagremorService, sagremorEdit, benoicFactory, carleonFactory, sagGenericInjectorManager, carleonComponentsConfig) {
 
         var self = this;
 
@@ -191,7 +191,7 @@ angular.module("sagremorApp")
         
         function addCarleonElementToDashboard(element, tag) {
 			var injector = _.find(sagGenericInjectorManager.components, function (inject) {
-				return inject.type === element.type;
+				return inject.type === element.type && !!carleonComponentsConfig[inject.type] && !!carleonComponentsConfig[inject.type].enabled;
 			});
 			var service = sharedData.get("carleonServices", element.type);
 			var elt = _.find(service.element, function (cElt) {

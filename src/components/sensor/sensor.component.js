@@ -33,6 +33,7 @@ angular.module("sagremorApp").component("sagSensor", {
 .run(function(sagGenericInjectorManager) {
     sagGenericInjectorManager.add({
         type: "sensor",
-        directive: "sag-sensor"
+        directive: "sag-sensor",
+        carleonService: false
     });
 });

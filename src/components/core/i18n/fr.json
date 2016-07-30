@@ -308,6 +308,7 @@
 	"heater_title": "Thermostat",
 	"sensor_title": "Capteur",
 	"injector_not_found": "Erreur, module inconnu",
+	"injector_disabled": "Module désactivé",
 	"angharad_loading_script_title": "Tâche",
 	"angharad_loading_script_message": "Lancement en cours",
 	"script_modal_title": "Tâche",

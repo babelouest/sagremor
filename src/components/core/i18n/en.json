@@ -308,6 +308,7 @@
 	"heater_title": "Heater",
 	"sensor_title": "Sensor",
 	"injector_not_found": "Error, inknown module",
+	"injector_disabled": "Module disabled",
 	"angharad_loading_script_title": "Script",
 	"angharad_loading_script_message": "Loading script",
 	"script_modal_title": "Script",

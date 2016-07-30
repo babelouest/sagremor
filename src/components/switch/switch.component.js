@@ -28,6 +28,7 @@ angular.module('sagremorApp').component('sagSwitch', {
 .run(function(sagGenericInjectorManager) {
     sagGenericInjectorManager.add({
         type: "switch",
-        directive: "sag-switch"
+        directive: "sag-switch",
+        carleonService: false
     });
 });

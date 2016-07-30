@@ -1,13 +1,13 @@
-function topLeftMenuCtrl ($scope, $translate, sagremorParams, sagGenericInjectorManager) {
+function topLeftMenuCtrl ($scope, $translate, sagremorParams, sagGenericInjectorManager, carleonComponentsConfig) {
     var self = this;
     
     this.serviceList = [];
     this.sagremorParams = sagremorParams;
     
     function init() {
-		_.forEach(sagGenericInjectorManager.components, function (service) {
-			if (service.leftMenu) {
-				self.serviceList.push(service.leftMenu);
+		_.forEach(sagGenericInjectorManager.components, function (inject) {
+			if (inject.carleonService && inject.leftMenu && !!carleonComponentsConfig[inject.type] && !!carleonComponentsConfig[inject.type].enabled) {	
+				self.serviceList.push(inject.leftMenu);
 			}
 		});
 	}

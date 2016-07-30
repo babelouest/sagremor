@@ -27,7 +27,8 @@ angular.module("sagremorApp").component("sagTrigger", {
 .run(function(sagGenericInjectorManager) {
     sagGenericInjectorManager.add({
         type: "trigger",
-        directive: "sag-trigger"
+        directive: "sag-trigger",
+        carleonService: false
     });
 })
 .filter;

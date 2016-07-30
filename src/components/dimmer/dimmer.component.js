@@ -38,6 +38,7 @@ angular.module("sagremorApp").component("sagDimmer", {
 .run(function(sagGenericInjectorManager) {
     sagGenericInjectorManager.add({
         type: "dimmer",
-        directive: "sag-dimmer"
+        directive: "sag-dimmer",
+        carleonService: false
     });
 });

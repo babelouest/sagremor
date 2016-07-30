@@ -244,6 +244,7 @@ angular.module("sagremorApp").component("sagMonitor", {
 .run(function(sagGenericInjectorManager) {
     sagGenericInjectorManager.add({
         type: "monitor",
-        directive: "sag-monitor"
+        directive: "sag-monitor",
+        carleonService: false
     });
 });

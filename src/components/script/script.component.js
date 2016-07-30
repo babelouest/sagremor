@@ -30,6 +30,7 @@ angular.module("sagremorApp").component("sagScript", {
 .run(function(sagGenericInjectorManager) {
     sagGenericInjectorManager.add({
         type: "script",
-        directive: "sag-script"
+        directive: "sag-script",
+        carleonService: false
     });
 });
