@@ -120,12 +120,14 @@ angular.module("sagremorApp").component("carleonMock", {
         groupTitle: "carleon_mock_title",
         service: carleonMockFactory,
         carleonService: true,
+        size: 1,
         leftMenu: {
 			title: "carleon_mock_title",
 			icon: "<i class=\"fa fa-thumbs-o-up\"></i>",
 			target: "carleonMock"
 		},
 		widgetHeight: 3,
+		widgetWidth: 2,
 		commands: {
 			exec1: {
 				title: "carleon_mock_command_exec1_title",
