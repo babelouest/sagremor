@@ -35,5 +35,8 @@
     "karma-jasmine": "*",
     "karma-ng-html2js-preprocessor": "^1.0.0",
     "karma-phantomjs-launcher": "^1.0.1"
+  },
+  "dependencies": {
+    "chart.js": "^2.2.1"
   }
 }

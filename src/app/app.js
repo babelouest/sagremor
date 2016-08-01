@@ -7,7 +7,6 @@ angular.module("sagremorApp", [
 "toaster", 
 "ui.bootstrap.contextMenu", 
 "pascalprecht.translate",
-"chart.js",
 "ngSanitize",
 "ui.bootstrap.datetimepicker",
 "datatables",

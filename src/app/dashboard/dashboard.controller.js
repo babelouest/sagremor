@@ -372,3 +372,10 @@ angular.module("sagremorApp")
         this.init();
         
 });
+
+/**
+ * Workaround for using jquery 3 with gridstack (I F****ing hate bower !)
+ */
+$.fn.size = function(){
+  return this.length;
+};
