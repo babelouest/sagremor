@@ -203,7 +203,8 @@ angular.module("sagremorApp")
 					var x = tagParams[2];
 					var y = tagParams[3];
 					var curHeight = injector.widgetHeight;
-					var dashboardElement = { type: element.type, name: element.name, element: element, x: x, y: y, width: 2, height: curHeight, tag: tag };
+					var curWidth = injector.widgetWidth;
+					var dashboardElement = { type: element.type, name: element.name, element: element, x: x, y: y, width: curWidth, height: curHeight, tag: tag };
 					self.dashboardWidgets.push(dashboardElement);
 				}
 			}
