@@ -1,8 +1,9 @@
-function carleonMotionController ($translatePartialLoader, $translate, angharadConfig, carleonFactory, carleonMotionFactory, sagremorParams, toaster) {
+function carleonMotionController ($scope, $translatePartialLoader, $translate, angharadConfig, carleonFactory, carleonMotionFactory, sagremorService, sagremorParams, toaster) {
     var ctrl = this;
     
     this.urlBaseImages = angharadConfig.baseUrl + angharadConfig.prefixCarleon + "service-motion/" + ctrl.element.name + "/image/";
     this.type = "";
+    this.name = ctrl.element.name;
 
     this.images = [];
     this.fileListName = [];
@@ -34,6 +35,16 @@ function carleonMotionController ($translatePartialLoader, $translate, angharadC
 				}
 			}
 		}
+		ctrl.refresh();
+    }
+    
+    this.openPopupImage = function (stream) {
+		sagremorService.imagePopup(stream);
+	};
+    
+    this.refresh = function () {
+		ctrl.fileListName = [];
+		ctrl.streamList = [];
 		carleonMotionFactory.status(ctrl.element.name).then(function (response) {
 			ctrl.online = response.online;
 			ctrl.type = sagremorParams.currentProfile.carleon.serviceMotion[ctrl.element.name].type;
@@ -58,7 +69,7 @@ function carleonMotionController ($translatePartialLoader, $translate, angharadC
 				ctrl.selectedStream = ctrl.streamList[0];
 			}
 		});
-    }
+	};
     
     this.changeSelectedFileList = function () {
 		ctrl.images = [];
@@ -105,6 +116,10 @@ function carleonMotionController ($translatePartialLoader, $translate, angharadC
 			toaster.pop("error", $translate.instant("profile_save"), $translate.instant("profile_save_error"));
 		});
 	};
+	
+	$scope.$on("carleonServicesChanged", function () {
+		ctrl.refresh();
+	});
 	
     init();
 }

@@ -465,5 +465,6 @@
 	"alert_http_headers": "En-têtes personnalisées",
 	"alert_http_header_key": "Clef",
 	"alert_http_header_value": "Valeur",
-	"alert_http_method_other": "Autre"
+	"alert_http_method_other": "Autre",
+	"image_title": "Image: "
 }

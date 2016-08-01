@@ -24,5 +24,6 @@
 	"carleon_motion_snapshot_success": "Success",
 	"carleon_motion_snapshot_error": "Error",
 	"carleon_motion_online": "Online",
-	"carleon_motion_offline": "Offline"
+	"carleon_motion_offline": "Offline",
+	"carleon_motion_refresh": "Refresh"
 }

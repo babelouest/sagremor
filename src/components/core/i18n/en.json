@@ -465,5 +465,6 @@
 	"alert_http_headers": "Customized headers",
 	"alert_http_header_key": "Key",
 	"alert_http_header_value": "Value",
-	"alert_http_method_other": "Other"
+	"alert_http_method_other": "Other",
+	"image_title": "Image: "
 }

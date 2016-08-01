@@ -18,6 +18,21 @@ angular.module("sagremorApp")
 			});
 		};
         
+		sagremorFactory.imagePopup = function (element) {
+			var modalInstance = $uibModal.open({
+				animation: true,
+				templateUrl: "components/modals/image.modal.html",
+				controller: "ImageModalCtrl",
+				controllerAs: "ImageModalCtrl",
+				size: "lg",
+				resolve: {
+					element: function () {
+						return element;
+					}
+				}
+			});
+		};
+        
         sagremorFactory.addToDashboard = function (element) {
             var tag = "SGMR$D$0$0";
 			var profile = sagremorParams.currentProfile;

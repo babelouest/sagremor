@@ -1,11 +1,11 @@
-angular.module('sagremorApp')
-    .controller('serviceCtrl',
+angular.module("sagremorApp")
+    .controller("serviceCtrl",
     function($scope, $stateParams, $location, $translate, $uibModal, toaster, sagGenericInjectorManager, sagremorService, carleonFactory, sharedData, sagremorParams) {
       
         var self = this;
         
         this.sagremorParams = sagremorParams;
-        this.serviceListGroups = [];
+        this.serviceGroup = {};
         this.currentInjector = _.find(sagGenericInjectorManager.components, function (component) {
 			return component.leftMenu && component.leftMenu.target === $stateParams.service;
 		});
@@ -46,28 +46,41 @@ angular.module('sagremorApp')
 					}
 				];
 			});
+			self.title = self.currentInjector.leftMenu.title;
+			self.serviceGroup = {title: self.currentInjector.groupTitle, list: [], service: self.currentInjector.service};
 			loadServices();
 		};
 		
 		function loadServices () {
-			self.serviceListGroups = [];
-			self.title = self.currentInjector.leftMenu.title;
 			var serviceList = [];
 			var service = sharedData.get("carleonServices", self.currentInjector.type);
 			if (!!service && !!service.element) {
 				_.forEach(service.element, function (element) {
-					var elt = {name: element.name, type: element.type, description: element.description, service: self.currentInjector.service};
-					serviceList.push(elt);
+					var exist = _.find(self.serviceGroup.list, function (elt) {
+						return elt.name === element.name;
+					});
+					if (!exist) {
+						var elt = {name: element.name, type: element.type, description: element.description, service: self.currentInjector.service};
+						self.serviceGroup.list.push(elt);
+					}
+				});
+				
+				_.forEach(self.serviceGroup.list, function (elt, index) {
+					var exist = _.find(service.element, function (serviceElt) {
+						return serviceElt.name === elt.name;
+					});
+					if (!exist) {
+						self.serviceGroup.list.splice(index, 1);
+					}
 				});
 			}
-			self.serviceListGroups.push({title: self.currentInjector.groupTitle, list: serviceList, service: self.currentInjector.service});
 		}
 		
 		this.addService = function (service) {
 			service.addService();
 		};
 		
-		$scope.$on('carleonServicesChanged', function () {
+		$scope.$on("carleonServicesChanged", function () {
 			loadServices();
 		});
         
