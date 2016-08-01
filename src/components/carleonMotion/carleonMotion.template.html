@@ -1,0 +1,94 @@
+<div class="row control-group">
+	<!-- type: file or stream -->
+	<div class="col-md-1">
+	</div>
+	<div class="col-md-3 controls" class="bg-info" data-ng-class="{'text-success': $ctrl.online, 'text-danger': !$ctrl.online}">
+		<label data-translate="carleon_motion_online" data-ng-if="$ctrl.online"></label>
+		<label data-translate="carleon_motion_offline" data-ng-if="!$ctrl.online"></label>
+		<i class="fa fa-power-off" aria-hidden="true"></i>
+	</div>
+	<div class="col-md-4 controls">
+		<label class="radio-inline" for="motionType">
+			<span data-translate="carleon_motion_photo_grid"></span>
+		</label>
+		<input type="radio" 
+				value="file" 
+				data-ng-model="$ctrl.type"
+				data-ng-change="$ctrl.changeType()"
+				data-ng-disabled="$ctrl.fileListName.length === 0">
+	</div>
+	<div class="col-md-4 controls">
+		<label class="radio-inline" for="motionType">
+			<span data-translate="carleon_motion_stream"></span>
+		</label>
+		<input type="radio" 
+				value="stream" 
+				data-ng-model="$ctrl.type"
+				data-ng-change="$ctrl.changeType()"
+				data-ng-disabled="$ctrl.streamListName.length === 0">
+	</div>
+</div>
+<!-- type file, select file lists -->
+<div class="row control-group">
+	<div class="col-md-5">
+	</div>
+	<div class="col-md-3 controls" data-ng-if="$ctrl.type === 'file' && $ctrl.fileListName.length > 1">
+		<div>
+			<label for="motionImagesList" data-translate="carleon_motion_file_list"></label>
+		</div>
+	</div>
+	<div class="col-md-3 controls" data-ng-if="$ctrl.type === 'file' && $ctrl.fileListName.length > 1">
+		<select id="motionImagesList" 
+				class="form-control"
+				data-ng-change="$ctrl.changeSelectedFileList()"
+				data-ng-model="$ctrl.selectedFileList"
+				data-ng-options="fileListName as fileListName for fileListName in $ctrl.fileListName track by fileListName">
+		</select>
+	</div>
+	<div class="col-md-6 controls" data-ng-if="$ctrl.type === 'file' && $ctrl.fileListName.length === 1">
+		<span data-ng-bind="$ctrl.selectedFileList"></span>
+	</div>
+	
+	<!-- type stream, select stream list -->
+	<div class="col-md-2 controls" data-ng-if="$ctrl.type === 'stream' && $ctrl.streamList.length > 1">
+		<label for="motionStreamList" data-translate="carleon_motion_stream_list"></label>
+	</div>
+	<div class="col-md-3 controls" data-ng-if="$ctrl.type === 'stream' && $ctrl.streamList.length > 1">
+		<select id="motionStreamList" 
+				class="form-control"
+				data-ng-model="$ctrl.selectedStream"
+				data-ng-change="$ctrl.changeSelectedStream()"
+				data-ng-options="stream as stream.name for stream in $ctrl.streamList track by stream.name">
+		</select>
+	</div>
+	<div class="col-md-3 controls" data-ng-if="$ctrl.type === 'stream' && $ctrl.streamListName.length === 1">
+		<span data-ng-bind="$ctrl.selectedStream.name"></span>
+	</div>
+	<div class="col-md-1 controls" data-ng-if="$ctrl.type === 'stream'">
+		<button type="button" class="btn btn-primary" data-ng-click="$ctrl.snapshot()" data-ng-disabled="!$ctrl.selectedStream.snapshot_uri">
+			<span data-translate="carleon_motion_stream_snapshot"></span>
+			<i class="fa fa-camera" aria-hidden="true"></i>
+		</button>
+	</div>
+</div>
+<hr>
+<!-- images grid -->
+<div class="row control-group" data-ng-if="$ctrl.type === 'file' && !!$ctrl.selectedFileList">
+	<div class="col-md-1">
+	</div>
+	<div class="col-md-10">
+		<data-ng-gallery data-images="$ctrl.images"></data-ng-gallery>
+	</div>
+	<div class="col-md-1">
+	</div>
+</div>
+<!-- stream -->
+<div class="row control-group" data-ng-if="$ctrl.type === 'stream' && !!$ctrl.selectedStream">
+	<div class="col-md-1">
+	</div>
+	<div class="col-md-10">
+		<img data-ng-src="{{$ctrl.selectedStream.uri}}" alt="{{$ctrl.selectedStream.name}}" class="img-responsive img-thumbnail">
+	</div>
+	<div class="col-md-1">
+	</div>
+</div>
