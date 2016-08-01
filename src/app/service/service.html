@@ -2,7 +2,7 @@
     <h1 data-translate="{{serviceCtrl.title}}"></h1>
 
 	<div data-ng-repeat="serviceList in serviceCtrl.serviceListGroups">
-		<div class="row">
+		<div class="row" data-ng-if="serviceCtrl.sagremorParams.adminMode">
 			<div class="span6">
 				<button class="btn btn-primary" type="button" data-ng-click="serviceCtrl.addService(serviceList.service)" data-translate="service_add"></button>
 			</div>
@@ -10,13 +10,12 @@
 		
 		<div class="row">
 			<h3 data-translate="{{serviceList.title}}"></h3>
-			<data-sag-container class="col-sm-2"
-								data-ng-repeat="element in serviceList.list"
+			<data-sag-container data-ng-repeat="element in serviceList.list"
 								data-menu="serviceCtrl.menu"
-								data-size="1"
 								data-title="element.display || element.name"
 								data-type="element.type"
-								data-element="element">
+								data-element="element"
+								data-ng-class="{'col-md-2': !serviceCtrl.size || serviceCtrl.size === 1, 'col-md-4': serviceCtrl.size === 2, 'col-md-6': serviceCtrl.size === 3}">
 				<div data-sag-generic-injector data-type="element.type" data-elt="element"></div>
 			</data-sag-container>
 		</div>
