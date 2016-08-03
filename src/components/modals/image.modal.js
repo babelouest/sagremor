@@ -8,10 +8,6 @@ angular.module("sagremorApp")
         function init() {
         }
         
-        this.tr = function (value) {
-			return $translate.instant(value);
-		};
-        
         this.close = function () {
             $uibModalInstance.dismiss("close");
         };

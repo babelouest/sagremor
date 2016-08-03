@@ -1,4 +1,7 @@
 {
+	"login_title": "Connexion",
+	"login_title_success": "Succès",
+	"login_title_error": "Erreur de connexion",
 	"dimmer_edit": "Modifier",
 	"dimmer_update_name": "Nom: ",
 	"dimmer_update_enabled": "Actif: ",

@@ -28,10 +28,10 @@ angular.module("sagremorApp")
                 $rootScope.$broadcast("loginSuccess");
                 $scope.isLogged = true;
                 $location.path("/");
-                toaster.pop({type: "success", title: "Login success"});
+                toaster.pop("success", $translate.instant("login_title"), $translate.instant("login_title_success"));
             },
             function (error) {
-                toaster.pop({type: "error", title: "Login error"});
+				toaster.pop("error", $translate.instant("login_title"), $translate.instant("login_title_error"));
             });
       };
       
