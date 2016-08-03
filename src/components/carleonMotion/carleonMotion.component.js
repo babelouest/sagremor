@@ -233,22 +233,22 @@ angular.module("sagremorApp").component("serviceMotion", {
 		widgetHeight: 5,
 		widgetWidth: 6,
 		commands: {
-			exec1: {
-				title: "carleon_motion_command_exec1_title",
+			online: {
+				title: "carleon_motion_command_online_title",
+				parameters: {},
+				result: {
+					type: "boolean",
+					title: "carleon_motion_command_online_result_title"
+				}
+			},
+			snapshot: {
+				title: "carleon_motion_command_snapshot_title",
 				parameters: {
-					param1: "carleon_mock_command_exec1_parameter_param1_title",
-					param2: "carleon_mock_command_exec1_parameter_param2_title",
-					param3: "carleon_mock_command_exec1_parameter_param3_title"
+					stream: "carleon_motion_command_snapshot_parameter_stream_title",
 				},
 				result: {
-					value1: {
-						type: "integer",
-						title: "carleon_mock_command_exec1_result_value1_title"
-					},
-					value2: {
-						type: "boolean",
-						title: "carleon_mock_command_exec1_result_value2_title"
-					}
+					type: "boolean",
+					title: "carleon_motion_command_snapshot_result_title"
 				}
 			}
 		}

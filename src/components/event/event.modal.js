@@ -197,59 +197,63 @@ angular.module("sagremorApp")
 						self.globalTriggerElementList.push({submodule: "carleon", source: service.name, element: element.name, display: element.name});
 					}
 				});
-				_.forEach(injector.commands, function (command, commandName) {
-					var newAction = {label: command.title, name: serviceName + "$" + commandName, submodule: "carleon"};
-					self.globalElementList.push(newAction);
-					self.carleonConditionElementsList[serviceName + "$" + commandName] = service.element;
-					if (!!service.commands[commandName]) {
-						self.carleonConditionCommandsParameters[serviceName + "$" + commandName] = [];
-						_.forEach(service.commands[commandName].parameters, function (serviceParameter, serviceParameterName) {
-							var commandParameter = {
-								name: serviceParameterName,
-								title: !!command.parameters[serviceParameterName]?$translate.instant(command.parameters[serviceParameterName]):serviceParameterName,
-								type: serviceParameter.type,
-								required: serviceParameter.required
-							};
-							self.carleonConditionCommandsParameters[serviceName + "$" + commandName].push(commandParameter);
-						});
-						self.carleonConditionResultParameters[serviceName + "$" + commandName] = [];
-						_.forEach(service.commands[commandName].result, function (serviceResult, serviceResultName) {
-							if (serviceResultName === "type") {
-								var commandResult = {
-									title: $translate.instant("condition_result_one_value"),
-									type: serviceResult
+				if (!!injector) {
+					_.forEach(injector.commands, function (command, commandName) {
+						var newAction = {label: command.title, name: serviceName + "$" + commandName, submodule: "carleon"};
+						self.globalElementList.push(newAction);
+						self.carleonConditionElementsList[serviceName + "$" + commandName] = service.element;
+						if (!!service.commands[commandName]) {
+							self.carleonConditionCommandsParameters[serviceName + "$" + commandName] = [];
+							_.forEach(service.commands[commandName].parameters, function (serviceParameter, serviceParameterName) {
+								var commandParameter = {
+									name: serviceParameterName,
+									title: !!command.parameters[serviceParameterName]?$translate.instant(command.parameters[serviceParameterName]):serviceParameterName,
+									type: serviceParameter.type,
+									required: serviceParameter.required
+								};
+								self.carleonConditionCommandsParameters[serviceName + "$" + commandName].push(commandParameter);
+							});
+							self.carleonConditionResultParameters[serviceName + "$" + commandName] = [];
+							_.forEach(service.commands[commandName].result, function (serviceResult, serviceResultName) {
+								if (serviceResultName === "type") {
+									var commandResult = {
+										title: $translate.instant("condition_result_one_value"),
+										type: serviceResult
+									}
+									self.carleonConditionResultParameters[serviceName + "$" + commandName].push(commandResult);
+								} else {
+									var commandResult = {
+										name: serviceResultName,
+										title: $translate.instant(command.result[serviceResultName].title),
+										type: serviceResult.type
+									}
+									self.carleonConditionResultParameters[serviceName + "$" + commandName].push(commandResult);
 								}
-								self.carleonConditionResultParameters[serviceName + "$" + commandName].push(commandResult);
-							} else {
-								var commandResult = {
-									name: serviceResultName,
-									title: $translate.instant(command.result[serviceResultName].title),
-									type: serviceResult.type
-								}
-								self.carleonConditionResultParameters[serviceName + "$" + commandName].push(commandResult);
-							}
-						});
-					}
-				});
+							});
+						}
+					});
+				}
 			});
 
 			_.forEach(sharedData.all("carleonServices"), function (service, serviceName) {
 				var injector = _.find(sagGenericInjectorManager.components, function (inject) {
 					return inject.type === serviceName && !!carleonComponentsConfig[inject.type] && !!carleonComponentsConfig[inject.type].enabled;
 				});
-				_.forEach(injector.results, function (result, resultName) {
-					if (!!result.type && !!result.title) {
-						var newCondition = {label: result.title, name: serviceName + "$" + resultName, submodule: "carleon", type: result.type};
-						self.globalElementList.push(newCondition);
-						self.carleonConditionElementsList[serviceName + "$" + resultName] = service.element;
-					} else {
-						_.forEach(result, function (curResult, curResultName) {
-							var newCondition = {label: curResult.title, name: serviceName + "$" + curResultName, submodule: "carleon", type: curResult.type, field: curResultName};
+				if (!!injector) {
+					_.forEach(injector.results, function (result, resultName) {
+						if (!!result.type && !!result.title) {
+							var newCondition = {label: result.title, name: serviceName + "$" + resultName, submodule: "carleon", type: result.type};
 							self.globalElementList.push(newCondition);
-							self.carleonConditionElementsList[serviceName + "$" + curResultName] = service.element;
-						});
-					}
-				});
+							self.carleonConditionElementsList[serviceName + "$" + resultName] = service.element;
+						} else {
+							_.forEach(result, function (curResult, curResultName) {
+								var newCondition = {label: curResult.title, name: serviceName + "$" + curResultName, submodule: "carleon", type: curResult.type, field: curResultName};
+								self.globalElementList.push(newCondition);
+								self.carleonConditionElementsList[serviceName + "$" + curResultName] = service.element;
+							});
+						}
+					});
+				}
 			});
         }
         

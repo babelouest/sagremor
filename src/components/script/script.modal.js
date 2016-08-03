@@ -86,23 +86,25 @@ angular.module("sagremorApp")
 				var injector = _.find(sagGenericInjectorManager.components, function (inject) {
 					return inject.type === serviceName && !!carleonComponentsConfig[inject.type] && !!carleonComponentsConfig[inject.type].enabled;
 				});
-				_.forEach(injector.commands, function (command, commandName) {
-					var newAction = {label: command.title, name: serviceName + "$" + commandName, submodule: "carleon"};
-					self.carleonConditionElementsList[serviceName + "$" + commandName] = service.element;
-					self.scriptActionElements.push(newAction);
-					if (!!service.commands[commandName]) {
-						self.carleonConditionCommandsParameters[serviceName + "$" + commandName] = [];
-						_.forEach(service.commands[commandName].parameters, function (serviceParameter, serviceParameterName) {
-							var commandParameter = {
-								name: serviceParameterName,
-								title: !!command.parameters[serviceParameterName]?$translate.instant(command.parameters[serviceParameterName]):serviceParameterName,
-								type: serviceParameter.type,
-								required: serviceParameter.required
-							};
-							self.carleonConditionCommandsParameters[serviceName + "$" + commandName].push(commandParameter);
-						});
-					}
-				});
+				if (!!injector) {
+					_.forEach(injector.commands, function (command, commandName) {
+						var newAction = {label: command.title, name: serviceName + "$" + commandName, submodule: "carleon"};
+						self.carleonConditionElementsList[serviceName + "$" + commandName] = service.element;
+						self.scriptActionElements.push(newAction);
+						if (!!service.commands[commandName]) {
+							self.carleonConditionCommandsParameters[serviceName + "$" + commandName] = [];
+							_.forEach(service.commands[commandName].parameters, function (serviceParameter, serviceParameterName) {
+								var commandParameter = {
+									name: serviceParameterName,
+									title: !!command.parameters[serviceParameterName]?$translate.instant(command.parameters[serviceParameterName]):serviceParameterName,
+									type: serviceParameter.type,
+									required: serviceParameter.required
+								};
+								self.carleonConditionCommandsParameters[serviceName + "$" + commandName].push(commandParameter);
+							});
+						}
+					});
+				}
 			});
 			
         }

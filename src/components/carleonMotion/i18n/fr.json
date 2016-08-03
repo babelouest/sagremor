@@ -25,5 +25,10 @@
 	"carleon_motion_snapshot_error": "Erreur",
 	"carleon_motion_online": "En ligne",
 	"carleon_motion_offline": "Hors ligne",
-	"carleon_motion_refresh": "Rafraîchir"
+	"carleon_motion_refresh": "Rafraîchir",
+	"carleon_motion_command_online_title": "Caméra connectée",
+	"carleon_motion_command_online_result_title": "Connexion",
+	"carleon_motion_command_snapshot_title": "Prendre un snapshot",
+	"carleon_motion_command_snapshot_parameter_stream_title": "Flux de caméra",
+	"carleon_motion_command_snapshot_result_title": "Résultat"
 }
