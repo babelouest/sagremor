@@ -1,6 +1,6 @@
 angular.module("sagremorApp")
     .controller("ParametersCtrl",
-    function($scope, $rootScope, $q, $location, $translate, $cookieStore, toaster, angharadFactory, benoicFactory, carleonFactory, sharedData, sagremorConfirm, sagremorParams) {
+    function($scope, $rootScope, $q, $location, $translate, $cookies, toaster, angharadFactory, benoicFactory, carleonFactory, sharedData, sagremorConfirm, sagremorParams) {
       
 		var self = this;
 
@@ -402,7 +402,7 @@ angular.module("sagremorApp")
 		
 		this.useProfile = function (profile) {
 			sagremorParams.currentProfile = profile;
-			$cookieStore.put("ANGHARAD_PROFILE", profile.name);
+			$cookies.put("ANGHARAD_PROFILE", profile.name);
 			$rootScope.$broadcast("carleonProfileUpdated");
 		};
 		

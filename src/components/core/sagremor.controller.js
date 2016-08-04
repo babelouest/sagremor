@@ -1,6 +1,6 @@
 angular.module("sagremorApp")
   .controller("sagremorCtrl", 
-  function($scope, $rootScope, $interval, $window, $http, $q, $location, $cookieStore, $translate, toaster, angharadFactory, benoicFactory, carleonFactory, garethFactory, sharedData, sagremorParams) {
+  function($scope, $rootScope, $interval, $window, $http, $q, $location, $cookies, $translate, toaster, angharadFactory, benoicFactory, carleonFactory, garethFactory, sharedData, sagremorParams) {
     var self = this;
     
     this.loaderToast;
@@ -91,7 +91,7 @@ angular.module("sagremorApp")
     }
     
     function initParameters() {
-        $http.defaults.headers.common["ANGHARAD_SESSION_ID"] = $cookieStore.get("ANGHARAD_SESSION_ID");
+        $http.defaults.headers.common["ANGHARAD_SESSION_ID"] = $cookies.get("ANGHARAD_SESSION_ID");
         sagremorParams.adminMode = false;
         sagremorParams.loggedIn = true;
     }
@@ -179,7 +179,7 @@ angular.module("sagremorApp")
 				self.setDefaultProfile();
 			} else {
 				sagremorParams.profiles = results.profiles;
-				var profile_name = $cookieStore.get("ANGHARAD_PROFILE");
+				var profile_name = $cookies.get("ANGHARAD_PROFILE");
 				sagremorParams.currentProfile = false;
 				
 				if (!!profile_name) {
@@ -233,7 +233,7 @@ angular.module("sagremorApp")
 		_.forEach(sagremorParams.profiles, function (profile) {
 			if (profile.default) {
 				sagremorParams.currentProfile = profile;
-				$cookieStore.put("ANGHARAD_PROFILE", profile.name);
+				$cookies.put("ANGHARAD_PROFILE", profile.name);
 			}
 		});
 		
@@ -249,7 +249,7 @@ angular.module("sagremorApp")
 			}, function (error) {
 				toaster.pop("error", $translate.instant("profile_save"), $translate.instant("profile_save_error"));
 			});
-			$cookieStore.put("ANGHARAD_PROFILE", $translate.instant("profile_default"));
+			$cookies.put("ANGHARAD_PROFILE", $translate.instant("profile_default"));
 			$scope.$broadcast("angharadProfileChanged");
 		}
 	};

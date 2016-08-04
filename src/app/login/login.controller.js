@@ -1,6 +1,6 @@
 angular.module("sagremorApp")
   .controller("LoginCtrl",
-  function($scope, $rootScope, $location, $cookieStore, $http, toaster, angharadFactory) {
+  function($scope, $rootScope, $location, $cookies, $http, $translate, toaster, angharadFactory) {
       
       var self = this;
       
@@ -23,7 +23,7 @@ angular.module("sagremorApp")
           }
           angharadFactory.postAuth(self.username, self.password, Math.round(validity.getTime() / 1000))
             .then(function (response) {
-                $cookieStore.put("ANGHARAD_SESSION_ID", response.token);
+                $cookies.put("ANGHARAD_SESSION_ID", response.token);
                 $http.defaults.headers.common["ANGHARAD_SESSION_ID"] = response.token;
                 $rootScope.$broadcast("loginSuccess");
                 $scope.isLogged = true;

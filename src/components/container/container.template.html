@@ -1,6 +1,6 @@
 <div data-ng-class="{'sag-container': !$ctrl.dashboard, 'sag-container-dashboard': ($ctrl.dashboard && $ctrl.element.type !== 'script')}">
 	<div class="row">
-        <div class="sag-container-header-menu col-sm-2" 
+        <div class="sag-container-header-menu col-xs-2" 
 			 data-ng-if="(!!$ctrl.menu && !$ctrl.dashboard) || $ctrl.dashboard && $ctrl.sagParams.adminMode" 
 			 data-uib-dropdown>
             <button class="btn btn-primary text-left" type="button" data-uib-dropdown-toggle data-ng-click="">
@@ -14,10 +14,8 @@
             <span data-ng-bind="$ctrl.title" class="text-center"></span>
         </div>
     </div>
-	<div class="row control-group">
-        <div data-ng-transclude class="sag-container-element col-md-12">
-        </div>
-    </div>
+	<div data-ng-transclude class="sag-container-element">
+	</div>
 	<div class="row">
 		<div class="col-md-12">
 			<span data-ng-repeat="script in $ctrl.scripts">

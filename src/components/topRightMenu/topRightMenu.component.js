@@ -1,4 +1,4 @@
-function topRightMenuCtrl ($scope, $rootScope, $location, $http, $translate, $cookieStore, angharadFactory, sagremorConstant, sagremorParams) {
+function topRightMenuCtrl ($scope, $rootScope, $location, $http, $translate, $cookies, angharadFactory, sagremorConstant, sagremorParams) {
     var self = this;
 
     self.sagremorParams = sagremorParams;
@@ -20,7 +20,7 @@ function topRightMenuCtrl ($scope, $rootScope, $location, $http, $translate, $co
 		_.forEach(sagremorParams.profiles, function (profile) {
 			if (profile.name === self.currentProfileName) {
 				sagremorParams.currentProfile = profile;
-				$cookieStore.put("ANGHARAD_PROFILE", self.currentProfileName);
+				$cookies.put("ANGHARAD_PROFILE", self.currentProfileName);
 				$rootScope.$broadcast("carleonProfileUpdated");
 				$rootScope.$broadcast("refreshDashboard");
 			}
