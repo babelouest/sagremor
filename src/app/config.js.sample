@@ -11,5 +11,8 @@ angular.module("sagremorApp")
 		},
 		"service-motion": {
 			"enabled": true
+		},
+		"service-mpd": {
+			"enabled": true
 		}
     });
