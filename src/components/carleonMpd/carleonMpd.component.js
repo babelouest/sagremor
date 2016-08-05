@@ -82,6 +82,10 @@ function carleonMpdController ($scope, $q, $translatePartialLoader, $translate, 
 		ctrl.refreshStatus();
 	});
 	
+	$scope.$on("$destroy", function() {
+		$interval.cancel(ctrl._interval);
+	});
+	
     init();
 }
 
