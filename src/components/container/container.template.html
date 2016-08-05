@@ -18,7 +18,7 @@
 	</div>
 	<div class="row">
 		<div class="col-md-12">
-			<span data-ng-repeat="script in $ctrl.scripts">
+			<span data-ng-repeat="script in $ctrl.scripts" class="script-small">
 				<button type="button" class="btn btn-xs btn-primary" data-ng-bind="script.name" data-ng-click="$ctrl.runScript(script)"></button>
 			</span>
 		</div>
