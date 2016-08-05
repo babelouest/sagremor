@@ -91,7 +91,7 @@ angular.module("sagremorApp")
 						var newAction = {label: command.title, name: serviceName + "$" + commandName, submodule: "carleon"};
 						self.carleonConditionElementsList[serviceName + "$" + commandName] = service.element;
 						self.scriptActionElements.push(newAction);
-						if (!!service.commands[commandName]) {
+						if (!!service.commands && !!service.commands[commandName]) {
 							self.carleonConditionCommandsParameters[serviceName + "$" + commandName] = [];
 							_.forEach(service.commands[commandName].parameters, function (serviceParameter, serviceParameterName) {
 								var commandParameter = {
