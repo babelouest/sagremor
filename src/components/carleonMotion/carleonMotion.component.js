@@ -121,6 +121,10 @@ function carleonMotionController ($scope, $translatePartialLoader, $translate, a
 		ctrl.refresh();
 	});
 	
+	$scope.$on("refreshCarleonServices", function () {
+		ctrl.refresh();
+	});
+	
     init();
 }
 
@@ -208,6 +212,16 @@ angular.module("sagremorApp").component("serviceMotion", {
 	
 	carleonMotionFactory.removeService = function (service) {
 		return sagremorConfirm.open($translate.instant("carleon_motion_remove"), $translate.instant("carleon_motion_confirm")).then(function () {
+			return carleonMotionFactory.removeMotionService(service.name).then(function () {
+				var injector = sharedData.get("carleonServices", "service-motion");
+				_.remove(injector.element, function (element) {
+					return element.name === service.name;
+				});
+				sharedData.add("carleonServices", "service-motion", injector);
+				toaster.pop("success", $translate.instant("carleon_motion_remove"), $translate.instant("carleon_motion_remove_success"));
+			}, function () {
+				toaster.pop("error", $translate.instant("carleon_motion_remove"), $translate.instant("carleon_motion_remove_error"));
+			});
 		});
 	};
 	

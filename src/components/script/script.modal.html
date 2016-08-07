@@ -5,8 +5,8 @@
     <div class="modal-body">
 		<!-- Script name and description -->
         <div class="row control-group" data-ng-class="{'has-error': !!ScriptModalCtrl.error.message}">
-            <label for="scriptName" class="col-md-4" data-translate="script_name"></label>
-            <div class="col-md-8 controls">
+            <label for="scriptName" class="col-xs-4" data-translate="script_name"></label>
+            <div class="col-xs-8 controls">
                 <input type="text" 
 						name="scriptName" 
 						id="scriptName" 
@@ -18,8 +18,8 @@
             </div>
         </div>
         <div class="row control-group">
-            <label for="scriptDecription" class="col-md-4" data-translate="script_description"></label>
-            <div class="col-md-8 controls">
+            <label for="scriptDecription" class="col-xs-4" data-translate="script_description"></label>
+            <div class="col-xs-8 controls">
                 <input type="text"
 						name="scriptDecription" 
 						id="scriptDecription" 
@@ -35,23 +35,23 @@
         <h4 data-translate="script_actions"></h4>
         <div data-ng-repeat="action in ScriptModalCtrl.script.actions">
 			<div class="row" data-ng-if="action.submodule === 'benoic'">
-				<div class="col-md-4">
+				<div class="col-xs-4">
 					<strong data-ng-bind="ScriptModalCtrl.getBenoicElementDisplay(action)"></strong>
 				</div>
-				<div class="col-md-4">
+				<div class="col-xs-4">
 					<strong data-ng-bind="ScriptModalCtrl.getBenoicElementValue(action)"></strong>
 				</div>
-				<div class="col-md-2">
+				<div class="col-xs-2">
 					<button type="button" class="btn" data-ng-click="ScriptModalCtrl.removeAction($index)">
 						<i class="fa fa-trash" aria-hidden="true"></i>
 					</button>
 				</div>
 			</div>
 			<div class="row" data-ng-if="action.submodule === 'carleon'">
-				<div class="col-md-4">
+				<div class="col-xs-4">
 					<strong data-ng-bind="ScriptModalCtrl.carleonCommand(action.command, action.parameters.service)"></strong>
 				</div>
-				<div class="col-md-4">
+				<div class="col-xs-4">
 					<div class="row" data-ng-repeat="(name, value) in action.parameters" data-ng-if="name !== 'service'">
 						<strong>
 							<span data-ng-bind="ScriptModalCtrl.carleonParameter(name, action.parameters.service, action.command)"></span>
@@ -60,7 +60,7 @@
 						</strong>
 					</div>
 				</div>
-				<div class="col-md-2">
+				<div class="col-xs-2">
 					<button type="button" class="btn" data-ng-click="ScriptModalCtrl.removeAction($index)">
 						<i class="fa fa-trash" aria-hidden="true"></i>
 					</button>
@@ -71,15 +71,15 @@
         <!-- New action -->
 		<hr>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-xs-12">
                 <button type="button" class="btn btn-primary" data-ng-click="ScriptModalCtrl.addAction()" data-translate="script_add_action"></button>
             </div>
         </div>
         <div data-ng-if="ScriptModalCtrl.newAction">
 			<hr>
 			<div class="row control-group" data-ng-class="{'has-error': !ScriptModalCtrl.newActionType}">
-				<label for="newActionElement" class="col-md-4" data-translate="script_action"></label>
-				<div class="col-md-8 controls">
+				<label for="newActionElement" class="col-xs-4" data-translate="script_action"></label>
+				<div class="col-xs-8 controls">
 					<select id="newActionElement" 
 							name="newActionElement" 
 							class="form-control"
@@ -91,8 +91,8 @@
 			</div>
 			<div data-ng-if="ScriptModalCtrl.newActionType.name === 'switch'">
 				<div class="row control-group" data-ng-class="{'has-error': !ScriptModalCtrl.newAction.switcher.name}">
-					<label for="newActionSwitch" class="col-md-4" data-translate="script_switch_select"></label>
-					<div class="col-md-8 controls">
+					<label for="newActionSwitch" class="col-xs-4" data-translate="script_switch_select"></label>
+					<div class="col-xs-8 controls">
 						<select id="newActionSwitch" 
 								name="newActionSwitch" 
 								class="form-control"
@@ -103,8 +103,8 @@
 					</div>
 				</div>
 				<div class="row">
-					<label for="newActionSwitchValue" class="col-md-4" data-translate="script_switch_value"></label>
-					<div class="col-md-8">
+					<label for="newActionSwitchValue" class="col-xs-4" data-translate="script_switch_value"></label>
+					<div class="col-xs-8">
 						<input type="checkbox"
 								id="newActionSwitchValue"
 								name="newActionSwitchValue"
@@ -120,8 +120,8 @@
 			</div>
 			<div data-ng-if="ScriptModalCtrl.newActionType.name === 'dimmer'">
 				<div class="row control-group" data-ng-class="{'has-error': !ScriptModalCtrl.newAction.dimmer.name}">
-					<label for="newActionDimmer" class="col-md-4" data-translate="script_dimmer_select"></label>
-					<div class="col-md-8 controls">
+					<label for="newActionDimmer" class="col-xs-4" data-translate="script_dimmer_select"></label>
+					<div class="col-xs-8 controls">
 						<select id="newActionDimmer" 
 								name="newActionDimmer" 
 								class="form-control"
@@ -132,16 +132,16 @@
 					</div>
 				</div>
 				<div class="row">
-					<label for="newActionDimmerValue" class="col-md-4" data-translate="script_dimmer_value"></label>
-					<div class="col-md-8">
+					<label for="newActionDimmerValue" class="col-xs-4" data-translate="script_dimmer_value"></label>
+					<div class="col-xs-8">
 						<input id="newActionDimmerValue" class="form-control" name="newActionDimmerValue" type="number" min="0" max="100" data-ng-model="ScriptModalCtrl.newAction.command">
 					</div>
 				</div>
 			</div>
 			<div data-ng-if="ScriptModalCtrl.newActionType.name === 'heater'">
 				<div class="row control-group" data-ng-class="{'has-error': !ScriptModalCtrl.newAction.heater.name}">
-					<label for="newActionHeater" class="col-md-4" data-translate="script_heater_select"></label>
-					<div class="col-md-8 controls">
+					<label for="newActionHeater" class="col-xs-4" data-translate="script_heater_select"></label>
+					<div class="col-xs-8 controls">
 						<select id="newActionHeater" 
 								name="newActionHeater" 
 								class="form-control"
@@ -152,8 +152,8 @@
 					</div>
 				</div>
 				<div class="row">
-					<label for="newActionHeaterValue" class="col-md-4" data-translate="script_heater_command"></label>
-					<div class="col-md-8">
+					<label for="newActionHeaterValue" class="col-xs-4" data-translate="script_heater_command"></label>
+					<div class="col-xs-8">
 						<input id="newActionHeaterValue" 
 								class="form-control" 
 								name="newActionHeaterValue" 
@@ -165,8 +165,8 @@
 					</div>
 				</div>
 				<div class="row control-group" data-ng-class="{'has-error': !ScriptModalCtrl.newAction.heater.mode}">
-					<label for="newActionHeaterMode" class="col-md-4" data-translate="script_heater_mode_title"></label>
-					<div class="col-md-8 controls">
+					<label for="newActionHeaterMode" class="col-xs-4" data-translate="script_heater_mode_title"></label>
+					<div class="col-xs-8 controls">
 						<select class="form-control" 
 								id="newActionHeaterMode" 
 								name="newActionHeaterMode" 
@@ -179,8 +179,8 @@
 			</div>
 			<div data-ng-if="ScriptModalCtrl.newActionType.submodule === 'carleon'">
 				<div class="row control-group" data-ng-class="{'has-error': false}">
-					<label for="newActionCarleonElement" class="col-md-4" data-translate="script_element_select"></label>
-					<div class="col-md-8 controls">
+					<label for="newActionCarleonElement" class="col-xs-4" data-translate="script_element_select"></label>
+					<div class="col-xs-8 controls">
 						<select id="newActionCarleonElement" 
 								name="newActionCarleonElement" 
 								class="form-control"
@@ -193,8 +193,8 @@
 				<div class="row control-group" 
 					data-ng-class="{'has-error': false}" 
 					data-ng-repeat="parameter in ScriptModalCtrl.carleonConditionCommandsParameters[ScriptModalCtrl.newActionType.name]">
-					<label for="{{ScriptModalCtrl.newActionType.name + '$' + parameter.name}}" class="col-md-4" data-ng-bind="parameter.title"></label>
-					<div class="col-md-8 controls">
+					<label for="{{ScriptModalCtrl.newActionType.name + '$' + parameter.name}}" class="col-xs-4" data-ng-bind="parameter.title"></label>
+					<div class="col-xs-8 controls">
 						<input type="text" class="form-control" name="{{ScriptModalCtrl.newActionType.name + '$' + parameter.name}}" id="{{ScriptModalCtrl.newActionType.name + '$' + parameter.name}}" data-ng-if="parameter.type === 'string'" data-ng-model="ScriptModalCtrl.newAction.parameters[parameter.name]">
 						<input type="number" class="form-control" name="{{ScriptModalCtrl.newActionType.name + '$' + parameter.name}}" id="{{ScriptModalCtrl.newActionType.name + '$' + parameter.name}}" data-ng-if="parameter.type === 'integer'" data-ng-model="ScriptModalCtrl.newAction.parameters[parameter.name]">
 						<input type="number" class="form-control" name="{{ScriptModalCtrl.newActionType.name + '$' + parameter.name}}" id="{{ScriptModalCtrl.newActionType.name + '$' + parameter.name}}" data-ng-if="parameter.type === 'real'" step=".01" data-ng-model="ScriptModalCtrl.newAction.parameters[parameter.name]">
@@ -203,10 +203,10 @@
 			</div>
 			<hr>
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-xs-6">
 					<button type="button" class="btn btn-primary" data-ng-click="ScriptModalCtrl.saveNewAction()" data-translate="btn_add" data-ng-disabled="!ScriptModalCtrl.isActionValid()" data-uib-tooltip="{{ScriptModalCtrl.error.messageAction}}"></button>
 				</div>
-				<div class="col-md-6">
+				<div class="col-xs-6">
 					<button type="button" class="btn btn-primary" data-ng-click="ScriptModalCtrl.cancelAddAction()" data-translate="btn_cancel"></button>
 				</div>
 			</div>

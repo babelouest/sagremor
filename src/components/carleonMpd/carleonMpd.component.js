@@ -19,7 +19,7 @@ function carleonMpdController ($scope, $q, $translatePartialLoader, $translate, 
 				startRefreshStatusInterval();
 			}
 		}, function () {
-			toaster.pop("error", $translate.instant("carleon_mpd"), $translate.instant("carleon_mpd_load_error"));
+			toaster.pop("error", $translate.instant("carleon_mpd"), $translate.instant("carleon_mpd_load_error", {name: ctrl.element.name}));
 		});
     }
     
@@ -28,7 +28,7 @@ function carleonMpdController ($scope, $q, $translatePartialLoader, $translate, 
 			ctrl.refreshStatus();
 		}, 1000 * 10);
 	}
-    
+	
     this.refreshStatus = function() {
 		carleonMpdFactory.getMpdStatus(ctrl.element.name).then(function (response) {
 			ctrl.mpd = response;
@@ -39,7 +39,7 @@ function carleonMpdController ($scope, $q, $translatePartialLoader, $translate, 
 				ctrl._interval = null;
 			}
 		}, function () {
-			toaster.pop("error", $translate.instant("carleon_mpd"), $translate.instant("carleon_mpd_load_error"));
+			toaster.pop("error", $translate.instant("carleon_mpd"), $translate.instant("carleon_mpd_load_error", {name: ctrl.element.name}));
 		});
 	};
     
@@ -78,7 +78,7 @@ function carleonMpdController ($scope, $q, $translatePartialLoader, $translate, 
 		}
 	};
     
-	$scope.$on("carleonServicesChanged", function () {
+	$scope.$on("refreshCarleonServices", function () {
 		ctrl.refreshStatus();
 	});
 	
@@ -173,6 +173,16 @@ angular.module("sagremorApp").component("serviceMpd", {
 	
 	carleonMpdFactory.removeService = function (service) {
 		return sagremorConfirm.open($translate.instant("carleon_mpd_remove"), $translate.instant("carleon_mpd_confirm")).then(function () {
+			return carleonMpdFactory.removeMpdService(service.name).then(function () {
+				var injector = sharedData.get("carleonServices", "service-mpd");
+				_.remove(injector.element, function (element) {
+					return element.name === service.name;
+				});
+				sharedData.add("carleonServices", "service-mpd", injector);
+				toaster.pop("success", $translate.instant("carleon_mpd_remove"), $translate.instant("carleon_mpd_remove_success"));
+			}, function () {
+				toaster.pop("error", $translate.instant("carleon_mpd_remove"), $translate.instant("carleon_mpd_remove_error"));
+			});
 		});
 	};
 	

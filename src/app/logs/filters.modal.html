@@ -5,7 +5,7 @@
     <div class="modal-body">
 		<!-- New filter button -->
 		<div class="row control-group">
-			<div class="col-md-4 controls">
+			<div class="col-xs-4 controls">
 				<button type="button" class="btn" data-ng-click="FiltersModalCtrl.newFilter()">
 					<i class="fa fa-plus" aria-hidden="true"></i>
 					<span data-translate="logs_filter_new_button"></span>
@@ -37,13 +37,13 @@
 			</table>
 			<!-- New clause and alert buttons -->
 			<div class="row control-group">
-				<div class="col-md-4 controls">
+				<div class="col-xs-4 controls">
 					<button type="button" class="btn" data-ng-click="FiltersModalCtrl.addClause()">
 						<i class="fa fa-plus" aria-hidden="true"></i>
 						<span data-translate="logs_clause_new_button"></span>
 					</button>
 				</div>
-				<div class="col-md-4 controls">
+				<div class="col-xs-4 controls">
 					<div data-uib-dropdown>
 						<button type="button" class="btn" data-ng-click="FiltersModalCtrl.addAlert()" data-uib-dropdown-toggle data-ng-click="">
 							<i class="fa fa-plus" aria-hidden="true"></i>
@@ -164,10 +164,10 @@
 			<div data-ng-if="FiltersModalCtrl.newAlertSmtp">
 				<div class="row control-group">
 					<h3 data-translate="alert_smtp_title"></h3>
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<label class="control-label" data-translate="alert_smtp_select"></label>
 					</div>
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<select id="logsSearchFilter" 
 								class="form-control"
 								data-ng-model="FiltersModalCtrl.existingSmtpAlert"
@@ -178,39 +178,39 @@
 					</div>
 				</div>
 				<div class="row control-group">
-					<div class="controls col-md-12 text-center">
+					<div class="controls col-xs-12 text-center">
 						<label class="control-label" data-translate="alert_or"></label>
 					</div>
 				</div>
 				<div class="row control-group">
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<label class="control-label" data-translate="alert_smtp_name"></label>
 					</div>
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<input required type="text" data-ng-model="FiltersModalCtrl.customSmtpAlert.name" class="form-control" data-ng-disabled="FiltersModalCtrl.existingSmtpAlert">
 					</div>
 				</div>
 				<div class="row control-group">
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<label class="control-label" data-translate="alert_smtp_host"></label>
 					</div>
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<input type="text" required data-ng-model="FiltersModalCtrl.customSmtpAlert.host" class="form-control" data-ng-disabled="FiltersModalCtrl.existingSmtpAlert">
 					</div>
 				</div>
 				<div class="row control-group">
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<label class="control-label" data-translate="alert_smtp_port"></label>
 					</div>
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<input type="number" data-ng-model="FiltersModalCtrl.customSmtpAlert.port" class="form-control" data-ng-disabled="FiltersModalCtrl.existingSmtpAlert">
 					</div>
 				</div>
 				<div class="row control-group">
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<label class="control-label" data-translate="alert_smtp_tls"></label>
 					</div>
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<input type="checkbox"
 								data-bs-switch
 								data-toggle="toggle"
@@ -221,10 +221,10 @@
 					</div>
 				</div>
 				<div class="row control-group">
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<label class="control-label" data-translate="alert_smtp_check_ca"></label>
 					</div>
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<input type="checkbox"
 								data-bs-switch
 								data-toggle="toggle"
@@ -235,73 +235,73 @@
 					</div>
 				</div>
 				<div class="row control-group">
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<label class="control-label" data-translate="alert_smtp_user"></label>
 					</div>
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<input type="text" data-ng-model="FiltersModalCtrl.customSmtpAlert.user" class="form-control" data-ng-disabled="FiltersModalCtrl.existingSmtpAlert">
 					</div>
 				</div>
 				<div class="row control-group">
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<label class="control-label" data-translate="alert_smtp_password"></label>
 					</div>
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<input type="text" data-ng-model="FiltersModalCtrl.customSmtpAlert.password" class="form-control" data-ng-disabled="FiltersModalCtrl.existingSmtpAlert">
 					</div>
 				</div>
 				<div class="row control-group">
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<label class="control-label" data-translate="alert_smtp_from"></label>
 					</div>
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<input type="text" data-uib-tooltip="{{'alert_smtp_emails_tooltip' | translate}}" required data-ng-model="FiltersModalCtrl.customSmtpAlert.from" class="form-control" data-ng-disabled="FiltersModalCtrl.existingSmtpAlert">
 					</div>
 				</div>
 				<div class="row control-group">
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<label class="control-label" data-translate="alert_smtp_to"></label>
 					</div>
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<input type="text" required data-uib-tooltip="{{'alert_smtp_emails_tooltip' | translate}}" data-ng-model="FiltersModalCtrl.customSmtpAlert.to" class="form-control" data-ng-disabled="FiltersModalCtrl.existingSmtpAlert">
 					</div>
 				</div>
 				<div class="row control-group">
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<label class="control-label" data-translate="alert_smtp_cc"></label>
 					</div>
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<input type="text" data-uib-tooltip="{{'alert_smtp_emails_tooltip' | translate}}" data-ng-model="FiltersModalCtrl.customSmtpAlert.cc" class="form-control" data-ng-disabled="FiltersModalCtrl.existingSmtpAlert">
 					</div>
 				</div>
 				<div class="row control-group">
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<label class="control-label" data-translate="alert_smtp_bcc"></label>
 					</div>
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<input type="text" data-uib-tooltip="{{'alert_smtp_emails_tooltip' | translate}}" data-ng-model="FiltersModalCtrl.customSmtpAlert.bcc" class="form-control" data-ng-disabled="FiltersModalCtrl.existingSmtpAlert">
 					</div>
 				</div>
 				<div class="row control-group">
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<label class="control-label" data-translate="alert_smtp_subject"></label>
 					</div>
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<input type="text" data-uib-tooltip="{{'alert_subject_body_tooltip' | translate}}" required data-ng-model="FiltersModalCtrl.customSmtpAlert.subject" class="form-control" data-ng-disabled="FiltersModalCtrl.existingSmtpAlert">
 					</div>
 				</div>
 				<div class="row control-group">
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<label class="control-label" data-translate="alert_smtp_body"></label>
 					</div>
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<input type="text" data-uib-tooltip="{{'alert_subject_body_tooltip' | translate}}" required data-ng-model="FiltersModalCtrl.customSmtpAlert.body" class="form-control" data-ng-disabled="FiltersModalCtrl.existingSmtpAlert">
 					</div>
 				</div>
 				<div class="row control-group">
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 					</div>
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<button type="button" class="btn" data-ng-click="FiltersModalCtrl.postNewSmtpAlert()" data-ng-disabled="!FiltersModalCtrl.isSmtpAlertValid()">
 							<i class="fa fa-check" aria-hidden="true"></i>
 						</button>
@@ -316,10 +316,10 @@
 			<div data-ng-if="FiltersModalCtrl.newAlertHttp">
 				<h3 data-translate="alert_http_title"></h3>
 				<div class="row control-group required">
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<label class="control-label" data-translate="alert_http_select"></label>
 					</div>
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<select id="logsSearchFilter" 
 								class="form-control"
 								data-ng-model="FiltersModalCtrl.existingHttpAlert"
@@ -330,23 +330,23 @@
 					</div>
 				</div>
 				<div class="row control-group">
-					<div class="controls col-md-12 text-center">
+					<div class="controls col-xs-12 text-center">
 						<label class="control-label" data-translate="alert_or"></label>
 					</div>
 				</div>
 				<div class="row control-group">
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<label class="control-label" data-translate="alert_http_name"></label>
 					</div>
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<input required type="text" data-ng-model="FiltersModalCtrl.customHttpAlert.name" class="form-control" data-ng-disabled="FiltersModalCtrl.existingHttpAlert">
 					</div>
 				</div>
 				<div class="row control-group">
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<label class="control-label" data-translate="alert_http_method"></label>
 					</div>
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<select required data-ng-model="FiltersModalCtrl.customHttpAlertMethodSelect" class="form-control" data-ng-disabled="FiltersModalCtrl.existingHttpAlert">
 							<option value="GET">GET</option>
 							<option value="POST">POST</option>
@@ -357,56 +357,56 @@
 					</div>
 				</div>
 				<div class="row control-group" data-ng-if="FiltersModalCtrl.customHttpAlertMethodSelect === 'custom'">
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<label class="control-label" data-translate="alert_http_method_custom"></label>
 					</div>
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<input type="text" data-ng-model="FiltersModalCtrl.customHttpAlert.method" class="form-control" data-ng-disabled="FiltersModalCtrl.existingHttpAlert">
 					</div>
 				</div>
 				<div class="row control-group">
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<label class="control-label" data-translate="alert_http_url"></label>
 					</div>
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<input required type="text" data-ng-model="FiltersModalCtrl.customHttpAlert.url" class="form-control" data-ng-disabled="FiltersModalCtrl.existingHttpAlert">
 					</div>
 				</div>
 				<div class="row control-group">
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<label class="control-label" data-translate="alert_http_body"></label>
 					</div>
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<textarea data-uib-tooltip="{{'alert_subject_body_tooltip' | translate}}" required class="form-control" data-ng-model="FiltersModalCtrl.customHttpAlert.body">
 						</textarea>
 					</div>
 				</div>
 				<div class="row control-group">
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<label class="control-label" data-translate="alert_http_headers"></label>
 					</div>
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<button type="button" class="btn" data-ng-click="FiltersModalCtrl.addAlertHttpHeader()">
 							<i class="fa fa-plus" aria-hidden="true"></i>
 						</button>
 					</div>
 				</div>
 				<div class="row control-group">
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<label class="control-label" data-translate="alert_http_header_key"></label>
 					</div>
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<label data-translate="alert_http_header_value"></label>
 					</div>
 				</div>
 				<div class="row control-group" data-ng-if="FiltersModalCtrl.newAlertHttpHeader && !FiltersModalCtrl.existingHttpAlert">
-					<div class="controls col-md-4">
+					<div class="controls col-xs-4">
 						<input type="text" data-ng-model="FiltersModalCtrl.customHttpAlertHeader.key" class="form-control">
 					</div>
-					<div class="controls col-md-4">
+					<div class="controls col-xs-4">
 						<input type="text" data-ng-model="FiltersModalCtrl.customHttpAlertHeader.value" class="form-control">
 					</div>
-					<div class="controls col-md-4">
+					<div class="controls col-xs-4">
 						<button type="button" class="btn" data-ng-click="FiltersModalCtrl.addNewAlertHttpHeader()" data-ng-disabled="!FiltersModalCtrl.customHttpAlertHeader.key || !FiltersModalCtrl.customHttpAlertHeader.value">
 							<i class="fa fa-check" aria-hidden="true"></i>
 						</button>
@@ -416,17 +416,17 @@
 					</div>
 				</div>
 				<div class="row control-group" data-ng-repeat="header in FiltersModalCtrl.customHttpAlert.http_headers">
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<label class="control-label" data-ng-bind="header.key"></label>
 					</div>
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<label class="control-label" data-ng-bind="header.value"></label>
 					</div>
 				</div>
 				<div class="row control-group">
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 					</div>
-					<div class="controls col-md-6">
+					<div class="controls col-xs-6">
 						<button type="button" class="btn" data-ng-click="FiltersModalCtrl.postNewHttpAlert()" data-ng-disabled="!FiltersModalCtrl.isHttpAlertValid()">
 							<i class="fa fa-check" aria-hidden="true"></i>
 						</button>
@@ -439,15 +439,15 @@
 			</div>
 			<!-- Filter save cancel buttons -->
 			<div class="row control-group">
-				<div class="col-md-6">
+				<div class="col-xs-6">
 				</div>
-				<div class="col-md-3">
+				<div class="col-xs-3">
 					<button type="button" class="btn btn-primary pull-right" data-ng-click="FiltersModalCtrl.postNewFilter()" data-ng-disabled="!FiltersModalCtrl.isFilterValid()">
 						<i class="fa fa-check" aria-hidden="true"></i>
 						<span data-translate="btn_ok"></span>
 					</button>
 				</div>
-				<div class="col-md-3">
+				<div class="col-xs-3">
 					<button type="button" class="btn btn-primary pull-right" data-ng-click="FiltersModalCtrl.cancelNewFilter()">
 						<i class="fa fa-times" aria-hidden="true"></i>
 						<span data-translate="btn_cancel"></span>
@@ -479,18 +479,18 @@
 						</td>
 						<td>
 							<div class="row" data-ng-if="filter.filter_alerts.smtp.length">
-								<div class="col-md-3">
+								<div class="col-xs-3">
 									<strong><span data-translate="logs_alert_list_smtp"></span></strong>
 								</div>
-								<div class="col-md-9">
+								<div class="col-xs-9">
 									<span class="pull-right" data-ng-bind="filter.filter_alerts.smtp.join(', ')"></span>
 								</div>
 							</div>
 							<div class="row" data-ng-if="filter.filter_alerts.http.length">
-								<div class="col-md-3">
+								<div class="col-xs-3">
 									<strong><span data-translate="logs_alert_list_http"></span></strong>
 								</div>
-								<div class="col-md-9">
+								<div class="col-xs-9">
 									<span class="pull-right" data-ng-bind="filter.filter_alerts.http.join(', ')"></span>
 								</div>
 							</div>

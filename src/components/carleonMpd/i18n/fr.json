@@ -13,7 +13,7 @@
 	"carleon_mpd_playlists_title": "Playlists",
 	"carleon_mpd_playlist_load": "Jouer",
 	"carleon_mpd": "Jukebox",
-	"carleon_mpd_load_error": "Erreur de chargement",
+	"carleon_mpd_load_error": "Erreur de chargement du jukebox {{name}}",
 	"carleon_mpd_volume_error": "Erreur de changement de volume",
 	"carleon_mpd_load_playlist_error": "Erreur de chargement de playlist",
 	"carleon_mpd_playing_title": "Titre",
@@ -29,5 +29,7 @@
 	"carleon_mpd_command_playlist_parameter_plsylist_title": "Résultat",
 	"carleon_mpd_command_volume_title": "Volume",
 	"carleon_mpd_command_volume_parameter_volume_title": "Valeur",
-	"carleon_mpd_command_volume_result_title": "Résultat"
+	"carleon_mpd_command_volume_result_title": "Résultat",
+	"carleon_mpd_remove": "Supprimer",
+	"carleon_mpd_confirm": "Êtes-vous sûr de vouloir supprimer ce jukebox ?"
 }

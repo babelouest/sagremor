@@ -2,22 +2,22 @@
     <h1 data-translate="logs_title"></h1>
 
 	<div class="row control-group">
-		<div class="col-md-1 controls">
+		<div class="col-xs-1 controls">
 			<label for="logsSearchLimit" data-translate="logs_search_limit"></label>
 		</div>
-		<div class="col-md-1 controls">
+		<div class="col-xs-2 controls">
 			<input type="number" min="1" class="form-control" name="logsSearchLimit" id="logsSearchLimit" data-ng-model="logsCtrl.searchOptions.limit">
 		</div>
-		<div class="col-md-1 controls">
+		<div class="col-xs-1 controls">
 			<label for="logsSearchOffset" data-translate="logs_search_offset"></label>
 		</div>
-		<div class="col-md-1 controls">
+		<div class="col-xs-2 controls">
 			<input type="number" min="0" class="form-control" name="logsSearchOffset" id="logsSearchOffset" data-ng-model="logsCtrl.searchOptions.offset">
 		</div>
-		<div class="col-md-1 controls">
+		<div class="col-xs-1 controls">
 			<label for="logsSearchFilter" data-translate="logs_search_filter"></label>
 		</div>
-		<div class="col-md-2 controls">
+		<div class="col-xs-2 controls">
 			<select id="logsSearchFilter" 
 					class="form-control"
 					data-ng-model="logsCtrl.searchOptions.filter"
@@ -26,14 +26,12 @@
 				<option value=""></option>
 			</select>
 		</div>
-		<div class="col-md-2">
-			<button type="button" class="btn btn-primary" data-ng-click="logsCtrl.search()">
+		<div class="col-xs-3">
+			<button type="button" class="btn btn-primary pull-right" data-ng-click="logsCtrl.search()" style="margin-left: 5px; margin-bottom: 5px;">
 				<i class="fa fa-search" aria-hidden="true"></i>
 				<span data-translate="logs_search_button"></span>
 			</button>
-		</div>
-		<div class="col-md-3">
-			<button type="button" class="btn btn-primary pull-right" data-ng-click="logsCtrl.filterManagement()">
+			<button type="button" class="btn btn-primary pull-right" data-ng-click="logsCtrl.filterManagement()" style="margin-left: 5px; margin-bottom: 5px;">
 				<i class="fa fa-filter" aria-hidden="true"></i>
 				<span data-translate="logs_filter_button"></span>
 			</button>

@@ -61,6 +61,29 @@ angular.module("sagremorApp")
             }
         };
         
+        $scope.$on("refreshAngharadScripts", function () {
+            self.refreshScripts();
+        });
+        
+        this.refreshScripts = function () {
+			var scripts = sharedData.all("angharadScripts");
+            for (key in scripts) {
+				var found = _.find(self.scriptList, function (script) {
+					return script.name === key;
+				});
+				
+				if (!found) {
+					self.scriptList.push(scripts[key]);
+				}
+            }
+            
+            for (var index = self.scriptList.length - 1; index >= 0; index--) {
+				if (!sharedData.get("angharadScripts", self.scriptList[index].name)) {
+					self.scriptList.splice(index, 1);
+				}
+			}
+		};
+        
         this.newScript = function () {
 			sagremorService.editScript(null);
 		};

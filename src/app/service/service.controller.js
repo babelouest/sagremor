@@ -76,6 +76,30 @@ angular.module("sagremorApp")
 			}
 		}
 		
+		function refreshServices () {
+			var service = sharedData.get("carleonServices", self.currentInjector.type);
+			if (!!service && !!service.element) {
+				_.forEach(service.element, function (element) {
+					var exist = _.find(self.serviceGroup.list, function (elt) {
+						return elt.name === element.name;
+					});
+					if (!exist) {
+						var elt = {name: element.name, type: element.type, description: element.description, service: self.currentInjector.service};
+						self.serviceGroup.list.push(elt);
+					}
+				});
+				
+				_.forEach(self.serviceGroup.list, function (elt, index) {
+					var exist = _.find(service.element, function (serviceElt) {
+						return serviceElt.name === elt.name;
+					});
+					if (!exist) {
+						self.serviceGroup.list.splice(index, 1);
+					}
+				});
+			}
+		}
+		
 		this.addService = function (service) {
 			service.addService();
 		};
@@ -84,6 +108,10 @@ angular.module("sagremorApp")
 			loadServices();
 		});
         
+		$scope.$on("refreshCarleonServices", function () {
+			refreshServices();
+		});
+	
         this.init();
         
     }

@@ -20,6 +20,74 @@ angular.module("sagremorApp")
 		});
     }
     
+    function refreshData() {
+		// Refresh benoic devices with overview
+		var devices = sharedData.all("benoicDevices");
+		var devicePromises = {};
+		_.forEach(sharedData.all("benoicDevices"), function (device, deviceName) {
+			if (device.connected) {
+				devicePromises[deviceName] = benoicFactory.getDeviceOverview(deviceName);
+			}
+		});
+		$q.all(devicePromises).then(function (results) {
+			_.forEach(results, function (element, name) {
+				sharedData.get("benoicDevices", name).element = element;
+			});
+			$rootScope.$broadcast("refreshDevices");
+		}, function (error) {
+			toaster.pop("error", $translate.instant("refresh"), $translate.instant("refresh_device_error"));
+		});
+		
+		// Refresh scripts and events
+		var promiseList = {
+			scripts: angharadFactory.getScriptList(),
+			schedulers: angharadFactory.getSchedulerList(),
+			triggers: angharadFactory.getTriggerList()
+		};
+		
+		$q.all(promiseList).then(function (result) {
+			sharedData.removeAll("angharadScripts");
+			sharedData.removeAll("angharadSchedulers");
+			sharedData.removeAll("angharadTriggers");
+			for (sc in result.scripts) {
+				sharedData.add("angharadScripts", result.scripts[sc].name, result.scripts[sc]);
+			}
+			$rootScope.$broadcast("refreshAngharadScripts");
+			for (sh in result.schedulers) {
+				sharedData.add("angharadSchedulers", result.schedulers[sh].name, result.schedulers[sh]);
+			}
+			for (tr in result.triggers) {
+				sharedData.add("angharadTriggers", result.triggers[tr].name, result.triggers[tr]);
+			}
+			$rootScope.$broadcast("refreshAngharadEvents");
+        }, function (error) {
+            toaster.pop("error", $translate.instant("refresh"), $translate.instant("refresh_scripts_events_error"));
+        });
+        
+        // Refresh carleon services elements
+		var qList = {
+			services: carleonFactory.getServiceList(),
+			profiles: carleonFactory.getProfileList()
+		}
+		
+		sharedData.removeAll("carleonServices");
+		
+		return $q.all(qList).then(function (results) {
+			for (key in results.services) {
+				_.forEach(results.services[key].element, function (element) {
+					element.type = results.services[key].name;
+				});
+				sharedData.add("carleonServices", results.services[key].name, results.services[key]);
+			}
+			$scope.$broadcast("refreshCarleonServices");
+			
+			sagremorParams.profiles = results.profiles;
+			$scope.$broadcast("carleonProfilesChanged");
+		}, function (error) {
+			toaster.pop({type: "error", title: $translate.instant("refresh"), body: $translate.instant("refresh_carleon_error")});
+		});
+	}
+    
     function getApiData() {
 		return self.initAngharadSubmodules().then(function (result) {
 			var promises = [ self.initAngharad() ];
@@ -57,7 +125,7 @@ angular.module("sagremorApp")
 		// If the window has not the focus, set a flag to refresh the page when it will have the focus
 		return $interval(function () {
 			if (self.hasFocus) {
-				getApiData();
+				refreshData();
 				self.shouldRefresh = false;
 			} else {
 				self.shouldRefresh = true;
@@ -72,7 +140,7 @@ angular.module("sagremorApp")
 	$window.onfocus = function() {  
 		self.hasFocus = true;  
 		if (self.shouldRefresh) {
-			getApiData();
+			refreshData();
 			self.shouldRefresh = false;
 		}
 	};
@@ -308,13 +376,7 @@ angular.module("sagremorApp")
     });
     
     $scope.$on("refresh", function () {
-		popLoader();
-		getApiData().then(function () {
-		}, function (error) {
-			toaster.pop({type: "error", title: $translate.instant("angharad_loading_title"), body: $translate.instant("init_message_loading_error")});
-		})["finally"](function () {
-			closeLoader(true);
-		});
+		refreshData();
 	});
     
     $scope.$on("loginSuccess", function () {

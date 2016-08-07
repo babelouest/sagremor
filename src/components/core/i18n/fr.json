@@ -2,6 +2,7 @@
 	"login_title": "Connexion",
 	"login_title_success": "Succès",
 	"login_title_error": "Erreur de connexion",
+	"dimmer_update_title": "Gradateur",
 	"dimmer_edit": "Modifier",
 	"dimmer_update_name": "Nom: ",
 	"dimmer_update_enabled": "Actif: ",
@@ -469,5 +470,9 @@
 	"alert_http_header_key": "Clef",
 	"alert_http_header_value": "Valeur",
 	"alert_http_method_other": "Autre",
-	"image_title": "Image: "
+	"image_title": "Image: ",
+	"refresh": "Rafrachir",
+	"refresh_device_error": "Erreur lors du rafraîchissement des dispositifs domotiques",
+	"refresh_scripts_events_error": "Erreur lors du rafraîchissement des tâches et des événements",
+	"refresh_carleon_error": "Erreur lors du rafraîchissement des services Carleon"
 }

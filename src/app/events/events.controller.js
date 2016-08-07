@@ -97,6 +97,46 @@ angular.module("sagremorApp")
             }
         };
         
+        $scope.$on("refreshAngharadEvents", function () {
+            self.refreshEvents();
+        });
+        
+        this.refreshEvents = function () {
+			var schedulers = sharedData.all("angharadSchedulers");
+            for (key in schedulers) {
+				var found = _.find(self.schedulerList, function (scheduler) {
+					return scheduler.name === key;
+				});
+				
+				if (!found) {
+					self.schedulerList.push(schedulers[key]);
+				}
+            }
+            
+            for (var index = self.schedulerList.length - 1; index >= 0; index--) {
+				if (!sharedData.get("angharadschedulers", self.schedulerList[index].name)) {
+					self.schedulerList.splice(index, 1);
+				}
+			}
+
+			var triggers = sharedData.all("angharadTriggers");
+            for (key in triggers) {
+				var found = _.find(self.triggerList, function (trigger) {
+					return trigger.name === key;
+				});
+				
+				if (!found) {
+					self.triggerList.push(triggers[key]);
+				}
+            }
+            
+            for (var index = self.triggerList.length - 1; index >= 0; index--) {
+				if (!sharedData.get("angharadTriggers", self.triggerList[index].name)) {
+					self.triggerList.splice(index, 1);
+				}
+			}
+		};
+        
         this.newEvent = function () {
 			sagremorService.editEvent(null);
 		};
