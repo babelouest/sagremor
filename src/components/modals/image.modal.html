@@ -7,13 +7,13 @@
 			<div class="col-xs-1">
 			</div>
 			<div class="col-xs-10">
-				<img data-ng-src="{{ImageModalCtrl.element.uri}}" alt="{{ImageModalCtrl.element.name}}" class="img-responsive img-thumbnail">
+				<img data-http-src="{{ImageModalCtrl.src}}" alt="{{ImageModalCtrl.title}}" class="img-responsive img-thumbnail">
 			</div>
 			<div class="col-xs-1">
 			</div>
 		</div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" type="button" data-ng-click="MonitorModalCtrl.close()" data-translate="monitor_close"></button>
+        <button class="btn btn-primary" type="button" data-ng-click="ImageModalCtrl.close()" data-translate="monitor_close"></button>
     </div>
 </div>

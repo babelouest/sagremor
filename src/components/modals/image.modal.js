@@ -1,9 +1,10 @@
 angular.module("sagremorApp")
     .controller("ImageModalCtrl",
-    function($scope, $uibModalInstance, $translate, element) {
+    function($scope, $uibModalInstance, $translate, title, src) {
         var self = this;
         
-        this.element = element;
+        this.title = title;
+        this.src = src;
         
         function init() {
         }
@@ -13,7 +14,7 @@ angular.module("sagremorApp")
         };
         
         this.displayTitle = function () {
-			return $translate.instant("image_title") + element.name;
+			return $translate.instant("image_title") + self.title;
 		};
 		
         init();

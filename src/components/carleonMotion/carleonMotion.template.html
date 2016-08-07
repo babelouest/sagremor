@@ -77,14 +77,16 @@
 	<hr>
 	<!-- images grid -->
 	<div class="row control-group" data-ng-if="$ctrl.type === 'file' && !!$ctrl.selectedFileList">
-		<div class="col-xs-12">
-			<data-ng-gallery data-images="$ctrl.images"></data-ng-gallery>
+		<div class="col-xs-3" data-ng-repeat="image in $ctrl.images">
+			<a href="" data-ng-click="$ctrl.openPopupImage(image.title, image.img)" alt="{{image.title}}">
+				<img data-http-src="{{image.thumb}}" title="{{image.title}}" class="img-responsive">
+			</a>
 		</div>
 	</div>
 	<!-- stream -->
 	<div class="row control-group" data-ng-if="$ctrl.type === 'stream' && !!$ctrl.selectedStream">
 		<div class="col-xs-12">
-			<a href="" data-ng-click="$ctrl.openPopupImage($ctrl.selectedStream)" alt="{{$ctrl.selectedStream.name}}">
+			<a href="" data-ng-click="$ctrl.openPopupImage($ctrl.selectedStream.name, $ctrl.selectedStream.uri)" alt="{{$ctrl.selectedStream.name}}">
 				<img data-ng-src="{{$ctrl.selectedStream.uri}}" alt="{{$ctrl.selectedStream.name}}" class="img-responsive img-thumbnail">
 			</a>
 		</div>

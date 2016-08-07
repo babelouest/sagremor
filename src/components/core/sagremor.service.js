@@ -18,7 +18,7 @@ angular.module("sagremorApp")
 			});
 		};
         
-		sagremorFactory.imagePopup = function (element) {
+		sagremorFactory.imagePopup = function (title, src) {
 			var modalInstance = $uibModal.open({
 				animation: true,
 				templateUrl: "components/modals/image.modal.html",
@@ -26,8 +26,11 @@ angular.module("sagremorApp")
 				controllerAs: "ImageModalCtrl",
 				size: "lg",
 				resolve: {
-					element: function () {
-						return element;
+					title: function () {
+						return title;
+					},
+					src: function () {
+						return src;
 					}
 				}
 			});

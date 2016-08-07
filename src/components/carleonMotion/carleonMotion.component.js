@@ -38,8 +38,8 @@ function carleonMotionController ($scope, $translatePartialLoader, $translate, a
 		ctrl.refresh();
     }
     
-    this.openPopupImage = function (stream) {
-		sagremorService.imagePopup(stream);
+    this.openPopupImage = function (title, src) {
+		sagremorService.imagePopup(title, src);
 	};
     
     this.refresh = function () {
