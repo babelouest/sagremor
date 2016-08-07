@@ -12,13 +12,34 @@ function sagMonitorController ($scope, $q, $translate, toaster, angharadFactory,
     this.data = [];
     this.labels = [];
     this.series = [];
-    this.colors = [];
     
     this.datasetOverride = [{
 		fill: false
 	}];
 	
+
 	this.options = {
+		chart: {
+			type: "lineChart",
+			x: function(d) { return d.timestamp; },
+			y: function(d) { return d.value; },
+			showValues: true,
+			valueFormat: function(d){
+				return d3.format(",.2f")(d);
+			},
+			transitionDuration: 500,
+			xScale : d3.time.scale(),
+			xAxis: {
+				axisLabel: $translate.instant("monitor_date_axis")
+			},
+			yAxis: {
+				axisLabel: "",
+				axisLabelDistance: 30
+			}
+		}
+	};
+
+	/*this.options = {
 		responsive: true,
 		tooltips: {
 			callbacks: {
@@ -50,7 +71,7 @@ function sagMonitorController ($scope, $q, $translate, toaster, angharadFactory,
 				radius: 3
 			}
 		}
-	};
+	};*/
     
     function init() {
 		updateDevices();
@@ -137,7 +158,7 @@ function sagMonitorController ($scope, $q, $translate, toaster, angharadFactory,
 		ctrl.newElement.color = ctrl.newElementColor;
 		ctrl.element.elements.push(ctrl.newElement);
 		carleonFactory.saveCurrentProfile().then(function () {
-			displayMonitor();
+			ctrl.displayMonitor();
 		}, function () {
 			toaster.pop("error", $translate.instant("profile_save"), $translate.instant("profile_save_error"));
 		})["finally"](function () {
@@ -185,26 +206,23 @@ function sagMonitorController ($scope, $q, $translate, toaster, angharadFactory,
 		});
 		
 		ctrl.data = [];
-		ctrl.labels = [];
-		ctrl.series = [];
-		ctrl.colors = [];
 		$q.all(httpMonitor).then(function (results) {
 			for (key in results) {
-				ctrl.colors.push(ctrl.element.elements[key].color);
-				_.remove(ctrl.colorList, function (curColor) {
-					return curColor.value === ctrl.element.elements[key].color;
-				});
 				_.remove(ctrl.elementListDisplayed, function (curElement) {
 					return curElement.device === ctrl.element.elements[key].device &&
 							curElement.type === ctrl.element.elements[key].type &&
 							curElement.name === ctrl.element.elements[key].name;
 				});
 				ctrl.series.push(ctrl.element.elements[key].display);
-                var myData = [];
+                var myData = {
+					key: ctrl.element.elements[key].display,
+					values: []
+                };
                 if (!!results[key] && results[key].length > 0) {
 					_.forEach(results[key], function (monitor) {
-						ctrl.labels.push(new Date(monitor.timestamp * 1000));
-						myData.push(monitor.value);
+						var curDate = new Date(monitor.timestamp * 1000);
+						var value = {timestamp: curDate, value: monitor.value};
+						myData.values.push(value);
 					});
 					ctrl.data.push(myData);
 				}
@@ -214,14 +232,14 @@ function sagMonitorController ($scope, $q, $translate, toaster, angharadFactory,
 	}
 	
 	this.newElementValid = function () {
-		return !!ctrl.newElement && !!ctrl.newElementColor;
+		return !!ctrl.newElement;
 	};
 	
 	this.removeSerie = function (serie) {
 		if (ctrl.element.elements.indexOf(serie) >= 0) {
 			ctrl.element.elements.splice(ctrl.element.elements.indexOf(serie), 1);
 			carleonFactory.saveCurrentProfile().then(function () {
-				displayMonitor();
+				ctrl.displayMonitor();
 			}, function () {
 				toaster.pop("error", $translate.instant("profile_save"), $translate.instant("profile_save_error"));
 			})["finally"](function () {

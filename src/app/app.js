@@ -10,7 +10,8 @@ angular.module("sagremorApp", [
 "ngSanitize",
 "ui.bootstrap.datetimepicker",
 "datatables",
-"angular.img"
+"angular.img",
+"nvd3"
 ])
 .constant("_", window._)
 .constant("sagremorConstant", {

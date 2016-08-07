@@ -4,46 +4,31 @@ angular.module("sagremorApp")
         var self = this;
         
         this.element = element;
-        this.series = [element.display];
         this.data = [];
-        this.labels = [];
         this.durationList = sagremorConstant.durationList;
         this.duration = {value: 4};
         
 		this.options = {
-			responsive: true,
-			tooltips: {
-				callbacks: {
-					label: function(tooltipItem, data) {
-						return tooltipItem.yLabel + " " + element.options.unit;
-					}
-				}
-			},
-			scales: {
-				xAxes: [{
-					type: "time",
-					display: true,
-					time: {
-						tooltipFormat: "YYYY/MM/DD hh:mm"
-					}
-				}],
-				yAxes: [{
-					scaleLabel: {
-						display: true,
-						labelString: element.options.unit
-					}
-				}]
-			},
-			elements: {
-				line: {
-					lineTension: 0.4
+			chart: {
+				type: "lineChart",
+				x: function(d) { return d.timestamp; },
+				y: function(d) { return d.value; },
+				showValues: true,
+				valueFormat: function(d){
+					return d3.format(",.2f")(d);
 				},
-				point: {
-					radius: 0
+				transitionDuration: 500,
+				xScale : d3.time.scale(),
+				xAxis: {
+					axisLabel: $translate.instant("monitor_date_axis")
+				},
+				yAxis: {
+					axisLabel: element.options.unit,
+					axisLabelDistance: 30
 				}
 			}
 		};
-    
+		
         function init() {
 			self.getMonitor();
         }
@@ -83,12 +68,15 @@ angular.module("sagremorApp")
 			
             benoicFactory.getMonitor(element.device, element.type, element.name, Math.round(from.getTime() / 1000)).then(function (result) {
                 self.data = [];
-                self.labels = [];
-                var myData = [];
+                var myData = {
+					key: element.display,
+					values: []
+                };
                 if (!!result && result.length > 0) {
 					_.forEach(result, function (monitor) {
-						self.labels.push(new Date(monitor.timestamp * 1000));
-						myData.push(monitor.value);
+						var curDate = new Date(monitor.timestamp * 1000);
+						var value = {timestamp: curDate, value: monitor.value};
+						myData.values.push(value);
 					});
 					self.data.push(myData);
 				}
