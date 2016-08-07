@@ -402,7 +402,9 @@ angular.module("sagremorApp")
 		
 		this.useProfile = function (profile) {
 			sagremorParams.currentProfile = profile;
-			$cookies.put("ANGHARAD_PROFILE", profile.name);
+			var exp = new $window.Date();
+			exp = new $window.Date(exp.getFullYear() + 10, exp.getMonth(), exp.getDate());
+			$cookies.put("ANGHARAD_PROFILE", profile.name, {expires: exp});
 			$rootScope.$broadcast("carleonProfileUpdated");
 		};
 		

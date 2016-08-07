@@ -159,6 +159,7 @@ angular.module("sagremorApp")
     }
     
     function initParameters() {
+		console.log($cookies.get("ANGHARAD_SESSION_ID"));
         $http.defaults.headers.common["ANGHARAD_SESSION_ID"] = $cookies.get("ANGHARAD_SESSION_ID");
         sagremorParams.adminMode = false;
         sagremorParams.loggedIn = true;
@@ -301,7 +302,9 @@ angular.module("sagremorApp")
 		_.forEach(sagremorParams.profiles, function (profile) {
 			if (profile.default) {
 				sagremorParams.currentProfile = profile;
-				$cookies.put("ANGHARAD_PROFILE", profile.name);
+				var exp = new $window.Date();
+				exp = new $window.Date(exp.getFullYear() + 10, exp.getMonth(), exp.getDate());
+				$cookies.put("ANGHARAD_PROFILE", profile.name, {expires: exp});
 			}
 		});
 		
@@ -317,7 +320,9 @@ angular.module("sagremorApp")
 			}, function (error) {
 				toaster.pop("error", $translate.instant("profile_save"), $translate.instant("profile_save_error"));
 			});
-			$cookies.put("ANGHARAD_PROFILE", $translate.instant("profile_default"));
+			var exp = new $window.Date();
+			exp = new $window.Date(exp.getFullYear() + 10, exp.getMonth(), exp.getDate());
+			$cookies.put("ANGHARAD_PROFILE", $translate.instant("profile_default"), {expires: exp});
 			$scope.$broadcast("angharadProfileChanged");
 		}
 	};

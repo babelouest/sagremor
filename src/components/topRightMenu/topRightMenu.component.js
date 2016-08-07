@@ -20,7 +20,9 @@ function topRightMenuCtrl ($scope, $rootScope, $location, $http, $translate, $co
 		_.forEach(sagremorParams.profiles, function (profile) {
 			if (profile.name === self.currentProfileName) {
 				sagremorParams.currentProfile = profile;
-				$cookies.put("ANGHARAD_PROFILE", self.currentProfileName);
+				var now = new Date();
+				var exp = new Date(now.getFullYear()+10, now.getMonth(), now.getDate());
+				$cookies.put("ANGHARAD_PROFILE", self.currentProfileName, {expires: exp});
 				$rootScope.$broadcast("carleonProfileUpdated");
 				$rootScope.$broadcast("refreshDashboard");
 			}
