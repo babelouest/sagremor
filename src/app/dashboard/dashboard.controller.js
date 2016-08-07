@@ -39,56 +39,75 @@ angular.module("sagremorApp")
 
         function getDashboardElements () {
             self.dashboardWidgets = [];
-            if (!!sagremorParams.currentProfile) {
+            if (!!sagremorParams.currentProfile && !!sagremorParams.currentProfile.addTo && !!sagremorParams.currentProfile.addTo.D && !!sagremorParams.currentProfile.addTo.D.size > 0) {
 				getDashboardElementsCurrentProfiles();
 			} else {
-				getDashboardElementsNoProfile();
+				getDashboardElementsEmptyProfile();
 			}
         }
         
-        function getDashboardElementsNoProfile () {
+        function getDashboardElementsEmptyProfile () {
 			// Carleon not enabled, adding all benoic elements to the dashboard (if enabled)
 			if (sagremorParams.benoicEnabled) {
 				var defaultTag = "SGMR$D$";
 				var defaultY = 0;
 				
 				var x = 0;
+				var counter = 0;
 				_.forEach(sharedData.all("benoicDevices"), function (device) {
 					if (!!device.element) {
 						_.forEach(device.element.sensors, function (element, name) {
-							element.type = "sensor";
-							element.device = device.name;
-							element.name = name;
-							addBenoicElementToDashboard(element, defaultTag + x + "$" + defaultY);
-							x += 2;
+							if (element.enabled) {
+								element.type = "sensor";
+								element.device = device.name;
+								element.name = name;
+								addBenoicElementToDashboard(element, defaultTag + x + "$" + defaultY);
+								x += 3;
+								x %= 12;
+								counter++;
+							}
 						});
 					}
 				});
-				addDashboardSeparator($translate.instant("sensors_title"), defaultTag + x + "$" + defaultY);
+				if (counter >0) {
+					addDashboardSeparator($translate.instant("sensors_title"), defaultTag + x + "$" + defaultY);
+				}
 				
 				var x = 0;
+				var counter = 0;
 				_.forEach(sharedData.all("benoicDevices"), function (device) {
 					if (!!device.element) {
 						_.forEach(device.element.heaters, function (element, name) {
-							element.type = "heater";
-							element.device = device.name;
-							element.name = name;
-							addBenoicElementToDashboard(element, defaultTag + x + "$" + defaultY);
-							x += 2;
+							if (element.enabled) {
+								element.type = "heater";
+								element.device = device.name;
+								element.name = name;
+								addBenoicElementToDashboard(element, defaultTag + x + "$" + defaultY);
+								x += 3;
+								x %= 12;
+								counter++;
+							}
 						});
 					}
 				});
-				addDashboardSeparator($translate.instant("heaters_title"), defaultTag + x + "$" + defaultY);;
+				if (counter >0) {
+					addDashboardSeparator($translate.instant("heaters_title"), defaultTag + x + "$" + defaultY);;
+				}
 				
 				var x = 0;
+				var counter = 0;
 				_.forEach(sharedData.all("benoicDevices"), function (device) {
 					if (!!device.element) {
 						_.forEach(device.element.dimmers, function (element, name) {
-							element.type = "dimmer";
-							element.device = device.name;
-							element.name = name;
-							addBenoicElementToDashboard(element, defaultTag + x + "$" + defaultY);
-							x += 2;
+							if (element.enabled) {
+								element.type = "dimmer";
+								element.device = device.name;
+								element.name = name;
+								addBenoicElementToDashboard(element, defaultTag + x + "$" + defaultY);
+								x += 3;
+								x %= 12;
+								counter++;
+							}
 						});
 					}
 				});
@@ -96,16 +115,21 @@ angular.module("sagremorApp")
 				_.forEach(sharedData.all("benoicDevices"), function (device) {
 					if (!!device.element) {
 						_.forEach(device.element.switches, function (element, name) {
-							element.type = "switch";
-							element.device = device.name;
-							element.name = name;
-							addBenoicElementToDashboard(element, defaultTag + x + "$" + defaultY);
-							x += 2;
+							if (element.enabled) {
+								element.type = "switch";
+								element.device = device.name;
+								element.name = name;
+								addBenoicElementToDashboard(element, defaultTag + x + "$" + defaultY);
+								x += 3;
+								x %= 12;
+								counter++;
+							}
 						});
 					}
 				});
-				addDashboardSeparator($translate.instant("switches_title"), defaultTag + x + "$" + defaultY);
-				
+				if (counter >0) {
+					addDashboardSeparator($translate.instant("switches_title"), defaultTag + x + "$" + defaultY);
+				}
 			}
 		}
 

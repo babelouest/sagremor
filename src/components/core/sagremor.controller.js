@@ -21,6 +21,7 @@ angular.module("sagremorApp")
     }
     
     function refreshData() {
+		popLoader();
 		// Refresh benoic devices with overview
 		var devices = sharedData.all("benoicDevices");
 		var devicePromises = {};
@@ -72,7 +73,7 @@ angular.module("sagremorApp")
 		
 		sharedData.removeAll("carleonServices");
 		
-		return $q.all(qList).then(function (results) {
+		$q.all(qList).then(function (results) {
 			for (key in results.services) {
 				_.forEach(results.services[key].element, function (element) {
 					element.type = results.services[key].name;
@@ -86,6 +87,10 @@ angular.module("sagremorApp")
 		}, function (error) {
 			toaster.pop({type: "error", title: $translate.instant("refresh"), body: $translate.instant("refresh_carleon_error")});
 		});
+		
+		// All done, refreshing dashboard now
+		toaster.clear(self.loaderToast);
+		$scope.$broadcast("refreshDashboard");
 	}
     
     function getApiData() {
@@ -159,7 +164,6 @@ angular.module("sagremorApp")
     }
     
     function initParameters() {
-		console.log($cookies.get("ANGHARAD_SESSION_ID"));
         $http.defaults.headers.common["ANGHARAD_SESSION_ID"] = $cookies.get("ANGHARAD_SESSION_ID");
         sagremorParams.adminMode = false;
         sagremorParams.loggedIn = true;
