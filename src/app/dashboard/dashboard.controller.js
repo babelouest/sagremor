@@ -39,7 +39,7 @@ angular.module("sagremorApp")
 
         function getDashboardElements () {
             self.dashboardWidgets = [];
-            if (!!sagremorParams.currentProfile && !!sagremorParams.currentProfile.addTo && !!sagremorParams.currentProfile.addTo.D && !!sagremorParams.currentProfile.addTo.D.size > 0) {
+            if (!!sagremorParams.currentProfile && !!sagremorParams.currentProfile.addTo && !!sagremorParams.currentProfile.addTo.D && sagremorParams.currentProfile.addTo.D.length > 0) {
 				getDashboardElementsCurrentProfiles();
 			} else {
 				getDashboardElementsEmptyProfile();

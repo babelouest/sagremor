@@ -22,6 +22,7 @@ angular.module("sagremorApp")
     
     function refreshData() {
 		popLoader();
+		
 		// Refresh benoic devices with overview
 		var devices = sharedData.all("benoicDevices");
 		var devicePromises = {};
@@ -37,60 +38,60 @@ angular.module("sagremorApp")
 			$rootScope.$broadcast("refreshDevices");
 		}, function (error) {
 			toaster.pop("error", $translate.instant("refresh"), $translate.instant("refresh_device_error"));
-		});
-		
-		// Refresh scripts and events
-		var promiseList = {
-			scripts: angharadFactory.getScriptList(),
-			schedulers: angharadFactory.getSchedulerList(),
-			triggers: angharadFactory.getTriggerList()
-		};
-		
-		$q.all(promiseList).then(function (result) {
-			sharedData.removeAll("angharadScripts");
-			sharedData.removeAll("angharadSchedulers");
-			sharedData.removeAll("angharadTriggers");
-			for (sc in result.scripts) {
-				sharedData.add("angharadScripts", result.scripts[sc].name, result.scripts[sc]);
-			}
-			$rootScope.$broadcast("refreshAngharadScripts");
-			for (sh in result.schedulers) {
-				sharedData.add("angharadSchedulers", result.schedulers[sh].name, result.schedulers[sh]);
-			}
-			for (tr in result.triggers) {
-				sharedData.add("angharadTriggers", result.triggers[tr].name, result.triggers[tr]);
-			}
-			$rootScope.$broadcast("refreshAngharadEvents");
-        }, function (error) {
-            toaster.pop("error", $translate.instant("refresh"), $translate.instant("refresh_scripts_events_error"));
-        });
-        
-        // Refresh carleon services elements
-		var qList = {
-			services: carleonFactory.getServiceList(),
-			profiles: carleonFactory.getProfileList()
-		}
-		
-		sharedData.removeAll("carleonServices");
-		
-		$q.all(qList).then(function (results) {
-			for (key in results.services) {
-				_.forEach(results.services[key].element, function (element) {
-					element.type = results.services[key].name;
-				});
-				sharedData.add("carleonServices", results.services[key].name, results.services[key]);
-			}
-			$scope.$broadcast("refreshCarleonServices");
+		})["finally"](function () {
+			// Refresh scripts and events
+			var promiseList = {
+				scripts: angharadFactory.getScriptList(),
+				schedulers: angharadFactory.getSchedulerList(),
+				triggers: angharadFactory.getTriggerList()
+			};
 			
-			sagremorParams.profiles = results.profiles;
-			$scope.$broadcast("carleonProfilesChanged");
-		}, function (error) {
-			toaster.pop({type: "error", title: $translate.instant("refresh"), body: $translate.instant("refresh_carleon_error")});
+			$q.all(promiseList).then(function (result) {
+				sharedData.removeAll("angharadScripts");
+				sharedData.removeAll("angharadSchedulers");
+				sharedData.removeAll("angharadTriggers");
+				for (sc in result.scripts) {
+					sharedData.add("angharadScripts", result.scripts[sc].name, result.scripts[sc]);
+				}
+				$rootScope.$broadcast("refreshAngharadScripts");
+				for (sh in result.schedulers) {
+					sharedData.add("angharadSchedulers", result.schedulers[sh].name, result.schedulers[sh]);
+				}
+				for (tr in result.triggers) {
+					sharedData.add("angharadTriggers", result.triggers[tr].name, result.triggers[tr]);
+				}
+				$rootScope.$broadcast("refreshAngharadEvents");
+			}, function (error) {
+				toaster.pop("error", $translate.instant("refresh"), $translate.instant("refresh_scripts_events_error"));
+			})["finally"](function () {
+				// Refresh carleon services elements
+				var qList = {
+					services: carleonFactory.getServiceList(),
+					profiles: carleonFactory.getProfileList()
+				}
+				
+				sharedData.removeAll("carleonServices");
+				
+				$q.all(qList).then(function (results) {
+					for (key in results.services) {
+						_.forEach(results.services[key].element, function (element) {
+							element.type = results.services[key].name;
+						});
+						sharedData.add("carleonServices", results.services[key].name, results.services[key]);
+					}
+					$scope.$broadcast("refreshCarleonServices");
+					
+					sagremorParams.profiles = results.profiles;
+					$scope.$broadcast("carleonProfilesChanged");
+				}, function (error) {
+					toaster.pop({type: "error", title: $translate.instant("refresh"), body: $translate.instant("refresh_carleon_error")});
+				})["finally"](function () {
+					// All done, refreshing dashboard now
+					toaster.clear(self.loaderToast);
+					$scope.$broadcast("refreshDashboard");
+				});
+			});
 		});
-		
-		// All done, refreshing dashboard now
-		toaster.clear(self.loaderToast);
-		$scope.$broadcast("refreshDashboard");
 	}
     
     function getApiData() {
