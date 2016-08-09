@@ -30,5 +30,6 @@
 	"carleon_motion_command_online_result_title": "Connection",
 	"carleon_motion_command_snapshot_title": "Take a snapshot",
 	"carleon_motion_command_snapshot_parameter_stream_title": "Camera stream",
-	"carleon_motion_command_snapshot_result_title": "Result"
+	"carleon_motion_command_snapshot_result_title": "Result",
+	"carleon_motion_stream_open": "Open streams"
 }

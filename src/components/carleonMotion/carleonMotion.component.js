@@ -1,8 +1,8 @@
-function carleonMotionController ($scope, $translatePartialLoader, $translate, angharadConfig, carleonFactory, carleonMotionFactory, sagremorService, sagremorParams, toaster) {
+function carleonMotionController ($scope, $http, $translatePartialLoader, $translate, angharadConfig, carleonFactory, carleonMotionFactory, sagremorService, sagremorParams, toaster) {
     var ctrl = this;
     
     this.urlBaseImages = angharadConfig.baseUrl + angharadConfig.prefixCarleon + "service-motion/" + ctrl.element.name + "/image/";
-    this.type = "";
+    this.urlBaseStream = angharadConfig.baseUrl + angharadConfig.prefixCarleon + "service-motion/" + ctrl.element.name + "/stream/";
     this.name = ctrl.element.name;
 
     this.images = [];
@@ -12,6 +12,7 @@ function carleonMotionController ($scope, $translatePartialLoader, $translate, a
     
     this.streamList = [];
     this.selectedStream = false;
+    this.streamUri = "";
     
     this.online = false;
     
@@ -29,7 +30,6 @@ function carleonMotionController ($scope, $translatePartialLoader, $translate, a
 			}
 			if (!sagremorParams.currentProfile.carleon.serviceMotion[ctrl.element.name]) {
 				sagremorParams.currentProfile.carleon.serviceMotion[ctrl.element.name] = {
-					type: "file",
 					selectedFileList: "",
 					selectedStream: ""
 				}
@@ -38,8 +38,8 @@ function carleonMotionController ($scope, $translatePartialLoader, $translate, a
 		ctrl.refresh();
     }
     
-    this.openPopupImage = function (title, src) {
-		sagremorService.imagePopup(title, src);
+    this.openPopupImage = function (imgArray, index) {
+		carleonMotionFactory.imagePopup(imgArray, index);
 	};
     
     this.refresh = function () {
@@ -47,7 +47,6 @@ function carleonMotionController ($scope, $translatePartialLoader, $translate, a
 		ctrl.streamList = [];
 		carleonMotionFactory.status(ctrl.element.name).then(function (response) {
 			ctrl.online = response.online;
-			ctrl.type = sagremorParams.currentProfile.carleon.serviceMotion[ctrl.element.name].type;
 			ctrl.fileList = response.file_list;
 			_.forEach(response.file_list, function (fileList, name) {
 				ctrl.fileListName.push(name);
@@ -61,13 +60,14 @@ function carleonMotionController ($scope, $translatePartialLoader, $translate, a
 			}
 			
 			_.forEach(response.stream_list, function (stream) {
-				ctrl.streamList.push(stream);
+				var image = {
+					name: ctrl.element.name,
+					title: stream.name,
+					img: ctrl.urlBaseStream + stream.name + "?ANGHARAD_SESSION_ID=" + $http.defaults.headers.common["ANGHARAD_SESSION_ID"].substr(19),
+					snapshotUri: stream.snapshot_uri
+				};
+				ctrl.streamList.push(image);
 			});
-			if (!!sagremorParams.currentProfile.carleon.serviceMotion[ctrl.element.name].selectedStream) {
-				ctrl.selectedStream = sagremorParams.currentProfile.carleon.serviceMotion[ctrl.element.name].selectedStream;
-			} else if (ctrl.streamList.length === 1) {
-				ctrl.selectedStream = ctrl.streamList[0];
-			}
 		});
 	};
     
@@ -75,8 +75,8 @@ function carleonMotionController ($scope, $translatePartialLoader, $translate, a
 		ctrl.images = [];
 		_.forEach(ctrl.fileList[ctrl.selectedFileList], function (file) {
 			var image = {
-				thumb: ctrl.urlBaseImages + ctrl.selectedFileList + "/" + file + "?thumbnail=true",
-				img: ctrl.urlBaseImages + ctrl.selectedFileList + "/" + file,
+				thumb: ctrl.urlBaseImages + ctrl.selectedFileList + "/" + file + "?thumbnail=true" + "&ANGHARAD_SESSION_ID=" + $http.defaults.headers.common["ANGHARAD_SESSION_ID"].substr(19),
+				img: ctrl.urlBaseImages + ctrl.selectedFileList + "/" + file + "?ANGHARAD_SESSION_ID=" + $http.defaults.headers.common["ANGHARAD_SESSION_ID"].substr(19),
 				title: file
 			}
 			ctrl.images.push(image);
@@ -90,31 +90,8 @@ function carleonMotionController ($scope, $translatePartialLoader, $translate, a
 		});
 	};
 	
-	this.snapshot = function () {
-		carleonMotionFactory.snapshot(ctrl.element.name, ctrl.selectedStream.name).then(function () {
-			toaster.pop("success", $translate.instant("carleon_motion_snapshot"), $translate.instant("carleon_motion_snapshot_success"));
-		}, function () {
-			toaster.pop("error", $translate.instant("carleon_motion_snapshot"), $translate.instant("carleon_motion_snapshot_error"));
-		});
-	};
-	
-	this.changeType = function () {
-		sagremorParams.currentProfile.carleon.serviceMotion[ctrl.element.name].type = ctrl.type;
-		carleonFactory.saveCurrentProfile().then(function () {
-			//toaster.pop("success", $translate.instant("profile_save"), $translate.instant("profile_save_success"));
-		}, function () {
-			toaster.pop("error", $translate.instant("profile_save"), $translate.instant("profile_save_error"));
-		});
-	};
-	
-	this.changeSelectedStream = function () {
-		sagremorParams.currentProfile.carleon.serviceMotion[ctrl.element.name].selectedStream = ctrl.selectedStream;
-		sagremorParams.currentProfile.carleon.serviceMotion[ctrl.element.name].selectedFileList = "";
-		carleonFactory.saveCurrentProfile().then(function () {
-			//toaster.pop("success", $translate.instant("profile_save"), $translate.instant("profile_save_success"));
-		}, function () {
-			toaster.pop("error", $translate.instant("profile_save"), $translate.instant("profile_save_error"));
-		});
+	this.openStream = function () {
+		carleonMotionFactory.imagePopup(ctrl.streamList, 0);
 	};
 	
 	$scope.$on("carleonServicesChanged", function () {
@@ -225,6 +202,24 @@ angular.module("sagremorApp").component("serviceMotion", {
 		});
 	};
 	
+	carleonMotionFactory.imagePopup = function (imgArray, index) {
+		var modalInstance = $uibModal.open({
+			animation: true,
+			templateUrl: "components/carleonMotion/carleonMotion.image.modal.html",
+			controller: "carleonMotionImageModalCtrl",
+			controllerAs: "carleonMotionImageModalCtrl",
+			size: "lg",
+			resolve: {
+				imgArray: function () {
+					return imgArray;
+				},
+				index: function () {
+					return index;
+				}
+			}
+		});
+	};
+        
     return carleonMotionFactory;
 
 })
