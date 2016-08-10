@@ -23,7 +23,7 @@ function topRightMenuCtrl ($scope, $rootScope, $location, $http, $translate, $co
 				var now = new Date();
 				var exp = new Date(now.getFullYear()+10, now.getMonth(), now.getDate());
 				$cookies.put("ANGHARAD_PROFILE", self.currentProfileName, {expires: exp});
-				$rootScope.$broadcast("carleonProfileUpdated");
+				$rootScope.$broadcast("angharadProfileUpdated");
 				$rootScope.$broadcast("refreshDashboard");
 			}
 		});
@@ -43,12 +43,12 @@ function topRightMenuCtrl ($scope, $rootScope, $location, $http, $translate, $co
 		});
     };
     
-	$scope.$on("carleonProfilesChanged", function () {
+	$scope.$on("angharadProfileChanged", function () {
 		self.profiles = sagremorParams.profiles;
 		self.currentProfileName = !!sagremorParams.currentProfile?sagremorParams.currentProfile.name:"";
 	});
 	
-	$scope.$on("carleonProfileUpdated", function () {
+	$scope.$on("angharadProfileUpdated", function () {
 		self.profiles = sagremorParams.profiles;
 		self.currentProfileName = !!sagremorParams.currentProfile?sagremorParams.currentProfile.name:"";
 	});

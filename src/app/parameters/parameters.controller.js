@@ -1,6 +1,6 @@
 angular.module("sagremorApp")
     .controller("ParametersCtrl",
-    function($scope, $rootScope, $q, $location, $translate, $cookies, toaster, angharadFactory, benoicFactory, carleonFactory, sharedData, sagremorConfirm, sagremorParams) {
+    function($scope, $rootScope, $q, $location, $translate, $cookies, $window, toaster, angharadFactory, benoicFactory, carleonFactory, sharedData, sagremorConfirm, sagremorParams) {
       
 		var self = this;
 
@@ -285,9 +285,9 @@ angular.module("sagremorApp")
 		
 		this.saveNewProfile = function () {
 			var newProfile = {name: self.newProfileName, description: self.newProfileDescription, default: self.newProfileDefault};
-			carleonFactory.setProfile(self.newProfileName, newProfile).then(function () {
+			angharadFactory.setProfile(self.newProfileName, newProfile).then(function () {
 				toaster.pop("success", $translate.instant("profiles"), $translate.instant("profiles_add_success"));
-				$scope.$broadcast("carleonProfilesChanged");
+				$scope.$broadcast("angharadProfileChanged");
 				self.profileList.push(newProfile);
 			}, function (error) {
 				toaster.pop("error", $translate.instant("profiles"), $translate.instant("profiles_add_error"));
@@ -298,9 +298,9 @@ angular.module("sagremorApp")
 
 		this.removeProfile = function (profile) {
 			sagremorConfirm.open($translate.instant("profile_remove"), $translate.instant("profile_remove_confirm")).then (function(result) {
-				carleonFactory.removeProfile(profile.name).then(function () {
+				angharadFactory.removeProfile(profile.name).then(function () {
 					toaster.pop("success", $translate.instant("profiles"), $translate.instant("profiles_remove_success"));
-					$scope.$broadcast("carleonProfilesChanged");
+					$scope.$broadcast("angharadProfileChanged");
 					_.remove(self.profileList, function (curProfile) {
 						return profile.name === curProfile.name;
 					});
@@ -344,11 +344,11 @@ angular.module("sagremorApp")
 				delete profile.update;
 				var promises = {
 					remove: carleonFactory.removeProfile(savedName),
-					add: carleonFactory.setProfile(profile.name, profile)
+					add: angharadFactory.setProfile(profile.name, profile)
 				}
 
 				$q.all(promises).then(function (results) {
-					$scope.$broadcast("carleonProfilesChanged");
+					$scope.$broadcast("angharadProfileChanged");
 					toaster.pop("success", $translate.instant("profiles"), $translate.instant("profiles_save_success"));
 				}, function (error) {
 					toaster.pop("error", $translate.instant("profiles"), $translate.instant("profiles_save_error"));
@@ -358,8 +358,8 @@ angular.module("sagremorApp")
 				delete profile.savedName;
 				delete profile.savedDescription;
 				delete profile.update;
-				carleonFactory.setProfile(profile.name, profile).then(function (result) {
-					$scope.$broadcast("carleonProfilesChanged");
+				angharadFactory.setProfile(profile.name, profile).then(function (result) {
+					$scope.$broadcast("angharadProfileChanged");
 					toaster.pop("success", $translate.instant("profiles"), $translate.instant("profiles_save_success"));
 				}, function (error) {
 					toaster.pop("error", $translate.instant("profiles"), $translate.instant("profiles_save_error"));
@@ -373,8 +373,8 @@ angular.module("sagremorApp")
 				delete profile.savedName;
 				delete profile.savedDescription;
 				delete profile.update;
-				carleonFactory.setProfile(profile.name, profile).then(function (result) {
-					$scope.$broadcast("carleonProfilesChanged");
+				angharadFactory.setProfile(profile.name, profile).then(function (result) {
+					$scope.$broadcast("angharadProfileChanged");
 					toaster.pop("success", $translate.instant("profiles"), $translate.instant("profiles_save_success"));
 				}, function (error) {
 					toaster.pop("error", $translate.instant("profiles"), $translate.instant("profiles_save_error"));
@@ -382,17 +382,17 @@ angular.module("sagremorApp")
 			} else {
 				// Set this one to default, and set the other default to false
 				delete profile.update;
-				carleonFactory.setProfile(profile.name, profile).then(function (result) {
+				angharadFactory.setProfile(profile.name, profile).then(function (result) {
 					_.forEach(self.profileList, function (curProfile) {
 						if (curProfile.default && curProfile.name !== profile.name) {
 							curProfile.default = false;
-							carleonFactory.setProfile(curProfile.name, curProfile).then(function (result) {
+							angharadFactory.setProfile(curProfile.name, curProfile).then(function (result) {
 							}, function (error) {
 								toaster.pop("error", $translate.instant("profiles"), $translate.instant("profiles_save_error"));
 							});
 						}
 					});
-					$scope.$broadcast("carleonProfilesChanged");
+					$scope.$broadcast("angharadProfileChanged");
 					toaster.pop("success", $translate.instant("profiles"), $translate.instant("profiles_save_success"));
 				}, function (error) {
 				  toaster.pop("error", $translate.instant("profiles"), $translate.instant("profiles_save_error"));
@@ -405,14 +405,14 @@ angular.module("sagremorApp")
 			var exp = new $window.Date();
 			exp = new $window.Date(exp.getFullYear() + 10, exp.getMonth(), exp.getDate());
 			$cookies.put("ANGHARAD_PROFILE", profile.name, {expires: exp});
-			$rootScope.$broadcast("carleonProfileUpdated");
+			$rootScope.$broadcast("angharadProfileUpdated");
 		};
 		
-		$scope.$on("carleonProfilesChanged", function () {
+		$scope.$on("angharadProfileChanged", function () {
 			self.profileList = sagremorParams.profiles;
 		});
 
-		$scope.$on("carleonProfileUpdated", function () {
+		$scope.$on("angharadProfileUpdated", function () {
 			self.currentProfile = sagremorParams.currentProfile;
 		});
 

@@ -1,4 +1,4 @@
-function sagScriptController ($translate, toaster, angharadFactory, sagremorParams) {
+function sagScriptController ($rootScope, $translate, toaster, angharadFactory, sagremorParams) {
     var ctrl = this;
     
     this.loaderToast = null;
@@ -14,6 +14,7 @@ function sagScriptController ($translate, toaster, angharadFactory, sagremorPara
 			toaster.pop("error", $translate.instant("script_run", {name: ctrl.element.name}), $translate.instant("script_run_error"));
 		})["finally"](function () {
 			toaster.clear(self.loaderToast);
+			$rootScope.$broadcast("refresh");
 		});
 	};
     

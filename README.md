@@ -5,7 +5,7 @@ Angharad 3.0 web client application
 ## Test
 
 ```bash
-$ npm install %% bower install
+$ npm install && bower install
 $ gulp serve
 ```
 

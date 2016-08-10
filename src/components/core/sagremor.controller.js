@@ -43,7 +43,8 @@ angular.module("sagremorApp")
 			var promiseList = {
 				scripts: angharadFactory.getScriptList(),
 				schedulers: angharadFactory.getSchedulerList(),
-				triggers: angharadFactory.getTriggerList()
+				triggers: angharadFactory.getTriggerList(),
+				profiles: angharadFactory.getProfileList()
 			};
 			
 			$q.all(promiseList).then(function (result) {
@@ -61,28 +62,23 @@ angular.module("sagremorApp")
 					sharedData.add("angharadTriggers", result.triggers[tr].name, result.triggers[tr]);
 				}
 				$rootScope.$broadcast("refreshAngharadEvents");
+				sagremorParams.profiles = result;
+				$scope.$broadcast("angharadProfileChanged");
 			}, function (error) {
 				toaster.pop("error", $translate.instant("refresh"), $translate.instant("refresh_scripts_events_error"));
 			})["finally"](function () {
 				// Refresh carleon services elements
-				var qList = {
-					services: carleonFactory.getServiceList(),
-					profiles: carleonFactory.getProfileList()
-				}
-				
 				sharedData.removeAll("carleonServices");
 				
-				$q.all(qList).then(function (results) {
-					for (key in results.services) {
-						_.forEach(results.services[key].element, function (element) {
-							element.type = results.services[key].name;
+				carleonFactory.getServiceList().then(function (result) {
+					for (key in result) {
+						_.forEach(result[key].element, function (element) {
+							element.type = result[key].name;
 						});
-						sharedData.add("carleonServices", results.services[key].name, results.services[key]);
+						sharedData.add("carleonServices", result[key].name, result[key]);
 					}
 					$scope.$broadcast("refreshCarleonServices");
 					
-					sagremorParams.profiles = results.profiles;
-					$scope.$broadcast("carleonProfilesChanged");
 				}, function (error) {
 					toaster.pop({type: "error", title: $translate.instant("refresh"), body: $translate.instant("refresh_carleon_error")});
 				})["finally"](function () {
@@ -233,44 +229,16 @@ angular.module("sagremorApp")
     }
     
 	this.initCarleon = function () {
-		var qList = {
-			services: carleonFactory.getServiceList(),
-			profiles: carleonFactory.getProfileList()
-		}
-		
 		sharedData.removeAll("carleonServices");
 		
-		return $q.all(qList).then(function (results) {
-			for (key in results.services) {
-				_.forEach(results.services[key].element, function (element) {
-					element.type = results.services[key].name;
+		return carleonFactory.getServiceList().then(function (result) {
+			for (key in result) {
+				_.forEach(result[key].element, function (element) {
+					element.type = result[key].name;
 				});
-				sharedData.add("carleonServices", results.services[key].name, results.services[key]);
+				sharedData.add("carleonServices", result[key].name, result[key]);
 			}
 			$scope.$broadcast("carleonServicesChanged");
-			
-			if (results.profiles.length === 0) {
-				self.setDefaultProfile();
-			} else {
-				sagremorParams.profiles = results.profiles;
-				var profile_name = $cookies.get("ANGHARAD_PROFILE");
-				sagremorParams.currentProfile = false;
-				
-				if (!!profile_name) {
-					_.forEach(results.profiles, function (profile) {
-						if (profile.name === profile_name) {
-							sagremorParams.currentProfile = profile;
-							$scope.$broadcast("angharadProfileChanged");
-						}
-					});
-					if (!sagremorParams.currentProfile) {
-						self.setDefaultProfile();
-					}
-				} else {
-					self.setDefaultProfile();
-				}
-			}
-			$scope.$broadcast("carleonProfilesChanged");
 		}, function (error) {
 			toaster.pop({type: "error", title: $translate.instant("carleon_loading_title"), body: $translate.instant("carleon_loading_error")});
 		});
@@ -320,7 +288,7 @@ angular.module("sagremorApp")
 				defaultProfile
 			];
 			sagremorParams.currentProfile = defaultProfile;
-			carleonFactory.setProfile($translate.instant("profile_default"), defaultProfile).then(function () {
+			angharadFactory.setProfile($translate.instant("profile_default"), defaultProfile).then(function () {
 				toaster.pop("success", $translate.instant("profile_save"), $translate.instant("profile_save_success"));
 			}, function (error) {
 				toaster.pop("error", $translate.instant("profile_save"), $translate.instant("profile_save_error"));
@@ -336,7 +304,8 @@ angular.module("sagremorApp")
 		var promiseList = {
 			scripts: angharadFactory.getScriptList(),
 			schedulers: angharadFactory.getSchedulerList(),
-			triggers: angharadFactory.getTriggerList()
+			triggers: angharadFactory.getTriggerList(),
+			profiles: angharadFactory.getProfileList()
 		};
 		
 		return $q.all(promiseList).then(function (result) {
@@ -352,6 +321,29 @@ angular.module("sagremorApp")
 				sharedData.add("angharadTriggers", result.triggers[tr].name, result.triggers[tr]);
 			}
 			$scope.$broadcast("angharadTriggersChanged");
+			
+			if (result.profiles.length === 0) {
+				self.setDefaultProfile();
+				$scope.$broadcast("angharadProfileChanged");
+			} else {
+				sagremorParams.profiles = result.profiles;
+				var profile_name = $cookies.get("ANGHARAD_PROFILE");
+				sagremorParams.currentProfile = false;
+				
+				if (!!profile_name) {
+					_.forEach(result.profiles, function (profile) {
+						if (profile.name === profile_name) {
+							sagremorParams.currentProfile = profile;
+							$scope.$broadcast("angharadProfileChanged");
+						}
+					});
+					if (!sagremorParams.currentProfile) {
+						self.setDefaultProfile();
+					}
+				} else {
+					self.setDefaultProfile();
+				}
+			}
         }, function (error) {
             toaster.pop("error", $translate.instant("angharad_loading_title"), $translate.instant("angharad_loading_error"));
         });

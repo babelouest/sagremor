@@ -11,6 +11,7 @@ angular.module("sagremorApp")
 		this.options = {
 			chart: {
 				type: "lineChart",
+				interpolate:"basis",
 				x: function(d) { return d.timestamp; },
 				y: function(d) { return d.value; },
 				showValues: true,

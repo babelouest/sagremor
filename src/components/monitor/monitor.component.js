@@ -21,6 +21,7 @@ function sagMonitorController ($scope, $q, $translate, toaster, angharadFactory,
 	this.options = {
 		chart: {
 			type: "lineChart",
+			interpolate:"basis",
 			x: function(d) { return d.timestamp; },
 			y: function(d) { return d.value; },
 			showValues: true,
@@ -39,40 +40,6 @@ function sagMonitorController ($scope, $q, $translate, toaster, angharadFactory,
 		}
 	};
 
-	/*this.options = {
-		responsive: true,
-		tooltips: {
-			callbacks: {
-				label: function(tooltipItem, data) {
-					return tooltipItem.yLabel;
-				}
-			}
-		},
-		scales: {
-			xAxes: [{
-				type: "time",
-				display: true,
-				time: {
-					tooltipFormat: "YYYY/MM/DD hh:mm"
-				}
-			}],
-			yAxes: [{
-				scaleLabel: {
-					display: true,
-				}
-			}]
-		},
-		elements: {
-			line: {
-				lineTension: 0.4,
-				fill: false
-			},
-			point: {
-				radius: 3
-			}
-		}
-	};*/
-    
     function init() {
 		updateDevices();
 		ctrl.displayMonitor();

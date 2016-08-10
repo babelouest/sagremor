@@ -1,4 +1,4 @@
-function sagContainerController ($translate, toaster, sharedData, angharadFactory) {
+function sagContainerController ($rootScope, $translate, toaster, sharedData, angharadFactory) {
     var ctrl = this;
     
     this.scripts = [];
@@ -40,6 +40,7 @@ function sagContainerController ($translate, toaster, sharedData, angharadFactor
 		}, function (error) {
 			toaster.pop("error", $translate.instant("script_run", {name: script.name}), $translate.instant("script_run_error"));
 		})["finally"](function () {
+			$rootScope.$broadcast("refresh");
 			toaster.clear(loaderToast);
 		});
 	};

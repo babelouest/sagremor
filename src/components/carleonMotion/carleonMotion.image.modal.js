@@ -27,7 +27,6 @@ angular.module("sagremorApp")
 		
 		this.changeImage = function (delta) {
 			self.index += delta;
-			console.log(self.index, self.imgArray.length)
 			self.currentImage = self.imgArray[self.index];
 			$scope.$broadcast("carleonMotionImageIframe", self.currentImage);
 		};
@@ -46,6 +45,10 @@ angular.module("sagremorApp")
 			}, function () {
 				toaster.pop("error", $translate.instant("carleon_motion_snapshot"), $translate.instant("carleon_motion_snapshot_error"));
 			});
+		};
+		
+		this.showIndex = function () {
+			return (self.index + 1) + " / " + self.imgArray.length;
 		};
 		
         init();

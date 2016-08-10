@@ -11,17 +11,15 @@
 			</div>
 			<div class="row control-group">
 				<div class="col-xs-5">
-					<button type="button" class="btn pull-right" data-ng-click="carleonMotionImageModalCtrl.changeImage(-1)" data-ng-disabled="!carleonMotionImageModalCtrl.canPrevious()">
+					<button type="button" class="btn pull-right" data-ng-click="carleonMotionImageModalCtrl.changeImage(-1)" data-ng-if="carleonMotionImageModalCtrl.canPrevious()">
 						<i class="fa fa-arrow-left" aria-hidden="true"></i>
 					</button>
 				</div>
 				<div class="col-xs-2 text-center">
-					<span data-ng-bind="carleonMotionImageModalCtrl.index + 1"></span>
-					<span> / </span>
-					<span data-ng-bind="carleonMotionImageModalCtrl.imgArray.length"></span>
+					<span data-ng-bind="carleonMotionImageModalCtrl.showIndex()"></span>
 				</div>
 				<div class="col-xs-5">
-					<button type="button" class="btn pull-left" data-ng-click="carleonMotionImageModalCtrl.changeImage(1)" data-ng-disabled="!carleonMotionImageModalCtrl.canNext()">
+					<button type="button" class="btn pull-left" data-ng-click="carleonMotionImageModalCtrl.changeImage(1)" data-ng-if="carleonMotionImageModalCtrl.canNext()">
 						<i class="fa fa-arrow-right" aria-hidden="true"></i>
 					</button>
 				</div>

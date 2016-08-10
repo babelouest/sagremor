@@ -61,7 +61,7 @@ angular.module("sagremorApp")
 				};
 				profile.addTo.D.push(newElement);
 			}
-			return carleonFactory.setProfile(profile.name, profile).then(function () {
+			return angharadFactory.setProfile(profile.name, profile).then(function () {
 				toaster.pop({type: "success", title: $translate.instant("angharad_add_to_dashboard"), body: $translate.instant("angharad_add_to_dashboard_success")});
 			}, function () {
 				toaster.pop({type: "error", title: $translate.instant("angharad_add_to_dashboard"), body: $translate.instant("angharad_add_to_dashboard_error")});
