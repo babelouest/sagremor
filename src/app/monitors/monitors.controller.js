@@ -63,7 +63,7 @@ angular.module("sagremorApp")
 				if (!exist && !!name) {
 					var monitor = {name: name, elements: []};
 					sagremorParams.currentProfile.monitorList.push(monitor);
-					carleonFactory.saveCurrentProfile().then(function() {
+					angharadFactory.saveCurrentProfile().then(function() {
 						toaster.pop("success", $translate.instant("monitor_save"), $translate.instant("monitor_save_success"));
 					}, function () {
 						toaster.pop("error", $translate.instant("monitor_save"), $translate.instant("monitor_save_error"));

@@ -20,7 +20,7 @@ angular.module("sagremorApp")
         return angharadBackendFactory;
     }])
     .factory("angharadFactory", 
-    function($http, angharadConfig, angharadBackendService) {
+    function($http, $q, angharadConfig, angharadBackendService, sagremorParams) {
 
         var urlBase = angharadConfig.baseUrl + angharadConfig.prefixAngharad;
         var dataFactory = {};

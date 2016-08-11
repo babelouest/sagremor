@@ -124,7 +124,7 @@ function sagMonitorController ($scope, $q, $translate, toaster, angharadFactory,
     this.addElement = function () {
 		ctrl.newElement.color = ctrl.newElementColor;
 		ctrl.element.elements.push(ctrl.newElement);
-		carleonFactory.saveCurrentProfile().then(function () {
+		angharadFactory.saveCurrentProfile().then(function () {
 			ctrl.displayMonitor();
 		}, function () {
 			toaster.pop("error", $translate.instant("profile_save"), $translate.instant("profile_save_error"));
@@ -205,7 +205,7 @@ function sagMonitorController ($scope, $q, $translate, toaster, angharadFactory,
 	this.removeSerie = function (serie) {
 		if (ctrl.element.elements.indexOf(serie) >= 0) {
 			ctrl.element.elements.splice(ctrl.element.elements.indexOf(serie), 1);
-			carleonFactory.saveCurrentProfile().then(function () {
+			angharadFactory.saveCurrentProfile().then(function () {
 				ctrl.displayMonitor();
 			}, function () {
 				toaster.pop("error", $translate.instant("profile_save"), $translate.instant("profile_save_error"));

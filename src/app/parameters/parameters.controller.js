@@ -343,7 +343,7 @@ angular.module("sagremorApp")
 				delete profile.newDescription;
 				delete profile.update;
 				var promises = {
-					remove: carleonFactory.removeProfile(savedName),
+					remove: angharadFactory.removeProfile(savedName),
 					add: angharadFactory.setProfile(profile.name, profile)
 				}
 

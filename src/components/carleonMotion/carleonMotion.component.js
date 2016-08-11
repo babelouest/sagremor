@@ -1,4 +1,4 @@
-function carleonMotionController ($scope, $http, $translatePartialLoader, $translate, angharadConfig, carleonFactory, carleonMotionFactory, sagremorService, sagremorParams, toaster) {
+function carleonMotionController ($scope, $http, $translatePartialLoader, $translate, angharadConfig, angharadFactory, carleonFactory, carleonMotionFactory, sagremorService, sagremorParams, toaster) {
     var ctrl = this;
     
     this.urlBaseImages = angharadConfig.baseUrl + angharadConfig.prefixCarleon + "service-motion/" + ctrl.element.name + "/image/";
@@ -83,7 +83,7 @@ function carleonMotionController ($scope, $http, $translatePartialLoader, $trans
 		});
 		sagremorParams.currentProfile.carleon.serviceMotion[ctrl.element.name].selectedStream = "";
 		sagremorParams.currentProfile.carleon.serviceMotion[ctrl.element.name].selectedFileList = ctrl.selectedFileList;
-		carleonFactory.saveCurrentProfile().then(function () {
+		angharadFactory.saveCurrentProfile().then(function () {
 			//toaster.pop("success", $translate.instant("profile_save"), $translate.instant("profile_save_success"));
 		}, function () {
 			toaster.pop("error", $translate.instant("profile_save"), $translate.instant("profile_save_error"));
