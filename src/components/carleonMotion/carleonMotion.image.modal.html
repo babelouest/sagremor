@@ -5,8 +5,11 @@
 		</div>
 		<div class="modal-body">
 			<div class="row control-group">
-				<div class="col-xs-12">
-					<img data-ng-src="{{carleonMotionImageModalCtrl.currentImage.img}}" alt="{{carleonMotionImageModalCtrl.currentImage.title}}" class="img-responsive img-thumbnail">
+				<div class="col-xs-12" data-ng-if="!!carleonMotionImageModalCtrl.currentImage.stream">
+					<img data-ng-src="{{carleonMotionImageModalCtrl.currentImage.stream}}" alt="{{carleonMotionImageModalCtrl.currentImage.title}}" class="img-responsive img-thumbnail">
+				</div>
+				<div class="col-xs-12" data-ng-if="!!carleonMotionImageModalCtrl.currentImage.img">
+					<img data-http-src="{{carleonMotionImageModalCtrl.currentImage.img}}" alt="{{carleonMotionImageModalCtrl.currentImage.title}}" class="img-responsive img-thumbnail">
 				</div>
 			</div>
 			<div class="row control-group">

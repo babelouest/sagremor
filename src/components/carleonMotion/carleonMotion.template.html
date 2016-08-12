@@ -44,9 +44,24 @@
 	<div class="row control-group" data-ng-if="!!$ctrl.selectedFileList">
 		<div class="col-xs-3" data-ng-repeat="image in $ctrl.images track by $index">
 			<a href="" data-ng-click="$ctrl.openPopupImage($ctrl.images, $index)" alt="{{image.title}}">
-				<img data-ng-src="{{image.thumb}}" title="{{image.title}}" class="img-responsive">
+				<img data-http-src="{{image.thumb}}" title="{{image.title}}" class="img-responsive">
 			</a>
 			<span class="small text-center" data-ng-bind="image.title"></span>
+		</div>
+	</div>
+	<div class="row control-group" data-ng-if="!!$ctrl.selectedFileList">
+		<div class="col-xs-5">
+			<button type="button" class="btn pull-right" data-ng-click="$ctrl.previousList()" data-ng-if="$ctrl.canPrevious()">
+				<i class="fa fa-arrow-left" aria-hidden="true"></i>
+			</button>
+		</div>
+		<div class="col-xs-2 text-center">
+			<span data-ng-bind="$ctrl.offset"></span>
+		</div>
+		<div class="col-xs-5">
+			<button type="button" class="btn pull-left" data-ng-click="$ctrl.nextList()" data-ng-if="$ctrl.canNext()">
+				<i class="fa fa-arrow-right" aria-hidden="true"></i>
+			</button>
 		</div>
 	</div>
 </div>

@@ -9,6 +9,7 @@ angular.module("sagremorApp")
 			name: "",
 			title: "",
 			img: "",
+			stream: "",
 			snapshotUri: ""
 		};
         

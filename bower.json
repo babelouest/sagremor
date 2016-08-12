@@ -60,7 +60,8 @@
     "components-font-awesome": "^4.6.3",
     "angular-datatables": "^0.5.4",
     "gridstack-angular": "^0.4.0",
-    "angular-nvd3": "^1.0.8"
+    "angular-nvd3": "^1.0.8",
+    "angular-img-http-src": "^1.0.1"
   },
   "devDependencies": {
     "angular-mocks": "~1.5.3"
