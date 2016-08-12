@@ -30,7 +30,7 @@ $ gulp build
 
 Then copy the files in the `dist` folder to your webserver Documentroot.
 
-# Some screenshots
+# Screenshots
 
 **Default dashboard**
 ![Defaut Dashboard](https://github.com/babelouest/sagremor/raw/master/snapshots/dashboard-default.png)
