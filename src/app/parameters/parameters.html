@@ -44,7 +44,6 @@
 					  <th data-translate="device_description"></th>
 					  <th data-translate="device_type"></th>
 					  <th data-translate="device_connected"></th>
-					  <th data-translate="device_enabled"></th>
 					  <th data-translate="device_action"></th>
 				  </tr>
 			  </thead>
@@ -57,9 +56,6 @@
 					  <td>{{device.type_uid + '_device_type' | translate}}</td>
 					  <td>
 						  <input data-toggle="toggle" data-bs-switch data-switch-size="mini" type="checkbox" data-ng-model="device.connected" data-ng-change="ParametersCtrl.connectDevice(device)">
-					  </td>
-					  <td>
-						  <input data-toggle="toggle" data-bs-switch data-switch-size="mini" type="checkbox" data-ng-model="device.enabled" data-ng-change="ParametersCtrl.enableDevice(device)">
 					  </td>
 					  <td data-ng-if="!device.update">
 						  <button type="button" class="btn" data-ng-click="ParametersCtrl.editDevice(device)">
