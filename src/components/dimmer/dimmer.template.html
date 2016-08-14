@@ -3,19 +3,19 @@
         <div class="ring">
             <div class="quarter quarter1" 
 				 data-ng-click="$ctrl.setDimmer(100)"
-				 data-ng-class="{'quarter-off': $ctrl.element.value < 100, 'quarter-on': $ctrl.element.value === 100}">
+				 data-ng-class="{'quarter-off': $ctrl.element.value < 75, 'quarter-almost-on': $ctrl.element.value < 100 && $ctrl.element.value > 75, 'quarter-on': $ctrl.element.value === 100}">
                 <span class="quarter-value">100%</span>
             </div>
             <div class="quarter quarter2" data-ng-click="$ctrl.setDimmer(25)"
-				 data-ng-class="{'quarter-off': $ctrl.element.value < 25, 'quarter-on': $ctrl.element.value >= 25}">
+				 data-ng-class="{'quarter-off': $ctrl.element.value === 0, 'quarter-almost-on': $ctrl.element.value < 25 && $ctrl.element.value > 0, 'quarter-on': $ctrl.element.value >= 25}">
                 <span class="quarter-value">25%</span>
             </div>
             <div class="quarter quarter3" data-ng-click="$ctrl.setDimmer(75)"
-				 data-ng-class="{'quarter-off': $ctrl.element.value < 75, 'quarter-on': $ctrl.element.value >= 75}">
+				 data-ng-class="{'quarter-off': $ctrl.element.value <= 50, 'quarter-almost-on': $ctrl.element.value < 75 && $ctrl.element.value > 50, 'quarter-on': $ctrl.element.value >= 75}">
                 <span class="quarter-value"><br/>75%</span>
             </div>
             <div class="quarter quarter4" data-ng-click="$ctrl.setDimmer(50)"
-				 data-ng-class="{'quarter-off': $ctrl.element.value < 50, 'quarter-on': $ctrl.element.value >= 50}">
+				 data-ng-class="{'quarter-off': $ctrl.element.value <= 25, 'quarter-almost-on': $ctrl.element.value < 50 && $ctrl.element.value > 25, 'quarter-on': $ctrl.element.value >= 50}">
                 <span class="quarter-value"><br/>50%</span>
             </div>
             <div class="cutout">
