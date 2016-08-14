@@ -62,6 +62,12 @@ angular.module("sagremorApp")
                 controller: "logsCtrl",
                 controllerAs: "logsCtrl"
             })
+            .state("users", {
+                url: "/users",
+                templateUrl: "app/users/users.html",
+                controller: "usersCtrl",
+                controllerAs: "usersCtrl"
+            })
             .state("parameters", {
                 url: "/parameters",
                 templateUrl: "app/parameters/parameters.html",

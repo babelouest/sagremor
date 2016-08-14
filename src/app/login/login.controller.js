@@ -19,7 +19,7 @@ angular.module("sagremorApp")
           if (this.rememberMe) {
               validity.setFullYear(validity.getFullYear() + 10);
           } else {
-              validity.setUTCSeconds(0);
+              validity.setDate(validity.getDate() + 1)
           }
           angharadFactory.postAuth(self.username, self.password, Math.round(validity.getTime() / 1000))
             .then(function (response) {

@@ -145,6 +145,33 @@ angular.module("sagremorApp")
 			return angharadBackendService.httpRequest("DELETE", urlBase + "profile/" + profile_id);
 		};
 		
+		/* Users endpoints */
+        dataFactory.getUserList = function () {
+            return angharadBackendService.httpRequest("GET", urlBase + "user/");
+        };
+
+        dataFactory.addUser = function (user) {
+            return angharadBackendService.httpRequest("POST", urlBase + "user/", user);
+        };
+
+        dataFactory.setUser = function (name, user) {
+            return angharadBackendService.httpRequest("PUT", urlBase + "user/" + name, user);
+        };
+
+        dataFactory.removeUser = function (name) {
+            return angharadBackendService.httpRequest("DELETE", urlBase + "user/" + name);
+        };
+        
+        /* Token endpoints */
+        dataFactory.getTokenList = function (options) {
+            return angharadBackendService.httpRequest("GET", urlBase + "token/", null, options);
+        };
+
+        dataFactory.revokeToken = function (token) {
+            return angharadBackendService.httpRequest("POST", urlBase + "token/", {token: token});
+        };
+
+		
 		dataFactory.saveCurrentProfile = function () {
 			var profile = sagremorParams.currentProfile;
 			var deferred = $q.defer();
