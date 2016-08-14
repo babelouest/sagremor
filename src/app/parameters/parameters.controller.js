@@ -154,24 +154,6 @@ angular.module("sagremorApp")
 			}
 		};
 
-		this.enableDevice = function (device) {
-			var copyDevice = angular.copy(device);
-			delete copyDevice.element;
-			benoicFactory.setDevice(copyDevice).then(function () {
-				if (copyDevice.enabled) {
-					toaster.pop("success", $translate.instant("device_disable"), $translate.instant("device_enable_success"));
-				} else {
-					toaster.pop("success", $translate.instant("device_disable"), $translate.instant("device_disable_success"));
-				}
-			}, function (error) {
-				if (copyDevice.enabled) {
-					toaster.pop("error", $translate.instant("device_disable"), $translate.instant("device_enable_error"));
-				} else {
-					toaster.pop("error", $translate.instant("device_disable"), $translate.instant("device_disable_error"));
-				}
-			});
-		};
-
 		this.editDevice = function (device) {
 		  device.newDescription = device.description;
 		  device.update = true;
