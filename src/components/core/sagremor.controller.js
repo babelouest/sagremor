@@ -11,13 +11,36 @@ angular.module("sagremorApp")
     this.refreshTimeout = null;
     
     function init() {
-		initParameters();
-        self.getAuth().then(function() {
-			$rootScope.$broadcast("authChanged");
-            popLoader();
-            getApiData();
-            self.refreshTimeout = startRefreshTimeout();
-		});
+		$translate("angharad_loading_title").then(function (title) {
+			// Nothing to do here, just waiting for lang files to be loaded before starting
+		})["finally"](function () {
+			initParameters();
+			self.getAuth().then(function() {
+				$rootScope.$broadcast("authChanged");
+				popLoader();
+				getApiData();
+				self.refreshTimeout = startRefreshTimeout();
+			});
+		})
+    }
+    
+    function closeLoader(result) {
+        toaster.clear(self.loaderToast);
+        if (result) {
+            toaster.pop({type: "success", title: $translate.instant("angharad_loading_title"), body: $translate.instant("init_message_loading_complete")});
+        } else {
+            toaster.pop({type: "error", title: $translate.instant("angharad_loading_title"), body: $translate.instant("init_message_loading_error")});
+        }
+    }
+    
+    function popLoader() {
+        self.loaderToast = toaster.pop({type: "wait", title: $translate.instant("angharad_loading_title"), body: $translate.instant("init_message_loading"), timeout: 0, showCloseButton: false});
+    }
+    
+    function initParameters() {
+        $http.defaults.headers.common["ANGHARAD_SESSION_ID"] = $cookies.get("ANGHARAD_SESSION_ID");
+        sagremorParams.adminMode = false;
+        sagremorParams.loggedIn = true;
     }
     
     function refreshData() {
@@ -146,25 +169,6 @@ angular.module("sagremorApp")
 			self.shouldRefresh = false;
 		}
 	};
-    
-    function closeLoader(result) {
-        toaster.clear(self.loaderToast);
-        if (result) {
-            toaster.pop({type: "success", title: $translate.instant("angharad_loading_title"), body: $translate.instant("init_message_loading_complete")});
-        } else {
-            toaster.pop({type: "error", title: $translate.instant("angharad_loading_title"), body: $translate.instant("init_message_loading_error")});
-        }
-    }
-    
-    function popLoader() {
-        self.loaderToast = toaster.pop({type: "wait", title: $translate.instant("angharad_loading_title"), body: $translate.instant("init_message_loading"), timeout: 0, showCloseButton: false});
-    }
-    
-    function initParameters() {
-        $http.defaults.headers.common["ANGHARAD_SESSION_ID"] = $cookies.get("ANGHARAD_SESSION_ID");
-        sagremorParams.adminMode = false;
-        sagremorParams.loggedIn = true;
-    }
     
     this.getAuth = function() {
 		return angharadFactory.getAuth()
