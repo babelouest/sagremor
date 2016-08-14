@@ -217,49 +217,53 @@ angular.module("sagremorApp")
 		};
 
 		this.submoduleEnable = function(submodule) {
-			if (submodule === "benoic") {
-				angharadFactory.enableSubmodule(submodule, self.submodules.benoic.enabled).then(function (response) {
-					sagremorParams.benoicEnabled = self.submodules.benoic.enabled;
-					$rootScope.$broadcast("submodulesChanged");
-					$rootScope.$broadcast("refreshDashboard")
-					if (self.submodules.benoic.enabled) {
-						$rootScope.$broadcast("reinitBenoic");
-					} else {
-						$rootScope.$broadcast("closeBenoic");
-					}
-					toaster.pop("success", $translate.instant("submodules"), $translate.instant("submodules_enable_success"));
-				}, function (error) {
-					toaster.pop("error", $translate.instant("submodules"), $translate.instant("submodules_enable_error"));
-				});
-			} else if (submodule === "carleon") {
-				angharadFactory.enableSubmodule(submodule, self.submodules.carleon.enabled).then(function (response) {
-					sagremorParams.carleonEnabled = self.submodules.carleon.enabled;
-					$rootScope.$broadcast("submodulesChanged");
-					$rootScope.$broadcast("refreshDashboard")
-					if (self.submodules.carleon.enabled) {
-						$rootScope.$broadcast("reinitCarleon");
-					} else {
-						$rootScope.$broadcast("closeCarleon");
-					}
-					toaster.pop("success", $translate.instant("submodules"), $translate.instant("submodules_enable_success"));
-				}, function (error) {
-					toaster.pop("error", $translate.instant("submodules"), $translate.instant("submodules_enable_error"));
-				});
-			} else if (submodule === "gareth") {
-				angharadFactory.enableSubmodule(submodule, self.submodules.gareth.enabled).then(function (response) {
-					sagremorParams.garethEnabled = self.submodules.gareth.enabled;
-					$rootScope.$broadcast("submodulesChanged");
-					$rootScope.$broadcast("refreshDashboard")
-					if (self.submodules.gareth.enabled) {
-						$rootScope.$broadcast("reinitGareth");
-					} else {
-						$rootScope.$broadcast("closeGareth");
-					}
-					toaster.pop("success", $translate.instant("submodules"), $translate.instant("submodules_enable_success"));
-				}, function (error) {
-					toaster.pop("error", $translate.instant("submodules"), $translate.instant("submodules_enable_error"));
-				});
-			}
+			return sagremorConfirm.open($translate.instant("param_submodule_enable"), $translate.instant("param_submodule_enable_confirm")).then(function () {
+				if (submodule === "benoic") {
+					angharadFactory.enableSubmodule(submodule, self.submodules.benoic.enabled).then(function (response) {
+						sagremorParams.benoicEnabled = self.submodules.benoic.enabled;
+						$rootScope.$broadcast("submodulesChanged");
+						$rootScope.$broadcast("refreshDashboard")
+						if (self.submodules.benoic.enabled) {
+							$rootScope.$broadcast("reinitBenoic");
+						} else {
+							$rootScope.$broadcast("closeBenoic");
+						}
+						toaster.pop("success", $translate.instant("submodules"), $translate.instant("submodules_enable_success"));
+					}, function (error) {
+						toaster.pop("error", $translate.instant("submodules"), $translate.instant("submodules_enable_error"));
+					});
+				} else if (submodule === "carleon") {
+					angharadFactory.enableSubmodule(submodule, self.submodules.carleon.enabled).then(function (response) {
+						sagremorParams.carleonEnabled = self.submodules.carleon.enabled;
+						$rootScope.$broadcast("submodulesChanged");
+						$rootScope.$broadcast("refreshDashboard")
+						if (self.submodules.carleon.enabled) {
+							$rootScope.$broadcast("reinitCarleon");
+						} else {
+							$rootScope.$broadcast("closeCarleon");
+						}
+						toaster.pop("success", $translate.instant("submodules"), $translate.instant("submodules_enable_success"));
+					}, function (error) {
+						toaster.pop("error", $translate.instant("submodules"), $translate.instant("submodules_enable_error"));
+					});
+				} else if (submodule === "gareth") {
+					angharadFactory.enableSubmodule(submodule, self.submodules.gareth.enabled).then(function (response) {
+						sagremorParams.garethEnabled = self.submodules.gareth.enabled;
+						$rootScope.$broadcast("submodulesChanged");
+						$rootScope.$broadcast("refreshDashboard")
+						if (self.submodules.gareth.enabled) {
+							$rootScope.$broadcast("reinitGareth");
+						} else {
+							$rootScope.$broadcast("closeGareth");
+						}
+						toaster.pop("success", $translate.instant("submodules"), $translate.instant("submodules_enable_success"));
+					}, function (error) {
+						toaster.pop("error", $translate.instant("submodules"), $translate.instant("submodules_enable_error"));
+					});
+				}
+			}, function () {
+				self.submodules[submodule].enabled = !self.submodules[submodule].enabled;
+			});
 		};
 
 		this.addProfile = function () {
