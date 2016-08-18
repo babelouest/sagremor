@@ -49,10 +49,31 @@ angular.module("sagremorApp")
         }
         
         function getDashboardElementsEmptyProfile () {
-			// Carleon not enabled, adding all benoic elements to the dashboard (if enabled)
+			var defaultTag = "SGMR$D$";
+			var defaultY = 0;
+			
+			// adding all carleon elements to the dashboard (if enabled)
+			if (sagremorParams.carleonEnabled) {
+				_.forEach(sagGenericInjectorManager.components, function (component) {
+					if (component.carleonService && carleonComponentsConfig[component.type].enabled) {
+						var x = 0;
+						var service = sharedData.get("carleonServices", component.type);
+						!!service && _.forEach(service.element, function (element) {
+							var curElement = {
+								type: component.type,
+								name: element.name
+							};
+							addCarleonElementToDashboard(curElement, defaultTag + x + "$" + defaultY);
+							x += component.widgetWidth;
+							x %= 12;
+						});
+						addDashboardSeparator($translate.instant(component.groupTitle), defaultTag + x + "$" + defaultY);
+					}
+				});
+			}
+			
+			// adding all benoic elements to the dashboard (if enabled)
 			if (sagremorParams.benoicEnabled) {
-				var defaultTag = "SGMR$D$";
-				var defaultY = 0;
 				
 				var x = 0;
 				var counter = 0;
@@ -133,6 +154,7 @@ angular.module("sagremorApp")
 					addDashboardSeparator($translate.instant("switches_title"), defaultTag + x + "$" + defaultY);
 				}
 			}
+			self.isInit = false;
 		}
 
         function getDashboardElementsCurrentProfile () {
@@ -346,26 +368,29 @@ angular.module("sagremorApp")
 					}
 				}
 				self._timeout = null;
-			}, 500);
+			}, 5000);
         };
         
         function updateTag(element, newTag) {
             if (newTag !== element.tag) {
 				var profile = sagremorParams.currentProfile;
-				if (!profile.addTo) {
-					profile.addTo = {D: []};
-				}
-				if (!profile.addTo.D) {
-					profile.addTo.D = [];
-				}
 				if (!!profile) {
+					if (!profile.addTo) {
+						profile.addTo = {D: []};
+					}
+					if (!profile.addTo.D) {
+						profile.addTo.D = [];
+					}
 					var elt = _.find(profile.addTo.D, function (e) {
 						return element.tag == e.tag;
 					});
 					if (!!elt) {
 						elt.tag = newTag;
-						return true;
+					} else {
+						element.tag = newTag;
+						profile.addTo.D.push(element);
 					}
+					return true;
 				}
             }
             return false;
