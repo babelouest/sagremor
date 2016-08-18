@@ -295,6 +295,27 @@ angular.module("sagremorApp")
 				});
 			});
 		};
+		
+		this.cleanProfile = function (profile) {
+			sagremorConfirm.open($translate.instant("profile_clean"), $translate.instant("profile_clean_confirm")).then (function(result) {
+				var cleanProfile = {name: profile.name, description: profile.description, default: profile.default};
+				angharadFactory.setProfile(profile.name, cleanProfile).then(function (result) {
+					for (key in sagremorParams.profiles) {
+						if (sagremorParams.profiles[key].name === cleanProfile.name) {
+							sagremorParams.profiles[key] = cleanProfile;
+						}
+					}
+					if (sagremorParams.currentProfile.name === cleanProfile.name) {
+						sagremorParams.currentProfile = cleanProfile;
+					}
+					$scope.$broadcast("angharadProfileChanged");
+					toaster.pop("success", $translate.instant("profiles"), $translate.instant("profiles_save_success"));
+					profile = cleanProfile;
+				}, function (error) {
+					toaster.pop("error", $translate.instant("profiles"), $translate.instant("profiles_save_error"));
+				});
+			});
+		};
 
 		this.editProfile = function (profile) {
 			profile.update = true;

@@ -216,6 +216,8 @@
 	"profiles_remove_error": "Erreur",
 	"profile_remove": "Profil",
 	"profile_remove_confirm": "Êtes-vous sûr de vouloir supprimer ce profil ?",
+	"profile_clean": "Nettoyage de profil",
+	"profile_clean_confirm": "Êtes-vous sûr de vouloir nettoyer ce profil ? Toutes les données vont être supprimées.",
 	"profiles_save_success": "Succès",
 	"profiles_save_error": "Erreur",
 	"profile_used": "Profil courant",
