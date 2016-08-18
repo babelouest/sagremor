@@ -85,7 +85,7 @@ angular.module("sagremorApp")
 					sharedData.add("angharadTriggers", result.triggers[tr].name, result.triggers[tr]);
 				}
 				$rootScope.$broadcast("refreshAngharadEvents");
-				sagremorParams.profiles = result;
+				sagremorParams.profiles = result.profiles;
 				$scope.$broadcast("angharadProfileChanged");
 			}, function (error) {
 				toaster.pop("error", $translate.instant("refresh"), $translate.instant("refresh_scripts_events_error"));
