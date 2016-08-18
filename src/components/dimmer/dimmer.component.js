@@ -10,15 +10,19 @@ function sagDimmerController (benoicFactory, sagremorParams, $translate) {
     }
     
     ctrl.setDimmer = function (value) {
-        benoicFactory.setElement(ctrl.element.device, "dimmer", ctrl.element.name, value).then(function () {
-            ctrl.element.value = value;
-        });
+		if (value >= 0 && value <= 100) {
+			benoicFactory.setElement(ctrl.element.device, "dimmer", ctrl.element.name, value).then(function () {
+				ctrl.element.value = value;
+			});
+		}
     };
     
     ctrl.addDimmer = function (value) {
-        benoicFactory.setElement(ctrl.element.device, "dimmer", ctrl.element.name, ctrl.element.value + value).then(function () {
-            ctrl.element.value += value;
-        });
+		if (ctrl.element.value + value >= 0 && ctrl.element.value + value <= 100) {
+			benoicFactory.setElement(ctrl.element.device, "dimmer", ctrl.element.name, ctrl.element.value + value).then(function () {
+				ctrl.element.value += value;
+			});
+		}
 	}
     
     ctrl.Dimmervalue = function () {
