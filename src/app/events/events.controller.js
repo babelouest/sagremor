@@ -73,14 +73,6 @@ angular.module("sagremorApp")
 			});
 		};
         
-        $scope.$on("angharadSchedulersChanged", function () {
-            self.updateSchedulers();
-        });
-        
-        $scope.$on("angharadTriggersChanged", function () {
-            self.updateTriggers();
-        });
-        
         this.updateSchedulers = function () {
             var events = sharedData.all("angharadSchedulers");
             self.schedulerList = [];
@@ -97,10 +89,6 @@ angular.module("sagremorApp")
             }
         };
         
-        $scope.$on("refreshAngharadEvents", function () {
-            self.refreshEvents();
-        });
-        
         this.refreshEvents = function () {
 			var schedulers = sharedData.all("angharadSchedulers");
             for (key in schedulers) {
@@ -114,7 +102,7 @@ angular.module("sagremorApp")
             }
             
             for (var index = self.schedulerList.length - 1; index >= 0; index--) {
-				if (!sharedData.get("angharadschedulers", self.schedulerList[index].name)) {
+				if (!sharedData.get("angharadSchedulers", self.schedulerList[index].name)) {
 					self.schedulerList.splice(index, 1);
 				}
 			}
@@ -141,6 +129,18 @@ angular.module("sagremorApp")
 			sagremorService.editEvent(null);
 		};
 		
+        $scope.$on("angharadSchedulersChanged", function () {
+            self.updateSchedulers();
+        });
+        
+        $scope.$on("angharadTriggersChanged", function () {
+            self.updateTriggers();
+        });
+        
+        $scope.$on("refreshAngharadEvents", function () {
+            self.refreshEvents();
+        });
+        
         this.init();
         
     }
