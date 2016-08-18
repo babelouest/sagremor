@@ -49,11 +49,13 @@ function carleonMpdController ($scope, $q, $translatePartialLoader, $translate, 
 	
 	this.setVolume = function (delta) {
 		var newVolume = ctrl.mpd.volume + delta;
-		carleonMpdFactory.setMpdVolume(ctrl.element.name, newVolume).then(function () {
-			ctrl.mpd.volume = newVolume;
-		}, function () {
-			toaster.pop("error", $translate.instant("carleon_mpd"), $translate.instant("carleon_mpd_volume_error"));
-		});
+		if (newVolume >= 0 && newVolume <= 100) {
+			carleonMpdFactory.setMpdVolume(ctrl.element.name, newVolume).then(function () {
+				ctrl.mpd.volume = newVolume;
+			}, function () {
+				toaster.pop("error", $translate.instant("carleon_mpd"), $translate.instant("carleon_mpd_volume_error"));
+			});
+		}
 	};
 	
 	this.displayVolumeCommand = function (delta) {
