@@ -213,6 +213,14 @@ angular.module("sagremorApp", [
     self.components = [];
     
     this.add = function (config) {
-        self.components.push(config);
-    }
+		if (!self.get(config.type)) {
+			self.components.push(config);
+		}
+    };
+    
+    this.get = function (type) {
+		return _.find(self.components, function (component) {
+			return component.type === type;
+		});
+	};
 });
