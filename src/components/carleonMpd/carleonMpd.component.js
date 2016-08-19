@@ -1,10 +1,11 @@
-function carleonMpdController ($scope, $q, $translatePartialLoader, $translate, $interval, angharadConfig, carleonFactory, carleonMpdFactory, sagremorService, sagremorParams, toaster) {
+function carleonMpdController ($scope, $q, $window, $translatePartialLoader, $translate, $interval, angharadConfig, carleonFactory, carleonMpdFactory, sagremorService, sagremorParams, toaster) {
     var ctrl = this;
     
     this.mpd = {};
     this.playlists = [];
     this.selectedPlaylist = false;
     this._interval = null;
+    this.hasFocus = true;
     
     function init() {
 		var promises = [
@@ -25,7 +26,9 @@ function carleonMpdController ($scope, $q, $translatePartialLoader, $translate, 
     
     function startRefreshStatusInterval() {
 		ctrl._interval = $interval(function () {
-			ctrl.refreshStatus();
+			if (ctrl.hasFocus) {
+				ctrl.refreshStatus();
+			}
 		}, 1000 * 10);
 	}
 	
@@ -88,6 +91,14 @@ function carleonMpdController ($scope, $q, $translatePartialLoader, $translate, 
 		$interval.cancel(ctrl._interval);
 	});
 	
+	$window.onblur = function() {  
+		ctrl.hasFocus = false;  
+	};
+    
+	$window.onfocus = function() {  
+		ctrl.hasFocus = true;
+	};
+    
     init();
 }
 
