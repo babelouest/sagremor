@@ -5,13 +5,13 @@
     <ul class="container-fluid top-left-menu-list" data-uib-dropdown-menu data-uib-dropdown-menu-auto-close="outsideClick">
         <li class="row-fluid">
             <a data-ng-href="#/">
-                <i class="fa fa-home"></i>
+                <i class="fa fa-home fa-fw"></i>
                 <span data-translate="menu_home"></span>
             </a>
         </li>
         <li class="row-fluid" data-ng-if="topLeftMenuCtrl.sagremorParams.benoicEnabled">
             <a data-ng-href="#/switches">
-                <i class="fa fa-lightbulb-o"></i>
+                <i class="fa fa-lightbulb-o fa-fw"></i>
                 <span data-translate="menu_lights"></span>
             </a>
         </li>
@@ -23,49 +23,49 @@
         </li>
         <li class="row-fluid" data-ng-if="topLeftMenuCtrl.sagremorParams.benoicEnabled">
             <a data-ng-href="#/sensors">
-                <i class="fa fa-line-chart"></i>
+                <i class="fa fa-line-chart fa-fw"></i>
                 <span data-translate="menu_sensors"></span>
             </a>
         </li>
         <li class="row-fluid" data-ng-repeat="service in topLeftMenuCtrl.serviceList" data-ng-if="topLeftMenuCtrl.sagremorParams.carleonEnabled">
             <a data-ng-href="#/service/{{service.target}}">
-				<data-ng-bind-html data-ng-bind-html="service.icon"></data-ng-bind-html>
+				<i data-ng-class="{'fa fa-{{service.icon}} fa-fw': true}"></i>
                 <span data-translate="{{service.title}}"></span>
             </a>
         </li>
         <li class="row-fluid">
             <a data-ng-href="#/scripts">
-                <i class="fa fa-tasks"></i>
+                <i class="fa fa-tasks fa-fw"></i>
                 <span data-translate="menu_scripts"></span>
             </a>
         </li>
         <li class="row-fluid">
             <a data-ng-href="#/events">
-                <i class="fa fa-calendar"></i>
+                <i class="fa fa-calendar fa-fw"></i>
                 <span data-translate="menu_events"></span>
             </a>
         </li>
         <li class="row-fluid">
             <a data-ng-href="#/monitors">
-                <i class="fa fa-bar-chart"></i>
+                <i class="fa fa-bar-chart fa-fw"></i>
                 <span data-translate="menu_monitor"></span>
             </a>
         </li>
         <li class="row-fluid" data-ng-if="topLeftMenuCtrl.sagremorParams.garethEnabled">
             <a data-ng-href="#/logs">
-                <i class="fa fa-history"></i>
+                <i class="fa fa-history fa-fw"></i>
                 <span data-translate="menu_logs"></span>
             </a>
         </li>
         <li class="row-fluid">
             <a data-ng-href="#/users">
-                <i class="fa fa-users"></i>
+                <i class="fa fa-users fa-fw"></i>
                 <span data-translate="menu_users"></span>
             </a>
         </li>
         <li class="row-fluid">
             <a data-ng-href="#/parameters">
-                <i class="fa fa-cogs"></i>
+                <i class="fa fa-cogs fa-fw"></i>
                 <span data-translate="menu_parameters"></span>
             </a>
         </li>

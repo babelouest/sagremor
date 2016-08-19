@@ -6,8 +6,10 @@ function topLeftMenuCtrl ($scope, $translate, sagremorParams, sagGenericInjector
     
     function init() {
 		_.forEach(sagGenericInjectorManager.components, function (inject) {
-			if (inject.carleonService && inject.leftMenu && !!carleonComponentsConfig[inject.type] && !!carleonComponentsConfig[inject.type].enabled) {	
-				self.serviceList.push(inject.leftMenu);
+			if (inject.carleonService && inject.leftMenu && !!carleonComponentsConfig[inject.type] && !!carleonComponentsConfig[inject.type].enabled) {
+				var menu = inject.leftMenu;
+				menu.icon = inject.icon;
+				self.serviceList.push(menu);
 			}
 		});
 	}
