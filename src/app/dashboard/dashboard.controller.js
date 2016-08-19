@@ -208,6 +208,9 @@ angular.module("sagremorApp")
 						case "heater":
 							icon = "fire";
 							break;
+						case "sensor":
+							icon = "line-chart";
+							break;
 					}
 					bElt.device = element.device;
 					bElt.name = element.name;
