@@ -27,7 +27,7 @@ function carleonMotionController ($scope, $http, $translatePartialLoader, $trans
     this.getFromProfile = function () {
 		if (sagremorParams.currentProfile && _.has(sagremorParams.currentProfile, "carleon.serviceMotion."+ctrl.element.name)) {
 			ctrl.profileParams = sagremorParams.currentProfile.carleon.serviceMotion[ctrl.element.name];
-		} else {
+		} else if (!!sagremorParams.currentProfile) {
 			if (!sagremorParams.currentProfile.carleon) {
 				sagremorParams.currentProfile.carleon = {};
 			}
@@ -56,7 +56,7 @@ function carleonMotionController ($scope, $http, $translatePartialLoader, $trans
 			_.forEach(response.file_list, function (fileList, name) {
 				ctrl.fileListName.push(name);
 			});
-			if (!!sagremorParams.currentProfile.carleon.serviceMotion[ctrl.element.name].selectedFileList) {
+			if (!!sagremorParams.currentProfile && !!sagremorParams.currentProfile.carleon.serviceMotion[ctrl.element.name].selectedFileList) {
 				ctrl.selectedFileList = sagremorParams.currentProfile.carleon.serviceMotion[ctrl.element.name].selectedFileList;
 				ctrl.changeSelectedFileList();
 			} else if (ctrl.fileListName.length === 1) {
@@ -268,6 +268,7 @@ angular.module("sagremorApp").component("serviceMotion", {
 		},
 		widgetHeight: 5,
 		widgetWidth: 6,
+		icon: "camera",
 		commands: {
 			online: {
 				title: "carleon_motion_command_online_title",
