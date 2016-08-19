@@ -50,14 +50,14 @@
 		<hr class="heater-hr">
 		<div class="row control-group">
 			<div class="clearfix input-group">
+				<span class="input-group-btn" data-ng-if="$ctrl.mpd.state == 'pause' || $ctrl.mpd.state == 'play'">
+					<button type="button" class="btn btn-default" data-ng-click="$ctrl.setAction('stop')"><i class="fa fa-stop" aria-hidden="true"></i></button>
+				</span>
 				<span class="input-group-btn" data-ng-if="$ctrl.mpd.state == 'pause' || $ctrl.mpd.state == 'stop'">
 					<button type="button" class="btn btn-default" data-ng-click="$ctrl.setAction('play')"><i class="fa fa-play" aria-hidden="true"></i></button>
 				</span>
 				<span class="input-group-btn" data-ng-if="$ctrl.mpd.state == 'play'">
 					<button type="button" class="btn btn-default" data-ng-click="$ctrl.setAction('pause')"><i class="fa fa-pause" aria-hidden="true"></i></button>
-				</span>
-				<span class="input-group-btn" data-ng-if="$ctrl.mpd.state == 'pause' || $ctrl.mpd.state == 'play'">
-					<button type="button" class="btn btn-default" data-ng-click="$ctrl.setAction('stop')"><i class="fa fa-stop" aria-hidden="true"></i></button>
 				</span>
 			</div>
 		</div>
