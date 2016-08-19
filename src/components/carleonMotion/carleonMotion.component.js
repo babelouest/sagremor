@@ -263,7 +263,6 @@ angular.module("sagremorApp").component("serviceMotion", {
         size: 3,
         leftMenu: {
 			title: "carleon_motion_title",
-			icon: "<i class=\"fa fa-camera\"></i>",
 			target: "carleonMotion"
 		},
 		widgetHeight: 5,

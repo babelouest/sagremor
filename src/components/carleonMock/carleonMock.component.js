@@ -123,7 +123,6 @@ angular.module("sagremorApp").component("carleonMock", {
         size: 1,
         leftMenu: {
 			title: "carleon_mock_title",
-			icon: "<i class=\"fa fa-thumbs-o-up\"></i>",
 			target: "carleonMock"
 		},
 		widgetHeight: 3,

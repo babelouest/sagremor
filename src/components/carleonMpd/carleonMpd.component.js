@@ -204,7 +204,6 @@ angular.module("sagremorApp").component("serviceMpd", {
         size: 2,
         leftMenu: {
 			title: "carleon_music_title",
-			icon: "<i class=\"fa fa-music\"></i>",
 			target: "carleonMpd"
 		},
 		widgetHeight: 4,
