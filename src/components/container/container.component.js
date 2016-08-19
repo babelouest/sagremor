@@ -63,6 +63,7 @@ angular.module("sagremorApp").component("sagContainer", {
         size: "=",
         element: "=",
         dashboard: "=",
-        sagParams: "="
+        sagParams: "=",
+        icon: "="
     }
 });
