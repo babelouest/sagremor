@@ -209,6 +209,7 @@ angular.module("sagremorApp").component("serviceMpd", {
 		},
 		widgetHeight: 4,
 		widgetWidth: 3,
+		icon: "music",
 		commands: {
 			action: {
 				title: "carleon_mpd_command_action_title",

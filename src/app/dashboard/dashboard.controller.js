@@ -197,9 +197,21 @@ angular.module("sagremorApp")
                 }
                 var bElt = sagremorService.getBenoicElement(element.device, element.type, element.name);
                 if (!!bElt) {
+					var icon = "";
+					switch (element.type) {
+						case "switch":
+							icon = "toggle-on";
+							break;
+						case "dimmer":
+							icon = "lightbulb-o";
+							break;
+						case "heater":
+							icon = "fire";
+							break;
+					}
 					bElt.device = element.device;
 					bElt.name = element.name;
-					var dashboardElement = { type: element.type, device: element.device, name: element.name, element: bElt, x: x, y: y, width: 2, height: curHeight, tag: tag };
+					var dashboardElement = { type: element.type, device: element.device, name: element.name, element: bElt, x: x, y: y, width: 2, height: curHeight, tag: tag, icon: icon };
 					self.dashboardWidgets.push(dashboardElement);
 				}
             }
@@ -213,7 +225,8 @@ angular.module("sagremorApp")
 					var x = tagParams[2];
 					var y = tagParams[3];
 					var curHeight = 1;
-					var dashboardElement = { type: element.type, name: element.name, element: elt, x: x, y: y, width: 2, height: curHeight, tag: tag };
+					var icon = "tasks";
+					var dashboardElement = { type: element.type, name: element.name, element: elt, x: x, y: y, width: 2, height: curHeight, tag: tag, icon: icon };
 					self.dashboardWidgets.push(dashboardElement);
 				}
 			}
@@ -221,10 +234,13 @@ angular.module("sagremorApp")
         
         function addEventToDashboard(element, tag) {
 			var elt = false;
+			var icon = "";
 			if (element.type === "scheduler") {
 				elt = sharedData.get("angharadSchedulers", element.name);
+				icon = "calendar";
 			} else {
 				elt = sharedData.get("angharadTriggers", element.name);
+				icon = "bell";
 			}
 			if (!!elt) {
 				var tagParams = tag.split("$");
@@ -232,7 +248,7 @@ angular.module("sagremorApp")
 					var x = tagParams[2];
 					var y = tagParams[3];
 					var curHeight = element.type === "scheduler"?2:1;
-					var dashboardElement = { type: element.type, name: element.name, element: elt, x: x, y: y, width: 2, height: curHeight, tag: tag };
+					var dashboardElement = { type: element.type, name: element.name, element: elt, x: x, y: y, width: 2, height: curHeight, tag: tag, icon: icon };
 					self.dashboardWidgets.push(dashboardElement);
 				}
 			}
@@ -253,7 +269,8 @@ angular.module("sagremorApp")
 					var y = tagParams[3];
 					var curHeight = injector.widgetHeight;
 					var curWidth = injector.widgetWidth;
-					var dashboardElement = { type: element.type, name: element.name, element: element, x: x, y: y, width: curWidth, height: curHeight, tag: tag };
+					var icon= injector.icon;
+					var dashboardElement = { type: element.type, name: element.name, element: element, x: x, y: y, width: curWidth, height: curHeight, tag: tag, icon: icon};
 					self.dashboardWidgets.push(dashboardElement);
 				}
 			}
@@ -269,7 +286,8 @@ angular.module("sagremorApp")
 					var x = tagParams[2];
 					var y = tagParams[3];
 					var curHeight = 4;
-					var dashboardElement = { type: element.type, name: element.name, element: elt, x: x, y: y, width: 6, height: curHeight, tag: tag };
+					var icon = "bar-chart";
+					var dashboardElement = { type: element.type, name: element.name, element: elt, x: x, y: y, width: 6, height: curHeight, tag: tag, icon: icon };
 					self.dashboardWidgets.push(dashboardElement);
 				}
 			}

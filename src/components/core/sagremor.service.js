@@ -225,22 +225,22 @@ angular.module("sagremorApp")
 			if (!!elements && !!elements.element) {
 				switch (type) {
 					case "switch":
-						if (elements.element.switches[name]) {
+						if (!!elements.element.switches && elements.element.switches[name]) {
 							return elements.element.switches[name];
 						}
 						break;
 					case "dimmer":
-						if (elements.element.dimmers[name]) {
+						if (!!elements.element.dimmers && elements.element.dimmers[name]) {
 							return elements.element.dimmers[name];
 						}
 						break;
 					case "heater":
-						if (elements.element.heaters[name]) {
+						if (!!elements.element.heaters && elements.element.heaters[name]) {
 							return elements.element.heaters[name];
 						}
 						break;
 					case "sensor":
-						if (elements.element.sensors[name]) {
+						if (!!elements.element.sensors && elements.element.sensors[name]) {
 							return elements.element.sensors[name];
 						}
 						break;
