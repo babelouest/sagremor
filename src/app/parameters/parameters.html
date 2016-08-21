@@ -11,6 +11,12 @@
           <div class="col-xs-2">
               <input data-ng-change="ParametersCtrl.submoduleEnable('benoic')" id="submodule-benoic" name="submodule-benoic" data-toggle="toggle" data-bs-switch data-switch-size="mini" type="checkbox" data-ng-model="ParametersCtrl.submodules.benoic.enabled">
           </div>
+          <div class="col-xs-2">
+			  <button type="button" class="btn btn-primary" data-ng-click="ParametersCtrl.reloadBenoicDeviceTypes()">
+				  <i aria-hidden="true" class="fa fa-refresh"></i>
+				  <span data-translate="param_submodule_benoic_reload_types"></span>
+			  </button>
+          </div>
       </div>
       <div class="row">
           <div class="col-xs-2">
@@ -18,6 +24,12 @@
           </div>
           <div class="col-xs-2">
               <input data-ng-change="ParametersCtrl.submoduleEnable('carleon')" id="submodule-carleon" name="submodule-carleon" data-toggle="toggle" data-bs-switch data-switch-size="mini" type="checkbox" data-ng-model="ParametersCtrl.submodules.carleon.enabled">
+          </div>
+          <div class="col-xs-2">
+			  <button type="button" class="btn btn-primary" data-ng-click="ParametersCtrl.reloadCarleonServices()">
+				  <i aria-hidden="true" class="fa fa-refresh"></i>
+				  <span data-translate="param_submodule_carleon_reload_services"></span>
+			  </button>
           </div>
       </div>
       <div class="row">

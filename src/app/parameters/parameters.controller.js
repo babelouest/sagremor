@@ -197,6 +197,30 @@ angular.module("sagremorApp")
 				});
 			});
 		};
+		
+		this.reloadBenoicDeviceTypes = function () {
+			benoicFactory.reloadDeviceTypes().then(function (result) {
+				sharedData.removeAll("benoicDeviceTypes");
+				_.forEach(result, function (deviceType) {
+					sharedData.add("benoicDeviceTypes", deviceType.uid, deviceType);
+				});
+				self.initDeviceTypes();
+				$rootScope.$broadcast("refresh");
+			});
+		};
+
+		this.reloadCarleonServices = function () {
+			carleonFactory.reloadServiceList().then(function (result) {
+				sharedData.removeAll("carleonServices");
+				for (key in result) {
+					_.forEach(result[key].element, function (element) {
+						element.type = result[key].name;
+					});
+					sharedData.add("carleonServices", result[key].name, result[key]);
+				}
+				$rootScope.$broadcast("refresh");
+			});
+		};
 
 		this.submoduleEnable = function(submodule) {
 			return sagremorConfirm.open($translate.instant("param_submodule_enable"), $translate.instant("param_submodule_enable_confirm")).then(function () {

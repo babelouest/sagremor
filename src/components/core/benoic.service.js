@@ -9,6 +9,10 @@ angular.module("sagremorApp")
         return angharadBackendService.httpRequest("GET", urlBase + "deviceTypes/");
     };
 
+    dataFactory.reloadDeviceTypes = function () {
+        return angharadBackendService.httpRequest("PUT", urlBase + "deviceTypes/reload");
+    };
+
     dataFactory.getDeviceList = function () {
         return angharadBackendService.httpRequest("GET", urlBase + "device/");
     };

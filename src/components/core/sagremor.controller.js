@@ -47,19 +47,31 @@ angular.module("sagremorApp")
 		popLoader();
 		
 		// Refresh benoic devices with overview
-		var devices = sharedData.all("benoicDevices");
-		var devicePromises = {};
-		_.forEach(sharedData.all("benoicDevices"), function (device, deviceName) {
-			if (device.connected) {
-				devicePromises[deviceName] = benoicFactory.getDeviceOverview(deviceName);
-			}
-		});
-		$q.all(devicePromises).then(function (results) {
-			_.forEach(results, function (element, name) {
-				sharedData.get("benoicDevices", name).element = element;
+		benoicFactory.getDeviceList().then(function (result) {
+			_.forEach(sharedData.all("benoicDevices"), function (device) {
+				device.enabled = false;
+				device.connected = false;
 			});
-			$rootScope.$broadcast("refreshDevices");
-		}, function (error) {
+			_.forEach(result, function (device) {
+				sharedData.add("benoicDevices", device.name, device);
+			});
+			
+			var devices = sharedData.all("benoicDevices");
+			var devicePromises = {};
+			_.forEach(sharedData.all("benoicDevices"), function (device, deviceName) {
+				if (device.connected) {
+					devicePromises[deviceName] = benoicFactory.getDeviceOverview(deviceName);
+				}
+			});
+			$q.all(devicePromises).then(function (results) {
+				_.forEach(results, function (element, name) {
+					sharedData.get("benoicDevices", name).element = element;
+				});
+				$rootScope.$broadcast("refreshDevices");
+			}, function (error) {
+				toaster.pop("error", $translate.instant("refresh"), $translate.instant("refresh_device_error"));
+			});
+		}, function () {
 			toaster.pop("error", $translate.instant("refresh"), $translate.instant("refresh_device_error"));
 		})["finally"](function () {
 			// Refresh scripts and events

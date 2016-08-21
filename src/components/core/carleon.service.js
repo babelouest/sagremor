@@ -10,6 +10,10 @@ angular.module("sagremorApp")
         return angharadBackendService.httpRequest("GET", urlBase + "service");
     };
 
+    dataFactory.reloadServiceList = function () {
+        return angharadBackendService.httpRequest("PUT", urlBase + "service/reload");
+    };
+
     dataFactory.enableService = function (service_name, enable) {
         return angharadBackendService.httpRequest("PUT", urlBase + "service/" + service_name + "/enable/" + (enable?"1":"0"));
     };
