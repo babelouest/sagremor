@@ -65,9 +65,13 @@ angular.module("sagremorApp")
 			});
 			$q.all(devicePromises).then(function (results) {
 				_.forEach(results, function (element, name) {
-					sharedData.get("benoicDevices", name).element = element;
+					var curDevice = sharedData.get("benoicDevices", name);
+					if (!!curDevice) {
+						curDevice.element = element;
+					}
 				});
 				$rootScope.$broadcast("refreshDevices");
+				$rootScope.$broadcast("refreshDashboard");
 			}, function (error) {
 				toaster.pop("error", $translate.instant("refresh"), $translate.instant("refresh_device_error"));
 			});
