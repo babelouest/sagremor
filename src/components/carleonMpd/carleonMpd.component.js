@@ -89,6 +89,7 @@ function carleonMpdController ($scope, $q, $window, $translatePartialLoader, $tr
 	
 	$scope.$on("$destroy", function() {
 		$interval.cancel(ctrl._interval);
+		ctrl._interval = null;
 	});
 	
 	$window.onblur = function() {  
