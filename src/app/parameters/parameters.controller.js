@@ -6,8 +6,8 @@ angular.module("sagremorApp")
 
 		this.submodules;
 
-		this.deviceList = {};
-		this.deviceTypes = {};
+		this.deviceList = [];
+		this.deviceTypes = [];
 		this.deviceAdded = false;
 
 		this.newDeviceName = "";
@@ -22,6 +22,8 @@ angular.module("sagremorApp")
 		this.currentProfile = false;
 		this.profileAdded = false;
 		
+		this.serviceList = [];
+		
 		this.sagremorParams = sagremorParams;
 
 		this.init = function() {
@@ -32,6 +34,7 @@ angular.module("sagremorApp")
 			self.submodules = sharedData.all("submodules");
 			self.deviceList = sharedData.all("benoicDevices");
 			self.initDeviceTypes();
+			self.serviceList = sharedData.all("carleonServices");
 			self.selectedLang = $translate.use();
 			self.profileList = sagremorParams.profiles;
 			self.currentProfile = sagremorParams.currentProfile;
@@ -47,6 +50,10 @@ angular.module("sagremorApp")
 
 		$scope.$on("benoicDeviceTypesChanged", function () {
 			self.initDeviceTypes();
+		});
+
+		$scope.$on("carleonServicesChanged", function () {
+			self.serviceList = sharedData.all("carleonServices");
 		});
 
 		this.addDevice = function () {
@@ -426,7 +433,7 @@ angular.module("sagremorApp")
 					$scope.$broadcast("angharadProfileChanged");
 					toaster.pop("success", $translate.instant("profiles"), $translate.instant("profiles_save_success"));
 				}, function (error) {
-				  toaster.pop("error", $translate.instant("profiles"), $translate.instant("profiles_save_error"));
+					toaster.pop("error", $translate.instant("profiles"), $translate.instant("profiles_save_error"));
 				});
 			}
 		};
@@ -437,6 +444,15 @@ angular.module("sagremorApp")
 			exp = new $window.Date(exp.getFullYear() + 10, exp.getMonth(), exp.getDate());
 			$cookies.put("ANGHARAD_PROFILE", profile.name, {expires: exp});
 			$rootScope.$broadcast("angharadProfileUpdated");
+		};
+		
+		this.enableCarleonService = function (service) {
+			carleonFactory.enableService(service.name, service.enabled).then(function () {
+				toaster.pop("success", $translate.instant("carleon_services"), $translate.instant("carleon_services_enabled_success"));
+				$rootScope.$broadcast("carleonServicesChanged");
+			}, function () {
+				toaster.pop("error", $translate.instant("carleon_services"), $translate.instant("carleon_services_enabled_error"));
+			});
 		};
 		
 		$scope.$on("angharadProfileChanged", function () {

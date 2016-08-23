@@ -117,6 +117,7 @@ angular.module("sagremorApp")
 						sharedData.add("carleonServices", result[key].name, result[key]);
 					}
 					$scope.$broadcast("refreshCarleonServices");
+					$scope.$broadcast("carleonServicesChanged");
 					
 				}, function (error) {
 					toaster.pop({type: "error", title: $translate.instant("refresh"), body: $translate.instant("refresh_carleon_error")});

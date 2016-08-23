@@ -6,32 +6,50 @@
     <div class="container">
       <div class="row">
           <div class="col-xs-2">
-              <label for="submodule-benoic" data-translate="param_submodule_benoic"></label>
+				 <label for="submodule-benoic" data-translate="param_submodule_benoic"></label>
           </div>
           <div class="col-xs-2">
               <input data-ng-change="ParametersCtrl.submoduleEnable('benoic')" id="submodule-benoic" name="submodule-benoic" data-toggle="toggle" data-bs-switch data-switch-size="mini" type="checkbox" data-ng-model="ParametersCtrl.submodules.benoic.enabled">
           </div>
           <div class="col-xs-2">
-			  <button type="button" class="btn btn-primary" data-ng-click="ParametersCtrl.reloadBenoicDeviceTypes()">
-				  <i aria-hidden="true" class="fa fa-refresh"></i>
-				  <span data-translate="param_submodule_benoic_reload_types"></span>
-			  </button>
+				  <button type="button" class="btn btn-primary" data-ng-click="ParametersCtrl.reloadBenoicDeviceTypes()" data-ng-disabled="!ParametersCtrl.submodules.benoic.enabled">
+					  <i aria-hidden="true" class="fa fa-refresh"></i>
+					  <span data-translate="param_submodule_benoic_reload_types"></span>
+				  </button>
           </div>
       </div>
+      <h4 data-translate="param_benoic_device_type_list"></h4>
+	  <div class="row" data-ng-repeat="type in ParametersCtrl.deviceTypes track by $index">
+		  <div class="col-xs-2" data-ng-bind="type.name">
+		  </div>
+		  <div class="col-xs-2">
+			  <input data-ng-change="ParametersCtrl.enableDeviceType(type)" data-toggle="toggle" data-bs-switch data-switch-size="mini" type="checkbox" data-ng-model="type.enabled" data-switch-active="false">
+		  </div>
+	  </div>
+      <hr>
       <div class="row">
           <div class="col-xs-2">
-              <label for="submodule-carleon" data-translate="param_submodule_carleon"></label>
+			  <label for="submodule-carleon" data-translate="param_submodule_carleon"></label>
           </div>
           <div class="col-xs-2">
               <input data-ng-change="ParametersCtrl.submoduleEnable('carleon')" id="submodule-carleon" name="submodule-carleon" data-toggle="toggle" data-bs-switch data-switch-size="mini" type="checkbox" data-ng-model="ParametersCtrl.submodules.carleon.enabled">
           </div>
           <div class="col-xs-2">
-			  <button type="button" class="btn btn-primary" data-ng-click="ParametersCtrl.reloadCarleonServices()">
+			  <button type="button" class="btn btn-primary" data-ng-click="ParametersCtrl.reloadCarleonServices()" data-ng-disabled="!ParametersCtrl.submodules.carleon.enabled">
 				  <i aria-hidden="true" class="fa fa-refresh"></i>
 				  <span data-translate="param_submodule_carleon_reload_services"></span>
 			  </button>
           </div>
       </div>
+      <h4 data-translate="param_carleon_service_list"></h4>
+	  <div class="row" data-ng-repeat="service in ParametersCtrl.serviceList track by $index">
+		  <div class="col-xs-2" data-ng-bind="service.name">
+		  </div>
+		  <div class="col-xs-2">
+			  <input data-ng-change="ParametersCtrl.enableCarleonService(service)" data-toggle="toggle" data-bs-switch data-switch-size="mini" type="checkbox" data-ng-model="service.enabled">
+		  </div>
+	  </div>
+      <hr>
       <div class="row">
           <div class="col-xs-2">
               <label for="submodule-gareth" data-translate="param_submodule_gareth"></label>
