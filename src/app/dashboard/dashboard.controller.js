@@ -6,6 +6,8 @@ angular.module("sagremorApp")
 
 		this._timeout = null;
 		this.sagremorParams = sagremorParams;
+		this.dashboardWidgets = [];
+		this.dashboardWidgetsDisplay = [];
 		this.profileName = "";
 		this.isInit = true;
 		
@@ -41,10 +43,16 @@ angular.module("sagremorApp")
 
         function getDashboardElements () {
             self.dashboardWidgets = [];
+            self.dashboardWidgetsDisplay = [];
             if (!!sagremorParams.currentProfile && !!sagremorParams.currentProfile.addTo && !!sagremorParams.currentProfile.addTo.D && sagremorParams.currentProfile.addTo.D.length > 0) {
 				getDashboardElementsCurrentProfile();
 			} else {
 				getDashboardElementsEmptyProfile();
+			}
+			for (key in self.dashboardWidgets) {
+				if (!!self.dashboardWidgets[key]) {
+					self.dashboardWidgetsDisplay.push(self.dashboardWidgets[key]);
+				}
 			}
         }
         
@@ -230,7 +238,7 @@ angular.module("sagremorApp")
 					var curHeight = 1;
 					var icon = "tasks";
 					var dashboardElement = { type: element.type, name: element.name, element: elt, x: x, y: y, width: 2, height: curHeight, tag: tag, icon: icon };
-					self.dashboardWidgets.push(dashboardElement);
+					self.dashboardWidgets[y * 10 + x] = dashboardElement;
 				}
 			}
 		}
@@ -252,7 +260,7 @@ angular.module("sagremorApp")
 					var y = tagParams[3];
 					var curHeight = element.type === "scheduler"?2:1;
 					var dashboardElement = { type: element.type, name: element.name, element: elt, x: x, y: y, width: 2, height: curHeight, tag: tag, icon: icon };
-					self.dashboardWidgets.push(dashboardElement);
+					self.dashboardWidgets[y * 10 + x] = dashboardElement;
 				}
 			}
 		}
@@ -274,7 +282,7 @@ angular.module("sagremorApp")
 					var curWidth = injector.widgetWidth;
 					var icon= injector.icon;
 					var dashboardElement = { type: element.type, name: element.name, element: element, x: x, y: y, width: curWidth, height: curHeight, tag: tag, icon: icon};
-					self.dashboardWidgets.push(dashboardElement);
+					self.dashboardWidgets[y * 10 + x] = dashboardElement;
 				}
 			}
         }
@@ -291,7 +299,7 @@ angular.module("sagremorApp")
 					var curHeight = 4;
 					var icon = "bar-chart";
 					var dashboardElement = { type: element.type, name: element.name, element: elt, x: x, y: y, width: 6, height: curHeight, tag: tag, icon: icon };
-					self.dashboardWidgets.push(dashboardElement);
+					self.dashboardWidgets[y * 10 + x] = dashboardElement;
 				}
 			}
 		}
@@ -306,7 +314,7 @@ angular.module("sagremorApp")
 		}
 		
 		function newDashboardSeparator(value) {
-			var dashboardElement = { type: "separator", name: value, x: 0, y: 0, width: 10, height: 1 };
+			var dashboardElement = { type: "separator", name: value, x: 0, y: self.dashboardWidgets[self.dashboardWidgets.length - 1].y + 1, width: 10, height: 1 };
 			var profile = sagremorParams.currentProfile;
 			if (!profile.addTo) {
 				profile.addTo = {D: []};
@@ -314,11 +322,11 @@ angular.module("sagremorApp")
 			if (!profile.addTo.D) {
 				profile.addTo.D = [];
 			}
-			self.dashboardWidgets.push(dashboardElement);
+			self.dashboardWidgetsDisplay.push(dashboardElement);
 			var newElement = {
 				type: "separator",
 				name: value,
-				tag: "SGMR$D$0$0"
+				tag: "SGMR$D$0$" + self.dashboardWidgets[self.dashboardWidgets.length - 1].y + 1
 			};
 			profile.addTo.D.push(newElement);
 			angharadFactory.setProfile(profile.name, profile).then(function () {
@@ -337,8 +345,8 @@ angular.module("sagremorApp")
 					}
 				});
 			}
-			var index = self.dashboardWidgets.indexOf(w);
-			self.dashboardWidgets.splice(index, 1);
+			var index = self.dashboardWidgetsDisplay.indexOf(w);
+			self.dashboardWidgetsDisplay.splice(index, 1);
 			sagremorParams.currentProfile = profile;
 			angharadFactory.setProfile(profile.name, profile).then(function () {
 				toaster.pop("success", $translate.instant("profile_save"), $translate.instant("profile_save_success"));
@@ -357,7 +365,7 @@ angular.module("sagremorApp")
 					if (sagremorParams.carleonEnabled) {
 						var changed = false;
 						_.forEach(items, function (item) {
-							var element = _.find(self.dashboardWidgets, function (widget) {
+							var element = _.find(self.dashboardWidgetsDisplay, function (widget) {
 								return widget.type === $(item.el).attr("data-sag-type") &&
 										widget.name === $(item.el).attr("data-sag-name") &&
 										(!widget.device || widget.device === $(item.el).attr("data-sag-device"));
@@ -371,14 +379,14 @@ angular.module("sagremorApp")
 							}
 						});
 						if (changed) {
-							var dashboardWidgets = _(sagremorParams.currentProfile.addTo.D).chain().sortBy(function (widget) {
+							var dashboardWidgetsDisplay = _(sagremorParams.currentProfile.addTo.D).chain().sortBy(function (widget) {
 								var splitted = widget.tag.split("$");
 								return splitted[2];
 							}).sortBy(function (widget) {
 								var splitted = widget.tag.split("$");
 								return splitted[3];
 							}).value();
-							sagremorParams.currentProfile.addTo.D = dashboardWidgets;
+							sagremorParams.currentProfile.addTo.D = dashboardWidgetsDisplay;
 							
 							angharadFactory.setProfile(sagremorParams.currentProfile.name, sagremorParams.currentProfile).then(function () {
 								toaster.pop("success", $translate.instant("profile_save"), $translate.instant("profile_save_success"));
