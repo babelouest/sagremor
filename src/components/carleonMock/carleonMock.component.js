@@ -126,7 +126,7 @@ angular.module("sagremorApp").component("carleonMock", {
 			target: "carleonMock"
 		},
 		widgetHeight: 3,
-		widgetWidth: 2,
+		widgetWidth: 3,
 		icon: "thumbs-o-up",
 		commands: {
 			exec1: {
