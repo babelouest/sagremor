@@ -216,7 +216,7 @@ angular.module("sagremorApp").component("serviceMpd", {
         size: 2,
         leftMenu: {
 			title: "carleon_music_title",
-			target: "carleonMpd"
+			target: "music"
 		},
 		widgetHeight: 4,
 		widgetWidth: 3,
