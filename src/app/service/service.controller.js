@@ -4,9 +4,11 @@ angular.module("sagremorApp")
       
         var self = this;
         
+        this.serviceList = [];
+        this.title = ""
+        
         this.sagremorParams = sagremorParams;
-        this.serviceGroup = {};
-        this.currentInjector = _.find(sagGenericInjectorManager.components, function (component) {
+        this.currentInjectors = _.filter(sagGenericInjectorManager.components, function (component) {
 			return component.leftMenu && component.leftMenu.target === $stateParams.service;
 		});
 		this.size = 1;
@@ -14,90 +16,73 @@ angular.module("sagremorApp")
         this.init = function () {
 			if (!sagremorParams.loggedIn) {
 				$location.path("/login");
+			} else if (!!self.currentInjectors) {
+				_.forEach(self.currentInjectors, function (currentInjector) {
+					var service = {type: currentInjector.type};
+					self.title = currentInjector.leftMenu.title;
+					service.size = currentInjector.size || 1
+					service.serviceGroup = {title: currentInjector.groupTitle, list: [], service: currentInjector.service};
+					service.menu = [
+						{
+							name: "edit", 
+							display: $translate.instant("edit"), 
+							action: function (param) {
+								param.service.editService(param);
+							}
+						},
+						{
+							name: "remove", 
+							display: $translate.instant("remove"), 
+							action: function (param) {
+								param.service.removeService(param).then(function () {
+									$scope.$broadcast("carleonServicesChanged");
+								});
+							}
+						},
+						{
+							name: "add_to_dashboard", 
+							display: $translate.instant("add_to_dashboard"), 
+							action: function (param) {
+								if (sagremorService.addToDashboard(param)) {
+									$scope.$broadcast("refreshDashboard");
+								}
+							}
+						}
+					];
+					self.serviceList.push(service);
+				});
+				loadServices();
 			}
-			
-			self.size = self.currentInjector.size || 1
-			$translate(["edit", "remove", "add_to_dashboard"]).then(function (results) {
-				self.menu = [
-					{
-						name: "edit", 
-						display: results.edit, 
-						action: function (param) {
-							param.service.editService(param);
-						}
-					},
-					{
-						name: "remove", 
-						display: results.remove, 
-						action: function (param) {
-							param.service.removeService(param).then(function () {
-								$scope.$broadcast("carleonServicesChanged");
-							});
-						}
-					},
-					{
-						name: "add_to_dashboard", 
-						display: results.add_to_dashboard, 
-						action: function (param) {
-							if (sagremorService.addToDashboard(param)) {
-                                $scope.$broadcast("refreshDashboard");
-                            }
-						}
-					}
-				];
-			});
-			self.title = self.currentInjector.leftMenu.title;
-			self.serviceGroup = {title: self.currentInjector.groupTitle, list: [], service: self.currentInjector.service};
-			loadServices();
 		};
 		
 		function loadServices () {
-			var serviceList = [];
-			var service = sharedData.get("carleonServices", self.currentInjector.type);
-			if (!!service && !!service.element) {
-				_.forEach(service.element, function (element) {
-					var exist = _.find(self.serviceGroup.list, function (elt) {
-						return elt.name === element.name;
-					});
-					if (!exist) {
-						var elt = {name: element.name, type: element.type, description: element.description, service: self.currentInjector.service};
-						self.serviceGroup.list.push(elt);
+			_.forEach(self.currentInjectors, function (currentInjector) {
+				var cService = sharedData.get("carleonServices", currentInjector.type);
+				if (!!cService && !!cService.element) {
+					var serviceGroup = _.find(self.serviceList, {type: currentInjector.type});
+					if (!serviceGroup.list) {
+						serviceGroup.list = [];
 					}
-				});
-				
-				_.forEach(self.serviceGroup.list, function (elt, index) {
-					var exist = _.find(service.element, function (serviceElt) {
-						return serviceElt.name === elt.name;
+					_.forEach(cService.element, function (element) {
+						var exist = _.find(serviceGroup.list, function (elt) {
+							return elt.name === element.name;
+						});
+						if (!exist) {
+							var elt = {name: element.name, type: element.type, description: element.description, service: currentInjector.service};
+							serviceGroup.list.push(elt);
+						}
 					});
-					if (!exist) {
-						self.serviceGroup.list.splice(index, 1);
-					}
-				});
-			}
-		}
-		
-		function refreshServices () {
-			var service = sharedData.get("carleonServices", self.currentInjector.type);
-			if (!!service && !!service.element) {
-				_.forEach(service.element, function (element) {
-					var exist = _.find(self.serviceGroup.list, function (elt) {
-						return elt.name === element.name;
+					
+					_.forEach(serviceGroup.list, function (elt, index) {
+						var exist = _.find(cService.element, function (serviceElt) {
+							return serviceElt.name === elt.name;
+						});
+						if (!exist) {
+							serviceGroup.list.splice(index, 1);
+						}
 					});
-					if (!exist) {
-						var elt = {name: element.name, type: element.type, description: element.description, service: self.currentInjector.service};
-						self.serviceGroup.list.push(elt);
-					}
-				});
-				
-				_.forEach(self.serviceGroup.list, function (elt, index) {
-					var exist = _.find(service.element, function (serviceElt) {
-						return serviceElt.name === elt.name;
-					});
-					if (!exist) {
-						self.serviceGroup.list.splice(index, 1);
-					}
-				});
-			}
+				}
+			});
 		}
 		
 		this.addService = function (service) {
@@ -109,7 +94,7 @@ angular.module("sagremorApp")
 		});
         
 		$scope.$on("refreshCarleonServices", function () {
-			refreshServices();
+			loadServices();
 		});
 	
         this.init();
