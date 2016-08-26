@@ -14,6 +14,12 @@ angular.module("sagremorApp")
                 controller: "LoginCtrl",
                 controllerAs: "LoginCtrl"
             })
+            .state("error", {
+                url: "/error",
+                templateUrl: "app/error/error.html",
+                controller: "ErrorCtrl",
+                controllerAs: "ErrorCtrl"
+            })
             .state("switches", {
                 url: "/switches",
                 templateUrl: "app/switches/switches.html",
