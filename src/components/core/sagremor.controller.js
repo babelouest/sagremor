@@ -199,6 +199,11 @@ angular.module("sagremorApp")
 			if (error.status === 401) {
 				sagremorParams.loggedIn = false;
 				$location.path("/login");
+			} else {
+				sagremorParams.loggedIn = false;
+				sagremorParams.errorMessage = "error_api_unavailable";
+				$location.path("/error");
+				$scope.$broadcast("generalError");
 			}
 			return $q.reject(error);
 		});

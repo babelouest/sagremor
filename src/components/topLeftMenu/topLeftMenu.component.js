@@ -15,7 +15,9 @@ function topLeftMenuCtrl ($scope, $translate, sagremorParams, sagGenericInjector
 			if (inject.carleonService && inject.leftMenu && !!carleonComponentsConfig[inject.type] && !!carleonComponentsConfig[inject.type].enabled && !!service && service.enabled) {
 				var menu = inject.leftMenu;
 				menu.icon = inject.icon;
-				self.serviceList.push(menu);
+				if (!_.find(self.serviceList, {target: menu.target})) {
+					self.serviceList.push(menu);
+				}
 			}
 		});
 	};
