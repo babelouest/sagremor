@@ -3,17 +3,31 @@
         <h3 class="modal_title" data-translate="logs_filter_modal_title"></h3>
     </div>
     <div class="modal-body">
-		<!-- New filter button -->
 		<div class="row control-group">
-			<div class="col-xs-4 controls">
+			<!-- New filter button -->
+			<div class="col-xs-4 controls" data-ng-if="!FiltersModalCtrl.displayAlert">
 				<button type="button" class="btn" data-ng-click="FiltersModalCtrl.newFilter()">
 					<i class="fa fa-plus" aria-hidden="true"></i>
 					<span data-translate="logs_filter_new_button"></span>
 				</button>
 			</div>
+			<!-- Remove alerts button -->
+			<div class="col-xs-4 controls" data-ng-if="!FiltersModalCtrl.displayAlert">
+				<button type="button" class="btn" data-ng-click="FiltersModalCtrl.showAlerts()">
+					<i class="fa fa-bolt" aria-hidden="true"></i>
+					<span data-translate="logs_alerts_delete_button"></span>
+				</button>
+			</div>
+			<!-- Show filters button -->
+			<div class="col-xs-4 controls" data-ng-if="FiltersModalCtrl.displayAlert">
+				<button type="button" class="btn" data-ng-click="FiltersModalCtrl.showFilters()">
+					<i class="fa fa-bolt" aria-hidden="true"></i>
+					<span data-translate="logs_filters_show_button"></span>
+				</button>
+			</div>
 		</div>
 		<!-- Edit filter input -->
-		<div data-ng-if="FiltersModalCtrl.editFilter">
+		<div data-ng-if="FiltersModalCtrl.editFilter && !FiltersModalCtrl.displayAlert">
 			<hr>
 			<h3 data-translate="filter_table_edit" data-ng-if="!FiltersModalCtrl.addFilter"></h3>
 			<h3 data-translate="filter_table_new" data-ng-if="FiltersModalCtrl.addFilter"></h3>
@@ -456,7 +470,7 @@
 			</div>
 		</div>
 		<!-- Filter list -->
-		<div data-ng-if="!FiltersModalCtrl.editFilter">
+		<div data-ng-if="!FiltersModalCtrl.editFilter && !FiltersModalCtrl.displayAlert">
 			<table class="table table-hover">
 				<thead>
 					<tr>
@@ -506,6 +520,28 @@
 					</tr>
 				</tbody>
 			</table>
+		</div>
+		<div data-ng-if="FiltersModalCtrl.displayAlert">
+			<h4 data-translate="logs_menu_smtp"></h4>
+			<div class="row" data-ng-repeat="alertSmtp in FiltersModalCtrl.AlertSmtpList">
+				<div class="col-xs-2"></div>
+				<div class="col-xs-4" data-ng-bind="alertSmtp.name"></div>
+				<div class="col-xs-4">
+					<button type="button" class="btn" data-ng-click="FiltersModalCtrl.removeSmtpAlert(alertSmtp)">
+						<i class="fa fa-trash" aria-hidden="true"></i>
+					</button>
+				</div>
+			</div>
+			<h4 data-translate="logs_menu_http"></h4>
+			<div class="row" data-ng-repeat="alertHttp in FiltersModalCtrl.AlertHttpList">
+				<div class="col-xs-2"></div>
+				<div class="col-xs-4" data-ng-bind="alertHttp.name"></div>
+				<div class="col-xs-4">
+					<button type="button" class="btn" data-ng-click="FiltersModalCtrl.removeHttpAlert(alertHttp)">
+						<i class="fa fa-trash" aria-hidden="true"></i>
+					</button>
+				</div>
+			</div>
 		</div>
     </div>
     <div class="modal-footer">

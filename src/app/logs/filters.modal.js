@@ -12,6 +12,7 @@ angular.module("sagremorApp")
         this.newAlertSmtp = false;
         this.newAlertHttp = false;
         this.newAlertHttpHeader = false;
+        this.displayAlert = false;
         this.customFilter = {
 			name: "",
 			description: "",
@@ -239,14 +240,12 @@ angular.module("sagremorApp")
 						name: "",
 						host: "",
 						port: 0,
-						tls: 0,
-						check_ca: 0,
+						tls: false,
+						check_ca: false,
 						user: null,
 						password: null,
 						from: "",
 						to: "",
-						cc: null,
-						bcc: null,
 						subject: "",
 						body: ""
 					};
@@ -372,6 +371,34 @@ angular.module("sagremorApp")
 			self.customFilter = filter;
 			self.editFilter = true;
 			self.addFilter = false;
+		};
+		
+		this.showAlerts = function () {
+			self.displayAlert = true;
+		};
+		
+		this.showFilters = function () {
+			self.displayAlert = false;
+		};
+		
+		this.removeSmtpAlert = function (alert) {
+			garethFactory.removeAlert("smtp", alert.name).then(function () {
+				sharedData.remove("garethAlertsSmtp", alert.name);
+				toaster.pop("success", $translate.instant("logs_alert"), $translate.instant("logs_alert_remove_success"));
+				$scope.$broadcast("garethChange");
+			}, function () {
+				toaster.pop("error", $translate.instant("logs_alert"), $translate.instant("logs_alert_remove_error"));
+			});
+		};
+		
+		this.removeHttpAlert = function (alert) {
+			garethFactory.removeAlert("http", alert.name).then(function () {
+				sharedData.remove("garethAlertsHttp", alert.name);
+				toaster.pop("success", $translate.instant("logs_alert"), $translate.instant("logs_alert_remove_success"));
+				$scope.$broadcast("garethChange");
+			}, function () {
+				toaster.pop("error", $translate.instant("logs_alert"), $translate.instant("logs_alert_remove_error"));
+			});
 		};
 		
 		this.close = function () {
