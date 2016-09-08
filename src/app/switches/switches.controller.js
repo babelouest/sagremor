@@ -184,7 +184,7 @@ angular.module("sagremorApp")
             // Remove all elements from self.switchList that are no longer in devices
             _.remove(self.switchList, function (switcher) {
 				var found = _.find(sharedData.all("benoicDevices"), function (device, deviceName) {
-					return _.find(device.element.dimmers, function (element, eltName) {
+					return !device.element || _.find(device.element.dimmers, function (element, eltName) {
 						return eltName === dimmer.name && deviceName === dimmer.device;
 					});
 				});

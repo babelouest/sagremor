@@ -8,6 +8,7 @@ angular.module("sagremorApp")
 
 		this.deviceList = [];
 		this.deviceTypes = [];
+		this.deviceTypesEnabled = [];
 		this.deviceAdded = false;
 
 		this.newDeviceName = "";
@@ -196,6 +197,7 @@ angular.module("sagremorApp")
 
 		this.initDeviceTypes = function () {
 			self.deviceTypes = sharedData.all("benoicDeviceTypes");
+			self.deviceTypesEnabled = _.filter(sharedData.all("benoicDeviceTypes"), {enabled: true});
 			_.forEach(self.deviceTypes, function (type) {
 				$translate(type.uid + "_device_type").then(function(translate) {
 					type.translate = translate;

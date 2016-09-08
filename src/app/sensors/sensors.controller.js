@@ -100,7 +100,7 @@ angular.module("sagremorApp")
             // Remove all elements from self.sensorList that are no longer in devices
             _.remove(self.sensorList, function (sensor) {
 				var found = _.find(sharedData.all("benoicDevices"), function (device, deviceName) {
-					return _.find(device.element.sensors, function (element, eltName) {
+					return !device.element || _.find(device.element.sensors, function (element, eltName) {
 						return eltName === sensor.name && deviceName === sensor.device;
 					});
 				});

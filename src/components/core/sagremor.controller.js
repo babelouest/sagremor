@@ -191,7 +191,7 @@ angular.module("sagremorApp")
 		return angharadFactory.getAuth()
 		.then(function(response) {
 			sagremorParams.loggedIn = true;
-			if ($location.url() === "/login") {
+			if ($location.url() === "/login" || $location.url() === "/error") {
 				$location.path("/");
 			}
 		},

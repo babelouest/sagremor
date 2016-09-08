@@ -23,7 +23,7 @@
 		  <div class="col-xs-2" data-ng-bind="type.name">
 		  </div>
 		  <div class="col-xs-2">
-			  <input data-ng-change="ParametersCtrl.enableDeviceType(type)" data-toggle="toggle" data-bs-switch data-switch-size="mini" type="checkbox" data-ng-model="type.enabled" data-switch-active="false">
+			  <input data-toggle="toggle" data-bs-switch data-switch-size="mini" type="checkbox" data-ng-model="type.enabled" data-switch-active="false">
 		  </div>
 	  </div>
       <hr>
@@ -108,7 +108,7 @@
 					  <td><input type="text" data-ng-model="ParametersCtrl.newDeviceName" data-ng-required data-ng-maxlength="64" maxlength="64"></td>
 					  <td><input type="text" data-ng-model="ParametersCtrl.newDeviceDescription" data-ng-maxlength="128" maxlength="128"></td>
 					  <td>
-						  <select data-ng-required data-ng-model="ParametersCtrl.newDeviceType" data-ng-options="device.uid as device.translate for device in ParametersCtrl.deviceTypes" data-ng-change="ParametersCtrl.setDeviceOptions()"></select>
+						  <select data-ng-required data-ng-model="ParametersCtrl.newDeviceType" data-ng-options="device.uid as device.translate for device in ParametersCtrl.deviceTypesEnabled" data-ng-change="ParametersCtrl.setDeviceOptions()"></select>
 					  </td>
 					  <td>
 						  <input data-toggle="toggle" data-bs-switch data-switch-size="mini" type="checkbox" data-ng-model="ParametersCtrl.newDeviceConnect">

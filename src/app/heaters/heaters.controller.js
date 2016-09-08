@@ -100,7 +100,7 @@ angular.module("sagremorApp")
             // Remove all elements from self.heaterList that are no longer in devices
             _.remove(self.heaterList, function (heater) {
 				var found = _.find(sharedData.all("benoicDevices"), function (device, deviceName) {
-					return _.find(device.element.heaters, function (element, eltName) {
+					return !device.element || _.find(device.element.heaters, function (element, eltName) {
 						return eltName === heater.name && deviceName === heater.device;
 					});
 				});
