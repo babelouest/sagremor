@@ -12,7 +12,7 @@
         </div>
         <div data-ng-if="$ctrl.element.type !== 'script'" class="sag-container-header-title col-xs-10" data-ng-class="{'sag-container-header-title-dashboard': $ctrl.dashboard}">
             <i data-ng-class="{'fa fa-{{$ctrl.icon}}': !!$ctrl.icon}" aria-hidden="true" data-ng-if="$ctrl.dashboard"></i>
-            <span data-toggle="tooltip" data-ng-attr-title="{{$ctrl.title}}">
+            <span data-toggle="tooltip" data-ng-attr-title="{{$ctrl.title + '\n' + $ctrl.element.description}}">
 				<span data-ng-bind="$ctrl.title" class="text-center"></span>
             </span>
         </div>
