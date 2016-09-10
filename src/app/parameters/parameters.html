@@ -105,8 +105,8 @@
 					  </td>
 				  </tr>
 				  <tr data-ng-if="ParametersCtrl.deviceAdded">
-					  <td><input type="text" data-ng-model="ParametersCtrl.newDeviceName" data-ng-required data-ng-maxlength="64" maxlength="64"></td>
-					  <td><input type="text" data-ng-model="ParametersCtrl.newDeviceDescription" data-ng-maxlength="128" maxlength="128"></td>
+					  <td><input type="text" data-ng-model="ParametersCtrl.newDeviceName" data-ng-required data-ng-maxlength="64" maxlength="64"placeholder="{{'device_name_placeholder' | translate}}"></td>
+					  <td><input type="text" data-ng-model="ParametersCtrl.newDeviceDescription" data-ng-maxlength="128" maxlength="128"placeholder="{{'device_description_placeholder' | translate}}"></td>
 					  <td>
 						  <select data-ng-required data-ng-model="ParametersCtrl.newDeviceType" data-ng-options="device.uid as device.translate for device in ParametersCtrl.deviceTypesEnabled" data-ng-change="ParametersCtrl.setDeviceOptions()"></select>
 					  </td>
@@ -130,10 +130,10 @@
 			  <div class="row">
 				  <div class="col-xs-3" data-ng-class="{'device-option-required': !option.optional}">{{ParametersCtrl.newDeviceType + "_" + option.name | translate}}</div>
 				  <div class="col-xs-3" data-ng-if="option.type === 'string'">
-					  <input type="text" data-ng-model="option.value" data-ng-required="!option.optional">
+					  <input type="text" data-ng-model="option.value" data-ng-required="!option.optional" placeholder="{{ParametersCtrl.newDeviceType + '_' + option.name + '_placeholder' | translate}}">
 				  </div>
 				  <div class="col-xs-3" data-ng-if="option.type === 'numeric'">
-					  <input type="number" data-ng-model="option.value" data-ng-required="!option.optional">
+					  <input type="number" data-ng-model="option.value" data-ng-required="!option.optional" placeholder="{{ParametersCtrl.newDeviceType + '_' + option.name + '_placeholder' | translate}}">
 				  </div>
 				  <div class="col-xs-3" data-ng-if="option.type === 'boolean'">
 					  <input data-toggle="toggle" type="checkbox" data-ng-model="option.value" data-ng-required="!option.optional">
@@ -164,10 +164,10 @@
 					<td data-ng-if="!profile.update">{{profile.name}}</td>
 					<td data-ng-if="!profile.update">{{profile.description}}</td>
 					<td data-ng-if="profile.update">
-						<input type="text" name="profileName" id="profileName" data-ng-model="profile.newName">
+						<input type="text" name="profileName" id="profileName" data-ng-model="profile.newName" placeholder="{{'profile_name_placeholder' | translate}}">
 					</td>
 					<td data-ng-if="profile.update">
-						<input type="text" name="profileDescription" id="profileDescription" data-ng-model="profile.newDescription">
+						<input type="text" name="profileDescription" id="profileDescription" data-ng-model="profile.newDescription" placeholder="{{'profile_description_placeholder' | translate}}">
 					</td>
 					<td>
 						<input data-toggle="toggle" data-bs-switch data-switch-size="mini" type="checkbox" data-ng-model="profile.default" data-ng-change="ParametersCtrl.setDefaultProfile(profile)">
@@ -199,8 +199,8 @@
 					</td>
 				</tr>
 				<tr data-ng-if="ParametersCtrl.profileAdded">
-					<td><input type="text" data-ng-model="ParametersCtrl.newProfileName" data-ng-required data-ng-maxlength="64" maxlength="64"></td>
-					<td><input type="text" data-ng-model="ParametersCtrl.newProfileDescription" data-ng-maxlength="128" maxlength="128"></td>
+					<td><input type="text" data-ng-model="ParametersCtrl.newProfileName" data-ng-required data-ng-maxlength="64" maxlength="64" placeholder="{{'profile_name_placeholder' | translate}}"></td>
+					<td><input type="text" data-ng-model="ParametersCtrl.newProfileDescription" data-ng-maxlength="128" maxlength="128" placeholder="{{'profile_description_placeholder' | translate}}"></td>
 					<td>
 						<input data-toggle="toggle" data-bs-switch data-switch-size="mini" type="checkbox" data-ng-model="ParametersCtrl.newProfileDefault">
 					</td>

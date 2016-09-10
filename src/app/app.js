@@ -188,7 +188,7 @@ angular.module("sagremorApp", [
 })
 .factory("sagremorEdit", function ($uibModal) {
     
-    var open = function (title, message) {
+    var open = function (title, message, placeholder) {
         return modalInstance = $uibModal.open({
             animation: true,
             templateUrl: "components/modals/edit.modal.html",
@@ -201,6 +201,9 @@ angular.module("sagremorApp", [
                 },
                 message: function () {
                     return message;
+                },
+                placeholder: function () {
+                    return placeholder;
                 }
             }
         }).result;

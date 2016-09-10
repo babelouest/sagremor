@@ -47,7 +47,7 @@ angular.module("sagremorApp")
         };
         
         this.newMonitor = function () {
-			return sagremorEdit.open($translate.instant("monitor_new_title"), $translate.instant("monitor_new_value")).then(function (result) {
+			return sagremorEdit.open($translate.instant("monitor_new_title"), $translate.instant("monitor_new_value"), $translate.instant("monitor_new_placeholder")).then(function (result) {
 				addMonitor(result.value);
 			});
 		};

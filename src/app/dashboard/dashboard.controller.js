@@ -36,7 +36,7 @@ angular.module("sagremorApp")
 		};
 		
 		this.addTitleLine = function () {
-			return sagremorEdit.open($translate.instant("dashboard_add_line"), $translate.instant("dashboard_add_line_value")).then(function (result) {
+			return sagremorEdit.open($translate.instant("dashboard_add_line"), $translate.instant("dashboard_add_line_value"), $translate.instant("dashboard_add_line_placeholder")).then(function (result) {
 				newDashboardSeparator(result.value);
 			});
 		};

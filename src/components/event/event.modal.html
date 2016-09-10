@@ -14,7 +14,8 @@
 						class="modal-input-text form-control"
 						size="16" 
 						maxlength="64"
-						data-ng-disabled="!EventModalCtrl.add">
+						data-ng-disabled="!EventModalCtrl.add"
+						placeholder="{{'event_name_placeholder' | translate}}">
             </div>
         </div>
         <div class="row control-group">
@@ -26,7 +27,8 @@
 						data-ng-model="EventModalCtrl.event.description" 
 						class="modal-input-text form-control" 
 						size="16" 
-						maxlength="128">
+						maxlength="128"
+						placeholder="{{'event_description_placeholder' | translate}}">
             </div>
         </div>
         <div class="row control-group">
@@ -247,7 +249,7 @@
 					</select>
 				</div>
 				<div class="col-xs-4" data-ng-if="EventModalCtrl.event.message_match <= 4">
-					<input type="text" class="form-control" name="newTriggerMessageValue" id="newTriggerMessageValue" data-ng-model="EventModalCtrl.event.message">
+					<input type="text" class="form-control" name="newTriggerMessageValue" id="newTriggerMessageValue" data-ng-model="EventModalCtrl.event.message" placeholder="{{'event_message_match_placeholder' | translate}}">
 				</div>
 			</div>
 			
