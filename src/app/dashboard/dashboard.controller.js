@@ -1,6 +1,6 @@
 angular.module("sagremorApp")
     .controller("DashboardCtrl", 
-    function($scope, $location, $translate, $timeout, toaster, sharedData, sagremorParams, sagremorService, sagremorEdit, angharadFactory, benoicFactory, carleonFactory, sagGenericInjectorManager, carleonComponentsConfig) {
+    function($scope, $location, $translate, $timeout, toaster, sharedData, sagremorParams, sagremorService, sagremorEdit, angharadFactory, benoicFactory, carleonFactory, sagGenericInjectorManager) {
 
         var self = this;
 
@@ -158,7 +158,7 @@ angular.module("sagremorApp")
 			// adding all carleon elements to the dashboard (if enabled)
 			if (sagremorParams.carleonEnabled) {
 				_.forEach(sagGenericInjectorManager.components, function (component) {
-					if (component.carleonService && carleonComponentsConfig[component.type].enabled) {
+					if (component.carleonService) {
 						addDashboardSeparator($translate.instant(component.groupTitle), defaultTag + currentX + "$" + currentY);
 						currentY++;
 						currentX = 0;
@@ -287,7 +287,7 @@ angular.module("sagremorApp")
         
         function addCarleonElementToDashboard(element, tag) {
 			var injector = _.find(sagGenericInjectorManager.components, function (inject) {
-				return inject.type === element.type && !!carleonComponentsConfig[inject.type] && !!carleonComponentsConfig[inject.type].enabled;
+				return inject.type === element.type;
 			});
 			var service = sharedData.get("carleonServices", element.type);
 			var elt = !!service && !!service.element && _.find(service.element, function (cElt) {

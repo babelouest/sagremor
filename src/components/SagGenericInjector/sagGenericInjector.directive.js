@@ -1,4 +1,4 @@
-angular.module("sagremorApp").directive("sagGenericInjector", function ($compile, sagGenericInjectorManager, carleonComponentsConfig) {
+angular.module("sagremorApp").directive("sagGenericInjector", function ($compile, sagGenericInjectorManager, sharedData) {
     
     var template = "<directive element=\"elt\"></directive>";
     
@@ -13,19 +13,16 @@ angular.module("sagremorApp").directive("sagGenericInjector", function ($compile
         },
         link: function(scope, element) {
             var config = _.find(sagGenericInjectorManager.components, {type: scope.type});
-            if (!!config) {
-				if (config.carleonService) {
-					if (!!carleonComponentsConfig[scope.type] && !!carleonComponentsConfig[scope.type].enabled) {
-						content = $compile(template.replace(/directive/g, config.directive))(scope);
-					} else {
-						content = $compile(templateDisabled)(scope);
-					}
-				} else {
-					content = $compile(template.replace(/directive/g, config.directive))(scope);
-				}
-            } else {
-                content = $compile(templateNotFound)(scope);
-            }
+			var service = sharedData.get("carleonServices", scope.type);
+			if (config.carleonService && service && service.enabled) {
+				content = $compile(template.replace(/directive/g, config.directive))(scope);
+			} else if (config.carleonService && service && !service.enabled) {
+				content = $compile(templateDisabled)(scope);
+			} else if (!config.carleonService) {
+				content = $compile(template.replace(/directive/g, config.directive))(scope);
+			} else {
+				content = $compile(templateNotFound)(scope);
+			}
             element.append(content);
         }
     }});

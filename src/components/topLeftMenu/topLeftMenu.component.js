@@ -1,4 +1,4 @@
-function topLeftMenuCtrl ($scope, $translate, sagremorParams, sagGenericInjectorManager, carleonComponentsConfig, sharedData) {
+function topLeftMenuCtrl ($scope, $translate, sagremorParams, sagGenericInjectorManager, sharedData) {
     var self = this;
     
     this.serviceList = [];
@@ -12,7 +12,7 @@ function topLeftMenuCtrl ($scope, $translate, sagremorParams, sagGenericInjector
 		self.serviceList = [];
 		_.forEach(sagGenericInjectorManager.components, function (inject) {
 			var service = sharedData.get("carleonServices", inject.type);
-			if (inject.carleonService && inject.leftMenu && !!carleonComponentsConfig[inject.type] && !!carleonComponentsConfig[inject.type].enabled && !!service && service.enabled) {
+			if (inject.carleonService && inject.leftMenu && !!service && service.enabled) {
 				var menu = inject.leftMenu;
 				menu.icon = inject.icon;
 				if (!_.find(self.serviceList, {target: menu.target})) {

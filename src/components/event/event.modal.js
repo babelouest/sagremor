@@ -1,6 +1,6 @@
 angular.module("sagremorApp")
     .controller("EventModalCtrl",
-    function($scope, $rootScope, $uibModalInstance, $translate, toaster, sagremorConstant, sagremorService, angharadFactory, sharedData, sagGenericInjectorManager, carleonComponentsConfig, event, eventType) {
+    function($scope, $rootScope, $uibModalInstance, $translate, toaster, sagremorConstant, sagremorService, angharadFactory, sharedData, sagGenericInjectorManager, event, eventType) {
         var self = this;
         
         this.add = true;
@@ -190,7 +190,7 @@ angular.module("sagremorApp")
 			
 			_.forEach(sharedData.all("carleonServices"), function (service, serviceName) {
 				var injector = _.find(sagGenericInjectorManager.components, function (inject) {
-					return inject.type === serviceName && !!carleonComponentsConfig[inject.type] && !!carleonComponentsConfig[inject.type].enabled;
+					return inject.type === serviceName && service.enabled;
 				});
 				_.forEach(service.element, function (element) {
 					if (element.options && element.options.trigger) {
@@ -237,7 +237,7 @@ angular.module("sagremorApp")
 
 			_.forEach(sharedData.all("carleonServices"), function (service, serviceName) {
 				var injector = _.find(sagGenericInjectorManager.components, function (inject) {
-					return inject.type === serviceName && !!carleonComponentsConfig[inject.type] && !!carleonComponentsConfig[inject.type].enabled;
+					return inject.type === serviceName && service.enabled;
 				});
 				if (!!injector) {
 					_.forEach(injector.results, function (result, resultName) {

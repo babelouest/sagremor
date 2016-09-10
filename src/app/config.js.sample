@@ -5,14 +5,3 @@ angular.module("sagremorApp")
 		"prefixBenoic": "benoic/",
 		"prefixCarleon": "carleon/"
 	})
-    .constant("carleonComponentsConfig", {
-		"mock-service": {
-			"enabled": false
-		},
-		"service-motion": {
-			"enabled": true
-		},
-		"service-mpd": {
-			"enabled": true
-		}
-    });

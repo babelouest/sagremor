@@ -18,7 +18,7 @@
  */
 angular.module("sagremorApp")
     .controller("ScriptModalCtrl",
-    function($scope, $rootScope, $uibModalInstance, $translate, toaster, sagremorConstant, sagremorService, angharadFactory, sharedData, sagGenericInjectorManager, carleonComponentsConfig, script) {
+    function($scope, $rootScope, $uibModalInstance, $translate, toaster, sagremorConstant, sagremorService, angharadFactory, sharedData, sagGenericInjectorManager, script) {
         var self = this;
         
         this.script = script;
@@ -84,7 +84,7 @@ angular.module("sagremorApp")
 			
 			_.forEach(sharedData.all("carleonServices"), function (service, serviceName) {
 				var injector = _.find(sagGenericInjectorManager.components, function (inject) {
-					return inject.type === serviceName && !!carleonComponentsConfig[inject.type] && !!carleonComponentsConfig[inject.type].enabled;
+					return inject.type === serviceName && service.enabled;
 				});
 				if (!!injector) {
 					_.forEach(injector.commands, function (command, commandName) {

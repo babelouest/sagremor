@@ -1,6 +1,6 @@
 angular.module("sagremorApp")
     .controller("ScriptBindElementModalCtrl",
-    function($scope, $uibModalInstance, $translate, toaster, DTOptionsBuilder, sharedData, sagGenericInjectorManager, angharadFactory, carleonComponentsConfig, script) {
+    function($scope, $uibModalInstance, $translate, toaster, DTOptionsBuilder, sharedData, sagGenericInjectorManager, angharadFactory, script) {
         var self = this;
         
         this.script = script;
@@ -108,7 +108,7 @@ angular.module("sagremorApp")
 
 			_.forEach(sharedData.all("carleonServices"), function (service, serviceName) {
 				var inject = _.find(sagGenericInjectorManager.components, function (inject) {
-					return inject.type === serviceName && !!carleonComponentsConfig[inject.type] && !!carleonComponentsConfig[inject.type].enabled;
+					return inject.type === serviceName && service.enabled;
 				});
 				_.forEach(service.element, function (element) {
 					var selected = !!_.find(self.script.options.tags, function (tag) {
