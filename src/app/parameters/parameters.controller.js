@@ -10,6 +10,7 @@ angular.module("sagremorApp")
 		this.deviceTypes = [];
 		this.deviceTypesEnabled = [];
 		this.deviceAdded = false;
+		this.deviceUpdated = false;
 
 		this.newDeviceName = "";
 		this.newDeviceDescription = "";
@@ -147,7 +148,12 @@ angular.module("sagremorApp")
 		this.connectDevice = function (device) {
 			if (device.connected) {
 				return benoicFactory.connectDevice(device.name).then(function (response) {
-					toaster.pop("success", $translate.instant("device_connect"), $translate.instant("device_connect_success"));
+					benoicFactory.getDeviceOverview(device.name).then(function (result) {
+						sharedData.get("benoicDevices", device.name).element = result;
+						toaster.pop("success", $translate.instant("device_connect"), $translate.instant("device_connect_success"));
+					}, function (error) {
+						toaster.pop("error", $translate.instant("device_overview"), $translate.instant("device_overview_error"));
+					});
 				}, function (error) {
 					toaster.pop("error", $translate.instant("device_connect"), $translate.instant("device_connect_error"));
 					device.connected = false;
@@ -155,6 +161,10 @@ angular.module("sagremorApp")
 			} else {
 				return benoicFactory.disconnectDevice(device.name).then(function (response) {
 					toaster.pop("success", $translate.instant("device_disconnect"), $translate.instant("device_disconnect_success"));
+					var curDevice = sharedData.get("benoicDevices", device.name);
+					if (!!curDevice) {
+						curDevice.element = {};
+					}
 				}, function (error) {
 					toaster.pop("error", $translate.instant("device_disconnect"), $translate.instant("device_disconnect_error"));
 					device.connected = true;
@@ -163,23 +173,40 @@ angular.module("sagremorApp")
 		};
 
 		this.editDevice = function (device) {
-		  device.newDescription = device.description;
-		  device.update = true;
+			device.newDescription = device.description;
+			device.update = true;
+			self.deviceUpdated = true;
+			self.deviceOptionListDisplay = true;
+			self.deviceOptionList = _.find(self.deviceTypes, {uid: device.type_uid}).options;
+			self.newDeviceType = device.type_uid;
+			_.forEach(self.deviceOptionList, function (option) {
+				option.value = device.options[option.name];
+			});
 		};
 
 		this.saveDevice = function (device) {
 			device.description = device.newDescription;
+			_.forEach(self.deviceOptionList, function (option) {
+				device.options[option.name] = option.value;
+			});
+			
 			benoicFactory.setDevice(device).then(function (response) {
 				toaster.pop("success", $translate.instant("device_save"), $translate.instant("device_save_success"));
 			}, function (error) {
 				toaster.pop("error", $translate.instant("device_save"), $translate.instant("device_save_error"));
 			})["finally"](function () {
+				self.deviceUpdated = false;
+				self.deviceOptionListDisplay = false;
+				self.deviceOptionList = [];
 				device.update = false;
 			});
 		};
 
 		this.cancelEditDevice = function (device) {
 			device.newDescription = device.description;
+			self.deviceUpdated = false;
+			self.deviceOptionListDisplay = false;
+			self.deviceOptionList = [];
 			device.update = false;
 		};
 

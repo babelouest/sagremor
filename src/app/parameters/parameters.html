@@ -125,8 +125,8 @@
 				  </tr>
 			  </tbody>
 		  </table>
-		  <h3 data-ng-if="ParametersCtrl.deviceAdded && ParametersCtrl.deviceOptionListDisplay" data-translate="device_options_title"></h3>
-		  <div data-ng-if="ParametersCtrl.deviceAdded && ParametersCtrl.deviceOptionListDisplay" data-ng-repeat="(optionName, option) in ParametersCtrl.deviceOptionList track by optionName" class="container">
+		  <h3 data-ng-if="(ParametersCtrl.deviceAdded || ParametersCtrl.deviceUpdated) && ParametersCtrl.deviceOptionListDisplay" data-translate="device_options_title"></h3>
+		  <div data-ng-if="(ParametersCtrl.deviceAdded || ParametersCtrl.deviceUpdated) && ParametersCtrl.deviceOptionListDisplay" data-ng-repeat="(optionName, option) in ParametersCtrl.deviceOptionList track by optionName" class="container">
 			  <div class="row">
 				  <div class="col-xs-3" data-ng-class="{'device-option-required': !option.optional}">{{ParametersCtrl.newDeviceType + "_" + option.name | translate}}</div>
 				  <div class="col-xs-3" data-ng-if="option.type === 'string'">
