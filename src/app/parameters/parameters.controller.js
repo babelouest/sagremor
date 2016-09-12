@@ -109,11 +109,9 @@ angular.module("sagremorApp")
 				if (self.newDeviceConnect) {
 					self.connectDevice({name: deviceName, connected: true}).then(function(result) {
 						toaster.pop("success", $translate.instant("device_add"), $translate.instant("device_add_success"));
-						$rootScope.$broadcast("reinitBenoic");
 					});
 				} else {
 					toaster.pop("success", $translate.instant("device_add"), $translate.instant("device_add_success"));
-					$rootScope.$broadcast("reinitBenoic");
 				}
 			}, function (error) {
 				toaster.pop("error", $translate.instant("device_add"), $translate.instant("device_add_error"));
@@ -125,6 +123,7 @@ angular.module("sagremorApp")
 				self.newDeviceType = "";
 				self.newDeviceConnect = true;
 				self.deviceOptionList = [];
+				$rootScope.$broadcast("reinitBenoic");
 			});
 		};
 
