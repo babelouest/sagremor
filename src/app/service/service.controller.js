@@ -14,10 +14,6 @@ angular.module("sagremorApp")
 		this.size = 1;
         
         this.init = function () {
-			loadServices();
-		};
-		
-		function loadServices () {
 			if (!sagremorParams.loggedIn) {
 				$location.path("/login");
 			} else if (!!self.currentInjectors) {
@@ -59,6 +55,10 @@ angular.module("sagremorApp")
 					}
 				});
 			}
+			loadServices();
+		};
+		
+		function loadServices () {
 			_.forEach(self.currentInjectors, function (currentInjector) {
 				var cService = sharedData.get("carleonServices", currentInjector.type);
 				if (!!cService && cService.enabled && !!cService.element) {
