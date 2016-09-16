@@ -151,7 +151,7 @@ angular.module("sagremorApp")
 						sharedData.get("benoicDevices", device.name).element = result;
 						toaster.pop("success", $translate.instant("device_connect"), $translate.instant("device_connect_success"));
 					}, function (error) {
-						toaster.pop("error", $translate.instant("device_overview"), $translate.instant("device_overview_error"));
+						toaster.pop("error", $translate.instant("device_connect"), $translate.instant("device_connect_error"));
 					});
 				}, function (error) {
 					toaster.pop("error", $translate.instant("device_connect"), $translate.instant("device_connect_error"));
