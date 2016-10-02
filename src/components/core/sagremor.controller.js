@@ -233,14 +233,15 @@ angular.module("sagremorApp")
             var deviceList = [];
             sharedData.removeAll("benoicDevices");
             _.forEach(deviceResult, function (curDevice) {
-				deviceList.push(benoicFactory.getDeviceOverview(curDevice.name).then(function (result) {
-					curDevice.element = result;
-				}, function () {
-					curDevice.element = {};
-					toaster.pop("error", $translate.instant("benoic_loading_title"), $translate.instant("benoic_loading_error", {name: curDevice.name}));
-				})["finally"](function () {
-					sharedData.add("benoicDevices", curDevice.name, curDevice);
-				}));
+				if (curDevice.connected) {
+					deviceList.push(benoicFactory.getDeviceOverview(curDevice.name).then(function (result) {
+						curDevice.element = result;
+					}, function () {
+						curDevice.element = {};
+						toaster.pop("error", $translate.instant("benoic_loading_title"), $translate.instant("benoic_loading_error", {name: curDevice.name}));
+					}));
+				}
+				sharedData.add("benoicDevices", curDevice.name, curDevice);
             });
             $q.all(deviceList).then(function (responses) {
             })["finally"](function () {
