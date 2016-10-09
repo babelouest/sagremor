@@ -107,9 +107,9 @@ angular.module("sagremorApp")
 				toaster.pop("error", $translate.instant("refresh"), $translate.instant("refresh_scripts_events_error"));
 			})["finally"](function () {
 				// Refresh carleon services elements
-				sharedData.removeAll("carleonServices");
 				
 				carleonFactory.getServiceList().then(function (result) {
+					sharedData.removeAll("carleonServices");
 					for (key in result) {
 						_.forEach(result[key].element, function (element) {
 							element.type = result[key].name;
