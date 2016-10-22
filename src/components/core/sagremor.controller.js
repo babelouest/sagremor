@@ -117,7 +117,6 @@ angular.module("sagremorApp")
 						sharedData.add("carleonServices", result[key].name, result[key]);
 					}
 					$scope.$broadcast("refreshCarleonServices");
-					$scope.$broadcast("carleonServicesChanged");
 					
 				}, function (error) {
 					toaster.pop({type: "error", title: $translate.instant("refresh"), body: $translate.instant("refresh_carleon_error")});
@@ -262,9 +261,10 @@ angular.module("sagremorApp")
 				});
 				sharedData.add("carleonServices", result[key].name, result[key]);
 			}
-			$scope.$broadcast("carleonServicesChanged");
 		}, function (error) {
 			toaster.pop({type: "error", title: $translate.instant("carleon_loading_title"), body: $translate.instant("carleon_loading_error")});
+		})["finally"](function () {
+			$rootScope.$broadcast("carleonServicesChanged");
 		});
 		
 	};
