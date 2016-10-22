@@ -188,7 +188,7 @@ function sagMonitorController ($scope, $q, $translate, toaster, angharadFactory,
                 if (!!results[key] && results[key].length > 0) {
 					_.forEach(results[key], function (monitor) {
 						var curDate = new Date(monitor.timestamp * 1000);
-						var value = {timestamp: curDate, value: monitor.value};
+						var value = {timestamp: curDate, value: parseFloat(monitor.value)};
 						myData.values.push(value);
 					});
 					ctrl.data.push(myData);

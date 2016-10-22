@@ -76,7 +76,7 @@ angular.module("sagremorApp")
                 if (!!result && result.length > 0) {
 					_.forEach(result, function (monitor) {
 						var curDate = new Date(monitor.timestamp * 1000);
-						var value = {timestamp: curDate, value: monitor.value};
+						var value = {timestamp: curDate, value: parseFloat(monitor.value)};
 						myData.values.push(value);
 					});
 					self.data.push(myData);
