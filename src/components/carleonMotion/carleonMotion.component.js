@@ -19,9 +19,9 @@ function carleonMotionController ($scope, $http, $translatePartialLoader, $trans
     
     this.profileParams = {};
     
-    function init() {
-		ctrl.getFromProfile();
+    this.init = function () {
 		ctrl.refresh();
+		ctrl.getFromProfile();
     }
     
     this.getFromProfile = function () {
@@ -117,19 +117,19 @@ function carleonMotionController ($scope, $http, $translatePartialLoader, $trans
 		carleonMotionFactory.imagePopup(ctrl.streamList, 0);
 	};
 	
-	$scope.$on("carleonServicesChanged", function () {
+	$scope.$on("refreshCarleonServices", function () {
 		ctrl.refresh();
 	});
 	
-	$scope.$on("refreshCarleonServices", function () {
-		ctrl.refresh();
+	$scope.$on("carleonServicesChanged", function () {
+		ctrl.init();
 	});
 	
 	$scope.$on("angharadProfileChanged", function () {
 		ctrl.getFromProfile();
 	});
 	
-    init();
+    this.init();
 }
 
 angular.module("sagremorApp").component("serviceMotion", {
