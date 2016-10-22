@@ -42,7 +42,6 @@ angular.module("sagremorApp")
 		};
 
         function getDashboardElements () {
-            self.dashboardWidgets = [];
             self.dashboardWidgetsDisplay = [];
             if (!!sagremorParams.currentProfile && !!sagremorParams.currentProfile.addTo && !!sagremorParams.currentProfile.addTo.D && sagremorParams.currentProfile.addTo.D.length > 0) {
 				getDashboardElementsCurrentProfile();
@@ -242,8 +241,9 @@ angular.module("sagremorApp")
 					}
 					bElt.device = element.device;
 					bElt.name = element.name;
+					var index = y * 10 + x;
 					var dashboardElement = { type: element.type, device: element.device, name: element.name, element: bElt, x: x, y: y, width: 2, height: curHeight, tag: tag, icon: icon };
-					self.dashboardWidgets.push(dashboardElement);
+					self.dashboardWidgets[index.toString()] = dashboardElement;
 				}
             }
         }
@@ -257,8 +257,9 @@ angular.module("sagremorApp")
 					var y = tagParams[3];
 					var curHeight = 1;
 					var icon = "tasks";
+					var index = y * 10 + x;
 					var dashboardElement = { type: element.type, name: element.name, element: elt, x: x, y: y, width: 2, height: curHeight, tag: tag, icon: icon };
-					self.dashboardWidgets[y * 10 + x] = dashboardElement;
+					self.dashboardWidgets[index.toString()] = dashboardElement;
 				}
 			}
 		}
@@ -279,8 +280,9 @@ angular.module("sagremorApp")
 					var x = tagParams[2];
 					var y = tagParams[3];
 					var curHeight = element.type === "scheduler"?2:1;
+					var index = y * 10 + x;
 					var dashboardElement = { type: element.type, name: element.name, element: elt, x: x, y: y, width: 2, height: curHeight, tag: tag, icon: icon };
-					self.dashboardWidgets[y * 10 + x] = dashboardElement;
+					self.dashboardWidgets[index.toString()] = dashboardElement;
 				}
 			}
 		}
@@ -300,9 +302,12 @@ angular.module("sagremorApp")
 					var y = tagParams[3];
 					var curHeight = injector.widgetHeight;
 					var curWidth = injector.widgetWidth;
-					var icon= injector.icon;
+					var icon = injector.icon;
+					var index = y * 10 + x;
 					var dashboardElement = { type: element.type, name: element.name, element: element, x: x, y: y, width: curWidth, height: curHeight, tag: tag, icon: icon};
-					self.dashboardWidgets[y * 10 + x] = dashboardElement;
+					if (!self.dashboardWidgets[index.toString()]) {
+						self.dashboardWidgets[index.toString()] = dashboardElement;
+					}
 				}
 			}
         }
@@ -318,8 +323,9 @@ angular.module("sagremorApp")
 					var y = tagParams[3];
 					var curHeight = 4;
 					var icon = "bar-chart";
+					var index = y * 10 + x;
 					var dashboardElement = { type: element.type, name: element.name, element: elt, x: x, y: y, width: 6, height: curHeight, tag: tag, icon: icon };
-					self.dashboardWidgets[y * 10 + x] = dashboardElement;
+					self.dashboardWidgets[index.toString()] = dashboardElement;
 				}
 			}
 		}
@@ -328,8 +334,9 @@ angular.module("sagremorApp")
             var tagParams = tag.split("$");
             if (tagParams.length >= 4) {
                 var y = tagParams[3];
+                var index = y * 10;
                 var dashboardElement = { type: "separator", name: value, x: 0, y: y, width: 20, height: 1, tag: tag };
-                self.dashboardWidgets.push(dashboardElement);
+                self.dashboardWidgets[index.toString()] = dashboardElement;
             }
 		}
 		
