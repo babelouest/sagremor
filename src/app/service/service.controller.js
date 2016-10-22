@@ -16,49 +16,48 @@ angular.module("sagremorApp")
         this.init = function () {
 			if (!sagremorParams.loggedIn) {
 				$location.path("/login");
-			} else if (!!self.currentInjectors) {
-				_.forEach(self.currentInjectors, function (currentInjector) {
-					var cService = sharedData.get("carleonServices", currentInjector.type);
-					if (!!cService && cService.enabled) {
-						var service = {type: currentInjector.type};
-						self.title = currentInjector.leftMenu.title;
-						service.size = currentInjector.size || 1
-						service.serviceGroup = {title: currentInjector.groupTitle, list: [], service: currentInjector.service};
-						service.menu = [
-							{
-								name: "edit", 
-								display: $translate.instant("edit"), 
-								action: function (param) {
-									param.service.editService(param);
-								}
-							},
-							{
-								name: "remove", 
-								display: $translate.instant("remove"), 
-								action: function (param) {
-									param.service.removeService(param).then(function () {
-										$scope.$broadcast("carleonServicesChanged");
-									});
-								}
-							},
-							{
-								name: "add_to_dashboard", 
-								display: $translate.instant("add_to_dashboard"), 
-								action: function (param) {
-									if (sagremorService.addToDashboard(param)) {
-										$scope.$broadcast("refreshDashboard");
-									}
-								}
-							}
-						];
-						self.serviceList.push(service);
-					}
-				});
 			}
 			loadServices();
 		};
 		
 		function loadServices () {
+			_.forEach(self.currentInjectors, function (currentInjector) {
+				var cService = sharedData.get("carleonServices", currentInjector.type);
+				if (!!cService && cService.enabled) {
+					var service = {type: currentInjector.type};
+					self.title = currentInjector.leftMenu.title;
+					service.size = currentInjector.size || 1
+					service.serviceGroup = {title: currentInjector.groupTitle, list: [], service: currentInjector.service};
+					service.menu = [
+						{
+							name: "edit", 
+							display: $translate.instant("edit"), 
+							action: function (param) {
+								param.service.editService(param);
+							}
+						},
+						{
+							name: "remove", 
+							display: $translate.instant("remove"), 
+							action: function (param) {
+								param.service.removeService(param).then(function () {
+									$scope.$broadcast("carleonServicesChanged");
+								});
+							}
+						},
+						{
+							name: "add_to_dashboard", 
+							display: $translate.instant("add_to_dashboard"), 
+							action: function (param) {
+								if (sagremorService.addToDashboard(param)) {
+									$scope.$broadcast("refreshDashboard");
+								}
+							}
+						}
+					];
+					self.serviceList.push(service);
+				}
+			});
 			_.forEach(self.currentInjectors, function (currentInjector) {
 				var cService = sharedData.get("carleonServices", currentInjector.type);
 				if (!!cService && cService.enabled && !!cService.element) {
