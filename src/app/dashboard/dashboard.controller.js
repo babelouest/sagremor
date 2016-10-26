@@ -6,7 +6,7 @@ angular.module("sagremorApp")
 
 		this._timeout = null;
 		this.sagremorParams = sagremorParams;
-		this.dashboardWidgets = [];
+		this.dashboardWidgets = {};
 		this.dashboardWidgetsDisplay = [];
 		this.profileName = "";
 		this.isInit = true;
@@ -45,8 +45,6 @@ angular.module("sagremorApp")
             self.dashboardWidgetsDisplay = [];
             if (!!sagremorParams.currentProfile && !!sagremorParams.currentProfile.addTo && !!sagremorParams.currentProfile.addTo.D && sagremorParams.currentProfile.addTo.D.length > 0) {
 				getDashboardElementsCurrentProfile();
-			} else {
-				getDashboardElementsEmptyProfile();
 			}
 			for (key in self.dashboardWidgets) {
 				if (!!self.dashboardWidgets[key]) {
@@ -54,135 +52,6 @@ angular.module("sagremorApp")
 				}
 			}
         }
-        
-        function getDashboardElementsEmptyProfile () {
-			var defaultTag = "SGMR$D$";
-			var currentX = 0;
-			var currentY = 0;
-			
-			// adding all benoic elements to the dashboard (if enabled)
-			if (sagremorParams.benoicEnabled) {
-				
-				addDashboardSeparator($translate.instant("switches_title"), defaultTag + currentX + "$" + currentY);
-				currentY++;
-				_.forEach(sharedData.all("benoicDevices"), function (device) {
-					if (!!device.element) {
-						_.forEach(device.element.dimmers, function (element, name) {
-							if (element.enabled) {
-								element.type = "dimmer";
-								element.device = device.name;
-								element.name = name;
-								addBenoicElementToDashboard(element, defaultTag + currentX + "$" + currentY);
-								if (currentX >= 10) {
-									currentX = 0;
-									currentY += 3;
-								} else {
-									currentX += 3;
-								}
-							}
-						});
-					}
-				});
-				currentY += 3;
-				currentX = 0;
-				_.forEach(sharedData.all("benoicDevices"), function (device) {
-					if (!!device.element) {
-						_.forEach(device.element.switches, function (element, name) {
-							if (element.enabled) {
-								element.type = "switch";
-								element.device = device.name;
-								element.name = name;
-								addBenoicElementToDashboard(element, defaultTag + currentX + "$" + currentY);
-								if (currentX >= 10) {
-									currentX = 0;
-									currentY++;
-								} else {
-									currentX += 3;
-								}
-							}
-						});
-					}
-				});
-				
-				currentX = 0;
-				currentY++;
-				addDashboardSeparator($translate.instant("sensors_title"), defaultTag + currentX + "$" + currentY);
-				currentY++;
-				
-				_.forEach(sharedData.all("benoicDevices"), function (device) {
-					if (!!device.element) {
-						_.forEach(device.element.sensors, function (element, name) {
-							if (element.enabled) {
-								element.type = "sensor";
-								element.device = device.name;
-								element.name = name;
-								addBenoicElementToDashboard(element, defaultTag + currentX + "$" + currentY);
-								if (currentX > 10) {
-									currentX = 0;
-									currentY++;
-								} else {
-									currentX += 3;
-								}
-							}
-						});
-					}
-				});
-				
-				currentY++;
-				currentX = 0;
-				addDashboardSeparator($translate.instant("heaters_title"), defaultTag + currentX + "$" + currentY);
-				currentY++;
-				_.forEach(sharedData.all("benoicDevices"), function (device) {
-					if (!!device.element) {
-						_.forEach(device.element.heaters, function (element, name) {
-							if (element.enabled) {
-								element.type = "heater";
-								element.device = device.name;
-								element.name = name;
-								addBenoicElementToDashboard(element, defaultTag + currentX + "$" + currentY);
-								if (currentX > 10) {
-									currentX = 0;
-									currentY += 3;
-								} else {
-									currentX += 3;
-								}
-							}
-						});
-					}
-				});
-			}
-			
-			currentY += 3;
-			currentX = 0;
-			// adding all carleon elements to the dashboard (if enabled)
-			if (sagremorParams.carleonEnabled) {
-				_.forEach(sagGenericInjectorManager.components, function (component) {
-					if (component.carleonService) {
-						addDashboardSeparator($translate.instant(component.groupTitle), defaultTag + currentX + "$" + currentY);
-						currentY++;
-						currentX = 0;
-						var service = sharedData.get("carleonServices", component.type);
-						!!service && _.forEach(service.element, function (element) {
-							var curElement = {
-								type: component.type,
-								name: element.name
-							};
-							addCarleonElementToDashboard(curElement, defaultTag + currentX + "$" + currentY);
-							if (currentX > 10) {
-								currentX = 0;
-								currentY += component.widgetHeight;
-							} else {
-								currentX += component.widgetWidth;
-							}
-						});
-						currentY += component.widgetHeight;
-						currentX = 0;
-					}
-				});
-			}
-			
-			self.isInit = false;
-		}
 
         function getDashboardElementsCurrentProfile () {
             var profile = sagremorParams.currentProfile;
