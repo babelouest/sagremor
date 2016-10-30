@@ -91,8 +91,11 @@ angular.module("sagremorApp")
                 if (element.type === "dimmer" || element.type === "heater") {
                     curHeight = 2;
                 }
+                var found = _.find(self.dashboardWidgets, function (widget) {
+					return widget.type === element.type && widget.device === element.device && widget.name === element.name;
+				});
                 var bElt = sagremorService.getBenoicElement(element.device, element.type, element.name);
-                if (!!bElt) {
+                if (!!bElt && !found) {
 					var icon = "";
 					switch (element.type) {
 						case "switch":
@@ -119,7 +122,10 @@ angular.module("sagremorApp")
         
         function addScriptToDashboard(element, tag) {
 			var elt = sharedData.get("angharadScripts", element.name);
-			if (!!elt) {
+			var found = _.find(self.dashboardWidgets, function (widget) {
+				return widget.type === element.type && widget.name === element.name;
+			});
+			if (!!elt && !found) {
 				var tagParams = tag.split("$");
 				if (tagParams.length >= 4) {
 					var x = tagParams[2];
@@ -136,6 +142,9 @@ angular.module("sagremorApp")
         function addEventToDashboard(element, tag) {
 			var elt = false;
 			var icon = "";
+			var found = _.find(self.dashboardWidgets, function (widget) {
+				return widget.type === element.type && widget.name === element.name;
+			});
 			if (element.type === "scheduler") {
 				elt = sharedData.get("angharadSchedulers", element.name);
 				icon = "calendar";
@@ -143,7 +152,7 @@ angular.module("sagremorApp")
 				elt = sharedData.get("angharadTriggers", element.name);
 				icon = "bell";
 			}
-			if (!!elt) {
+			if (!!elt && !found) {
 				var tagParams = tag.split("$");
 				if (tagParams.length >= 4) {
 					var x = tagParams[2];
@@ -151,6 +160,27 @@ angular.module("sagremorApp")
 					var curHeight = element.type === "scheduler"?2:1;
 					var index = y * 10 + x;
 					var dashboardElement = { type: element.type, name: element.name, element: elt, x: x, y: y, width: 2, height: curHeight, tag: tag, icon: icon };
+					self.dashboardWidgets[index.toString()] = dashboardElement;
+				}
+			}
+		}
+        
+        function addMonitorToDashboard(element, tag) {
+			var elt = _.find(sagremorParams.currentProfile.monitorList, function (monitor) {
+				return monitor.name === element.name;
+			});
+			var found = _.find(self.dashboardWidgets, function (widget) {
+				return widget.type === element.type && widget.name === element.name;
+			});
+			if (!!elt && !found) {
+				var tagParams = tag.split("$");
+				if (tagParams.length >= 4) {
+					var x = tagParams[2];
+					var y = tagParams[3];
+					var curHeight = 4;
+					var icon = "bar-chart";
+					var index = y * 10 + x;
+					var dashboardElement = { type: element.type, name: element.name, element: elt, x: x, y: y, width: 6, height: curHeight, tag: tag, icon: icon };
 					self.dashboardWidgets[index.toString()] = dashboardElement;
 				}
 			}
@@ -164,7 +194,10 @@ angular.module("sagremorApp")
 			var elt = !!service && !!service.element && _.find(service.element, function (cElt) {
 				return cElt.name === element.name;
 			});
-			if (!!elt) {
+			var found = _.find(self.dashboardWidgets, function (widget) {
+				return widget.type === element.type && widget.name === element.name;
+			});
+			if (!!elt && !found) {
 				var tagParams = tag.split("$");
 				if (tagParams.length >= 4) {
 					var x = tagParams[2];
@@ -180,24 +213,6 @@ angular.module("sagremorApp")
 				}
 			}
         }
-        
-        function addMonitorToDashboard(element, tag) {
-			var elt = _.find(sagremorParams.currentProfile.monitorList, function (monitor) {
-				return monitor.name === element.name;
-			});
-			if (!!elt) {
-				var tagParams = tag.split("$");
-				if (tagParams.length >= 4) {
-					var x = tagParams[2];
-					var y = tagParams[3];
-					var curHeight = 4;
-					var icon = "bar-chart";
-					var index = y * 10 + x;
-					var dashboardElement = { type: element.type, name: element.name, element: elt, x: x, y: y, width: 6, height: curHeight, tag: tag, icon: icon };
-					self.dashboardWidgets[index.toString()] = dashboardElement;
-				}
-			}
-		}
         
         function addDashboardSeparator(value, tag) {
             var tagParams = tag.split("$");
