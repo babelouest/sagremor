@@ -10,6 +10,7 @@ angular.module("sagremorApp")
 		this.dashboardWidgetsDisplay = [];
 		this.profileName = "";
 		this.isInit = true;
+		this.counter = 0;
 		
         this.options = {
             cellHeight: 100,
@@ -43,8 +44,14 @@ angular.module("sagremorApp")
 
         function getDashboardElements () {
             self.dashboardWidgetsDisplay = [];
-            if (!!sagremorParams.currentProfile && !!sagremorParams.currentProfile.addTo && !!sagremorParams.currentProfile.addTo.D && sagremorParams.currentProfile.addTo.D.length > 0) {
-				getDashboardElementsCurrentProfile();
+            var profile = sagremorParams.currentProfile;
+            if (!!profile) {
+				self.profileName = profile.name;
+				if (!!profile.addTo && !!profile.addTo.D && profile.addTo.D.length > 0) {
+					getDashboardElementsCurrentProfile();
+				}
+			} else {
+				self.profileName = "";
 			}
 			for (key in self.dashboardWidgets) {
 				if (!!self.dashboardWidgets[key]) {
@@ -55,11 +62,6 @@ angular.module("sagremorApp")
 
         function getDashboardElementsCurrentProfile () {
             var profile = sagremorParams.currentProfile;
-            if (!!profile) {
-				self.profileName = profile.name;
-			} else {
-				self.profileName = "";
-			}
 			if (!!profile && !!profile.addTo && !!profile.addTo.D) {
 				_.forEach(profile.addTo.D, function (element) {
 					if (!!element.device) {
@@ -87,35 +89,49 @@ angular.module("sagremorApp")
             if (tagParams.length >= 4) {
                 var x = tagParams[2];
                 var y = tagParams[3];
+                if (y === 100) {
+					self.counter++;
+					y += self.counter;
+				}
                 var curHeight = 1;
                 if (element.type === "dimmer" || element.type === "heater") {
                     curHeight = 2;
                 }
                 var found = _.find(self.dashboardWidgets, function (widget) {
-					return widget.type === element.type && widget.device === element.device && widget.name === element.name;
+					return widget && widget.type === element.type && widget.device === element.device && widget.name === element.name;
 				});
                 var bElt = sagremorService.getBenoicElement(element.device, element.type, element.name);
-                if (!!bElt && !found) {
-					var icon = "";
-					switch (element.type) {
-						case "switch":
-							icon = "toggle-on";
-							break;
-						case "dimmer":
-							icon = "lightbulb-o";
-							break;
-						case "heater":
-							icon = "fire";
-							break;
-						case "sensor":
-							icon = "line-chart";
-							break;
+                if (!!bElt) {
+					if (!found) {
+						var icon = "";
+						switch (element.type) {
+							case "switch":
+								icon = "toggle-on";
+								break;
+							case "dimmer":
+								icon = "lightbulb-o";
+								break;
+							case "heater":
+								icon = "fire";
+								break;
+							case "sensor":
+								icon = "line-chart";
+								break;
+						}
+						bElt.device = element.device;
+						bElt.name = element.name;
+						var index = y * 10 + x;
+						var dashboardElement = { type: element.type, device: element.device, name: element.name, element: bElt, x: x, y: y, width: 2, height: curHeight, tag: tag, icon: icon };
+						self.dashboardWidgets[index] = dashboardElement;
+					} else {
+						_.forEach(self.dashboardWidgets, function (widget) {
+							if (widget && widget.type === element.type && widget.device === element.device && widget.name === element.name) {
+								bElt.device = element.device;
+								bElt.name = element.name;
+								widget.element = bElt;
+							}
+						});
 					}
-					bElt.device = element.device;
-					bElt.name = element.name;
-					var index = y * 10 + x;
-					var dashboardElement = { type: element.type, device: element.device, name: element.name, element: bElt, x: x, y: y, width: 2, height: curHeight, tag: tag, icon: icon };
-					self.dashboardWidgets[index.toString()] = dashboardElement;
 				}
             }
         }
@@ -123,18 +139,22 @@ angular.module("sagremorApp")
         function addScriptToDashboard(element, tag) {
 			var elt = sharedData.get("angharadScripts", element.name);
 			var found = _.find(self.dashboardWidgets, function (widget) {
-				return widget.type === element.type && widget.name === element.name;
+				return widget && widget.type === element.type && widget.name === element.name;
 			});
 			if (!!elt && !found) {
 				var tagParams = tag.split("$");
 				if (tagParams.length >= 4) {
 					var x = tagParams[2];
 					var y = tagParams[3];
+					if (y === 100) {
+						self.counter++;
+						y += self.counter;
+					}
 					var curHeight = 1;
 					var icon = "tasks";
 					var index = y * 10 + x;
 					var dashboardElement = { type: element.type, name: element.name, element: elt, x: x, y: y, width: 2, height: curHeight, tag: tag, icon: icon };
-					self.dashboardWidgets[index.toString()] = dashboardElement;
+					self.dashboardWidgets[index] = dashboardElement;
 				}
 			}
 		}
@@ -157,10 +177,14 @@ angular.module("sagremorApp")
 				if (tagParams.length >= 4) {
 					var x = tagParams[2];
 					var y = tagParams[3];
+					if (y === 100) {
+						self.counter++;
+						y += self.counter;
+					}
 					var curHeight = element.type === "scheduler"?2:1;
 					var index = y * 10 + x;
 					var dashboardElement = { type: element.type, name: element.name, element: elt, x: x, y: y, width: 2, height: curHeight, tag: tag, icon: icon };
-					self.dashboardWidgets[index.toString()] = dashboardElement;
+					self.dashboardWidgets[index] = dashboardElement;
 				}
 			}
 		}
@@ -170,18 +194,22 @@ angular.module("sagremorApp")
 				return monitor.name === element.name;
 			});
 			var found = _.find(self.dashboardWidgets, function (widget) {
-				return widget.type === element.type && widget.name === element.name;
+				return widget && widget.type === element.type && widget.name === element.name;
 			});
 			if (!!elt && !found) {
 				var tagParams = tag.split("$");
 				if (tagParams.length >= 4) {
 					var x = tagParams[2];
 					var y = tagParams[3];
+					if (y === 100) {
+						self.counter++;
+						y += self.counter;
+					}
 					var curHeight = 4;
 					var icon = "bar-chart";
 					var index = y * 10 + x;
 					var dashboardElement = { type: element.type, name: element.name, element: elt, x: x, y: y, width: 6, height: curHeight, tag: tag, icon: icon };
-					self.dashboardWidgets[index.toString()] = dashboardElement;
+					self.dashboardWidgets[index] = dashboardElement;
 				}
 			}
 		}
@@ -195,20 +223,24 @@ angular.module("sagremorApp")
 				return cElt.name === element.name;
 			});
 			var found = _.find(self.dashboardWidgets, function (widget) {
-				return widget.type === element.type && widget.name === element.name;
+				return widget && widget.type === element.type && widget.name === element.name;
 			});
 			if (!!elt && !found) {
 				var tagParams = tag.split("$");
 				if (tagParams.length >= 4) {
 					var x = tagParams[2];
 					var y = tagParams[3];
+					if (y === 100) {
+						self.counter++;
+						y += self.counter;
+					}
 					var curHeight = injector.widgetHeight;
 					var curWidth = injector.widgetWidth;
 					var icon = injector.icon;
 					var index = y * 10 + x;
 					var dashboardElement = { type: element.type, name: element.name, element: element, x: x, y: y, width: curWidth, height: curHeight, tag: tag, icon: icon};
-					if (!self.dashboardWidgets[index.toString()]) {
-						self.dashboardWidgets[index.toString()] = dashboardElement;
+					if (!self.dashboardWidgets[index]) {
+						self.dashboardWidgets[index] = dashboardElement;
 					}
 				}
 			}
@@ -220,7 +252,7 @@ angular.module("sagremorApp")
                 var y = tagParams[3];
                 var index = y * 10;
                 var dashboardElement = { type: "separator", name: value, x: 0, y: y, width: 20, height: 1, tag: tag };
-                self.dashboardWidgets[index.toString()] = dashboardElement;
+                self.dashboardWidgets[index] = dashboardElement;
             }
 		}
 		
@@ -347,8 +379,9 @@ angular.module("sagremorApp")
 			return false;
 		}
         
-        $scope.$on("angharadProfileChanged", function () {
+        $scope.$on("angharadProfileUpdated", function () {
 			self.isInit = true;
+            self.dashboardWidgets = [];
             getDashboardElements();
         });
         
