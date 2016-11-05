@@ -6,11 +6,10 @@ angular.module("sagremorApp")
 
 		this._timeout = null;
 		this.sagremorParams = sagremorParams;
-		this.dashboardWidgets = {};
+		this.dashboardWidgets = [];
 		this.dashboardWidgetsDisplay = [];
 		this.profileName = "";
 		this.isInit = true;
-		this.counter = 0;
 		
         this.options = {
             cellHeight: 100,
@@ -89,10 +88,6 @@ angular.module("sagremorApp")
             if (tagParams.length >= 4) {
                 var x = tagParams[2];
                 var y = tagParams[3];
-                if (y === 100) {
-					self.counter++;
-					y += self.counter;
-				}
                 var curHeight = 1;
                 if (element.type === "dimmer" || element.type === "heater") {
                     curHeight = 2;
@@ -122,7 +117,7 @@ angular.module("sagremorApp")
 						bElt.name = element.name;
 						var index = y * 10 + x;
 						var dashboardElement = { type: element.type, device: element.device, name: element.name, element: bElt, x: x, y: y, width: 2, height: curHeight, tag: tag, icon: icon };
-						self.dashboardWidgets[index] = dashboardElement;
+						self.dashboardWidgets.push(dashboardElement);
 					} else {
 						_.forEach(self.dashboardWidgets, function (widget) {
 							if (widget && widget.type === element.type && widget.device === element.device && widget.name === element.name) {
@@ -146,15 +141,11 @@ angular.module("sagremorApp")
 				if (tagParams.length >= 4) {
 					var x = tagParams[2];
 					var y = tagParams[3];
-					if (y === 100) {
-						self.counter++;
-						y += self.counter;
-					}
 					var curHeight = 1;
 					var icon = "tasks";
 					var index = y * 10 + x;
 					var dashboardElement = { type: element.type, name: element.name, element: elt, x: x, y: y, width: 2, height: curHeight, tag: tag, icon: icon };
-					self.dashboardWidgets[index] = dashboardElement;
+					self.dashboardWidgets.push(dashboardElement);
 				}
 			}
 		}
@@ -177,14 +168,10 @@ angular.module("sagremorApp")
 				if (tagParams.length >= 4) {
 					var x = tagParams[2];
 					var y = tagParams[3];
-					if (y === 100) {
-						self.counter++;
-						y += self.counter;
-					}
 					var curHeight = element.type === "scheduler"?2:1;
 					var index = y * 10 + x;
 					var dashboardElement = { type: element.type, name: element.name, element: elt, x: x, y: y, width: 2, height: curHeight, tag: tag, icon: icon };
-					self.dashboardWidgets[index] = dashboardElement;
+					self.dashboardWidgets.push(dashboardElement);
 				}
 			}
 		}
@@ -201,15 +188,11 @@ angular.module("sagremorApp")
 				if (tagParams.length >= 4) {
 					var x = tagParams[2];
 					var y = tagParams[3];
-					if (y === 100) {
-						self.counter++;
-						y += self.counter;
-					}
 					var curHeight = 4;
 					var icon = "bar-chart";
 					var index = y * 10 + x;
 					var dashboardElement = { type: element.type, name: element.name, element: elt, x: x, y: y, width: 6, height: curHeight, tag: tag, icon: icon };
-					self.dashboardWidgets[index] = dashboardElement;
+					self.dashboardWidgets.push(dashboardElement);
 				}
 			}
 		}
@@ -230,18 +213,12 @@ angular.module("sagremorApp")
 				if (tagParams.length >= 4) {
 					var x = tagParams[2];
 					var y = tagParams[3];
-					if (y === 100) {
-						self.counter++;
-						y += self.counter;
-					}
 					var curHeight = injector.widgetHeight;
 					var curWidth = injector.widgetWidth;
 					var icon = injector.icon;
 					var index = y * 10 + x;
 					var dashboardElement = { type: element.type, name: element.name, element: element, x: x, y: y, width: curWidth, height: curHeight, tag: tag, icon: icon};
-					if (!self.dashboardWidgets[index]) {
-						self.dashboardWidgets[index] = dashboardElement;
-					}
+					self.dashboardWidgets.push(dashboardElement);
 				}
 			}
         }
@@ -252,12 +229,12 @@ angular.module("sagremorApp")
                 var y = tagParams[3];
                 var index = y * 10;
                 var dashboardElement = { type: "separator", name: value, x: 0, y: y, width: 20, height: 1, tag: tag };
-                self.dashboardWidgets[index] = dashboardElement;
+                self.dashboardWidgets.push(dashboardElement);
             }
 		}
 		
 		function newDashboardSeparator(value) {
-			var dashboardElement = { type: "separator", name: value, x: 0, y: self.dashboardWidgets[self.dashboardWidgets.length - 1].y + 1, width: 10, height: 1 };
+			var dashboardElement = { type: "separator", name: value, x: 0, y: 0, width: 10, height: 1 };
 			var profile = sagremorParams.currentProfile;
 			if (!profile.addTo) {
 				profile.addTo = {D: []};
@@ -269,7 +246,7 @@ angular.module("sagremorApp")
 			var newElement = {
 				type: "separator",
 				name: value,
-				tag: "SGMR$D$0$" + self.dashboardWidgets[self.dashboardWidgets.length - 1].y + 1
+				tag: "SGMR$D$0$0"
 			};
 			profile.addTo.D.push(newElement);
 			angharadFactory.setProfile(profile.name, profile).then(function () {
