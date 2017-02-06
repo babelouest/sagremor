@@ -9,19 +9,12 @@ angular.module("sagremorApp")
     this.shoudRefresh = false;
     this.hasFocus = true;
     this.refreshTimeout = null;
+    this.isInit = false;
     
     function init() {
-		$translate("angharad_loading_title").then(function (title) {
-			// Nothing to do here, just waiting for lang files to be loaded before starting
-		})["finally"](function () {
-			initParameters();
-			self.getAuth().then(function() {
-				$rootScope.$broadcast("authChanged");
-				popLoader();
-				getApiData();
-				self.refreshTimeout = startRefreshTimeout();
-			});
-		})
+        $translate("angharad_loading_title").then(function (title) {
+            // Nothing to do here, just waiting for lang files to be loaded before starting
+        })
     }
     
     function closeLoader(result) {
@@ -38,9 +31,14 @@ angular.module("sagremorApp")
     }
     
     function initParameters() {
-        $http.defaults.headers.common["ANGHARAD_SESSION_ID"] = $cookies.get("ANGHARAD_SESSION_ID");
-        sagremorParams.adminMode = false;
-        sagremorParams.loggedIn = true;
+        if (!self.isInit) {
+            popLoader();
+            getApiData();
+            self.refreshTimeout = startRefreshTimeout();
+            sagremorParams.adminMode = false;
+            sagremorParams.loggedIn = true;
+            self.isInit = true;
+        }
     }
     
     function refreshData() {
@@ -178,35 +176,13 @@ angular.module("sagremorApp")
 		self.hasFocus = false;  
 	};
     
-	$window.onfocus = function() {  
+	$window.onfocus = function() {
 		self.hasFocus = true;  
 		if (self.shouldRefresh) {
 			refreshData();
 			self.shouldRefresh = false;
 		}
 	};
-    
-    this.getAuth = function() {
-		return angharadFactory.getAuth()
-		.then(function(response) {
-			sagremorParams.loggedIn = true;
-			if ($location.url() === "/login" || $location.url() === "/error") {
-				$location.path("/");
-			}
-		},
-		function(error) {
-			if (error.status === 401) {
-				sagremorParams.loggedIn = false;
-				$location.path("/login");
-			} else {
-				sagremorParams.loggedIn = false;
-				sagremorParams.errorMessage = "error_api_unavailable";
-				$location.path("/error");
-				$scope.$broadcast("generalError");
-			}
-			return $q.reject(error);
-		});
-    };
     
     this.initAngharadSubmodules = function () {
         return angharadFactory.getSumboduleList();
@@ -415,6 +391,11 @@ angular.module("sagremorApp")
         } else if (self.benoicInitError) {
             closeLoader(false);
         }
+    });
+
+    $scope.$on('oauth:login', function(event, token) {
+        sagremorParams.token = token;
+        initParameters();
     });
     
     init();

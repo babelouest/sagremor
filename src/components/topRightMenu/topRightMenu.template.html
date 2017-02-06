@@ -37,14 +37,20 @@
 				</button>
 			</div>
 		</li>
-		<li class="row control-group" data-ng-if="topRightMenuCtrl.sagremorParams.loggedIn">
+		<li class="row control-group">
 			<div class="col-xs-6 controls">
-				<label for="sag-refresh" data-translate="top_right_menu_logout"></label>
-			</div>
-			<div class="col-xs-6 controls">
-				<button id="sag-logout" name="sag-logout" type="button" class="btn btn-primary btn-sm" data-ng-click="topRightMenuCtrl.logout()">
-					<i class="fa fa-sign-out" aria-hidden="true"></i>
-				</button>
+                                <data-oauth
+                                        data-site="https://hunbaut.babelouest.org/glewlwyddev/glewlwyd/"
+                                        data-client-id="sagremor"
+                                        data-response-type="code"
+                                        data-redirect-uri="http://localhost:3000/"
+                                        data-profile-uri="https://hunbaut.babelouest.org/glewlwyddev/glewlwyd/profile/"
+                                        data-scope="angharad"
+                                        data-authorize-path="auth"
+                                        data-token-path="token"
+                                        data-template="/components/core/login.html"
+                                        data-storage="localStorage">
+                                </data-oauth>
 			</div>
 		</li>
 	</ul>

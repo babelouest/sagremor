@@ -1,7 +1,7 @@
 angular.module("sagremorApp", [
 "ui.bootstrap",
 "ui.router", 
-"ngCookies", 
+"ngCookies",
 "angularMoment",
 "frapontillo.bootstrap-switch", 
 "toaster", 
@@ -11,7 +11,8 @@ angular.module("sagremorApp", [
 "ui.bootstrap.datetimepicker",
 "datatables",
 "angular.img",
-"nvd3"
+"nvd3",
+"oauth"
 ])
 .constant("_", window._)
 .constant("sagremorConstant", {
