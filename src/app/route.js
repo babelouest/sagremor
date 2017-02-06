@@ -1,39 +1,42 @@
 angular.module("sagremorApp")
+.config(function($locationProvider) {
+    $locationProvider.html5Mode(true).hashPrefix('!');
+  })
     .config(function ($stateProvider, $urlRouterProvider) {
         
         $stateProvider
             .state("dashboard", {
-                url: "/",
+                url: "dashboard",
                 templateUrl: "app/dashboard/dashboard.html",
                 controller: "DashboardCtrl",
                 controllerAs: "DashboardCtrl"
             })
             .state("login", {
-                url: "/login",
+                url: "login",
                 templateUrl: "app/login/login.html",
                 controller: "LoginCtrl",
                 controllerAs: "LoginCtrl"
             })
             .state("error", {
-                url: "/error",
+                url: "error",
                 templateUrl: "app/error/error.html",
                 controller: "ErrorCtrl",
                 controllerAs: "ErrorCtrl"
             })
             .state("switches", {
-                url: "/switches",
+                url: "switches",
                 templateUrl: "app/switches/switches.html",
                 controller: "switchesCtrl",
                 controllerAs: "switchesCtrl"
             })
             .state("heaters", {
-                url: "/heaters",
+                url: "heaters",
                 templateUrl: "app/heaters/heaters.html",
                 controller: "heatersCtrl",
                 controllerAs: "heatersCtrl"
             })
             .state("sensors", {
-                url: "/sensors",
+                url: "sensors",
                 templateUrl: "app/sensors/sensors.html",
                 controller: "sensorsCtrl",
                 controllerAs: "sensorsCtrl"
@@ -45,41 +48,41 @@ angular.module("sagremorApp")
                 controllerAs: "serviceCtrl"
             })
             .state("scripts", {
-                url: "/scripts",
+                url: "scripts",
                 templateUrl: "app/scripts/scripts.html",
                 controller: "scriptsCtrl",
                 controllerAs: "scriptsCtrl"
             })
             .state("events", {
-                url: "/events",
+                url: "events",
                 templateUrl: "app/events/events.html",
                 controller: "eventsCtrl",
                 controllerAs: "eventsCtrl"
             })
             .state("monitors", {
-                url: "/monitors",
+                url: "monitors",
                 templateUrl: "app/monitors/monitors.html",
                 controller: "monitorsCtrl",
                 controllerAs: "monitorsCtrl"
             })
             .state("logs", {
-                url: "/logs",
+                url: "logs",
                 templateUrl: "app/logs/logs.html",
                 controller: "logsCtrl",
                 controllerAs: "logsCtrl"
             })
             .state("users", {
-                url: "/users",
+                url: "users",
                 templateUrl: "app/users/users.html",
                 controller: "usersCtrl",
                 controllerAs: "usersCtrl"
             })
             .state("parameters", {
-                url: "/parameters",
+                url: "parameters",
                 templateUrl: "app/parameters/parameters.html",
                 controller: "ParametersCtrl",
                 controllerAs: "ParametersCtrl"
             });
             
-        $urlRouterProvider.otherwise("/");
+        $urlRouterProvider.otherwise("dashboard");
     });
