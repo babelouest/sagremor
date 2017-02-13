@@ -13,7 +13,7 @@ function topRightMenuCtrl ($scope, $rootScope, $location, $http, $translate, $co
     self.oauth2 = angharadConfig.oauth2;
     
     if ($location.search().type) {
-        selft.oauth2.responseType = $location.search().type;
+        self.oauth2.responseType = $location.search().type;
     }
 
     self.changeLang = function () {

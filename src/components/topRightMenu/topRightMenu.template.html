@@ -1,7 +1,7 @@
 <div class="top-right-menu" data-uib-dropdown>
-    <button class="btn btn-primary text-left" type="button" data-uib-dropdown-toggle>
-        <i class="fa fa-user" aria-hidden="true"></i>
-    </button>
+	<button class="btn btn-primary text-left" type="button" data-uib-dropdown-toggle>
+		<i class="fa fa-user" aria-hidden="true"></i>
+	</button>
 	<ul class="container-fluid dropdown-menu dropdown-menu-right top-right-menu-list" data-uib-dropdown-menu data-uib-dropdown-menu-auto-close="outsideClick" data-ng-click="$event.stopPropagation()">
 		<li class="row control-group" data-ng-if="topRightMenuCtrl.sagremorParams.loggedIn">
 			<div class="col-xs-6 controls">
@@ -38,18 +38,19 @@
 			</div>
 		</li>
 		<li class="row control-group">
-                        <data-oauth
-                                data-site="{{topRightMenuCtrl.oauth2.site}}"
-                                data-client-id="{{topRightMenuCtrl.oauth2.clientId}}"
-                                data-response-type="{{topRightMenuCtrl.oauth2.responseType}}"
-                                data-redirect-uri="{{topRightMenuCtrl.oauth2.redirectUri}}"
-                                data-profile-uri="{{topRightMenuCtrl.oauth2.profileUri}}"
-                                data-scope="{{topRightMenuCtrl.oauth2.scope}}"
-                                data-authorize-path="{{topRightMenuCtrl.oauth2.authorizePath}}"
-                                data-token-path="{{topRightMenuCtrl.oauth2.tokenPath}}"
-                                data-template="/components/core/login.html"
-                                data-storage="localStorage">
-                        </data-oauth>
+      <data-oauth
+        data-site="{{topRightMenuCtrl.oauth2.site}}"
+        data-client-id="{{topRightMenuCtrl.oauth2.clientId}}"
+        data-response-type="{{topRightMenuCtrl.oauth2.responseType}}"
+        data-redirect-uri="{{topRightMenuCtrl.oauth2.redirectUri}}"
+        data-profile-uri="{{topRightMenuCtrl.oauth2.profileUri}}"
+        data-scope="{{topRightMenuCtrl.oauth2.scope}}"
+        data-authorize-path="{{topRightMenuCtrl.oauth2.authorizePath}}"
+        data-token-path="{{topRightMenuCtrl.oauth2.tokenPath}}"
+        data-template="/components/core/login.html"
+        data-storage="localStorage"
+        data-disable-check-session="true">
+      </data-oauth>
 		</li>
 	</ul>
 </div>

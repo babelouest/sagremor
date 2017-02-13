@@ -70,7 +70,7 @@
   },
   "resolutions": {
     "bootstrap": "~3.3.6",
-    "angular": "1.5.8",
+    "angular": "~1.5.3",
     "d3": "^3.4.4",
     "nvd3": "^1.7.1"
   }
