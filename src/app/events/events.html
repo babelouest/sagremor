@@ -7,7 +7,7 @@
     <hr data-ng-if="eventsCtrl.schedulerList.length > 0">
     <h2 data-translate="schedulers_title" data-ng-if="eventsCtrl.schedulerList.length > 0"></h2>
     <div class="row">
-        <div data-ng-repeat="scheduler in eventsCtrl.schedulerList track by $index" class="col-sm-2">
+        <div data-ng-repeat="scheduler in eventsCtrl.schedulerList track by $index" class="col-sm-3">
             <data-sag-container data-menu="eventsCtrl.menuScheduler"
                                 data-size="1"
                                 data-title="scheduler.name"
@@ -21,7 +21,7 @@
     <hr data-ng-if="eventsCtrl.triggerList.length > 0">
     <h2 data-translate="triggers_title" data-ng-if="eventsCtrl.triggerList.length > 0"></h2>
     <div class="row">
-        <div data-ng-repeat="trigger in eventsCtrl.triggerList track by $index" class="col-sm-2">
+        <div data-ng-repeat="trigger in eventsCtrl.triggerList track by $index" class="col-sm-3">
             <data-sag-container data-menu="eventsCtrl.menuTrigger"
                                 data-size="1"
                                 data-title="trigger.name"

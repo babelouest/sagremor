@@ -13,7 +13,6 @@ angular.module("sagremorApp")
           deferred.reject(error);
         });
       } else {
-        console.log("No auth token");
         deferred.reject("unauthorized");
       }
 		  

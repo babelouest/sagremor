@@ -10,7 +10,11 @@ function sagDimmerController (benoicFactory, sagremorParams, $translate) {
     }
     
     ctrl.setDimmer = function (value) {
-		if (value >= 0 && value <= 100) {
+        if (value === 0 && ctrl.element.value === 0) {
+			benoicFactory.setElement(ctrl.element.device, "dimmer", ctrl.element.name, 101).then(function (result) {
+				ctrl.element.value = result.value;
+			});
+		} else if (value >= 0 && value <= 100) {
 			benoicFactory.setElement(ctrl.element.device, "dimmer", ctrl.element.name, value).then(function () {
 				ctrl.element.value = value;
 			});

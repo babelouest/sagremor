@@ -1,13 +1,13 @@
 <div class="container-fluid">
 	<div class="row control-group">
-		<div class="row control-group" data-ng-if="!!$ctrl.mpd.name">
+		<div class="row control-group" data-ng-if="!!$ctrl.mpd.name && ($ctrl.mpd.state == 'pause' || $ctrl.mpd.state == 'play')">
 			<div class="col-xs-12 controls text-center">
 				<strong>
 					<span data-ng-bind="$ctrl.mpd.name"></span>
 				</strong>
 			</div>
 		</div>
-		<div class="row control-group" data-ng-if="!!$ctrl.mpd.title">
+		<div class="row control-group" data-ng-if="!!$ctrl.mpd.title && ($ctrl.mpd.state == 'pause' || $ctrl.mpd.state == 'play')">
 			<div class="col-xs-2 controls">
 				<strong>
 					<span data-translate="carleon_mpd_playing_title"></span>
@@ -17,7 +17,7 @@
 				<span data-ng-bind="$ctrl.mpd.title"></span>
 			</div>
 		</div>
-		<div class="row control-group" data-ng-if="!!$ctrl.mpd.artist">
+		<div class="row control-group" data-ng-if="!!$ctrl.mpd.artist && ($ctrl.mpd.state == 'pause' || $ctrl.mpd.state == 'play')">
 			<div class="col-xs-2 controls">
 				<strong>
 					<span data-translate="carleon_mpd_playing_artist"></span>
@@ -27,7 +27,7 @@
 				<span data-ng-bind="$ctrl.mpd.artist"></span>
 			</div>
 		</div>
-		<div class="row control-group" data-ng-if="!!$ctrl.mpd.album">
+		<div class="row control-group" data-ng-if="!!$ctrl.mpd.album && ($ctrl.mpd.state == 'pause' || $ctrl.mpd.state == 'play')">
 			<div class="col-xs-2 controls">
 				<strong>
 					<span data-translate="carleon_mpd_playing_album"></span>
@@ -37,7 +37,7 @@
 				<span data-ng-bind="$ctrl.mpd.album"></span>
 			</div>
 		</div>
-		<div class="row control-group" data-ng-if="!!$ctrl.mpd.date">
+		<div class="row control-group" data-ng-if="!!$ctrl.mpd.date && ($ctrl.mpd.state == 'pause' || $ctrl.mpd.state == 'play')">
 			<div class="col-xs-2 controls">
 				<strong>
 					<span data-translate="carleon_mpd_playing_date"></span>
@@ -45,6 +45,23 @@
 			</div>
 			<div class="col-xs-10 controls">
 				<span data-ng-bind="$ctrl.mpd.date"></span>
+			</div>
+		</div>
+		<hr class="heater-hr">
+		<div class="clearfix control-group">
+			<div class="col-xs-4 controls">
+				<label for="mpdPlaylists" data-translate="carleon_mpd_playlists_title"></label>
+			</div>
+			<div class="col-xs-4 controls">
+				<select class="form-control" 
+						name="mpdPlaylists" 
+						value="mpdPlaylists" 
+						data-ng-model="$ctrl.selectedPlaylist" 
+						data-ng-options="playlist as playlist for playlist in $ctrl.playlists">
+				</select>
+			</div>
+			<div class="col-xs-4 controls">
+				<button type="button" class="btn btn-primary" data-ng-click="$ctrl.loadPlaylist()" data-translate="carleon_mpd_playlist_load"></button>
 			</div>
 		</div>
 		<hr class="heater-hr">
@@ -87,23 +104,6 @@
 					<div class="ring-value" data-ng-bind="$ctrl.displayVolume()">
 					</div>
 				</div>
-			</div>
-		</div>
-		<hr class="heater-hr">
-		<div class="clearfix control-group">
-			<div class="col-xs-4 controls">
-				<label for="mpdPlaylists" data-translate="carleon_mpd_playlists_title"></label>
-			</div>
-			<div class="col-xs-4 controls">
-				<select class="form-control" 
-						name="mpdPlaylists" 
-						value="mpdPlaylists" 
-						data-ng-model="$ctrl.selectedPlaylist" 
-						data-ng-options="playlist as playlist for playlist in $ctrl.playlists">
-				</select>
-			</div>
-			<div class="col-xs-4 controls">
-				<button type="button" class="btn btn-primary" data-ng-click="$ctrl.loadPlaylist()" data-translate="carleon_mpd_playlist_load"></button>
 			</div>
 		</div>
 	</div>

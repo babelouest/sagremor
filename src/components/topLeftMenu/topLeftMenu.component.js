@@ -21,6 +21,14 @@ function topLeftMenuCtrl ($scope, $translate, sagremorParams, sagGenericInjector
 			}
 		});
 	};
+    
+    /**
+     * Because I couldn't find how to do it with otherwise...
+     */
+    this.selectTab = function (tabName) {
+        $(".sag-menu").removeClass("active");
+        $(tabName).addClass("active");
+    };
 	
 	$scope.$on("submodulesChanged", function () {
 		self.sagremorParams = sagremorParams;

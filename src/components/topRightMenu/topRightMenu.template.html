@@ -38,20 +38,18 @@
 			</div>
 		</li>
 		<li class="row control-group">
-			<div class="col-xs-6 controls">
-                                <data-oauth
-                                        data-site="https://hunbaut.babelouest.org/glewlwyddev/glewlwyd/"
-                                        data-client-id="sagremor"
-                                        data-response-type="code"
-                                        data-redirect-uri="http://localhost:3000/"
-                                        data-profile-uri="https://hunbaut.babelouest.org/glewlwyddev/glewlwyd/profile/"
-                                        data-scope="angharad"
-                                        data-authorize-path="auth"
-                                        data-token-path="token"
-                                        data-template="/components/core/login.html"
-                                        data-storage="localStorage">
-                                </data-oauth>
-			</div>
+                        <data-oauth
+                                data-site="{{topRightMenuCtrl.oauth2.site}}"
+                                data-client-id="{{topRightMenuCtrl.oauth2.clientId}}"
+                                data-response-type="{{topRightMenuCtrl.oauth2.responseType}}"
+                                data-redirect-uri="{{topRightMenuCtrl.oauth2.redirectUri}}"
+                                data-profile-uri="{{topRightMenuCtrl.oauth2.profileUri}}"
+                                data-scope="{{topRightMenuCtrl.oauth2.scope}}"
+                                data-authorize-path="{{topRightMenuCtrl.oauth2.authorizePath}}"
+                                data-token-path="{{topRightMenuCtrl.oauth2.tokenPath}}"
+                                data-template="/components/core/login.html"
+                                data-storage="localStorage">
+                        </data-oauth>
 		</li>
 	</ul>
 </div>

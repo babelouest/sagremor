@@ -1,6 +1,6 @@
 angular.module("sagremorApp")
   .controller("sagremorCtrl", 
-  function($scope, $rootScope, $interval, $window, $http, $q, $location, $cookies, $translate, toaster, angharadFactory, benoicFactory, carleonFactory, garethFactory, sharedData, sagremorParams) {
+  function($scope, $rootScope, $interval, $window, $http, $q, $location, $cookies, $translate, toaster, angharadFactory, benoicFactory, carleonFactory, garethFactory, sharedData, sagremorParams, angharadConfig) {
     var self = this;
     
     this.loaderToast;
