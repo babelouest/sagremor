@@ -4,6 +4,7 @@ angular.module("sagremorApp")
         "prefixAngharad": "angharad/",
         "prefixBenoic": "benoic/",
         "prefixCarleon": "carleon/",
+        "prefixGareth": "gareth/",
         oauth2: {
             site: "https://oauth2.url/",
             clientId: "sagremor",
