@@ -347,7 +347,6 @@ angular.module("sagremorApp")
 	};
   
   this.closeSagremor = function () {
-    console.log("Close?");
     sagremorParams.token = null;
     sagremorParams.loggedIn = false;
     $scope.isLogged = false;
