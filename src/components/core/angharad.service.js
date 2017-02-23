@@ -6,15 +6,11 @@ angular.module("sagremorApp")
 		angharadBackendFactory.httpRequest = function (method, url, data, params) {
 		  var deferred = $q.defer();
 		  
-      if (sagremorParams.token && sagremorParams.token.access_token) {
-        $http({method: method, url: url, data: data, params: params, headers: {Authorization: 'Bearer ' + sagremorParams.token.access_token}}).then(function (response) {
-          deferred.resolve(response.data);
-        }, function (error) {
-          deferred.reject(error);
-        });
-      } else {
-        deferred.reject("unauthorized");
-      }
+      $http({method: method, url: url, data: data, params: params}).then(function (response) {
+        deferred.resolve(response.data);
+      }, function (error) {
+        deferred.reject(error);
+      });
 		  
 		  return deferred.promise;
 		};

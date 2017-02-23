@@ -404,7 +404,7 @@ angular.module("sagremorApp")
 	});
 
 	$scope.$on('oauth:login', function(event, token) {
-		sagremorParams.token = token;
+        $http.defaults.headers.common.Authorization = "Bearer " + token.access_token;
 		initParameters();
 	});
 	
