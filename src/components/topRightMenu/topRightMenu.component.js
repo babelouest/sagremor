@@ -1,14 +1,20 @@
-function topRightMenuCtrl ($scope, $rootScope, $location, $http, $translate, $cookies, angharadFactory, sagremorConstant, sagremorParams) {
+function topRightMenuCtrl ($scope, $rootScope, $location, $http, $translate, $cookies, angharadFactory, sagremorConstant, sagremorParams, angharadConfig) {
     var self = this;
 
     self.sagremorParams = sagremorParams;
 
     self.selectedLang = $translate.use();
-
+    
     self.langList = sagremorConstant.langList;
     
     self.profiles = sagremorParams.profiles;
     self.currentProfileName = !!sagremorParams.currentProfile?sagremorParams.currentProfile.name:"";
+
+    self.oauth2 = angharadConfig.oauth2;
+    
+    if ($location.search().type) {
+        self.oauth2.responseType = $location.search().type;
+    }
 
     self.changeLang = function () {
         $translate.use(self.selectedLang).then(function () {
@@ -33,16 +39,6 @@ function topRightMenuCtrl ($scope, $rootScope, $location, $http, $translate, $co
 		$rootScope.$broadcast("refresh");
 	};
 	
-    self.logout = function() {
-		angharadFactory.deleteAuth()
-			.then(function(response) {
-			sagremorParams.loggedIn = false;
-			$scope.isLogged = false;
-			$location.path("/login");
-			$http.defaults.headers.common["ANGHARAD_SESSION_ID"] = "";
-		});
-    };
-    
 	$scope.$on("angharadProfileChanged", function () {
 		self.profiles = sagremorParams.profiles;
 		self.currentProfileName = !!sagremorParams.currentProfile?sagremorParams.currentProfile.name:"";

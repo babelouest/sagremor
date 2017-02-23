@@ -1,49 +1,45 @@
 angular.module("sagremorApp")
   .controller("sagremorCtrl", 
-  function($scope, $rootScope, $interval, $window, $http, $q, $location, $cookies, $translate, toaster, angharadFactory, benoicFactory, carleonFactory, garethFactory, sharedData, sagremorParams) {
-    var self = this;
-    
-    this.loaderToast;
-    this.initComplete = false;
-    this.benoicInitError = false;
-    this.shoudRefresh = false;
-    this.hasFocus = true;
-    this.refreshTimeout = null;
-    
-    function init() {
+  function($scope, $rootScope, $interval, $window, $http, $q, $location, $cookies, $translate, toaster, angharadFactory, benoicFactory, carleonFactory, garethFactory, sharedData, sagremorParams, angharadConfig) {
+	var self = this;
+	
+	this.loaderToast;
+	this.initComplete = false;
+	this.benoicInitError = false;
+	this.shoudRefresh = false;
+	this.hasFocus = true;
+	this.refreshTimeout = null;
+	this.isInit = false;
+	
+	function init() {
 		$translate("angharad_loading_title").then(function (title) {
 			// Nothing to do here, just waiting for lang files to be loaded before starting
-		})["finally"](function () {
-			initParameters();
-			self.getAuth().then(function() {
-				$rootScope.$broadcast("authChanged");
-				popLoader();
-				getApiData();
-				self.refreshTimeout = startRefreshTimeout();
-			});
 		})
-    }
-    
-    function closeLoader(result) {
-        toaster.clear(self.loaderToast);
-        if (result) {
-            toaster.pop({type: "success", title: $translate.instant("angharad_loading_title"), body: $translate.instant("init_message_loading_complete")});
-        } else {
-            toaster.pop({type: "error", title: $translate.instant("angharad_loading_title"), body: $translate.instant("init_message_loading_error")});
-        }
-    }
-    
-    function popLoader() {
-        self.loaderToast = toaster.pop({type: "wait", title: $translate.instant("angharad_loading_title"), body: $translate.instant("init_message_loading"), timeout: 0, showCloseButton: false});
-    }
-    
-    function initParameters() {
-        $http.defaults.headers.common["ANGHARAD_SESSION_ID"] = $cookies.get("ANGHARAD_SESSION_ID");
-        sagremorParams.adminMode = false;
-        sagremorParams.loggedIn = true;
-    }
-    
-    function refreshData() {
+	}
+	
+	function closeLoader(result) {
+		toaster.clear(self.loaderToast);
+		if (result) {
+			toaster.pop({type: "success", title: $translate.instant("angharad_loading_title"), body: $translate.instant("init_message_loading_complete")});
+		} else {
+			toaster.pop({type: "error", title: $translate.instant("angharad_loading_title"), body: $translate.instant("init_message_loading_error")});
+		}
+	}
+	
+	function popLoader() {
+		self.loaderToast = toaster.pop({type: "wait", title: $translate.instant("angharad_loading_title"), body: $translate.instant("init_message_loading"), timeout: 0, showCloseButton: false});
+	}
+	
+	function initParameters() {
+    popLoader();
+    getApiData();
+    self.refreshTimeout = startRefreshTimeout();
+    sagremorParams.adminMode = false;
+    sagremorParams.loggedIn = true;
+    self.isInit = true;
+	}
+	
+	function refreshData() {
 		popLoader();
 		
 		// Refresh benoic devices with overview
@@ -73,7 +69,6 @@ angular.module("sagremorApp")
 			$q.all(devicePromises).then(function (results) {
 			})["finally"](function () {
 				$rootScope.$broadcast("refreshDevices");
-				$rootScope.$broadcast("refreshDashboard");
 			});
 		}, function () {
 			toaster.pop("error", $translate.instant("refresh"), $translate.instant("refresh_device_error"));
@@ -128,8 +123,8 @@ angular.module("sagremorApp")
 			});
 		});
 	}
-    
-    function getApiData() {
+	
+	function getApiData() {
 		return self.initAngharadSubmodules().then(function (result) {
 			var promises = [ self.initAngharad() ];
 			sagremorParams.benoicEnabled = false;
@@ -153,8 +148,8 @@ angular.module("sagremorApp")
 			}, function () {
 				toaster.pop({type: "error", title: $translate.instant("angharad_loading_title"), body: $translate.instant("init_message_loading_error")});
 			})["finally"](function () {
-                self.initComplete = true;
-                $scope.$broadcast("initComplete");
+				self.initComplete = true;
+				$scope.$broadcast("initComplete");
 			});
 		}, function (error) {
 			toaster.pop({type: "error", title: $translate.instant("angharad_loading_title"), body: $translate.instant("init_message_loading_error")});
@@ -177,61 +172,39 @@ angular.module("sagremorApp")
 	$window.onblur = function() {  
 		self.hasFocus = false;  
 	};
-    
-	$window.onfocus = function() {  
+	
+	$window.onfocus = function() {
 		self.hasFocus = true;  
 		if (self.shouldRefresh) {
 			refreshData();
 			self.shouldRefresh = false;
 		}
 	};
-    
-    this.getAuth = function() {
-		return angharadFactory.getAuth()
-		.then(function(response) {
-			sagremorParams.loggedIn = true;
-			if ($location.url() === "/login" || $location.url() === "/error") {
-				$location.path("/");
-			}
-		},
-		function(error) {
-			if (error.status === 401) {
-				sagremorParams.loggedIn = false;
-				$location.path("/login");
-			} else {
-				sagremorParams.loggedIn = false;
-				sagremorParams.errorMessage = "error_api_unavailable";
-				$location.path("/error");
-				$scope.$broadcast("generalError");
-			}
-			return $q.reject(error);
-		});
-    };
-    
-    this.initAngharadSubmodules = function () {
-        return angharadFactory.getSumboduleList();
-    };
-    
-    this.initBenoic = function () {
-        var promiseList = {
-            deviceTypesResult: benoicFactory.getDeviceTypes(),
-            deviceResult: benoicFactory.getDeviceList()
-        };
-        
-        return $q.all(promiseList).then(function (result) {
-            var deviceTypesResult = result.deviceTypesResult;
-            var deviceResult = result.deviceResult;
-            
-            // Handle device types
-            _.forEach(deviceTypesResult, function (type) {
-                sharedData.add("benoicDeviceTypes", type.name, type);
-            });
-            $scope.$broadcast("benoicDeviceTypesChanged");
-            
-            // Handle devices
-            var deviceList = [];
-            sharedData.removeAll("benoicDevices");
-            _.forEach(deviceResult, function (curDevice) {
+	
+	this.initAngharadSubmodules = function () {
+		return angharadFactory.getSumboduleList();
+	};
+	
+	this.initBenoic = function () {
+		var promiseList = {
+			deviceTypesResult: benoicFactory.getDeviceTypes(),
+			deviceResult: benoicFactory.getDeviceList()
+		};
+		
+		return $q.all(promiseList).then(function (result) {
+			var deviceTypesResult = result.deviceTypesResult;
+			var deviceResult = result.deviceResult;
+			
+			// Handle device types
+			_.forEach(deviceTypesResult, function (type) {
+				sharedData.add("benoicDeviceTypes", type.name, type);
+			});
+			$scope.$broadcast("benoicDeviceTypesChanged");
+			
+			// Handle devices
+			var deviceList = [];
+			sharedData.removeAll("benoicDevices");
+			_.forEach(deviceResult, function (curDevice) {
 				if (curDevice.connected) {
 					deviceList.push(benoicFactory.getDeviceOverview(curDevice.name).then(function (result) {
 						curDevice.element = result;
@@ -241,16 +214,16 @@ angular.module("sagremorApp")
 					}));
 				}
 				sharedData.add("benoicDevices", curDevice.name, curDevice);
-            });
-            $q.all(deviceList).then(function (responses) {
-            })["finally"](function () {
+			});
+			$q.all(deviceList).then(function (responses) {
+			})["finally"](function () {
 				$rootScope.$broadcast("benoicDevicesChanged");
-            });
-        }, function (error) {
-            toaster.pop("error", $translate.instant("benoic_loading_title"), $translate.instant("benoic_loading_error"));
-        });
-    }
-    
+			});
+		}, function (error) {
+			toaster.pop("error", $translate.instant("benoic_loading_title"), $translate.instant("benoic_loading_error"));
+		});
+	}
+	
 	this.initCarleon = function () {
 		sharedData.removeAll("carleonServices");
 		
@@ -323,8 +296,8 @@ angular.module("sagremorApp")
 			$scope.$broadcast("angharadProfileChanged");
 		}
 	};
-    
-    this.initAngharad = function () {
+	
+	this.initAngharad = function () {
 		var promiseList = {
 			scripts: angharadFactory.getScriptList(),
 			schedulers: angharadFactory.getSchedulerList(),
@@ -368,55 +341,93 @@ angular.module("sagremorApp")
 					self.setDefaultProfile();
 				}
 			}
-        }, function (error) {
-            toaster.pop("error", $translate.instant("angharad_loading_title"), $translate.instant("angharad_loading_error"));
-        });
+		}, function (error) {
+			toaster.pop("error", $translate.instant("angharad_loading_title"), $translate.instant("angharad_loading_error"));
+		});
 	};
+  
+  this.closeSagremor = function () {
+    sagremorParams.token = null;
+    sagremorParams.loggedIn = false;
+    $scope.isLogged = false;
+    sagremorParams.profiles = [];
+    sagremorParams.currentProfile = null;
+    $rootScope.$broadcast("closeBenoic");
+    $rootScope.$broadcast("closeCarleon");
+    $rootScope.$broadcast("closeGareth");
+    $rootScope.$broadcast("angharadProfileUpdated");
+    $rootScope.$broadcast("refreshDashboard");
+  };
 	
-    $scope.$on("reinitBenoic", function () {
-        self.initBenoic();
-    });
-    
-    $scope.$on("reinitCarleon", function () {
-        self.initCarleon();
-    });
-    
-    $scope.$on("reinitGareth", function () {
-        self.initGareth();
-    });
-    
-    $scope.$on("closeBenoic", function () {
-        sharedData.removeAll("benoicDevices");
-    });
-    
-    $scope.$on("closeCarleon", function () {
-        sharedData.removeAll("carleonServices");
+	$scope.$on("reinitBenoic", function () {
+		self.initBenoic();
+	});
+	
+	$scope.$on("reinitCarleon", function () {
+		self.initCarleon();
+	});
+	
+	$scope.$on("reinitGareth", function () {
+		self.initGareth();
+	});
+	
+	$scope.$on("closeBenoic", function () {
+		sharedData.removeAll("benoicDevices");
+	});
+	
+	$scope.$on("closeCarleon", function () {
+		sharedData.removeAll("carleonServices");
 		sagremorParams.profiles = [];
 		sagremorParams.currentProfile = false;
-    });
-    
-    $scope.$on("closeGareth", function () {
+	});
+	
+	$scope.$on("closeGareth", function () {
 		sharedData.removeAll("garethFilters");
 		sharedData.removeAll("garethAlertsSmtp");
 		sharedData.removeAll("garethAlertsHttp");
-    });
-    
-    $scope.$on("refresh", function () {
-		refreshData();
 	});
-    
-    $scope.$on("loginSuccess", function () {
-        init();
-    });
-    
-    $scope.$on("initComplete", function() {
-        if (self.initComplete) {
-            closeLoader(true);
-        } else if (self.benoicInitError) {
-            closeLoader(false);
-        }
-    });
-    
-    init();
+  
+	$scope.$on("refresh", function () {
+	  refreshData();
+	});
+	
+	$scope.$on("loginSuccess", function () {
+		init();
+	});
+	
+	$scope.$on("initComplete", function() {
+		if (self.initComplete) {
+			closeLoader(true);
+		} else if (self.benoicInitError) {
+			closeLoader(false);
+		}
+	});
+
+	$scope.$on('oauth:login', function(event, token) {
+        $http.defaults.headers.common.Authorization = "Bearer " + token.access_token;
+		initParameters();
+	});
+	
+	$scope.$on('oauth:refresh', function(event, token) {
+		sagremorParams.token = token;
+	});
+	
+	$scope.$on('oauth:loggedOut', function(event, token) {
+		self.closeSagremor();
+	});
+	
+	$scope.$on('oauth:denied', function(event, token) {
+		self.closeSagremor();
+	});
+	
+	$scope.$on('oauth:expired', function(event, token) {
+		self.closeSagremor();
+	});
+	
+	$scope.$on('oauth:invalid', function(event, message) {
+		self.closeSagremor();
+	});
+	
+	init();
   }
 );

@@ -1,4 +1,7 @@
 angular.module("sagremorApp")
+    .config(function($locationProvider) {
+        $locationProvider.html5Mode(true).hashPrefix('!');
+    })
     .config(function ($stateProvider, $urlRouterProvider) {
         
         $stateProvider
@@ -7,12 +10,6 @@ angular.module("sagremorApp")
                 templateUrl: "app/dashboard/dashboard.html",
                 controller: "DashboardCtrl",
                 controllerAs: "DashboardCtrl"
-            })
-            .state("login", {
-                url: "/login",
-                templateUrl: "app/login/login.html",
-                controller: "LoginCtrl",
-                controllerAs: "LoginCtrl"
             })
             .state("error", {
                 url: "/error",
@@ -67,12 +64,6 @@ angular.module("sagremorApp")
                 templateUrl: "app/logs/logs.html",
                 controller: "logsCtrl",
                 controllerAs: "logsCtrl"
-            })
-            .state("users", {
-                url: "/users",
-                templateUrl: "app/users/users.html",
-                controller: "usersCtrl",
-                controllerAs: "usersCtrl"
             })
             .state("parameters", {
                 url: "/parameters",

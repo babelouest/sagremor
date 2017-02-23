@@ -6,3 +6,4 @@ typings
 coverage
 src/app/config.js
 Makefile
+constants.js

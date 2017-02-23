@@ -23,7 +23,7 @@ angular.module("sagremorApp")
 		function loadServices () {
 			_.forEach(self.currentInjectors, function (currentInjector) {
 				var cService = sharedData.get("carleonServices", currentInjector.type);
-				if (!!cService && cService.enabled) {
+				if (!!cService && cService.enabled && !_.find(self.serviceList, {type: currentInjector.type})) {
 					var service = {type: currentInjector.type};
 					self.title = currentInjector.leftMenu.title;
 					service.size = currentInjector.size || 1

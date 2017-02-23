@@ -1,18 +1,32 @@
-<div class="container">
-    <div class="container" data-ng-if="!isLogged">
-        <form class="form-signin">
-            <h2 class="form-signin-heading" data-translate="login_sign_in"></h2>
-            <label class="sr-only" for="inputLogin" data-translate="login_username"></label>
-            <input id="inputLogin" class="form-control" type="text" autofocus="" required="" placeholder="{{'login' | translate}}" data-ng-model="LoginCtrl.username">
-            <label class="sr-only" for="inputPassword" data-translate="login_password"></label>
-            <input id="password" class="form-control" type="password" required="" placeholder="{{'password' | translate}}" data-ng-model="LoginCtrl.password">
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" value="remember-me" data-ng-model="LoginCtrl.rememberMe">
-                    <span data-translate="login_remember"></span>
-                </label>
-            </div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit" data-ng-click="LoginCtrl.postLogin()" data-translate="login_validate"></button>
-        </form>
-    </div>
+<div class="col-xs-6 controls">
+  <label data-translate="top_right_menu_login"         data-ng-if="responseType !== 'password' && show=='logged-out'"></label>
+  <label data-translate="top_right_menu_logout"        data-ng-if="show=='logged-in'"></label>
+  <label data-translate="top_right_menu_access_denied" data-ng-if="responseType !== 'password' && show=='denied'"></label>
+</div>
+<div class="col-xs-6 controls">
+  <button type="button" class="btn btn-primary btn-sm" data-ng-if="responseType !== 'password' && show=='logged-out' || show=='denied'" data-ng-click="login()">
+    <i class="fa fa-sign-in" aria-hidden="true"></i>
+  </button>
+  <button type="button" class="btn btn-primary btn-sm" data-ng-if="show=='logged-in'" data-ng-click="logout()">
+    <i class="fa fa-sign-out" aria-hidden="true"></i>
+  </button>
+</div>
+<div class="col-xs-12">
+  <div data-ng-show="responseType === 'password' && show !== 'logged-in'">
+    <form>
+      <div>
+        <label>Login</label>
+        <input type="text" data-ng-model="typedLogin" placeholder="login" >
+      </div>
+      <div>
+        <label>Password</label>
+        <input type="password" data-ng-model="typedPassword" placeholder="password" >
+      </div>
+      <div>
+        <label>Keep connection</label>
+        <input type="checkbox" data-ng-model="typedKeepConnection" >
+      </div>
+      <input type="submit" class="btn btn-primary btn-sm" value="Submit" data-ng-click="checkPassword()">
+    </form>
+  </div>
 </div>

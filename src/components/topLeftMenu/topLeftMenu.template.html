@@ -1,72 +1,53 @@
-<div class="top-left-menu" data-uib-dropdown data-ng-if="topLeftMenuCtrl.sagremorParams.loggedIn">
-    <button class="btn btn-primary text-left" type="button" data-uib-dropdown-toggle data-ng-click="">
-        <i class="fa fa-bars" aria-hidden="true"></i>
-    </button>
-    <ul class="container-fluid top-left-menu-list" data-uib-dropdown-menu data-uib-dropdown-menu-auto-close="outsideClick">
-        <li class="row-fluid">
-            <a data-ng-href="#/">
+<div data-ng-if="topLeftMenuCtrl.sagremorParams.loggedIn">
+    <ul class="nav nav-tabs tabs-left">
+        <li id="tabDashboard" class="sag-menu active text-center">
+            <a data-ui-sref="dashboard" href="#tabView" data-toggle="tab" data-ng-click="topLeftMenuCtrl.selectTab('#tabDashboard')">
                 <i class="fa fa-home fa-fw"></i>
-                <span data-translate="menu_home"></span>
             </a>
         </li>
-        <li class="row-fluid" data-ng-if="topLeftMenuCtrl.sagremorParams.benoicEnabled">
-            <a data-ng-href="#/switches">
+        <li id="tabSwitches" class="sag-menu text-center" data-ng-if="topLeftMenuCtrl.sagremorParams.benoicEnabled">
+            <a data-ui-sref="switches" href="#tabView" data-toggle="tab" data-ng-click="topLeftMenuCtrl.selectTab('#tabSwitches')">
                 <i class="fa fa-lightbulb-o fa-fw"></i>
-                <span data-translate="menu_lights"></span>
             </a>
         </li>
-        <li class="row-fluid" data-ng-if="topLeftMenuCtrl.sagremorParams.benoicEnabled">
-            <a data-ng-href="#/heaters">
+        <li id="tabHeaters" class="sag-menu text-center" data-ng-if="topLeftMenuCtrl.sagremorParams.benoicEnabled">
+            <a data-ui-sref="heaters" href="#tabView" data-toggle="tab" data-ng-click="topLeftMenuCtrl.selectTab('#tabHeaters')">
                 <i class="fa fa-fire"></i>
-                <span data-translate="menu_heaters"></span>
             </a>
         </li>
-        <li class="row-fluid" data-ng-if="topLeftMenuCtrl.sagremorParams.benoicEnabled">
-            <a data-ng-href="#/sensors">
+        <li id="tabSensors" class="sag-menu text-center" data-ng-if="topLeftMenuCtrl.sagremorParams.benoicEnabled">
+            <a data-ui-sref="sensors" href="#tabView" data-toggle="tab" data-ng-click="topLeftMenuCtrl.selectTab('#tabSensors')">
                 <i class="fa fa-line-chart fa-fw"></i>
-                <span data-translate="menu_sensors"></span>
             </a>
         </li>
-        <li class="row-fluid" data-ng-repeat="service in topLeftMenuCtrl.serviceList" data-ng-if="topLeftMenuCtrl.sagremorParams.carleonEnabled">
-            <a data-ng-href="#/service/{{service.target}}">
+        <li class="sag-menu text-center" data-ng-repeat="service in topLeftMenuCtrl.serviceList" data-ng-if="topLeftMenuCtrl.sagremorParams.carleonEnabled" id="tabService{{service.target}}">
+            <a data-ui-sref="service({service: service.target})" href="#tabView" data-toggle="tab" data-ng-click="topLeftMenuCtrl.selectTab('#tabService' + service.target)">
 				<i data-ng-class="{'fa fa-{{service.icon}} fa-fw': true}"></i>
-                <span data-translate="{{service.title}}"></span>
             </a>
         </li>
-        <li class="row-fluid">
-            <a data-ng-href="#/scripts">
+        <li id="tabScripts" class="sag-menu text-center">
+            <a data-ui-sref="scripts" href="#tabView" data-toggle="tab" data-ng-click="topLeftMenuCtrl.selectTab('#tabScripts')">
                 <i class="fa fa-tasks fa-fw"></i>
-                <span data-translate="menu_scripts"></span>
             </a>
         </li>
-        <li class="row-fluid">
-            <a data-ng-href="#/events">
+        <li id="tabEvents" class="sag-menu text-center">
+            <a data-ui-sref="events" href="#tabView" data-toggle="tab" data-ng-click="topLeftMenuCtrl.selectTab('#tabEvents')">
                 <i class="fa fa-calendar fa-fw"></i>
-                <span data-translate="menu_events"></span>
             </a>
         </li>
-        <li class="row-fluid">
-            <a data-ng-href="#/monitors">
+        <li id="tabMonitors" class="sag-menu text-center">
+            <a data-ui-sref="monitors" href="#tabView" data-toggle="tab" data-ng-click="topLeftMenuCtrl.selectTab('#tabMonitors')">
                 <i class="fa fa-bar-chart fa-fw"></i>
-                <span data-translate="menu_monitor"></span>
             </a>
         </li>
-        <li class="row-fluid" data-ng-if="topLeftMenuCtrl.sagremorParams.garethEnabled">
-            <a data-ng-href="#/logs">
+        <li id="tabLogs" class="sag-menu text-center" data-ng-if="topLeftMenuCtrl.sagremorParams.garethEnabled">
+            <a data-ui-sref="logs" href="#tabView" data-toggle="tab" data-ng-click="topLeftMenuCtrl.selectTab('#tabLogs')">
                 <i class="fa fa-history fa-fw"></i>
-                <span data-translate="menu_logs"></span>
             </a>
         </li>
-        <li class="row-fluid">
-            <a data-ng-href="#/users">
-                <i class="fa fa-users fa-fw"></i>
-                <span data-translate="menu_users"></span>
-            </a>
-        </li>
-        <li class="row-fluid">
-            <a data-ng-href="#/parameters">
+        <li id="tabParameters" class="sag-menu text-center">
+            <a data-ui-sref="parameters" href="#tabView" data-toggle="tab" data-ng-click="topLeftMenuCtrl.selectTab('#tabParameters')">
                 <i class="fa fa-cogs fa-fw"></i>
-                <span data-translate="menu_parameters"></span>
             </a>
         </li>
     </ul>
