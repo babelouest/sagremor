@@ -32,3 +32,59 @@
 .dropdown-menu-right {
   padding-top: 3px;
 }
+
+/* Vertical tab css */
+/* custom inclusion of right, left and below tabs */
+
+.sag-tabs-right > .nav-tabs,
+.sag-tabs-left > .nav-tabs {
+  border-bottom: 0;
+}
+
+.tab-content > .tab-pane,
+.pill-content > .pill-pane {
+  display: none;
+}
+
+.tab-content > .active,
+.pill-content > .active {
+  display: block;
+}
+
+
+.sag-tabs-left > .nav-tabs > li,
+.sag-tabs-right > .nav-tabs > li {
+  float: none;
+}
+
+.sag-tabs-left > .nav-tabs > li > a,
+.sag-tabs-right > .nav-tabs > li > a {
+  min-width: 74px;
+  margin-right: 0;
+  margin-bottom: 3px;
+}
+
+.sag-tabs-left > .nav-tabs {
+  float: left;
+  margin-right: 19px;
+  border-right: 1px solid #ddd;
+}
+
+.sag-tabs-left > .nav-tabs > li > a {
+  margin-right: -1px;
+  -webkit-border-radius: 4px 0 0 4px;
+     -moz-border-radius: 4px 0 0 4px;
+          border-radius: 4px 0 0 4px;
+}
+
+.sag-tabs-left > .nav-tabs > li > a:hover,
+.sag-tabs-left > .nav-tabs > li > a:focus {
+  border-color: #eeeeee #dddddd #eeeeee #eeeeee;
+}
+
+.sag-tabs-left > .nav-tabs .active > a,
+.sag-tabs-left > .nav-tabs .active > a:hover,
+.sag-tabs-left > .nav-tabs .active > a:focus {
+  border-color: #ddd transparent #ddd #ddd;
+
+}

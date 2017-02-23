@@ -29,7 +29,7 @@ function topLeftMenuCtrl ($scope, $translate, sagremorParams, sagGenericInjector
         $(".sag-menu").removeClass("active");
         $(tabName).addClass("active");
     };
-	
+    
 	$scope.$on("submodulesChanged", function () {
 		self.sagremorParams = sagremorParams;
 	});

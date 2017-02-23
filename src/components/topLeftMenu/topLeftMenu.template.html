@@ -1,5 +1,5 @@
 <div data-ng-if="topLeftMenuCtrl.sagremorParams.loggedIn">
-    <ul class="nav nav-tabs tabs-left">
+    <ul class="nav nav-tabs nav-stacked nav-pills topnav">
         <li id="tabDashboard" class="sag-menu active text-center">
             <a data-ui-sref="dashboard" data-toggle="tab" data-ng-click="topLeftMenuCtrl.selectTab('#tabDashboard')" title="{{'menu_home'|translate}}">
                 <i class="fa fa-home fa-fw"></i>
@@ -20,7 +20,7 @@
                 <i class="fa fa-line-chart fa-fw"></i>
             </a>
         </li>
-        <li class="sag-menu text-center" data-ng-repeat="service in topLeftMenuCtrl.serviceList" data-ng-if="topLeftMenuCtrl.sagremorParams.carleonEnabled" id="tabService{{service.target}}">
+        <li id="tabService{{service.target}}" class="sag-menu text-center" data-ng-repeat="service in topLeftMenuCtrl.serviceList" data-ng-if="topLeftMenuCtrl.sagremorParams.carleonEnabled">
             <a data-ui-sref="service({service: service.target})" data-toggle="tab" data-ng-click="topLeftMenuCtrl.selectTab('#tabService' + service.target)" title="{{service.name|translate}}">
                 <i data-ng-class="{'fa fa-{{service.icon}} fa-fw': true}"></i>
             </a>
