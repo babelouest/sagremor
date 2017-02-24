@@ -352,6 +352,7 @@ angular.module("sagremorApp")
     $scope.isLogged = false;
     sagremorParams.profiles = [];
     sagremorParams.currentProfile = null;
+    self.isInit = false;
     $rootScope.$broadcast("closeBenoic");
     $rootScope.$broadcast("closeCarleon");
     $rootScope.$broadcast("closeGareth");
@@ -410,6 +411,9 @@ angular.module("sagremorApp")
 	
 	$scope.$on('oauth:refresh', function(event, token) {
 		$http.defaults.headers.common.Authorization = "Bearer " + token.access_token;
+    if (!self.isInit) {
+      initParameters();
+    }
 	});
 	
 	$scope.$on('oauth:loggedOut', function(event, token) {
@@ -417,6 +421,7 @@ angular.module("sagremorApp")
 	});
 	
 	$scope.$on('oauth:denied', function(event, token) {
+    toaster.pop("error", $translate.instant("angharad_loading_title"), $translate.instant("access_denied"));
 		self.closeSagremor();
 	});
 	
