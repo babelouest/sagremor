@@ -35,6 +35,7 @@ angular.module("sagremorApp")
 			}
 
 			function popLoader() {
+        toaster.clear(self.loaderToast);
 				self.loaderToast = toaster.pop({
 					type: "wait",
 					title: $translate.instant("angharad_loading_title"),
