@@ -7,6 +7,7 @@
 	"carleon_mpd_modal_host": "Host",
 	"carleon_mpd_modal_port": "Port",
 	"carleon_mpd_modal_password": "Password",
+	"carleon_mpd_modal_switch": "Switch attached",
 	"carleon_mpd_save": "Jukebox save",
 	"carleon_mpd_save_success": "Success",
 	"carleon_mpd_save_error": "Error",

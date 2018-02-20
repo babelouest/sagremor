@@ -54,7 +54,6 @@ function topRightMenuCtrl($scope, $rootScope, $location, $http, $translate, $coo
 		self.profiles = sagremorParams.profiles;
 		self.currentProfileName = !!sagremorParams.currentProfile ? sagremorParams.currentProfile.name : "";
 	});
-
 }
 
 angular.module("sagremorApp").component("topRightMenu", {

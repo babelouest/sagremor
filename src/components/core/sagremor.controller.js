@@ -14,7 +14,7 @@ angular.module("sagremorApp")
 			function init() {
 				$translate("angharad_loading_title").then(function(title) {
 					// Nothing to do here, just waiting for lang files to be loaded before starting
-				})
+				});
 			}
 
 			function closeLoader(result) {
@@ -475,7 +475,7 @@ angular.module("sagremorApp")
 			});
 
 			$scope.$on('oauth:expired', function(event, token) {
-				self.closeSagremor();
+				$scope.$broadcast("reconnect");
 			});
 
 			$scope.$on('oauth:invalid', function(event, message) {
