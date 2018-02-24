@@ -99,7 +99,6 @@ function carleonMpdController($scope, $q, $window, $translatePartialLoader, $tra
 
 	this.loadPlaylist = function() {
 		if (!!ctrl.selectedPlaylist) {
-			console.log(ctrl);
 			if (ctrl.mpdElement.device && ctrl.mpdElement.switch) {
 				benoicFactory.setElement(ctrl.mpdElement.device, "switch", ctrl.mpdElement.switch, "1");
 			}
