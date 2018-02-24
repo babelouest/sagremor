@@ -227,13 +227,3 @@ angular.module("sagremorApp", [
 		});
 	};
 });
-
-// Bootstrap the application manually instead of the ng-app directive.
-// So we can get the config.json file prior to everything else
-// Thanks to Jaco Pretorius: https://jacopretorius.net/2016/09/loading-configuration-data-on-startup-with-angular.html
-angular.element(document).ready(() => {
-  $.get('config.json', (response) => {
-    angular.module('sagremorApp').constant("angharadConfig", response);
-    angular.bootstrap(document, ['sagremorApp']);
-  });
-});
