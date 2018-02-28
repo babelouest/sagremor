@@ -17,3 +17,10 @@ build:
 	gulp build
 	mkdir -p dist/app/login/
 	cp src/app/login/login.html dist/app/login/
+
+clean:
+	rm -rf node_modules/ bower_components/ dist/
+
+install:
+	mkdir -p /usr/local/share/angharad/webapp
+	cp -R dist/* /usr/local/share/angharad/webapp/
