@@ -454,12 +454,14 @@ angular.module("sagremorApp")
 			});
 
 			$scope.$on('oauth:login', function(event, token) {
+				sharedData.add("oauthToken", "token", token);
 				$http.defaults.headers.common.Authorization = "Bearer " + token.access_token;
 				initParameters();
 			});
 
 			$scope.$on('oauth:refresh', function(event, token) {
 				$http.defaults.headers.common.Authorization = "Bearer " + token.access_token;
+				sharedData.add("oauthToken", "token", token);
 				if (!self.isInit) {
 					initParameters();
 				}

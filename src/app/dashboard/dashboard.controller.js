@@ -10,6 +10,7 @@ angular.module("sagremorApp")
             this.dashboardWidgetsDisplay = [];
             this.profileName = "";
             this.isInit = true;
+            this.connected = false;
 
             this.options = {
                 cellHeight: 100,
@@ -451,6 +452,26 @@ angular.module("sagremorApp")
             $scope.$on("carleonServicesChanged", function() {
                 self.isInit = true;
                 getDashboardElements();
+            });
+
+            $scope.$on("oauth:login", function(event, token) {
+              self.connected = true;
+            });
+
+            $scope.$on('oauth:refresh', function(event, token) {
+              self.connected = true;
+            });
+
+            $scope.$on('oauth:denied', function(event, token) {
+              self.connected = false;
+            });
+
+            $scope.$on('oauth:expired', function(event, token) {
+              self.connected = false;
+            });
+
+            $scope.$on('oauth:invalid', function(event, token) {
+              self.connected = false;
             });
 
             this.init();
