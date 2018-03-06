@@ -474,15 +474,6 @@ angular.module("sagremorApp")
 			$rootScope.$broadcast("angharadProfileUpdated");
 		};
 		
-		this.enableCarleonService = function (service) {
-			carleonFactory.enableService(service.name, service.enabled).then(function () {
-				toaster.pop("success", $translate.instant("carleon_services"), $translate.instant("carleon_services_enabled_success"));
-				$rootScope.$broadcast("carleonServicesChanged");
-			}, function () {
-				toaster.pop("error", $translate.instant("carleon_services"), $translate.instant("carleon_services_enabled_error"));
-			});
-		};
-		
 		$scope.$on("angharadProfileChanged", function () {
 			self.profileList = sagremorParams.profiles;
 		});

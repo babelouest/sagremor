@@ -403,6 +403,7 @@ angular.module("sagremorApp")
 				$rootScope.$broadcast("closeGareth");
 				$rootScope.$broadcast("angharadProfileUpdated");
 				$rootScope.$broadcast("refreshDashboard");
+				sharedData.add("oauthToken", "token", false);
 			};
 
 			$scope.$on("reinitBenoic", function() {
