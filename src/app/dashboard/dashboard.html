@@ -1,13 +1,12 @@
 <div>
     <h1 data-translate="dashboard_title"></h1>
-    <h2 data-ng-bind="DashboardCtrl.profileName">
-    </h2>
+    <h2 data-ng-bind="DashboardCtrl.profileName"></h2>
 
     <div class="row" data-ng-if="DashboardCtrl.sagremorParams.adminMode">
-		<button type="button" class="btn btn-primary" name="addTitleLine" id="addTitleLine" data-ng-click="DashboardCtrl.addTitleLine()" data-translate="dashboard_button_add_title_line"></button>
-		<hr>
+      <button type="button" class="btn btn-primary" name="addTitleLine" id="addTitleLine" data-ng-click="DashboardCtrl.addTitleLine()" data-translate="dashboard_button_add_title_line"></button>
+      <hr>
     </div>
-	
+  
     <div class="row">
         <div class="col-md-12">
             <div data-gridstack class="grid-stack grid1"
@@ -40,18 +39,23 @@
                         </data-sag-container>
                     </div>
                     <div data-ng-if="w.type === 'separator'">
-						<div class="sag-container-header-menu" data-uib-dropdown>
-							<button class="btn btn-primary text-left" data-ng-if="DashboardCtrl.sagremorParams.adminMode" type="button" data-uib-dropdown-toggle data-ng-click="">#</button>
-							<ul data-uib-dropdown-menu>
-								<li><a href="" data-ng-click="DashboardCtrl.removeFromDashboard(w)" data-translate="remove_from_dashboard"></a></li>
-							</ul>
-							<fieldset class="grid-stack-item-content" dir="ltr">
-								<legend data-ng-bind="w.name" class="sag-separator"></legend>
-							</fieldset>
-						</div>
+                      <div class="sag-container-header-menu" data-uib-dropdown>
+                        <button class="btn btn-primary text-left" data-ng-if="DashboardCtrl.sagremorParams.adminMode" type="button" data-uib-dropdown-toggle data-ng-click="">#</button>
+                        <ul data-uib-dropdown-menu>
+                          <li><a href="" data-ng-click="DashboardCtrl.removeFromDashboard(w)" data-translate="remove_from_dashboard"></a></li>
+                        </ul>
+                        <fieldset class="grid-stack-item-content" dir="ltr">
+                          <legend data-ng-bind="w.name" class="sag-separator"></legend>
+                        </fieldset>
+                      </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="row" data-ng-if="!DashboardCtrl.connected">
+        <div class="col-md-12">
+            <h3 data-translate="connect_message"></h2>
         </div>
     </div>
 </div>

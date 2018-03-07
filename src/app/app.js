@@ -99,10 +99,10 @@ angular.module("sagremorApp", [
 
 })
 .config(function ($translateProvider, $translatePartialLoaderProvider) {
-    $translateProvider.useLoader("$translatePartialLoader", {
-        urlTemplate: "components/{part}/i18n/{lang}.json"
-    });
-    $translatePartialLoaderProvider.addPart("core");
+	$translateProvider.useLoader("$translatePartialLoader", {
+		urlTemplate: "components/{part}/i18n/{lang}.json"
+	});
+	$translatePartialLoaderProvider.addPart("core");
 	$translateProvider
 	// see: http://angular-translate.github.io/docs/#/guide/09_language-negotiation
 	.registerAvailableLanguageKeys(['en', 'fr'], {
@@ -118,9 +118,8 @@ angular.module("sagremorApp", [
 	.determinePreferredLanguage();
 
 	// interpolation for pluralization
-	//$translateProvider.addInterpolation('$translateMessageFormatInterpolation');
-    $translateProvider.useCookieStorage();
-    $translateProvider.useSanitizeValueStrategy("escape");
+	$translateProvider.useCookieStorage();
+	$translateProvider.useSanitizeValueStrategy("escape");
 })
 .factory("sharedData", function() {
     var sharedData = {};

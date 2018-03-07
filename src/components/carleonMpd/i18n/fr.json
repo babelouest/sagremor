@@ -7,6 +7,7 @@
 	"carleon_mpd_modal_host": "Machine hôte",
 	"carleon_mpd_modal_port": "Port",
 	"carleon_mpd_modal_password": "Mot de passe",
+	"carleon_mpd_modal_switch": "Interrupteur associé",
 	"carleon_mpd_save": "Sauvegarde d'un jukebox",
 	"carleon_mpd_save_success": "Succès",
 	"carleon_mpd_save_error": "Erreur",

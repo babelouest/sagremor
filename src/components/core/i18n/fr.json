@@ -155,8 +155,6 @@
 	"param_submodule_gareth": "Gareth",
 	"param_submodule_enable": "Changement d'état",
 	"param_submodule_enable_confirm": "Êtes-vous sûr de vouloir changer l'état de ce sous-module ?",
-	"param_submodule_benoic_reload_types": "Recharger les types de dispositifs",
-	"param_submodule_carleon_reload_services": "Recharger les types de services",
 	"param_admin_global": "Global",
 	"param_admin_mode": "Mode administrateur",
 	"param_device_list": "Liste des dispositifs domotiques",
@@ -529,5 +527,6 @@
 	"refresh_device_error": "Erreur lors du rafraîchissement du dispositif {{name}}",
 	"refresh_scripts_events_error": "Erreur lors du rafraîchissement des tâches et des événements",
 	"refresh_carleon_error": "Erreur lors du rafraîchissement des services Carleon",
-  "access_denied": "Accès refusé"
+	"access_denied": "Accès refusé",
+	"connect_message": "Veuillez vous connecter à l'application"
 }

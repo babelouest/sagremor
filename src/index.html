@@ -1,5 +1,5 @@
 <!doctype html>
-<html data-ng-app="sagremorApp">
+<html>
 <head>
     <base href="/">
     <meta charset="utf-8">
@@ -56,4 +56,15 @@
     <!-- endbuild -->
 
   </body>
+<script type="text/javascript">
+  // Bootstrap the application manually instead of the ng-app directive.
+  // So we can get the config.json file prior to everything else
+  // Thanks to Jaco Pretorius: https://jacopretorius.net/2016/09/loading-configuration-data-on-startup-with-angular.html
+  $(function(){
+      $.get('config.json', (response) => {
+      angular.module('sagremorApp').constant("angharadConfig", response);
+      angular.bootstrap(document, ['sagremorApp']);
+    });
+  });
+</script>
 </html>

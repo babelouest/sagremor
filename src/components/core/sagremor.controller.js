@@ -14,7 +14,7 @@ angular.module("sagremorApp")
 			function init() {
 				$translate("angharad_loading_title").then(function(title) {
 					// Nothing to do here, just waiting for lang files to be loaded before starting
-				})
+				});
 			}
 
 			function closeLoader(result) {
@@ -403,6 +403,7 @@ angular.module("sagremorApp")
 				$rootScope.$broadcast("closeGareth");
 				$rootScope.$broadcast("angharadProfileUpdated");
 				$rootScope.$broadcast("refreshDashboard");
+				sharedData.add("oauthToken", "token", false);
 			};
 
 			$scope.$on("reinitBenoic", function() {
@@ -454,12 +455,14 @@ angular.module("sagremorApp")
 			});
 
 			$scope.$on('oauth:login', function(event, token) {
+				sharedData.add("oauthToken", "token", token);
 				$http.defaults.headers.common.Authorization = "Bearer " + token.access_token;
 				initParameters();
 			});
 
 			$scope.$on('oauth:refresh', function(event, token) {
 				$http.defaults.headers.common.Authorization = "Bearer " + token.access_token;
+				sharedData.add("oauthToken", "token", token);
 				if (!self.isInit) {
 					initParameters();
 				}
@@ -475,7 +478,7 @@ angular.module("sagremorApp")
 			});
 
 			$scope.$on('oauth:expired', function(event, token) {
-				self.closeSagremor();
+				$scope.$broadcast("reconnect");
 			});
 
 			$scope.$on('oauth:invalid', function(event, message) {
