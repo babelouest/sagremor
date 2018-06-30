@@ -5,3 +5,4 @@ typings
 coverage
 config.json
 dist
+package-lock.json
