@@ -41,10 +41,6 @@ function topRightMenuCtrl($scope, $rootScope, $location, $http, $translate, $coo
 		$rootScope.$broadcast("refresh");
 	};
 
-	self.reconnect = function() {
-		$rootScope.$broadcast("reconnect");
-	};
-
 	$scope.$on("angharadProfileChanged", function() {
 		self.profiles = sagremorParams.profiles;
 		self.currentProfileName = !!sagremorParams.currentProfile ? sagremorParams.currentProfile.name : "";

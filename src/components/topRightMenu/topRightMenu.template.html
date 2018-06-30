@@ -37,16 +37,6 @@
 				</button>
 			</div>
 		</li>
-		<li class="row control-group" data-ng-if="!topRightMenuCtrl.sagremorParams.loggedIn">
-			<div class="col-xs-6 controls">
-				<label for="sag-refresh" data-translate="top_right_menu_refresh"></label>
-			</div>
-			<div class="col-xs-6 controls">
-				<button id="sag-refresh" name="sag-refresh" type="button" class="btn btn-primary btn-sm" data-ng-click="topRightMenuCtrl.reconnect()">
-					<i class="fa fa-refresh" aria-hidden="true"></i>
-				</button>
-			</div>
-		</li>
 		<li class="row control-group">
                 <data-oauth
                         data-site="{{topRightMenuCtrl.oauth2.site}}"
