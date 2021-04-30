@@ -2,6 +2,8 @@
 
 Angharad 3.0 web client application
 
+**This repository has been archived because this source code has moved to its [mother project](https://github.com/babelouest/angharad)**
+
 ![example snapshot](https://github.com/babelouest/sagremor/raw/master/snapshots/dashboard-filled.png)
 
 # Prerequisites
